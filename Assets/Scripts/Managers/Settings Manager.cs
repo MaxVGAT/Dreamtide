@@ -14,7 +14,6 @@ public class ShowHideSettings : MonoBehaviour
     public CanvasGroup settingsGroup;
     public CanvasGroup creditsGroup;
     public CanvasGroup exitGroup;
-    public CanvasGroup startGroup;
     public float fadeTime = 0.3f;
 
     [Header("Volume")]
@@ -58,13 +57,6 @@ public class ShowHideSettings : MonoBehaviour
             exitGroup.alpha = 0;
             exitGroup.interactable = false;
             exitGroup.blocksRaycasts = false;
-        }
-
-        if (startGroup != null)
-        {
-            startGroup.alpha = 0;
-            startGroup.interactable = false;
-            startGroup.blocksRaycasts = false;
         }
     }
 
@@ -139,31 +131,6 @@ public class ShowHideSettings : MonoBehaviour
         exitGroup.alpha = 0;
         exitGroup.interactable = false;
         exitGroup.blocksRaycasts = false;
-
-        mainMenuGroup.interactable = true;
-    }
-
-    public void ShowStart()
-    {
-        if (startGroup == null || mainMenuGroup == null) return;
-
-        // Show start panel, disable main menu interaction
-        startGroup.alpha = 1;
-        startGroup.interactable = true;
-        startGroup.blocksRaycasts = true;
-
-        mainMenuGroup.interactable = false;
-    }
-
-    public void HideStart()
-    {
-        if (startGroup == null || mainMenuGroup == null) return;
-
-        // Hide start
-        // panel, re-enable main menu interaction
-        startGroup.alpha = 0;
-        startGroup.interactable = false;
-        startGroup.blocksRaycasts = false;
 
         mainMenuGroup.interactable = true;
     }

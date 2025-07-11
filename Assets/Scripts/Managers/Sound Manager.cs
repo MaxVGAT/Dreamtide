@@ -22,12 +22,14 @@ public class SoundManager : MonoBehaviour
     [Header("Menu SFX")]
     [SerializeField] private AudioClip buttonPressSFX;
     [SerializeField] private AudioClip buttonCloseSFX;
+    [SerializeField] public AudioClip hoverSFX;
+    [SerializeField] private AudioClip startSFX;
     [SerializeField] private AudioClip ToggleONSFX;
     [SerializeField] private AudioClip ToggleOFFSFX;
     [SerializeField] private AudioClip PauseSFX;
 
     [Header("Sound Settings")]
-    [SerializeField, Range(0f, 1f)] private float sfxVolume = 0.3f;
+    [SerializeField, Range(0f, 1f)] private float sfxVolume = 0.1f;
     [SerializeField, Range(0f, 1f)] private float musicVolume = 0.1f;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
@@ -133,11 +135,15 @@ public class SoundManager : MonoBehaviour
 
     public void PlayCloseButtonSFX() => PlaySFX(buttonCloseSFX);
 
+    public void PlayHoverSFX() => PlaySFX(hoverSFX);
+
     public void PlayToggleONSFX() => PlaySFX(ToggleONSFX);
 
     public void PlayToggleOFFSFX() => PlaySFX(ToggleOFFSFX);
 
     public void PlayPauseSFX() => PlaySFX(PauseSFX);
+
+    public void PlayStartSFX() => PlaySFX(startSFX);
 
     // Set music volume and save preference
     public void SetMusicVolume(float volume)
