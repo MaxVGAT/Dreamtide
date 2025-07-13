@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 09713b54fabbbd44aa0766a3adecf1bf
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - customCursor: {instanceID: 0}
+  - LobbySpawn: {fileID: 5853136122368825533, guid: 394c1868fb5408b4da8563367432c5a5, type: 3}
+  - CitySpawn: {fileID: 1506615683742966248, guid: cf9a5aa8262edc04aa9d6466b18f82ba, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
