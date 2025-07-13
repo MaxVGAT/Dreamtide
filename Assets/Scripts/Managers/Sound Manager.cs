@@ -24,8 +24,6 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip buttonCloseSFX;
     [SerializeField] public AudioClip hoverSFX;
     [SerializeField] private AudioClip startSFX;
-    [SerializeField] private AudioClip ToggleONSFX;
-    [SerializeField] private AudioClip ToggleOFFSFX;
     [SerializeField] private AudioClip PauseSFX;
 
     [Header("Sound Settings")]
@@ -136,10 +134,6 @@ public class SoundManager : MonoBehaviour
     public void PlayCloseButtonSFX() => PlaySFX(buttonCloseSFX);
 
     public void PlayHoverSFX() => PlaySFX(hoverSFX);
-
-    public void PlayToggleONSFX() => PlaySFX(ToggleONSFX);
-
-    public void PlayToggleOFFSFX() => PlaySFX(ToggleOFFSFX);
 
     public void PlayPauseSFX() => PlaySFX(PauseSFX);
 

@@ -37,6 +37,8 @@ public class ButtonHoverPulse : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         isHovering = true;
 
+        EventSystem.current.SetSelectedGameObject(gameObject);
+
         // Play hover SFX
         if (SFXSource != null)
         {
@@ -63,5 +65,8 @@ public class ButtonHoverPulse : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnDeselect(BaseEventData eventData)
     {
         isHovering = false;
+
+        PointerEventData pointerData = new PointerEventData(EventSystem.current);
+        ExecuteEvents.Execute(gameObject, pointerData, ExecuteEvents.pointerExitHandler);
     }
 }

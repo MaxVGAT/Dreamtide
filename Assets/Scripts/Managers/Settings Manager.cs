@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ShowHideSettings : MonoBehaviour
@@ -97,6 +98,7 @@ public class ShowHideSettings : MonoBehaviour
         creditsGroup.blocksRaycasts = true;
 
         mainMenuGroup.interactable = false;
+        settingsGroup.interactable = false;
     }
 
     public void HideCredits()
@@ -109,6 +111,7 @@ public class ShowHideSettings : MonoBehaviour
         creditsGroup.blocksRaycasts = false;
 
         mainMenuGroup.interactable = true;
+        settingsGroup.interactable = true;
     }
 
     public void ShowExit()
@@ -133,6 +136,26 @@ public class ShowHideSettings : MonoBehaviour
         exitGroup.blocksRaycasts = false;
 
         mainMenuGroup.interactable = true;
+    }
+
+    public void OnCloseWindow(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+
+        if (context.performed && settingsGroup.alpha > 0)
+        {
+            HideSettings();
+        }
+
+        if (context.performed && creditsGroup.alpha > 0)
+        {
+            HideCredits();
+        }
+
+        if (context.performed && exitGroup.alpha > 0)
+        {
+            HideExit();
+        }
     }
 
     // ----------------------------------------
