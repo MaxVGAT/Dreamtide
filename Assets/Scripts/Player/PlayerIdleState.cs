@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class PlayerIdleState : EntityState
 {
-    public PlayerIdleState(StateMachine stateMachine, string stateName) : base(stateMachine, stateName)
+    public PlayerIdleState(Player player, StateMachine stateMachine, string stateName) : base(player, stateMachine, stateName)
     {
 
     }
 
-    public override void Enter()
+    public override void Update()
     {
-        base.Enter();
+        base.Update();
+
+        if (Input.GetKeyDown(KeyCode.F))
+            stateMachine.ChangeState(player.moveState);
     }
 }
