@@ -6,28 +6,34 @@ using UnityEngine.InputSystem;
 public class ControllerMouseSwitch : MonoBehaviour
 {
     public GameObject firstSelected;
+    public InputActionReference closeWindow;
 
     void Start()
     {
-        //EventSystem.current.SetSelectedGameObject(firstSelected);
+        EventSystem.current.SetSelectedGameObject(firstSelected);
         Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
+
+        if (closeWindow != null)
+        {
+            closeWindow.action.Enable();
+            closeWindow.action.performed += OnCloseWindow;
+        }
     }
 
     private void Update()
     {
-        
+
     }
 
     private void OnInputActionChange(object obj, InputActionChange change)
     {
-        if(change == InputActionChange.ActionPerformed)
+        if (change == InputActionChange.ActionPerformed)
         {
             InputAction inputAction = (InputAction)obj;
             InputControl lastControl = inputAction.activeControl;
             InputDevice lastDevice = lastControl.device;
 
-             if(lastDevice.displayName == "Mouse")
+            if (lastDevice.displayName == "Mouse")
             {
                 Cursor.visible = true;
             }
@@ -41,18 +47,52 @@ public class ControllerMouseSwitch : MonoBehaviour
     private void OnEnable()
     {
         InputSystem.onActionChange += OnInputActionChange;
+        if (closeWindow != null)
+        {
+            closeWindow.action.Enable();
+            closeWindow.action.performed += OnCloseWindow;
+        }
     }
 
     private void OnDisable()
     {
         InputSystem.onActionChange -= OnInputActionChange;
+        if (closeWindow != null)
+        {
+            closeWindow.action.performed -= OnCloseWindow;
+            closeWindow.action.Disable();
+        }
     }
 
-    public void OnCancel(InputAction.CallbackContext context)
+    public void OnCloseWindow(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if (!context.performed) return;
+
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
-            if(Settings)
+            Debug.Log("Pressed escape");
+        }
+
+        if (ShowHideSettings.Instance != null)
+        {
+            if (ShowHideSettings.Instance.settingsGroup != null && ShowHideSettings.Instance.settingsGroup.alpha > 0)
+            {
+                ShowHideSettings.Instance.HideSettings();
+                SoundManager.Instance.PlayCloseButtonSFX();
+            }
+
+            if (ShowHideSettings.Instance.creditsGroup != null && ShowHideSettings.Instance.creditsGroup.alpha > 0)
+            {
+                ShowHideSettings.Instance.HideCredits();
+                SoundManager.Instance.PlayCloseButtonSFX();
+                ShowHideSettings.Instance.ShowSettings();
+            }
+
+            if (ShowHideSettings.Instance.exitGroup != null && ShowHideSettings.Instance.exitGroup.alpha > 0)
+            {
+                ShowHideSettings.Instance.HideExit();
+                SoundManager.Instance.PlayCloseButtonSFX();
+            }
         }
     }
 }

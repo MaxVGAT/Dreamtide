@@ -110,7 +110,6 @@ public class ShowHideSettings : MonoBehaviour
         creditsGroup.interactable = false;
         creditsGroup.blocksRaycasts = false;
 
-        mainMenuGroup.interactable = true;
         settingsGroup.interactable = true;
     }
 
@@ -136,26 +135,6 @@ public class ShowHideSettings : MonoBehaviour
         exitGroup.blocksRaycasts = false;
 
         mainMenuGroup.interactable = true;
-    }
-
-    public void OnCloseWindow(InputAction.CallbackContext context)
-    {
-        if (!context.performed) return;
-
-        if (context.performed && settingsGroup.alpha > 0)
-        {
-            HideSettings();
-        }
-
-        if (context.performed && creditsGroup.alpha > 0)
-        {
-            HideCredits();
-        }
-
-        if (context.performed && exitGroup.alpha > 0)
-        {
-            HideExit();
-        }
     }
 
     // ----------------------------------------
