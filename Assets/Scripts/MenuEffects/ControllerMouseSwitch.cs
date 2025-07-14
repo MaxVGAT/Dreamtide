@@ -6,11 +6,14 @@ using UnityEngine.InputSystem;
 public class ControllerMouseSwitch : MonoBehaviour
 {
     public GameObject firstSelected;
+    public GameObject settingsSelected;
+    public GameObject exitSelected;
     public InputActionReference closeWindow;
 
     void Start()
     {
-        EventSystem.current.SetSelectedGameObject(firstSelected);
+        SetSelectedOnMenu();
+
         Cursor.visible = true;
 
         if (closeWindow != null)
@@ -94,5 +97,21 @@ public class ControllerMouseSwitch : MonoBehaviour
                 SoundManager.Instance.PlayCloseButtonSFX();
             }
         }
+    }
+
+    public void SetSelectedOnMenu()
+    {
+        EventSystem.current.SetSelectedGameObject(firstSelected);
+    }
+
+    public void SetSelectedOnSettings()
+    {
+        Debug.Log("SetSelectedOnSettings called!");
+        EventSystem.current.SetSelectedGameObject(settingsSelected);
+    }
+
+    public void SetSelectedOnExit()
+    {
+        EventSystem.current.SetSelectedGameObject(exitSelected);
     }
 }

@@ -6,6 +6,8 @@ public class ShowHideSettings : MonoBehaviour
 {
 
     public static ShowHideSettings Instance { get; private set; }
+
+    ControllerMouseSwitch deviceSwitch;
     
     // ----------------------------------------
     // REFERENCES
@@ -16,9 +18,6 @@ public class ShowHideSettings : MonoBehaviour
     public CanvasGroup creditsGroup;
     public CanvasGroup exitGroup;
     public float fadeTime = 0.3f;
-
-    [Header("Volume")]
-    public Slider volumeSlider;
 
     // ----------------------------------------
     // UNITY EVENTS
@@ -34,6 +33,8 @@ public class ShowHideSettings : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        deviceSwitch = FindFirstObjectByType<ControllerMouseSwitch>();
     }
 
     private void Start()
@@ -74,6 +75,8 @@ public class ShowHideSettings : MonoBehaviour
         settingsGroup.blocksRaycasts = true;
 
         mainMenuGroup.interactable = false;
+
+        deviceSwitch.SetSelectedOnSettings();
     }
 
     public void HideSettings()
@@ -86,6 +89,8 @@ public class ShowHideSettings : MonoBehaviour
         settingsGroup.blocksRaycasts = false;
 
         mainMenuGroup.interactable = true;
+
+        deviceSwitch.SetSelectedOnMenu();
     }
 
     public void ShowCredits()
@@ -123,6 +128,8 @@ public class ShowHideSettings : MonoBehaviour
         exitGroup.blocksRaycasts = true;
 
         mainMenuGroup.interactable = false;
+
+        deviceSwitch.SetSelectedOnExit();
     }
 
     public void HideExit()
@@ -135,33 +142,8 @@ public class ShowHideSettings : MonoBehaviour
         exitGroup.blocksRaycasts = false;
 
         mainMenuGroup.interactable = true;
-    }
 
-    // ----------------------------------------
-    // VOLUME SETTINGS
-    // ----------------------------------------
-    public void SetVolume()
-    {
-        if (volumeSlider == null) return;
-
-        // Update global volume and save setting
-        AudioListener.volume = volumeSlider.value;
-        SaveVolume();
-    }
-
-    public void SaveVolume()
-    {
-        if (volumeSlider == null) return;
-
-        PlayerPrefs.SetFloat("soundVolume", volumeSlider.value);
-    }
-
-    public void LoadVolume()
-    {
-        if (volumeSlider == null) return;
-
-        // Load saved volume or default to 1
-        volumeSlider.value = PlayerPrefs.GetFloat("soundVolume", 1f);
+        deviceSwitch.SetSelectedOnMenu();
     }
 
     // ----------------------------------------

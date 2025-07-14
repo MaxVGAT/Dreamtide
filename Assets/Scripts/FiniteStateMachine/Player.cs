@@ -3,13 +3,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private StateMachine stateMachine;
-    private EntityState idleState;
+
+    private PlayerIdleState idleState;
 
     private void Awake()
     {
         stateMachine = new StateMachine();
 
-        idleState = new EntityState(stateMachine, "Idle State");
+        idleState = new PlayerIdleState(stateMachine, "idle");
     }
 
     private void Start()

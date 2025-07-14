@@ -7024,7 +7024,6 @@ MonoBehaviour:
   creditsGroup: {fileID: 564975173}
   exitGroup: {fileID: 1364581158}
   fadeTime: 0.3
-  volumeSlider: {fileID: 0}
 --- !u!1 &998891463
 GameObject:
   m_ObjectHideFlags: 0
@@ -8957,6 +8956,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstSelected: {fileID: 482212217}
+  settingsSelected: {fileID: 998891463}
+  exitSelected: {fileID: 1226255827}
   closeWindow: {fileID: -4428977360372289376, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!4 &1519386871
 Transform:
