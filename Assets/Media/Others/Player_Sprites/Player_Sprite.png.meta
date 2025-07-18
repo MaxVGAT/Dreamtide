@@ -1395,7 +1395,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 69
-        y: 397
+        y: 396
         width: 69
         height: 44
       alignment: 9
@@ -1438,8 +1438,8 @@ TextureImporter:
       name: Player_Sprite_45
       rect:
         serializedVersion: 2
-        x: 206
-        y: 395
+        x: 207
+        y: 396
         width: 69
         height: 44
       alignment: 9
@@ -1461,7 +1461,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 276
-        y: 397
+        y: 396
         width: 69
         height: 44
       alignment: 9
@@ -1505,7 +1505,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 353
+        y: 352
         width: 69
         height: 44
       alignment: 9
@@ -1772,8 +1772,8 @@ TextureImporter:
         y: 264
         width: 69
         height: 44
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.47, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1794,8 +1794,8 @@ TextureImporter:
         y: 264
         width: 69
         height: 44
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.47, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1816,8 +1816,8 @@ TextureImporter:
         y: 264
         width: 69
         height: 44
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.47, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

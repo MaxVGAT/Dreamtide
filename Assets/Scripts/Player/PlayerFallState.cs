@@ -11,9 +11,9 @@ public class PlayerFallState : PlayerAiredState
         base.Update();
 
         if (player.isGrounded)
-        {
             stateMachine.ChangeState(player.idleState);
-            Debug.Log("...");
-        }
+
+        if (player.isWallDetected)
+            stateMachine.ChangeState(player.wallSlideState);
     }
 }
