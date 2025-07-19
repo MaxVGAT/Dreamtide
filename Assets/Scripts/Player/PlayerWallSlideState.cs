@@ -10,9 +10,15 @@ public class PlayerWallSlideState : EntityState
     public override void Update()
     {
         base.Update();
+
+        
+
         HandleWallSlide();
 
-        if(player.isWallDetected == false)
+        if (inputActions.Player.Jump.WasPressedThisFrame())
+            stateMachine.ChangeState(player.wallJumpState);
+
+        if (player.isWallDetected == false)
             stateMachine.ChangeState(player.fallState);
 
         if (player.isGrounded)
