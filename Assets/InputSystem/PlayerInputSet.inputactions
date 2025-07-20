@@ -220,6 +220,17 @@
                 },
                 {
                     "name": "",
+                    "id": "0254aab4-cce9-4cab-aa6e-7950b876aab1",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "9a0ab584-6a45-411d-9e77-ec9d521298cd",
                     "path": "<Keyboard>/escape",
                     "interactions": "",

@@ -8,9 +8,11 @@ public abstract class EntityState
 
     protected Animator anim;
     protected Rigidbody2D rb;
-    protected PlayerInputSet inputActions;
+    protected PlayerInputSet input;
 
     protected float stateTimer;
+
+    protected bool triggerCalled;
 
     public EntityState(Player player, StateMachine stateMachine, string animBoolName)
     {
@@ -20,12 +22,13 @@ public abstract class EntityState
 
         anim = player.anim;
         rb = player.rb;
-        inputActions = player.inputActions;
+        input = player.input;
     }
 
     public virtual void Enter()
     {
         anim.SetBool(animBoolName, true);
+        triggerCalled = false;
     }
 
     public virtual void Update()
@@ -36,14 +39,21 @@ public abstract class EntityState
 
         if (player.moveInput.x != 0)
         {
-            if (inputActions.Player.Dash.WasPressedThisFrame() && CanDash())
+            if (input.Player.Dash.WasPressedThisFrame() && CanDash())
                 stateMachine.ChangeState(player.dashState);
         }
+
+        
     }
 
     public virtual void Exit()
     {
         anim.SetBool(animBoolName, false);
+    }
+
+    public void CallAnimationTrigger()
+    {
+        triggerCalled = true;
     }
 
     private bool CanDash()
@@ -56,4 +66,5 @@ public abstract class EntityState
 
         return true;
     }
+
 }

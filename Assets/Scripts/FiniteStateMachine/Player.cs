@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 
     private StateMachine stateMachine;
 
-    public PlayerInputSet inputActions { get; private set; }
+    public PlayerInputSet input { get; private set; }
 
     public PlayerIdleState idleState { get; private set; }
     public PlayerMoveState moveState {  get; private set; }
@@ -18,7 +18,11 @@ public class Player : MonoBehaviour
     public PlayerWallSlideState wallSlideState { get; private set; }
     public PlayerWallJumpState wallJumpState { get; private set; }
     public PlayerDashState dashState { get; private set; }
+    public PlayerBasicAttackState basicAttackState { get; private set; }
 
+    [Header("Attack details")]
+    public Vector2 attackVelocity;
+    public float attackVelocityDuration = 0.1f;
 
     [Header("Movement details")]
     public float moveSpeed;
@@ -47,7 +51,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         stateMachine = new StateMachine();
-        inputActions = new PlayerInputSet();
+        input = new PlayerInputSet();
 
         idleState = new PlayerIdleState(this, stateMachine, "idle");
         moveState = new PlayerMoveState(this, stateMachine, "move");
@@ -56,19 +60,20 @@ public class Player : MonoBehaviour
         wallSlideState = new PlayerWallSlideState(this, stateMachine, "wallSlide");
         wallJumpState = new PlayerWallJumpState(this, stateMachine, "jumpFall");
         dashState = new PlayerDashState(this, stateMachine, "dash");
+        basicAttackState = new PlayerBasicAttackState(this, stateMachine, "basicAttack");
     }
 
     private void OnEnable()
     {
-        inputActions.Enable();
+        input.Enable();
 
-        inputActions.Player.Movement.performed += context => moveInput = context.ReadValue<Vector2>();
-        inputActions.Player.Movement.canceled += context => moveInput = Vector2.zero;
+        input.Player.Movement.performed += context => moveInput = context.ReadValue<Vector2>();
+        input.Player.Movement.canceled += context => moveInput = Vector2.zero;
     }
 
     private void OnDisable()
     {
-        inputActions.Disable();
+        input.Disable();
     }
 
     private void Start()
@@ -80,6 +85,11 @@ public class Player : MonoBehaviour
     {
         HandleCollisionDetection();
         stateMachine.UpdateActiveState();
+    }
+
+    public void CallAnimationTrigger()
+    {
+        stateMachine.currentState.CallAnimationTrigger();
     }
 
     public void SetVelocity(float xVelocity, float yVelocity)

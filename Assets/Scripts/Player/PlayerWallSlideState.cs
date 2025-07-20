@@ -15,7 +15,7 @@ public class PlayerWallSlideState : EntityState
 
         HandleWallSlide();
 
-        if (inputActions.Player.Jump.WasPressedThisFrame())
+        if (input.Player.Jump.WasPressedThisFrame())
             stateMachine.ChangeState(player.wallJumpState);
 
         if (player.isWallDetected == false)
