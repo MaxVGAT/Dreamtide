@@ -154,7 +154,7 @@ MonoBehaviour:
   - {x: 3, y: 1.5}
   - {x: 1, y: 2}
   - {x: 1.5, y: 3}
-  jumpAttackVelocity: {x: 2, y: -5}
+  jumpAttackVelocity: {x: 6, y: -5}
   attackVelocityDuration: 0.1
   comboAttackWindow: 1
   moveSpeed: 10
@@ -250,8 +250,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0268237, y: -0.25800002}
-  m_Size: {x: 0.86364734, y: 2.1}
+  m_Offset: {x: 0.02000001, y: -0.24653769}
+  m_Size: {x: 0.86364734, y: 1.43}
   m_Direction: 0
 --- !u!1 &526946642
 GameObject:
@@ -647,7 +647,7 @@ Transform:
   m_GameObject: {fileID: 1351292927}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalPosition: {x: 1.1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -719,7 +719,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -947963489, guid: ecc37a78d9a50e34ea8bc9482e9c18c3, type: 3}
+  m_Sprite: {fileID: -356594966, guid: 3bf776d222e8fea458806ac11a506528, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
