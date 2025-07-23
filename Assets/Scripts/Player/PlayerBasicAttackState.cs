@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PlayerBasicAttackState : EntityState
+public class PlayerBasicAttackState : PlayerState
 {
 
     private float attackVelocityTimer;

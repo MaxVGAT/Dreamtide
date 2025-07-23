@@ -53,6 +53,9 @@ TagManager:
   - name: Decor
     uniqueID: 2439552263
     locked: 0
+  - name: Enemy
+    uniqueID: 3706769625
+    locked: 0
   - name: Player
     uniqueID: 3876397981
     locked: 0

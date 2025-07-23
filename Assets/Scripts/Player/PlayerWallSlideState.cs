@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerWallSlideState : EntityState
+public class PlayerWallSlideState : PlayerState
 {
 
     public PlayerWallSlideState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)

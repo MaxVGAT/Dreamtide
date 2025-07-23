@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class playerJumpAttackState : EntityState
+public class playerJumpAttackState : PlayerState
 {
 
     private bool touchedGround;
