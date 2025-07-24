@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerGroundedState
 {
-    public PlayerIdleState(Player player, StateMachine stateMachine, string stateName) : base(player, stateMachine, stateName)
+    public PlayerIdleState(Entity_Player player, StateMachine stateMachine, string stateName) : base(player, stateMachine, stateName)
     {
 
     }

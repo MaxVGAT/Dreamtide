@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Troll : Enemy
+public class Enemy_Troll : Entity_Enemy
 {
     protected override void Awake()
     {
@@ -8,6 +8,7 @@ public class Troll : Enemy
 
         idleState = new EnemyIdleState(this, stateMachine, "idle");
         moveState = new EnemyMoveState(this, stateMachine, "move");
+        attackState = new EnemyAttackState(this, stateMachine, "attack");
     }
 
     protected override void Start()
@@ -16,4 +17,6 @@ public class Troll : Enemy
 
         stateMachine.Initialize(idleState);
     }
+
+    
 }

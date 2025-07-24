@@ -13,7 +13,7 @@ public class PlayerBasicAttackState : PlayerState
     private int comboLimit = 3;
     private int attackDirection;
 
-    public PlayerBasicAttackState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerBasicAttackState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
         if (comboLimit != player.attackVelocity.Length)
             comboLimit = player.attackVelocity.Length;
@@ -80,7 +80,6 @@ public class PlayerBasicAttackState : PlayerState
 
     private void ApplyAttackVelocity()
     {
-
         Vector2 attackVelocity = player.attackVelocity[comboIndex - 1];
 
         attackVelocityTimer = player.attackVelocityDuration;

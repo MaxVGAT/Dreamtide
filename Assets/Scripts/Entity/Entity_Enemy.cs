@@ -1,9 +1,11 @@
 using UnityEngine;
 
-public class Enemy : Entity
+public class Entity_Enemy : Entity
 {
     public EnemyIdleState idleState;
     public EnemyMoveState moveState;
+    public EnemyAttackState attackState;
+    public EnemyBattleState battleState;
 
     [Header("Movement details")]
     public float moveSpeed = 1.4f;

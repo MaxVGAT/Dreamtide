@@ -3,9 +3,9 @@ using UnityEngine;
 public class EnemyState : EntityState
 {
 
-    protected Enemy enemy;
+    protected Entity_Enemy enemy;
 
-    public EnemyState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(stateMachine, animBoolName)
+    public EnemyState(Entity_Enemy enemy, StateMachine stateMachine, string animBoolName) : base(stateMachine, animBoolName)
     {
         this.enemy = enemy;
 
@@ -16,6 +16,9 @@ public class EnemyState : EntityState
     public override void Update()
     {
         base.Update();
+
+        if (Input.GetKeyDown(KeyCode.E))
+            stateMachine.ChangeState(enemy.attackState);
 
         anim.SetFloat("moveAnimSpeedMultiplier", enemy.moveAnimSpeedMultiplier);
     }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerAiredState : PlayerState
 {
-    public PlayerAiredState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerAiredState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

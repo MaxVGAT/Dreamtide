@@ -5,7 +5,7 @@ public class playerJumpAttackState : PlayerState
 
     private bool touchedGround;
 
-    public playerJumpAttackState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public playerJumpAttackState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

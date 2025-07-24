@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyIdleState : EnemyState
 {
-    public EnemyIdleState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
+    public EnemyIdleState(Entity_Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
     }
 
@@ -19,7 +19,6 @@ public class EnemyIdleState : EnemyState
 
         if (stateTimer < 0)
             stateMachine.ChangeState(enemy.moveState);
-        
     }
 
 }
