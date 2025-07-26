@@ -210,8 +210,8 @@ MonoBehaviour:
   groundCheck: {fileID: 7745232504372768339}
   upperWallCheck: {fileID: 5214534299404897934}
   lowerWallCheck: {fileID: 0}
-  visual: {fileID: 0}
-  visualOffset: {x: 0, y: 0, z: 0}
+  battleMoveSpeed: 2.5
+  attackDistance: 2
   moveSpeed: 1.4
   idleTime: 2
   moveAnimSpeedMultiplier: 1

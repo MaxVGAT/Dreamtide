@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Entity_Enemy : Entity
@@ -7,6 +8,10 @@ public class Entity_Enemy : Entity
     public EnemyMoveState moveState;
     public EnemyAttackState attackState;
     public EnemyBattleState battleState;
+
+    [Header("Battle details")]
+    public float battleMoveSpeed = 3;
+    public float attackDistance = 1;
 
     [Header("Movement details")]
     public float moveSpeed = 1.4f;
@@ -20,7 +25,13 @@ public class Entity_Enemy : Entity
 
     public RaycastHit2D PlayerDetection()
     {
-        return Physics2D.Raycast(playerCheck.position, Vector2.right * facingDirection, playerCheckDistance, whatIsPlayer);
+        RaycastHit2D hit =
+            Physics2D.Raycast(playerCheck.position, Vector2.right * facingDirection, playerCheckDistance, whatIsPlayer | whatIsGround);
+
+        if (hit.collider == null || hit.collider.gameObject.layer != LayerMask.NameToLayer("Player"))
+            return default;
+
+        return hit;
     }
 
     protected override void OnDrawGizmos()
@@ -29,6 +40,8 @@ public class Entity_Enemy : Entity
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(playerCheck.position, new Vector3(playerCheck.position.x + (facingDirection * playerCheckDistance), playerCheck.position.y));
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(playerCheck.position, new Vector3(playerCheck.position.x + (facingDirection * attackDistance), playerCheck.position.y));
     }
 
 }
