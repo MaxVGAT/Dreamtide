@@ -15,12 +15,4 @@ public class Entity_AnimationTriggers : MonoBehaviour
     {
         entity.CallAnimationTrigger();
     }
-
-    public void OnLeapEnd()
-    {
-        // For example, move the monster forward by a fixed distance
-        float leapDistance = 2f;
-        Vector2 direction = new Vector2(entityEnemy.facingDirection, 0);
-        entityEnemy.transform.position += (Vector3)(direction * leapDistance);
-    }
 }
