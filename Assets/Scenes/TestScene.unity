@@ -178,13 +178,13 @@ GameObject:
   - component: {fileID: 476782408}
   - component: {fileID: 476782410}
   - component: {fileID: 476782411}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &476782408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,11 +197,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e960d9494265cd408053036761a3786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheckDistance: 0.5
-  wallCheckDistance: 0.5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
+  groundCheckDistance: 0.45
+  wallCheckDistance: 0.3
   groundCheck: {fileID: 1076398696}
   upperWallCheck: {fileID: 526946643}
   lowerWallCheck: {fileID: 690336688}
@@ -228,7 +228,7 @@ Transform:
   m_GameObject: {fileID: 476782407}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.635, y: -0.574, z: 0}
+  m_LocalPosition: {x: 0.58, y: -3.89, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -513,7 +513,7 @@ GameObject:
   - component: {fileID: 799178435}
   - component: {fileID: 799178434}
   - component: {fileID: 799178433}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PigAssassin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -613,18 +613,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b33147c8262bb1f4682147f4161573bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheckDistance: 0.3
-  wallCheckDistance: 0.4
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
+  groundCheckDistance: 0.3
+  wallCheckDistance: 0.4
   groundCheck: {fileID: 1094950993}
   upperWallCheck: {fileID: 799178432}
   lowerWallCheck: {fileID: 0}
-  battleState: {fileID: 0}
+  visual: {fileID: 0}
+  visualOffset: {x: 0, y: 0, z: 0}
   moveSpeed: 1.4
   idleTime: 2
   moveAnimSpeedMultiplier: 1
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  playerCheck: {fileID: 799178432}
+  playerCheckDistance: 5
 --- !u!1 &1076398695
 GameObject:
   m_ObjectHideFlags: 0
@@ -2556,71 +2562,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!1001 &1745729579
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6083828296542259031, guid: f017514452643bd4d8a2817fa376c97b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.87604
-      objectReference: {fileID: 0}
-    - target: {fileID: 6083828296542259031, guid: f017514452643bd4d8a2817fa376c97b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.80263
-      objectReference: {fileID: 0}
-    - target: {fileID: 6083828296542259031, guid: f017514452643bd4d8a2817fa376c97b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6083828296542259031, guid: f017514452643bd4d8a2817fa376c97b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6083828296542259031, guid: f017514452643bd4d8a2817fa376c97b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6083828296542259031, guid: f017514452643bd4d8a2817fa376c97b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6083828296542259031, guid: f017514452643bd4d8a2817fa376c97b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6083828296542259031, guid: f017514452643bd4d8a2817fa376c97b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6083828296542259031, guid: f017514452643bd4d8a2817fa376c97b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6083828296542259031, guid: f017514452643bd4d8a2817fa376c97b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6855482778734545026, guid: f017514452643bd4d8a2817fa376c97b, type: 3}
-      propertyPath: m_Name
-      value: Enemy_Troll
-      objectReference: {fileID: 0}
-    - target: {fileID: 6855482778734545026, guid: f017514452643bd4d8a2817fa376c97b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7653061241281639610, guid: f017514452643bd4d8a2817fa376c97b, type: 3}
-      propertyPath: lowerWallCheck
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f017514452643bd4d8a2817fa376c97b, type: 3}
 --- !u!1 &1959205861
 GameObject:
   m_ObjectHideFlags: 0
@@ -3122,5 +3063,4 @@ SceneRoots:
   - {fileID: 675226258}
   - {fileID: 476782409}
   - {fileID: 295357187}
-  - {fileID: 1745729579}
   - {fileID: 799178432}

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyMoveState : EnemyState
+public class EnemyMoveState : EnemyGroundState
 {
     public EnemyMoveState(Entity_Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
