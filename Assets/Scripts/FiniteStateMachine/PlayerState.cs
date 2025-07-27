@@ -28,6 +28,13 @@ public abstract class PlayerState : EntityState
 
     }
 
+    public override void UpdateAnimationParameters()
+    {
+        base.UpdateAnimationParameters();
+
+        anim.SetFloat("yVelocity", rb.linearVelocity.y);
+    }
+
 private bool CanDash()
     {
         if (player.isWallDetected)

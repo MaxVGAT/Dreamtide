@@ -212,8 +212,11 @@ MonoBehaviour:
   lowerWallCheck: {fileID: 0}
   battleMoveSpeed: 2.5
   attackDistance: 2
+  battleTimeDuration: 3
+  minRetreatDistance: 1
+  retreatVelocity: {x: 7, y: 4}
   moveSpeed: 1.4
-  idleTime: 2
+  idleTime: 1.5
   moveAnimSpeedMultiplier: 1
   whatIsPlayer:
     serializedVersion: 2

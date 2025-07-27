@@ -10,9 +10,9 @@ public class EnemyGroundState : EnemyState
     {
         base.Update();
 
-        Debug.Log("PlayerDetection: " + enemy.PlayerDetection());
+        Debug.Log("PlayerDetection: " + enemy.PlayerIsDetected());
 
-        if (enemy.PlayerDetection() == true)
+        if (enemy.PlayerIsDetected())
             stateMachine.ChangeState(enemy.battleState);
         
     }

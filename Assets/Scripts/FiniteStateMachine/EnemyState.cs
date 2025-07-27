@@ -8,18 +8,17 @@ public class EnemyState : EntityState
     public EnemyState(Entity_Enemy enemy, StateMachine stateMachine, string animBoolName) : base(stateMachine, animBoolName)
     {
         this.enemy = enemy;
-
         rb = enemy.rb;
         anim = enemy.anim;
     }
 
-    public override void Update()
+    public override void UpdateAnimationParameters()
     {
-        base.Update();
+        base.UpdateAnimationParameters();
 
-        if (Input.GetKeyDown(KeyCode.E))
-            stateMachine.ChangeState(enemy.attackState);
+        float battleAnimSpeedMultiplier = enemy.battleMoveSpeed / enemy.moveSpeed;
 
+        anim.SetFloat("battleAnimSpeedMultiplier", enemy.moveAnimSpeedMultiplier);
         anim.SetFloat("moveAnimSpeedMultiplier", enemy.moveAnimSpeedMultiplier);
         anim.SetFloat("xVelocity", rb.linearVelocity.x);
     }
