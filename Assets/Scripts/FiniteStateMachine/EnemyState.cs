@@ -12,6 +12,7 @@ public class EnemyState : EntityState
         anim = enemy.anim;
     }
 
+    //Accelerates the enemy speed in the battle state
     public override void UpdateAnimationParameters()
     {
         base.UpdateAnimationParameters();

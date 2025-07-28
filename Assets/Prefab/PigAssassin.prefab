@@ -352,8 +352,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcda8ebf277b4d44dabe237a08c4175e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHp: 0
   maxHp: 100
   isDead: 0
+  knockbackPower: {x: 5, y: 3}
+  heavyKnockbackPower: {x: 7, y: 7}
+  knockbackDuration: 0.2
+  heavyKnockbackDuration: 0.4
+  heavyDamageThreshold: 0.3
 --- !u!114 &2254614268702257582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,4 +373,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onDamageMaterial: {fileID: 2100000, guid: 7c40572a2c35797418a37607223f918a, type: 2}
-  onDamageVfxDuration: 0.2
+  onDamageVfxDuration: 0.15

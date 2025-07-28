@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbdda37ced21bc741bbd3629b2b0af0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 5
   targetCheck: {fileID: 2088617211}
   targetCheckRadius: 1.1
   whatIsTarget:
@@ -336,8 +336,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5f69d76adf2db45ba45e7cadb6b9f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHp: 0
   maxHp: 100
   isDead: 0
+  knockbackPower: {x: 1.5, y: 2.5}
+  heavyKnockbackPower: {x: 7, y: 7}
+  knockbackDuration: 0.5
+  heavyKnockbackDuration: 0.6
+  heavyDamageThreshold: 0.3
 --- !u!114 &476782414
 MonoBehaviour:
   m_ObjectHideFlags: 0

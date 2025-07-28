@@ -17,6 +17,7 @@ public abstract class EntityState
         this.animBoolName = animBoolName;
     }
 
+    //Activates related animation when entering a state
     public virtual void Enter()
     {
         anim.SetBool(animBoolName, true);
@@ -29,11 +30,13 @@ public abstract class EntityState
         UpdateAnimationParameters();
     }
 
+    //Deactivates animation and state
     public virtual void Exit()
     {
         anim.SetBool(animBoolName, false);
     }
 
+    //Called by animation event
     public void AnimationTrigger()
     {
         triggerCalled = true;
