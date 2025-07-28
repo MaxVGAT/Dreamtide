@@ -179,7 +179,7 @@ Transform:
   m_GameObject: {fileID: 6797775906255061209}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.02, y: -0.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -198,6 +198,8 @@ GameObject:
   - component: {fileID: 9119322556811204883}
   - component: {fileID: 4846748094602450862}
   - component: {fileID: 8776262220084980379}
+  - component: {fileID: 7220162087079203924}
+  - component: {fileID: 2254614268702257582}
   m_Layer: 8
   m_Name: PigAssassin
   m_TagString: Untagged
@@ -268,9 +270,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbdda37ced21bc741bbd3629b2b0af0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetCollider: []
+  damage: 10
   targetCheck: {fileID: 2861140375456197927}
-  targetCheckRadius: 0.7
+  targetCheckRadius: 0.6
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
@@ -338,3 +340,31 @@ CapsuleCollider2D:
   m_Offset: {x: 0.02061911, y: -0.42108476}
   m_Size: {x: 0.5870582, y: 1.1457063}
   m_Direction: 0
+--- !u!114 &7220162087079203924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7158245371963173002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcda8ebf277b4d44dabe237a08c4175e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 100
+  isDead: 0
+--- !u!114 &2254614268702257582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7158245371963173002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa96deb5bc14e94d9fe855b6acc30b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDamageMaterial: {fileID: 2100000, guid: 7c40572a2c35797418a37607223f918a, type: 2}
+  onDamageVfxDuration: 0.2

@@ -3,6 +3,8 @@ using UnityEngine;
 public class Entity_CombatComponent : MonoBehaviour
 {
 
+    public float damage = 10;
+
     [Header("Target detection")]
     [SerializeField] private Transform targetCheck;
     [SerializeField] private float targetCheckRadius = 1;
@@ -11,7 +13,12 @@ public class Entity_CombatComponent : MonoBehaviour
     public void PerformAttack()
     {
         foreach (var target in GetDetectedColliders())
-            Debug.Log("Attacking" + target.name);
+        {
+            Entity_HealthComponent targetHealth = target.GetComponent<Entity_HealthComponent>();
+
+            targetHealth?.TakeDamage(damage, transform);
+            Debug.Log(target.name + ": lost " + damage + "HP!");
+        }
     }
 
     private Collider2D[] GetDetectedColliders()
@@ -21,6 +28,7 @@ public class Entity_CombatComponent : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(targetCheck.position, targetCheckRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(targetCheck.position, targetCheckRadius);
     }
 }

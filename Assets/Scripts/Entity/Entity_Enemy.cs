@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Entity_Enemy : Entity
 {
-
     public EnemyIdleState idleState;
     public EnemyMoveState moveState;
     public EnemyAttackState attackState;
@@ -25,7 +24,22 @@ public class Entity_Enemy : Entity
     [SerializeField] private LayerMask whatIsPlayer;
     [SerializeField] private Transform playerCheck;
     [SerializeField] private float playerCheckDistance = 10f;
+    public Transform player { get; private set; }
 
+    public void TryEnterBattleState(Transform player)
+    {
+        if (stateMachine.currentState == battleState || stateMachine.currentState == attackState) return;
+        this.player = player;
+        stateMachine.ChangeState(battleState);
+    }
+
+    public Transform GetPlayerReference()
+    {
+        if (player == null)
+            player = PlayerIsDetected().transform;
+
+        return player;
+    }
     public RaycastHit2D PlayerIsDetected()
     {
         RaycastHit2D hit =
