@@ -154,6 +154,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9925ddba115c204f9166427124649c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6797775906255061209
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2861140375456197927}
+  m_Layer: 8
+  m_Name: targetCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2861140375456197927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6797775906255061209}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5214534299404897934}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7158245371963173002
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,6 +195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5214534299404897934}
   - component: {fileID: 1369827980519507736}
+  - component: {fileID: 9119322556811204883}
   - component: {fileID: 4846748094602450862}
   - component: {fileID: 8776262220084980379}
   m_Layer: 8
@@ -188,6 +220,7 @@ Transform:
   m_Children:
   - {fileID: 3990100709260744566}
   - {fileID: 7745232504372768339}
+  - {fileID: 2861140375456197927}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1369827980519507736
@@ -213,7 +246,7 @@ MonoBehaviour:
   battleMoveSpeed: 2.5
   attackDistance: 2
   battleTimeDuration: 3
-  minRetreatDistance: 1
+  minRetreatDistance: 1.5
   retreatVelocity: {x: 7, y: 4}
   moveSpeed: 1.4
   idleTime: 1.5
@@ -223,6 +256,24 @@ MonoBehaviour:
     m_Bits: 128
   playerCheck: {fileID: 5214534299404897934}
   playerCheckDistance: 5
+--- !u!114 &9119322556811204883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7158245371963173002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbdda37ced21bc741bbd3629b2b0af0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetCollider: []
+  targetCheck: {fileID: 2861140375456197927}
+  targetCheckRadius: 0.7
+  whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!50 &4846748094602450862
 Rigidbody2D:
   serializedVersion: 5
