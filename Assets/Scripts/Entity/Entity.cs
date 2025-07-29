@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Timers;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -27,6 +28,8 @@ public class Entity : MonoBehaviour
     private bool isKnocked;
     private Coroutine knockbackCo;
 
+    private Coroutine despawnCo;
+
     protected virtual void Awake()
     {
         anim = GetComponentInChildren<Animator>();
@@ -37,7 +40,7 @@ public class Entity : MonoBehaviour
 
     protected virtual void Start()
     {
-        
+       
     }
 
     protected virtual void Update()
@@ -49,6 +52,54 @@ public class Entity : MonoBehaviour
     public void CurrentStateAnimationTrigger()
     {
         stateMachine.currentState.AnimationTrigger();
+    }
+
+    public virtual void EntityDeath()
+    {
+
+    }
+
+    public void DespawnOnDeath(float duration)
+    {
+        if (despawnCo != null)
+            StopCoroutine(despawnCo);
+
+        despawnCo = StartCoroutine(DespawnOnDeathCo(2f));
+    }
+
+    private IEnumerator DespawnOnDeathCo(float duration) // Destroy the game object when dead with a fade out
+    {
+        float timer = 0f;
+
+        SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
+
+        // Debug: Print what sprites were found
+        Debug.Log($"Found {sprites.Length} SpriteRenderers:");
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            Debug.Log($"  {i}: {sprites[i].gameObject.name} (Parent: {sprites[i].transform.parent?.name})");
+        }
+
+        Color[] originalColors = new Color[sprites.Length]; // Save the colors to change alpha without changing RGB
+        for (int i = 0; i < sprites.Length; i++)
+            originalColors[i] = sprites[i].color;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float alphaFade = Mathf.Lerp(1f, 0f, timer / duration); // From visible to fully invisible before destroying
+
+            for (int i = 0; i < sprites.Length; i++)
+            {
+                Color baseColor = originalColors[i]; //Save base color
+                baseColor.a = alphaFade;             // Apply fade lerp to alpha
+                sprites[i].color = baseColor;        //Apply new color
+            }
+
+            yield return null;
+        }
+
+        Destroy(gameObject);
     }
 
     public void ReceiveKnockback(Vector2 knockback, float duration)

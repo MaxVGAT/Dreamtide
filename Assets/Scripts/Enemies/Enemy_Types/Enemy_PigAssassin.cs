@@ -10,6 +10,7 @@ public class Enemy_PigAssassin : Entity_Enemy
         moveState = new EnemyMoveState(this, stateMachine, "move");
         attackState = new EnemyAttackState(this, stateMachine, "attack");
         battleState = new EnemyBattleState(this, stateMachine, "battle");
+        deadState = new EnemyDeadState(this, stateMachine, "death");
     }
 
     protected override void Start()
@@ -18,6 +19,4 @@ public class Enemy_PigAssassin : Entity_Enemy
 
         stateMachine.Initialize(idleState);
     }
-
-
 }
