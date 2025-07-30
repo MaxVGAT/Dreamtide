@@ -73,13 +73,6 @@ public class Entity : MonoBehaviour
 
         SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
 
-        // Debug: Print what sprites were found
-        Debug.Log($"Found {sprites.Length} SpriteRenderers:");
-        for (int i = 0; i < sprites.Length; i++)
-        {
-            Debug.Log($"  {i}: {sprites[i].gameObject.name} (Parent: {sprites[i].transform.parent?.name})");
-        }
-
         Color[] originalColors = new Color[sprites.Length]; // Save the colors to change alpha without changing RGB
         for (int i = 0; i < sprites.Length; i++)
             originalColors[i] = sprites[i].color;
@@ -91,8 +84,13 @@ public class Entity : MonoBehaviour
 
             for (int i = 0; i < sprites.Length; i++)
             {
-                Color baseColor = originalColors[i]; //Save base color
+                Color baseColor = originalColors[i]; //Save base color*
+
+                baseColor.r = 1f;
+                baseColor.g = 1f;
+                baseColor.b = 0f;
                 baseColor.a = alphaFade;             // Apply fade lerp to alpha
+
                 sprites[i].color = baseColor;        //Apply new color
             }
 

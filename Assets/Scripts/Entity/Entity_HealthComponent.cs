@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Entity_HealthComponent : MonoBehaviour
+public class Entity_HealthComponent : MonoBehaviour, IDamageable
 {
 
     private Entity_VFX entityVfx;
