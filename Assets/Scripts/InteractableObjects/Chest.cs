@@ -10,7 +10,7 @@ public class Chest : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage, Transform damageDealer)
     {
-        vfx.PlayOnDamageVfx();
+        vfx.HandleHitColor(Entity_VFX.FlashType.White);
         anim.SetBool("openChest", true);
         rb.linearVelocity = new Vector2(0, 3);
 

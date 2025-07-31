@@ -25,6 +25,8 @@ public class Entity : MonoBehaviour
     public bool isWallDetected { get; private set; }
     public bool isGrounded { get; private set; }
 
+    public virtual bool isBlocking => false;
+
     private bool isKnocked;
     private Coroutine knockbackCo;
 

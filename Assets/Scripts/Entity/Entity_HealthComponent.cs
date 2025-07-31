@@ -30,14 +30,23 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
     //Applies damage and triggers hit VFX. Ignore if dead.
     public virtual void TakeDamage(float damage, Transform damageDealer)
     {
-        if(isDead) return;
+        if (isDead) return;
+
 
         Vector2 knockback = CalculateKnockback(damage, damageDealer);
         float duration = CalculateKnockbackDuration(damage);
 
-        entity?.ReceiveKnockback(knockback, duration);
+        if (entity.isBlocking)
+        {
+            entityVfx.HandleHitColor(Entity_VFX.FlashType.Yellow);
+            damage /= 2;
+        }
+        else
+        {
+            entityVfx.HandleHitColor(Entity_VFX.FlashType.Red);
+            entity?.ReceiveKnockback(knockback, duration);
+        }
 
-        entityVfx?.PlayOnDamageVfx();
         ReduceHP(damage);
     }
 
@@ -46,6 +55,7 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
     {
         currentHp -= damage;
 
+        Debug.Log("Took " + damage + "damages");
         if (currentHp <= 0)
             Die();
     }

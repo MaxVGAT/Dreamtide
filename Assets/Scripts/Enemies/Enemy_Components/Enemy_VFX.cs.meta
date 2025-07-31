@@ -1,13 +1,14 @@
 fileFormatVersion: 2
-guid: efa96deb5bc14e94d9fe855b6acc30b9
+guid: 70b0ccd6bd78ebc44b2808d93effe903
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - interactableHitMat: {fileID: 2100000, guid: 7c4b71561153d47459d63d2c057baa53, type: 2}
-  - redHitMat: {fileID: 2100000, guid: 7c40572a2c35797418a37607223f918a, type: 2}
+  - interactableHitMat: {instanceID: 0}
+  - redHitMat: {instanceID: 0}
   - yellowHitBlockMat: {instanceID: 0}
   - greenHitPerfectBlockMat: {instanceID: 0}
+  - attackAlert: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

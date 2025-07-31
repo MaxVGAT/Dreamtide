@@ -356,7 +356,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa96deb5bc14e94d9fe855b6acc30b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onDamageMaterial: {fileID: 2100000, guid: 7c40572a2c35797418a37607223f918a, type: 2}
+  interactableHitMat: {fileID: 2100000, guid: 7c4b71561153d47459d63d2c057baa53, type: 2}
+  redHitMat: {fileID: 2100000, guid: 7c40572a2c35797418a37607223f918a, type: 2}
+  yellowHitBlockMat: {fileID: 2100000, guid: ed5c77e987c2abf45b9a1aba8f6808c8, type: 2}
+  greenHitPerfectBlockMat: {fileID: 2100000, guid: ed099f02b5ced2f4a81354ba8aa99fcd, type: 2}
   onDamageVfxDuration: 0.2
 --- !u!1 &526946642
 GameObject:
@@ -690,7 +693,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa96deb5bc14e94d9fe855b6acc30b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onDamageMaterial: {fileID: 2100000, guid: 7c4b71561153d47459d63d2c057baa53, type: 2}
+  interactableHitMat: {fileID: 2100000, guid: 7c4b71561153d47459d63d2c057baa53, type: 2}
+  redHitMat: {fileID: 2100000, guid: 7c40572a2c35797418a37607223f918a, type: 2}
+  yellowHitBlockMat: {fileID: 2100000, guid: ed5c77e987c2abf45b9a1aba8f6808c8, type: 2}
+  greenHitPerfectBlockMat: {fileID: 2100000, guid: ed099f02b5ced2f4a81354ba8aa99fcd, type: 2}
   onDamageVfxDuration: 0.2
 --- !u!1 &1076398695
 GameObject:
@@ -3155,10 +3161,6 @@ PrefabInstance:
     - target: {fileID: 7158245371963173002, guid: 9c7944f23c3410b4fbcab35eaac8844c, type: 3}
       propertyPath: m_Name
       value: PigAssassin
-      objectReference: {fileID: 0}
-    - target: {fileID: 8063328358245824006, guid: 9c7944f23c3410b4fbcab35eaac8844c, type: 3}
-      propertyPath: m_FlipX
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

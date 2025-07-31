@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: playerJumpAttackStart
+  m_Name: playerJumpAttackPerformed
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,13 +21,19 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 509063282, guid: 3bf776d222e8fea458806ac11a506528, type: 3}
+      value: {fileID: -1450894213, guid: 3bf776d222e8fea458806ac11a506528, type: 3}
+    - time: 0.14285715
+      value: {fileID: -704412336, guid: 3bf776d222e8fea458806ac11a506528, type: 3}
+    - time: 0.2857143
+      value: {fileID: 174466654, guid: 3bf776d222e8fea458806ac11a506528, type: 3}
+    - time: 0.42857143
+      value: {fileID: 51700388, guid: 3bf776d222e8fea458806ac11a506528, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
-  m_SampleRate: 10
+  m_SampleRate: 7
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -44,13 +50,16 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 509063282, guid: 3bf776d222e8fea458806ac11a506528, type: 3}
+    - {fileID: -1450894213, guid: 3bf776d222e8fea458806ac11a506528, type: 3}
+    - {fileID: -704412336, guid: 3bf776d222e8fea458806ac11a506528, type: 3}
+    - {fileID: 174466654, guid: 3bf776d222e8fea458806ac11a506528, type: 3}
+    - {fileID: 51700388, guid: 3bf776d222e8fea458806ac11a506528, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.1
+    m_StopTime: 0.5714286
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -69,4 +78,18 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: AttackTrigger
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.42857143
+    functionName: CurrentStateTrigger
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

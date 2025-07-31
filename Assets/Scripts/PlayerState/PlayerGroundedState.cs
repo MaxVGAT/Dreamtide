@@ -19,5 +19,8 @@ public class PlayerGroundedState : PlayerState
 
         if (input.Player.Attack.WasPerformedThisFrame())
             stateMachine.ChangeState(player.basicAttackState);
+
+        if (input.Player.Block.WasPerformedThisFrame())
+            stateMachine.ChangeState(player.blockState);
     }
 }

@@ -19,6 +19,7 @@ public class Entity_Player : Entity
     public PlayerBasicAttackState basicAttackState { get; private set; }
     public playerJumpAttackState jumpAttackState { get; private set; }
     public PlayerDeadState deadState { get; private set; }
+    public PlayerBlockState blockState { get; private set; }
 
     [Header("Attack details")]
     public Vector2[] attackVelocity;
@@ -54,6 +55,7 @@ public class Entity_Player : Entity
         basicAttackState = new PlayerBasicAttackState(this, stateMachine, "basicAttack");
         jumpAttackState = new playerJumpAttackState(this, stateMachine, "jumpAttack");
         deadState = new PlayerDeadState(this, stateMachine, "death");
+        blockState = new PlayerBlockState(this, stateMachine, "block");
     }
 
     protected override void Start()
@@ -61,6 +63,8 @@ public class Entity_Player : Entity
         base.Start();
         stateMachine.Initialize(idleState);
     }
+
+    public override bool isBlocking => stateMachine.currentState is PlayerBlockState;
 
     public override void EntityDeath()
     {
