@@ -8,6 +8,7 @@ public class Entity_Enemy : Entity
     public EnemyAttackState attackState;
     public EnemyBattleState battleState;
     public EnemyDeadState deadState;
+    public EnemyStunnedState stunnedState;
 
     [Header("Battle details")]
     public float battleMoveSpeed = 4;
@@ -21,12 +22,19 @@ public class Entity_Enemy : Entity
     public float idleTime = 2f;
     [Range(0, 2)] public float moveAnimSpeedMultiplier = 1f;
 
+    [Header("Stun details")]
+    public float stunnedDuration = 1f;
+    public Vector2 stunnedVelocity = new Vector2(8, 4);
+    protected bool canBeStunned;
+
     [Header("Player detection")]
     [SerializeField] private LayerMask whatIsPlayer;
     [SerializeField] private Transform playerCheck;
     [SerializeField] private float playerCheckDistance = 10f;
     public Transform player { get; private set; }
 
+
+    public void EnableCounterAttack(bool enable) => canBeStunned = true;
     public override void EntityDeath()
     {
         base.EntityDeath();

@@ -253,6 +253,8 @@ MonoBehaviour:
   moveSpeed: 1.4
   idleTime: 1.5
   moveAnimSpeedMultiplier: 1
+  stunnedDuration: 1
+  stunnedVelocity: {x: 8, y: 4}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128

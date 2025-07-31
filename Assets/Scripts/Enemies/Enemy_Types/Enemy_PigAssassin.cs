@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class Enemy_PigAssassin : Entity_Enemy
+public class Enemy_PigAssassin : Entity_Enemy, ICounterable
 {
+
     protected override void Awake()
     {
         base.Awake();
@@ -11,6 +12,7 @@ public class Enemy_PigAssassin : Entity_Enemy
         attackState = new EnemyAttackState(this, stateMachine, "attack");
         battleState = new EnemyBattleState(this, stateMachine, "battle");
         deadState = new EnemyDeadState(this, stateMachine, "death");
+        stunnedState = new EnemyStunnedState(this, stateMachine, "stunned");
     }
 
     protected override void Start()
@@ -18,5 +20,21 @@ public class Enemy_PigAssassin : Entity_Enemy
         base.Start();
 
         stateMachine.Initialize(idleState);
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (Input.GetKeyDown(KeyCode.H))
+            HandleCounterAttack();
+    }
+
+    public void HandleCounterAttack()
+    {
+        if (canBeStunned == false)
+            return;
+
+        stateMachine.ChangeState(stunnedState);
     }
 }

@@ -84,7 +84,7 @@ public class Entity : MonoBehaviour
 
             for (int i = 0; i < sprites.Length; i++)
             {
-                Color baseColor = originalColors[i]; //Save base color*
+                Color baseColor = originalColors[i]; //Save base color
 
                 baseColor.r = 1f;
                 baseColor.g = 1f;
