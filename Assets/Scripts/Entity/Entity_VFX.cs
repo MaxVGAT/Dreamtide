@@ -18,6 +18,7 @@ public class Entity_VFX : MonoBehaviour
     private Coroutine onDamageVfxCoroutine;
 
     [Header("On Doing Damage VFX")]
+    [SerializeField] private Color hitVfxColor = Color.white;
     [SerializeField] private GameObject hitVfx;
 
     private void Awake()
@@ -28,7 +29,8 @@ public class Entity_VFX : MonoBehaviour
 
     public void CreateOnHitVFX(Transform target)
     {
-        Instantiate(hitVfx, target.position, Quaternion.identity);
+        GameObject vfx = Instantiate(hitVfx, target.position, Quaternion.identity);
+        vfx.GetComponentInChildren<SpriteRenderer>().color = hitVfxColor;
     }
 
     public void HandleHitColor(FlashType type)

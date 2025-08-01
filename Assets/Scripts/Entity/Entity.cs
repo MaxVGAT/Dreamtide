@@ -89,7 +89,7 @@ public class Entity : MonoBehaviour
                 Color baseColor = originalColors[i]; //Save base color
 
                 baseColor.r = 1f;
-                baseColor.g = 1f;
+                baseColor.g = 0f;
                 baseColor.b = 0f;
                 baseColor.a = alphaFade;             // Apply fade lerp to alpha
 
