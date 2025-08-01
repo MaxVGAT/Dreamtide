@@ -145,6 +145,15 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Counter"",
+                    ""type"": ""Button"",
+                    ""id"": ""dd0be2d2-b0c4-4762-a6f7-3267a7f832d4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -367,6 +376,28 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""action"": ""Block"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd6fec2e-0ca4-4a44-9df2-c27a4aa483a5"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Counter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5dab1b9c-d62d-4630-b53c-f86796b62900"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Counter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -414,6 +445,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
+        m_Player_Counter = m_Player.FindAction("Counter", throwIfNotFound: true);
     }
 
     ~@PlayerInputSet()
@@ -500,6 +532,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Block;
+    private readonly InputAction m_Player_Counter;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -535,6 +568,10 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Block".
         /// </summary>
         public InputAction @Block => m_Wrapper.m_Player_Block;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Counter".
+        /// </summary>
+        public InputAction @Counter => m_Wrapper.m_Player_Counter;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -579,6 +616,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @Block.started += instance.OnBlock;
             @Block.performed += instance.OnBlock;
             @Block.canceled += instance.OnBlock;
+            @Counter.started += instance.OnCounter;
+            @Counter.performed += instance.OnCounter;
+            @Counter.canceled += instance.OnCounter;
         }
 
         /// <summary>
@@ -608,6 +648,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @Block.started -= instance.OnBlock;
             @Block.performed -= instance.OnBlock;
             @Block.canceled -= instance.OnBlock;
+            @Counter.started -= instance.OnCounter;
+            @Counter.performed -= instance.OnCounter;
+            @Counter.canceled -= instance.OnCounter;
         }
 
         /// <summary>
@@ -716,5 +759,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnBlock(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Counter" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCounter(InputAction.CallbackContext context);
     }
 }

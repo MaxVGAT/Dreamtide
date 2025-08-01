@@ -59,6 +59,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Counter",
+                    "type": "Button",
+                    "id": "dd0be2d2-b0c4-4762-a6f7-3267a7f832d4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -279,6 +288,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dd6fec2e-0ca4-4a44-9df2-c27a4aa483a5",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Counter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5dab1b9c-d62d-4630-b53c-f86796b62900",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Counter",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

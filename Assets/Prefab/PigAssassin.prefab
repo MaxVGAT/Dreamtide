@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2351164070094630183}
   - component: {fileID: 898920272723869582}
   m_Layer: 8
-  m_Name: GameObject
+  m_Name: attackAlertVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: -588197671
   m_SortingLayer: 5
   m_SortingOrder: -1
-  m_Sprite: {fileID: 2982296621558941318, guid: 24256bd822f0c074bb3ddc01e85ff52a, type: 3}
+  m_Sprite: {fileID: 7131830947536714243, guid: b23bf7339668c584fbf55e3caee6bfa8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -384,7 +384,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 4
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: dca470f1f80e5bc4ebe7bb02cd15d70e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -469,4 +469,5 @@ MonoBehaviour:
   yellowHitBlockMat: {fileID: 2100000, guid: ed5c77e987c2abf45b9a1aba8f6808c8, type: 2}
   greenHitPerfectBlockMat: {fileID: 2100000, guid: ed099f02b5ced2f4a81354ba8aa99fcd, type: 2}
   onDamageVfxDuration: 0.2
+  hitVfx: {fileID: 8180107373983343457, guid: d5c8fdf91d1469d4a95fdcb04d11fb80, type: 3}
   attackAlert: {fileID: 975297263222268675}

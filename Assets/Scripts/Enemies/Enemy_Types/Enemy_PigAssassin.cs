@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Enemy_PigAssassin : Entity_Enemy, ICounterable
 {
+    public bool CanBeCountered { get => canBeStunned; }
 
     protected override void Awake()
     {
@@ -22,17 +23,9 @@ public class Enemy_PigAssassin : Entity_Enemy, ICounterable
         stateMachine.Initialize(idleState);
     }
 
-    protected override void Update()
-    {
-        base.Update();
-
-        if (Input.GetKeyDown(KeyCode.H))
-            HandleCounterAttack();
-    }
-
     public void HandleCounterAttack()
     {
-        if (canBeStunned == false)
+        if (CanBeCountered == false)
             return;
 
         stateMachine.ChangeState(stunnedState);

@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 476782409}
   - component: {fileID: 476782408}
-  - component: {fileID: 476782412}
+  - component: {fileID: 476782415}
   - component: {fileID: 476782413}
   - component: {fileID: 476782410}
   - component: {fileID: 476782411}
@@ -306,24 +306,6 @@ CapsuleCollider2D:
   m_Offset: {x: -0.05, y: -0.245}
   m_Size: {x: 0.64446974, y: 1.495}
   m_Direction: 0
---- !u!114 &476782412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 476782407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbdda37ced21bc741bbd3629b2b0af0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 50
-  targetCheck: {fileID: 2088617211}
-  targetCheckRadius: 1.1
-  whatIsTarget:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!114 &476782413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,6 +343,26 @@ MonoBehaviour:
   yellowHitBlockMat: {fileID: 2100000, guid: ed5c77e987c2abf45b9a1aba8f6808c8, type: 2}
   greenHitPerfectBlockMat: {fileID: 2100000, guid: ed099f02b5ced2f4a81354ba8aa99fcd, type: 2}
   onDamageVfxDuration: 0.2
+  hitVfx: {fileID: 8180107373983343457, guid: d5c8fdf91d1469d4a95fdcb04d11fb80, type: 3}
+--- !u!114 &476782415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476782407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 242d8314f0e9d444c8b05ee73ce078de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  targetCheck: {fileID: 2088617211}
+  targetCheckRadius: 1
+  whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 256
+  counterRecovery: 0.25
 --- !u!1 &526946642
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,6 +700,7 @@ MonoBehaviour:
   yellowHitBlockMat: {fileID: 2100000, guid: ed5c77e987c2abf45b9a1aba8f6808c8, type: 2}
   greenHitPerfectBlockMat: {fileID: 2100000, guid: ed099f02b5ced2f4a81354ba8aa99fcd, type: 2}
   onDamageVfxDuration: 0.2
+  hitVfx: {fileID: 0}
 --- !u!1 &1076398695
 GameObject:
   m_ObjectHideFlags: 0

@@ -40,6 +40,7 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
         {
             entityVfx.HandleHitColor(Entity_VFX.FlashType.Yellow);
             damage /= 2;
+            
         }
         else
         {

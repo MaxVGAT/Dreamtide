@@ -8,7 +8,7 @@ public class Entity_VFX : MonoBehaviour
 
     public enum FlashType { Red, Yellow, Green, White }
 
-    [Header("On Damage VFX")]
+    [Header("On Taking Damage VFX")]
     [SerializeField] private Material interactableHitMat;
     [SerializeField] private Material redHitMat;
     [SerializeField] private Material yellowHitBlockMat;
@@ -17,10 +17,18 @@ public class Entity_VFX : MonoBehaviour
     private Material originalMaterial;
     private Coroutine onDamageVfxCoroutine;
 
+    [Header("On Doing Damage VFX")]
+    [SerializeField] private GameObject hitVfx;
+
     private void Awake()
     {
         sr = GetComponentInChildren<SpriteRenderer>();
         originalMaterial = sr.material;
+    }
+
+    public void CreateOnHitVFX(Transform target)
+    {
+        Instantiate(hitVfx, target.position, Quaternion.identity);
     }
 
     public void HandleHitColor(FlashType type)
