@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Entity_HealthComponent : MonoBehaviour, IDamageable
 {
-
+    private Slider healthBar;
     private Entity_VFX entityVfx;
     private Entity entity;
 
@@ -23,8 +24,10 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
     {
         entityVfx = GetComponent<Entity_VFX>();
         entity = GetComponent<Entity>();
+        healthBar = GetComponentInChildren<Slider>();
 
         currentHp = maxHp;
+        UpdateHealthBar();
     }
 
     //Applies damage and triggers hit VFX. Ignore if dead.
@@ -55,10 +58,19 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
     protected virtual void ReduceHP(float damage)
     {
         currentHp -= damage;
+        UpdateHealthBar();
 
         Debug.Log("Took " + damage + "damages");
         if (currentHp <= 0)
             Die();
+    }
+
+    private void UpdateHealthBar()
+    {
+        if (healthBar == null)
+            return;
+
+        healthBar.value = currentHp / maxHp;
     }
 
     // Death logic - Override for custom behavior(animation, drops...)

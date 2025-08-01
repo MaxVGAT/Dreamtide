@@ -39,6 +39,8 @@ public class Entity_VFX : MonoBehaviour
 
         if(type == FlashType.Yellow)
             mat = yellowHitBlockMat;
+        if (type == FlashType.White)
+            mat = interactableHitMat;
         //else if (type == FlashType.Green)
         //    mat = greenHitPerfectBlockMat;
 
