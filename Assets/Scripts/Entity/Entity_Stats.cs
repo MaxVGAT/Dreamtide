@@ -15,4 +15,17 @@ public class Entity_Stats : MonoBehaviour
 
         return baseHp + bonusHP;
     }
+
+    public float GetEvasion()
+    {
+        float baseEvasion = defense.evasion.GetValue();
+        float bonusEvasion = major.agility.GetValue() * 0.5f; // each agility point gives +0.5% evasion;
+
+        float totalEvasion = baseEvasion + bonusEvasion;
+        float evasionCap = 25f; // Evasion will be capped at 50%;
+
+        float finalEvasion = Mathf.Clamp(totalEvasion, 0, evasionCap);
+
+        return finalEvasion;
+    }
 }

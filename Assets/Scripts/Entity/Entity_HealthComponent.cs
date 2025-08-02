@@ -1,4 +1,4 @@
-using UnityEngine;
+ using UnityEngine;
 using UnityEngine.UI;
 
 public class Entity_HealthComponent : MonoBehaviour, IDamageable
@@ -32,10 +32,13 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
     }
 
     //Applies damage and triggers hit VFX. Ignore if dead.
-    public virtual void TakeDamage(float damage, Transform damageDealer)
+    public virtual bool TakeDamage(float damage, Transform damageDealer)
     {
-        if (isDead) return;
+        if (isDead)
+            return false;
 
+        if (AttackAvoided())
+            return false;
 
         Vector2 knockback = CalculateKnockback(damage, damageDealer);
         float duration = CalculateKnockbackDuration(damage);
@@ -44,7 +47,6 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
         {
             entityVfx.HandleHitColor(Entity_VFX.FlashType.Yellow);
             damage /= 2;
-            
         }
         else
         {
@@ -53,7 +55,10 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
         }
 
         ReduceHP(damage);
+        return true;
     }
+
+    private bool AttackAvoided() => Random.Range(0, 100) < stats.GetEvasion();
 
     // Reduces health and checks for death.
     protected virtual void ReduceHP(float damage)

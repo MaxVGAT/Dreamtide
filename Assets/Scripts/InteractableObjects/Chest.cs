@@ -8,7 +8,7 @@ public class Chest : MonoBehaviour, IDamageable
     private Entity_VFX vfx => GetComponent<Entity_VFX>();
 
 
-    public void TakeDamage(float damage, Transform damageDealer)
+    public bool TakeDamage(float damage, Transform damageDealer)
     {
         vfx.HandleHitColor(Entity_VFX.FlashType.White);
         anim.SetBool("openChest", true);
@@ -17,6 +17,8 @@ public class Chest : MonoBehaviour, IDamageable
         rb.angularVelocity = Random.Range(-200, 200);
 
         ChangeRBToKinematic();
+
+        return true;
     }
 
     private void ChangeRBToKinematic()
