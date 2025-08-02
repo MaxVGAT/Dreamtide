@@ -6,9 +6,9 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
     private Slider healthBar;
     private Entity_VFX entityVfx;
     private Entity entity;
+    private Entity_Stats stats;
 
     [SerializeField] protected float currentHp;
-    [SerializeField] protected float maxHp = 100;
     [SerializeField] protected bool isDead;
 
     [Header("On Damage Knockback")]
@@ -25,8 +25,9 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
         entityVfx = GetComponent<Entity_VFX>();
         entity = GetComponent<Entity>();
         healthBar = GetComponentInChildren<Slider>();
+        stats = GetComponent<Entity_Stats>();
 
-        currentHp = maxHp;
+        currentHp = stats.GetMaxHealth();
         UpdateHealthBar();
     }
 
@@ -70,7 +71,7 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
         if (healthBar == null)
             return;
 
-        healthBar.value = currentHp / maxHp;
+        healthBar.value = currentHp / stats.GetMaxHealth();
     }
 
     // Death logic - Override for custom behavior(animation, drops...)
@@ -93,5 +94,5 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
 
     private float CalculateKnockbackDuration(float damage) => IsHeavyDamage(damage) ? heavyKnockbackDuration : knockbackDuration;
 
-    private bool IsHeavyDamage(float damage) => damage / maxHp > heavyDamageThreshold;
+    private bool IsHeavyDamage(float damage) => damage / stats.GetMaxHealth() > heavyDamageThreshold;
 }
