@@ -8,10 +8,11 @@ public class Player_Combat : Entity_CombatComponent
     [SerializeField] private float counterRecovery = 1f;
 
 
-    public bool CounterAttackPerformed()
+    public bool CounterAttackPerformed(out bool isCrit)
     {
         bool hasPerformedCounter = false;
         counteredTargetTransform = null;
+        isCrit = false;
 
         foreach(var target in GetDetectedColliders())
         {
@@ -22,9 +23,12 @@ public class Player_Combat : Entity_CombatComponent
 
             if(counterable.CanBeCountered)
             {
+                counteredTargetTransform = target.transform;
+
+                float damage = Stats.GetPhysicalDamage(out isCrit);
                 counterable.HandleCounterAttack();
                 hasPerformedCounter = true;
-                counteredTargetTransform = target.transform;
+                break;
             }
         }
         return hasPerformedCounter;

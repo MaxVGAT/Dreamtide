@@ -15,14 +15,15 @@ public class PlayerCounterAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
-
+         
         stateTimer = combat.GetCounterRecovery();
-        counteredSomething = combat.CounterAttackPerformed();
+        bool isCrit;
+        counteredSomething = combat.CounterAttackPerformed(out isCrit);
 
         anim.SetBool("counterAttackPerformed", counteredSomething);
 
         if(counteredSomething && combat.counteredTargetTransform != null)
-            vfx.CreateOnHitVFX(combat.counteredTargetTransform);
+            vfx.CreateOnHitVFX(combat.counteredTargetTransform, isCrit);
     }
 
     public override void Update()

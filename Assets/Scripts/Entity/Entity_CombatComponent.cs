@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class Entity_CombatComponent : MonoBehaviour
 {
+    private Entity_Stats stats;
+    protected Entity_Stats Stats => stats;
+    
     private Entity_VFX vfx;
-    public float damage = 10;
 
     [Header("Target detection")]
     [SerializeField] private Transform targetCheck;
@@ -13,6 +15,7 @@ public class Entity_CombatComponent : MonoBehaviour
     private void Awake()
     {
         vfx = GetComponent<Entity_VFX>();
+        stats = GetComponent<Entity_Stats>();
     }
 
     public void PerformAttack()
@@ -24,10 +27,11 @@ public class Entity_CombatComponent : MonoBehaviour
             if (damageable == null)
                 continue; // skip target, go next
 
+            float damage = stats.GetPhysicalDamage(out bool isCrit);
             bool targetGotHit = damageable.TakeDamage(damage, transform);
 
             if(targetGotHit)
-                vfx.CreateOnHitVFX(target.transform);
+                vfx.CreateOnHitVFX(target.transform, isCrit);
         }
     }
 
