@@ -40,13 +40,19 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
         if (AttackAvoided())
             return false;
 
-        Vector2 knockback = CalculateKnockback(damage, damageDealer);
-        float duration = CalculateKnockbackDuration(damage);
+        Entity_Stats attackerStats = damageDealer.GetComponent<Entity_Stats>();
+        float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;
+
+        float mitigation = stats.GetArmorMitigation(armorReduction);
+        float finalDamage = damage * (1 - mitigation);
+
+        Vector2 knockback = CalculateKnockback(finalDamage, damageDealer);
+        float duration = CalculateKnockbackDuration(finalDamage);
 
         if (entity.isBlocking)
         {
             entityVfx.HandleHitColor(Entity_VFX.FlashType.Yellow);
-            damage /= 2;
+            finalDamage /= 2;
         }
         else
         {
@@ -54,7 +60,7 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
             entity?.ReceiveKnockback(knockback, duration);
         }
 
-        ReduceHP(damage);
+        ReduceHP(finalDamage);
         return true;
     }
 

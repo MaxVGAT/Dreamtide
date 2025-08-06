@@ -9,6 +9,7 @@ public class Stats_OffenseGroup
     public Stats damage;
     public Stats critPower;
     public Stats critChance;
+    public Stats armorReduction;
 
 
     //Elemental damages

@@ -14,5 +14,6 @@ public class UI_MiniHealthBar : MonoBehaviour
     {
         entity.OnFlipped -= HandleMiniHealthBarFlip; // Unsubscribe
     }
+
     private void HandleMiniHealthBarFlip() => transform.rotation = Quaternion.identity; // Keeps enemies mini health bar at default
 }
