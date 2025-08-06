@@ -587,13 +587,9 @@ MonoBehaviour:
     critPower:
       baseValue: 0
     critChance:
-<<<<<<< HEAD
       baseValue: 60
     armorReduction:
       baseValue: 0
-=======
-      baseValue: 10
->>>>>>> ba87de9f070feb811692029f01d3a621597ab0c9
     fireDamage:
       baseValue: 0
     iceDamage:
