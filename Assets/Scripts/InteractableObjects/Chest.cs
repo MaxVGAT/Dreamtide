@@ -8,7 +8,7 @@ public class Chest : MonoBehaviour, IDamageable
     private Entity_VFX vfx => GetComponent<Entity_VFX>();
 
 
-    public bool TakeDamage(float damage, Transform damageDealer)
+    public bool TakeDamage(float damage, float elementalDamage, Transform damageDealer)
     {
         vfx.HandleHitColor(Entity_VFX.FlashType.White);
         anim.SetBool("openChest", true);

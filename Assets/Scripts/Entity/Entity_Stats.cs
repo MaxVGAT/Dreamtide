@@ -14,18 +14,46 @@ public class Entity_Stats : MonoBehaviour
         float totalBaseDamage = baseDamage + bonusDamage;
 
         float baseCritChance = offense.critChance.GetValue();
-        float bonusCritChance = major.agility.GetValue() * 0.3f; // each agility point gives 0.3% bonus crit chance
+        float bonusCritChance = major.agility.GetValue() * 0.3f; // +0.3% crit chance per AGI
         float critChance = baseCritChance + bonusCritChance;
 
         float baseCritPower = offense.critPower.GetValue();
-        float bonusCritPower = major.strength.GetValue() * 1; // each strength point gives 1% crit power
+        float bonusCritPower = major.strength.GetValue() * 1; // +1% crit power per STR
 
         float critPower = (baseCritPower + bonusCritPower) / 100; // Crit power as multiplier (eg. 150 / 100 = 1.5 - multiplier)
 
         isCrit = Random.Range(0, 100) < critChance;
-        float finalDamage = isCrit ? totalBaseDamage * critPower : totalBaseDamage;
+        float finalPhysicalDamage = isCrit ? totalBaseDamage * critPower : totalBaseDamage;
 
-        return finalDamage;
+        return finalPhysicalDamage;
+    }
+
+    public float GetElementalDamage()
+    {
+        float fireDamage = offense.fireDamage.GetValue();
+        float iceDamage = offense.iceDamage.GetValue();
+        float lightningDamage = offense.lightningDamage.GetValue();
+
+        float bonusElementalDamage = major.intelligence.GetValue(); // +1 per INT
+
+        float highestDamage = fireDamage;
+
+        if(iceDamage > highestDamage)
+            highestDamage = iceDamage;
+        else if(lightningDamage > highestDamage)
+            highestDamage = lightningDamage;
+
+        if (highestDamage <= 0)
+            return 0;
+
+        float bonusFire = (fireDamage == highestDamage) ? 0 : fireDamage * 0.5f; // Deal 50% bonus damage if not highest damage
+        float bonusIce = (iceDamage == highestDamage) ? 0 : iceDamage * 0.5f;
+        float bonusLightning = (lightningDamage == highestDamage) ? 0 : lightningDamage * 0.5f;
+
+        float weakerElementsDamage = bonusFire + bonusIce + bonusLightning;
+        float finalElementalDamage = highestDamage + + weakerElementsDamage + bonusElementalDamage;
+
+        return finalElementalDamage;
     }
 
     public float GetMaxHealth()

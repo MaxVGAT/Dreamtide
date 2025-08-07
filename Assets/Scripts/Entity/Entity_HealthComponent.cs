@@ -32,7 +32,7 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
     }
 
     //Applies damage and triggers hit VFX. Ignore if dead.
-    public virtual bool TakeDamage(float damage, Transform damageDealer)
+    public virtual bool TakeDamage(float damage, float elementalDamage, Transform damageDealer)
     {
         if (isDead)
             return false;
@@ -72,7 +72,6 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
         currentHp -= damage;
         UpdateHealthBar();
 
-        Debug.Log("Took " + damage + "damages");
         if (currentHp <= 0)
             Die();
     }
