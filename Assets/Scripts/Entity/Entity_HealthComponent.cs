@@ -32,7 +32,7 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
     }
 
     //Applies damage and triggers hit VFX. Ignore if dead.
-    public virtual bool TakeDamage(float damage, float elementalDamage, Transform damageDealer)
+    public virtual bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageDealer)
     {
         if (isDead)
             return false;
@@ -42,10 +42,26 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
 
         Entity_Stats attackerStats = damageDealer.GetComponent<Entity_Stats>();
         float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;
+        float physicalDamageTaken, elementalDamageTaken;
 
+        ApplyPhysAndElemRes(damage, elementalDamage, element, armorReduction, out physicalDamageTaken, out elementalDamageTaken);
+
+        TakeKnockback(damageDealer, physicalDamageTaken);
+        ReduceHP(physicalDamageTaken + elementalDamageTaken);
+
+        return true;
+    }
+
+    private void ApplyPhysAndElemRes(float damage, float elementalDamage, ElementType element, float armorReduction, out float physicalDamageTaken, out float elementalDamageTaken)
+    {
         float mitigation = stats.GetArmorMitigation(armorReduction);
-        float finalDamage = damage * (1 - mitigation);
+        physicalDamageTaken = damage * (1 - mitigation);
+        float resistance = stats.GetElementalResistance(element);
+        elementalDamageTaken = elementalDamage * (1 - resistance);
+    }
 
+    private float TakeKnockback(Transform damageDealer, float finalDamage)
+    {
         Vector2 knockback = CalculateKnockback(finalDamage, damageDealer);
         float duration = CalculateKnockbackDuration(finalDamage);
 
@@ -55,13 +71,9 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
             finalDamage /= 2;
         }
         else
-        {
-            entityVfx.HandleHitColor(Entity_VFX.FlashType.Red);
             entity?.ReceiveKnockback(knockback, duration);
-        }
 
-        ReduceHP(finalDamage);
-        return true;
+        return finalDamage;
     }
 
     private bool AttackAvoided() => Random.Range(0, 100) < stats.GetEvasion();
@@ -69,6 +81,7 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
     // Reduces health and checks for death.
     protected virtual void ReduceHP(float damage)
     {
+        entityVfx.HandleHitColor(Entity_VFX.FlashType.Red);
         currentHp -= damage;
         UpdateHealthBar();
 

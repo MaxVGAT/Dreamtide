@@ -1,16 +1,20 @@
 using UnityEngine;
 
+
+public enum ElementType { None, Fire, Ice, Lightning}
+
 public class Entity_Stats : MonoBehaviour
 {
     public Stats maxHealth;
     public Stats_MajorStats major;
     public Stats_OffenseGroup offense;
     public Stats_DefenseGroup defense;
+    public ElementType elementType;
 
     public float GetPhysicalDamage(out bool isCrit)
     {
         float baseDamage = offense.damage.GetValue();
-        float bonusDamage = major.strength.GetValue();
+        float bonusDamage = major.strength.GetValue(); // +1 bonus dmg per STR
         float totalBaseDamage = baseDamage + bonusDamage;
 
         float baseCritChance = offense.critChance.GetValue();
@@ -28,7 +32,7 @@ public class Entity_Stats : MonoBehaviour
         return finalPhysicalDamage;
     }
 
-    public float GetElementalDamage()
+    public float GetElementalDamage(out ElementType element)
     {
         float fireDamage = offense.fireDamage.GetValue();
         float iceDamage = offense.iceDamage.GetValue();
@@ -37,14 +41,25 @@ public class Entity_Stats : MonoBehaviour
         float bonusElementalDamage = major.intelligence.GetValue(); // +1 per INT
 
         float highestDamage = fireDamage;
+        element = ElementType.Fire;
 
-        if(iceDamage > highestDamage)
+        if (iceDamage > highestDamage)
+        {
             highestDamage = iceDamage;
-        else if(lightningDamage > highestDamage)
+            element = ElementType.Ice;
+        }
+
+        if (lightningDamage > highestDamage)
+        {
             highestDamage = lightningDamage;
+            element = ElementType.Lightning;
+        }
 
         if (highestDamage <= 0)
+        {
+            element = ElementType.None;
             return 0;
+        }
 
         float bonusFire = (fireDamage == highestDamage) ? 0 : fireDamage * 0.5f; // Deal 50% bonus damage if not highest damage
         float bonusIce = (iceDamage == highestDamage) ? 0 : iceDamage * 0.5f;
@@ -54,6 +69,32 @@ public class Entity_Stats : MonoBehaviour
         float finalElementalDamage = highestDamage + + weakerElementsDamage + bonusElementalDamage;
 
         return finalElementalDamage;
+    }
+
+    public float GetElementalResistance(ElementType element)
+    {
+        float baseResistance = 0;
+        float bonusResistance = major.intelligence.GetValue() * 0.5f; // Gives 0.5% of elemental resistance per INT
+
+        switch (element)
+        {
+            case ElementType.Fire:
+                baseResistance = defense.fireRes.GetValue();
+                break;
+            case ElementType.Ice:
+                baseResistance = defense.iceRes.GetValue();
+                break;
+            case ElementType.Lightning:
+                baseResistance = defense.lightningRes.GetValue();
+                break;
+        }
+
+        float resistance = baseResistance + bonusResistance;
+        float resistanceCap = 75f;
+        float finalResistance = Mathf.Clamp(resistance, 0, resistanceCap) / 100;
+
+        return finalResistance;
+        
     }
 
     public float GetMaxHealth()
