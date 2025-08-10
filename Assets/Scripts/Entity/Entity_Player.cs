@@ -68,6 +68,42 @@ public class Entity_Player : Entity
 
     public override bool isBlocking => stateMachine.currentState is PlayerBlockState;
 
+    protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
+    {
+        float originalMoveSpeed = moveSpeed;
+        float originalJumpForce = jumpForce;
+        float originalAnimSpeed = anim.speed;
+        Vector2 originalWallJump = wallJumpDir;
+        Vector2 originalJumpAttack = jumpAttackVelocity;
+        Vector2[] originalAttackVelocity = attackVelocity;
+
+        float speedMultiplier = 1 - slowMultiplier;
+
+        moveSpeed = moveSpeed * speedMultiplier;
+        jumpForce = jumpForce * speedMultiplier;
+        anim.speed = anim.speed * speedMultiplier;
+        wallJumpDir = wallJumpDir * speedMultiplier;
+        jumpAttackVelocity = jumpAttackVelocity * speedMultiplier;
+
+        for(int i = 0; i < attackVelocity.Length; i++)
+        {
+            attackVelocity[i] = attackVelocity[i] * speedMultiplier;
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed = originalMoveSpeed;
+        jumpForce = originalJumpForce;
+        anim.speed = originalAnimSpeed;
+        wallJumpDir = originalWallJump;
+        jumpAttackVelocity = originalJumpAttack;
+
+        for(int i = 0; i < attackVelocity.Length; i++)
+        {
+            attackVelocity[i] = originalAttackVelocity[i];
+        }
+    }   
+
     public override void EntityDeath()
     {
         base.EntityDeath();
@@ -76,7 +112,7 @@ public class Entity_Player : Entity
         stateMachine.ChangeState(deadState);
     }
 
-    public void EnterAttackStateWithDelay()
+public void EnterAttackStateWithDelay()
     {
         if (queuedAttackCo != null)
             StopCoroutine(queuedAttackCo);

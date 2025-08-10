@@ -375,6 +375,7 @@ GameObject:
   - component: {fileID: 476782411}
   - component: {fileID: 476782414}
   - component: {fileID: 476782416}
+  - component: {fileID: 476782417}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -537,9 +538,12 @@ MonoBehaviour:
   yellowHitBlockMat: {fileID: 2100000, guid: ed5c77e987c2abf45b9a1aba8f6808c8, type: 2}
   greenHitPerfectBlockMat: {fileID: 2100000, guid: ed099f02b5ced2f4a81354ba8aa99fcd, type: 2}
   onDamageVfxDuration: 0.2
-  hitVfxColor: {r: 1, g: 0.9490196, b: 0.20392157, a: 1}
+  hitVfxColor: {r: 1, g: 1, b: 1, a: 1}
   hitVfx: {fileID: 8180107373983343457, guid: d5c8fdf91d1469d4a95fdcb04d11fb80, type: 3}
   critHitVfx: {fileID: 2932540793665141418, guid: c85a78c8ddd1aaa48969029749e053f3, type: 3}
+  chillVfx: {r: 0, g: 0.6806977, b: 1, a: 1}
+  burnVfx: {r: 1, g: 0, b: 0, a: 1}
+  stunVfx: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &476782415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,6 +561,8 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256
+  defaultDuration: 3
+  chillSlowMultiplier: 0.2
   counterRecovery: 0.25
 --- !u!114 &476782416
 MonoBehaviour:
@@ -593,7 +599,7 @@ MonoBehaviour:
     fireDamage:
       baseValue: 0
     iceDamage:
-      baseValue: 0
+      baseValue: 1
     lightningDamage:
       baseValue: 0
   defense:
@@ -607,6 +613,19 @@ MonoBehaviour:
       baseValue: 0
     lightningRes:
       baseValue: 0
+  elementType: 0
+--- !u!114 &476782417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476782407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f748db609fb0c05469c534c00cf9e40e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &526946642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,6 +1055,9 @@ MonoBehaviour:
   hitVfxColor: {r: 1, g: 1, b: 1, a: 1}
   hitVfx: {fileID: 0}
   critHitVfx: {fileID: 0}
+  chillVfx: {r: 0, g: 1, b: 1, a: 1}
+  burnVfx: {r: 1, g: 0, b: 0, a: 1}
+  stunVfx: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &925317443
 GameObject:
   m_ObjectHideFlags: 0
@@ -3928,6 +3950,9 @@ MonoBehaviour:
   hitVfxColor: {r: 1, g: 0.9483957, b: 0.2028302, a: 1}
   hitVfx: {fileID: 8180107373983343457, guid: d5c8fdf91d1469d4a95fdcb04d11fb80, type: 3}
   critHitVfx: {fileID: 2932540793665141418, guid: c85a78c8ddd1aaa48969029749e053f3, type: 3}
+  chillVfx: {r: 0, g: 0.68235296, b: 1, a: 1}
+  burnVfx: {r: 1, g: 0, b: 0, a: 1}
+  stunVfx: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   attackAlert: {fileID: 2251788724982589869}
 --- !u!224 &569768929110015031
 RectTransform:
@@ -4488,7 +4513,7 @@ MonoBehaviour:
     fireDamage:
       baseValue: 0
     iceDamage:
-      baseValue: 0
+      baseValue: 2
     lightningDamage:
       baseValue: 0
   defense:
@@ -4502,6 +4527,7 @@ MonoBehaviour:
       baseValue: 0
     lightningRes:
       baseValue: 0
+  elementType: 0
 --- !u!50 &5905377918481308928
 Rigidbody2D:
   serializedVersion: 5
@@ -4767,6 +4793,8 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
+  defaultDuration: 3
+  chillSlowMultiplier: 0.4
 --- !u!1 &8205616137449628196
 GameObject:
   m_ObjectHideFlags: 0
@@ -4783,6 +4811,7 @@ GameObject:
   - component: {fileID: 8540000759910915834}
   - component: {fileID: 327000526351371945}
   - component: {fileID: 5867372614718201644}
+  - component: {fileID: 8540000759910915835}
   m_Layer: 8
   m_Name: PigAssassin
   m_TagString: Untagged
@@ -4847,6 +4876,18 @@ MonoBehaviour:
   knockbackDuration: 0.2
   heavyKnockbackDuration: 0.4
   heavyDamageThreshold: 0.3
+--- !u!114 &8540000759910915835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8205616137449628196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f748db609fb0c05469c534c00cf9e40e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8776268511961261309
 Transform:
   m_ObjectHideFlags: 0

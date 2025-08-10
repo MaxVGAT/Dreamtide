@@ -32,6 +32,7 @@ public class Entity : MonoBehaviour
     private Coroutine knockbackCo;
 
     private Coroutine despawnCo;
+    private Coroutine slowDownCo;
 
     protected virtual void Awake()
     {
@@ -60,6 +61,20 @@ public class Entity : MonoBehaviour
     public virtual void EntityDeath()
     {
 
+    }
+
+    public virtual void SlowDownEntityBy(float duration, float slowMultiplier)
+    {
+        if(slowDownCo != null)
+            StopCoroutine(slowDownCo);
+
+        slowDownCo = StartCoroutine(SlowDownEntityCo(duration, slowMultiplier));
+
+    }
+
+    protected virtual IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
+    {
+        yield return null;
     }
 
     public void DespawnOnDeath(float duration)

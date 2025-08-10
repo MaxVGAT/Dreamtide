@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Entity_Enemy : Entity
@@ -34,6 +35,24 @@ public class Entity_Enemy : Entity
     [SerializeField] private float playerCheckDistance = 10f;
     public Transform player { get; private set; }
 
+    protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
+    {
+        float originalMoveSpeed = moveSpeed;
+        float originalBattleSpeed = battleMoveSpeed;
+        float originalAnimSpeed = anim.speed;
+
+        float speedMultiplier = 1 - slowMultiplier;
+
+        moveSpeed = moveSpeed * speedMultiplier;
+        battleMoveSpeed = battleMoveSpeed * speedMultiplier;
+        anim.speed = anim.speed * speedMultiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed = originalMoveSpeed;
+        battleMoveSpeed = originalBattleSpeed;
+        anim.speed = originalAnimSpeed;
+    }
 
     public void EnableCounterAttack(bool enable) => canBeStunned = enable;
 
