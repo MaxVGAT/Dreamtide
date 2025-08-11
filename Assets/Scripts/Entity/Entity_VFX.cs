@@ -42,7 +42,11 @@ public class Entity_VFX : MonoBehaviour
     {
         if (element == ElementType.Ice)
             StartCoroutine(PlayStatusVfxCo(duration, chillVfx));
+        
+        if(element == ElementType.Fire)
+            StartCoroutine(PlayStatusVfxCo(duration, burnVfx));
     }
+
     private IEnumerator PlayStatusVfxCo(float duration, Color effectColor)
     {
         float tickInterval = 0.25f;

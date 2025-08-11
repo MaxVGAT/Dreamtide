@@ -79,7 +79,7 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
     private bool AttackAvoided() => Random.Range(0, 100) < stats.GetEvasion();
 
     // Reduces health and checks for death.
-    protected virtual void ReduceHP(float damage)
+    public void ReduceHP(float damage)
     {
         entityVfx.HandleHitColor(Entity_VFX.FlashType.Red);
         currentHp -= damage;

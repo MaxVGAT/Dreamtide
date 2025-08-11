@@ -11,7 +11,7 @@ public class Entity_Stats : MonoBehaviour
     public Stats_DefenseGroup defense;
     public ElementType elementType;
 
-    public float GetPhysicalDamage(out bool isCrit)
+    public float GetPhysicalDamage(out bool isCrit, float scaleFactor = 1)
     {
         float baseDamage = offense.damage.GetValue();
         float bonusDamage = major.strength.GetValue(); // +1 bonus dmg per STR
@@ -29,10 +29,10 @@ public class Entity_Stats : MonoBehaviour
         isCrit = Random.Range(0, 100) < critChance;
         float finalPhysicalDamage = isCrit ? totalBaseDamage * critPower : totalBaseDamage;
 
-        return finalPhysicalDamage;
+        return finalPhysicalDamage * scaleFactor;
     }
 
-    public float GetElementalDamage(out ElementType element)
+    public float GetElementalDamage(out ElementType element, float scaleFactor = 1)
     {
         float fireDamage = offense.fireDamage.GetValue();
         float iceDamage = offense.iceDamage.GetValue();
@@ -68,7 +68,7 @@ public class Entity_Stats : MonoBehaviour
         float weakerElementsDamage = bonusFire + bonusIce + bonusLightning;
         float finalElementalDamage = highestDamage + + weakerElementsDamage + bonusElementalDamage;
 
-        return finalElementalDamage;
+        return finalElementalDamage * scaleFactor;
     }
 
     public float GetElementalResistance(ElementType element)

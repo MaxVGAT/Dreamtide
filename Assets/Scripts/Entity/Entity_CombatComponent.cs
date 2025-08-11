@@ -47,7 +47,7 @@ public class Entity_CombatComponent : MonoBehaviour
         }
     }
 
-    public void ApplyStatusEffect(Transform target, ElementType element)
+    public void ApplyStatusEffect(Transform target, ElementType element, float scaleFactor = 1)
     {
         Entity_StatusHandler statusHandler = target.GetComponent<Entity_StatusHandler>();
 
@@ -56,6 +56,15 @@ public class Entity_CombatComponent : MonoBehaviour
 
         if(element == ElementType.Ice && statusHandler.CanBeApplied(ElementType.Ice))
             statusHandler.ApplyChilledEffect(defaultDuration, chillSlowMultiplier);
+
+        if (element == ElementType.Fire && statusHandler.CanBeApplied(ElementType.Fire))
+        {
+            float fireDamage = stats.offense.fireDamage.GetValue();
+            statusHandler.ApplyBurnedEffect(defaultDuration, fireDamage);
+        }
+
+        //if (element == ElementType.Lightning && statusHandler.CanBeApplied(ElementType.Lightning))
+
 
     }
 
