@@ -1,15 +1,19 @@
  using UnityEngine;
 using UnityEngine.UI;
 
-public class Entity_HealthComponent : MonoBehaviour, IDamageable
+public class Entity_Health : MonoBehaviour, IDamageable
 {
     private Slider healthBar;
     private Entity_VFX entityVfx;
     private Entity entity;
-    private Entity_Stats stats;
+    private Entity_Stats entityStats;
 
-    [SerializeField] protected float currentHp;
+    [SerializeField] protected float currentHealth;
     [SerializeField] protected bool isDead;
+
+    [Header("Health Regen")]
+    [SerializeField] private float regenInterval = 1;
+    [SerializeField] private bool canRegenerateHealth = true;
 
     [Header("On Damage Knockback")]
     [SerializeField] private Vector2 knockbackPower = new Vector2(1.5f, 2.5f);
@@ -22,13 +26,15 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
 
     protected virtual void Awake()
     {
-        entityVfx = GetComponent<Entity_VFX>();
-        entity = GetComponent<Entity>();
         healthBar = GetComponentInChildren<Slider>();
-        stats = GetComponent<Entity_Stats>();
+        entity = GetComponent<Entity>();
+        entityVfx = GetComponent<Entity_VFX>();
+        entityStats = GetComponent<Entity_Stats>();
 
-        currentHp = stats.GetMaxHealth();
+        currentHealth = entityStats.GetMaxHealth();
         UpdateHealthBar();
+
+        InvokeRepeating(nameof(RegenerateHealth), 0, regenInterval);
     }
 
     //Applies damage and triggers hit VFX. Ignore if dead.
@@ -47,17 +53,66 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
         ApplyPhysAndElemRes(damage, elementalDamage, element, armorReduction, out physicalDamageTaken, out elementalDamageTaken);
 
         TakeKnockback(damageDealer, physicalDamageTaken);
-        ReduceHP(physicalDamageTaken + elementalDamageTaken);
+        ReduceHealth(physicalDamageTaken + elementalDamageTaken);
 
         return true;
     }
 
     private void ApplyPhysAndElemRes(float damage, float elementalDamage, ElementType element, float armorReduction, out float physicalDamageTaken, out float elementalDamageTaken)
     {
-        float mitigation = stats.GetArmorMitigation(armorReduction);
+        float mitigation = entityStats.GetArmorMitigation(armorReduction);
         physicalDamageTaken = damage * (1 - mitigation);
-        float resistance = stats.GetElementalResistance(element);
+        float resistance = entityStats.GetElementalResistance(element);
         elementalDamageTaken = elementalDamage * (1 - resistance);
+    }
+
+    private bool AttackAvoided() => Random.Range(0, 100) < entityStats.GetEvasion();
+
+    private void RegenerateHealth()
+    {
+        if (canRegenerateHealth == false)
+            return;
+
+        float regenAmount = entityStats.resource.healthRegen.GetValue();
+        IncreaseHealth(regenAmount);
+    }
+
+    public void IncreaseHealth(float healAmount)
+    {
+        if (isDead)
+            return;
+
+        float newHealth = currentHealth + healAmount;
+        float maxHealth = entityStats.GetMaxHealth();
+
+        currentHealth = Mathf.Min(newHealth, maxHealth);
+        UpdateHealthBar();
+    }
+
+    // Reduces health and checks for death.
+    public void ReduceHealth(float damage)
+    {
+        entityVfx.HandleHitColor(Entity_VFX.FlashType.Red);
+        currentHealth -= damage;
+        UpdateHealthBar();
+
+        if (currentHealth <= 0)
+            Die();
+    }
+
+    private void UpdateHealthBar()
+    {
+        if (healthBar == null)
+            return;
+
+        healthBar.value = currentHealth / entityStats.GetMaxHealth();
+    }
+
+    // Death logic - Override for custom behavior(animation, drops...)
+    private void Die()
+    {
+        isDead = true;
+        entity.EntityDeath();
     }
 
     private float TakeKnockback(Transform damageDealer, float finalDamage)
@@ -76,34 +131,6 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
         return finalDamage;
     }
 
-    private bool AttackAvoided() => Random.Range(0, 100) < stats.GetEvasion();
-
-    // Reduces health and checks for death.
-    public void ReduceHP(float damage)
-    {
-        entityVfx.HandleHitColor(Entity_VFX.FlashType.Red);
-        currentHp -= damage;
-        UpdateHealthBar();
-
-        if (currentHp <= 0)
-            Die();
-    }
-
-    private void UpdateHealthBar()
-    {
-        if (healthBar == null)
-            return;
-
-        healthBar.value = currentHp / stats.GetMaxHealth();
-    }
-
-    // Death logic - Override for custom behavior(animation, drops...)
-    private void Die()
-    {
-        isDead = true;
-        entity.EntityDeath();
-    }
-
     private Vector2 CalculateKnockback(float damage, Transform damageDealer)
     {
         int direction = transform.position.x > damageDealer.position.x ? 1 : -1;
@@ -117,5 +144,5 @@ public class Entity_HealthComponent : MonoBehaviour, IDamageable
 
     private float CalculateKnockbackDuration(float damage) => IsHeavyDamage(damage) ? heavyKnockbackDuration : knockbackDuration;
 
-    private bool IsHeavyDamage(float damage) => damage / stats.GetMaxHealth() > heavyDamageThreshold;
+    private bool IsHeavyDamage(float damage) => damage / entityStats.GetMaxHealth() > heavyDamageThreshold;
 }

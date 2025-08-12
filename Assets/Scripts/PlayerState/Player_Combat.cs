@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player_Combat : Entity_CombatComponent
+public class Player_Combat : Entity_Combat
 {
     public Transform counteredTargetTransform { get; private set; }
 

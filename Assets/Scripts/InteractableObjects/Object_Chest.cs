@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Chest : MonoBehaviour, IDamageable
+public class Object_Chest : MonoBehaviour, IDamageable
 {
     private Rigidbody2D rb => GetComponentInChildren<Rigidbody2D>();
     private Collider2D col => GetComponentInChildren<Collider2D>();

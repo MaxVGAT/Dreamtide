@@ -5,6 +5,9 @@ using System;
 
 public class Stats_OffenseGroup
 {
+
+    public Stats attackSpeed;
+
     //Physical stats
     public Stats damage;
     public Stats critPower;

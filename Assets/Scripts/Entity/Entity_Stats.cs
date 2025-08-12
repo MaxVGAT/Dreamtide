@@ -5,11 +5,12 @@ public enum ElementType { None, Fire, Ice, Lightning}
 
 public class Entity_Stats : MonoBehaviour
 {
-    public Stats maxHealth;
-    public Stats_MajorStats major;
+    public Stats_ResourceGroup resource;
+    public Stats_MajorGroup major;
     public Stats_OffenseGroup offense;
     public Stats_DefenseGroup defense;
-    public ElementType elementType;
+
+
 
     public float GetPhysicalDamage(out bool isCrit, float scaleFactor = 1)
     {
@@ -99,7 +100,7 @@ public class Entity_Stats : MonoBehaviour
 
     public float GetMaxHealth()
     {
-        float baseHealth = maxHealth.GetValue();
+        float baseHealth = resource.maxHealth.GetValue();
         float bonusHealth = major.vitality.GetValue() * 5;
 
         float finalMaxHealth = baseHealth + bonusHealth;

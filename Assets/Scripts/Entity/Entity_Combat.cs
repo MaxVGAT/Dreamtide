@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Entity_CombatComponent : MonoBehaviour
+public class Entity_Combat : MonoBehaviour
 {
     private Entity_Stats stats;
     protected Entity_Stats Stats => stats;
@@ -15,6 +15,10 @@ public class Entity_CombatComponent : MonoBehaviour
     [Header("Status effect details")]
     [SerializeField] private float defaultDuration = 1f;
     [SerializeField] private float chillSlowMultiplier = .2f;
+    [SerializeField] private float electrifyChargeBuildUp = 0.4f;
+    [Space]
+    [SerializeField] private float fireScale = 0.8f;
+    [SerializeField] private float lightningScale = 2.5f;
 
     private void Awake()
     {
@@ -55,17 +59,21 @@ public class Entity_CombatComponent : MonoBehaviour
             return;
 
         if(element == ElementType.Ice && statusHandler.CanBeApplied(ElementType.Ice))
-            statusHandler.ApplyChilledEffect(defaultDuration, chillSlowMultiplier);
+            statusHandler.ApplyChillEffect(defaultDuration, chillSlowMultiplier);
 
         if (element == ElementType.Fire && statusHandler.CanBeApplied(ElementType.Fire))
         {
-            float fireDamage = stats.offense.fireDamage.GetValue();
-            statusHandler.ApplyBurnedEffect(defaultDuration, fireDamage);
+            scaleFactor = fireScale;
+            float fireDamage = stats.offense.fireDamage.GetValue() * scaleFactor;
+            statusHandler.ApplyBurnEffect(defaultDuration, fireDamage);
         }
 
-        //if (element == ElementType.Lightning && statusHandler.CanBeApplied(ElementType.Lightning))
-
-
+        if (element == ElementType.Lightning && statusHandler.CanBeApplied(ElementType.Lightning))
+        {
+            scaleFactor = lightningScale;
+            float lightningDamage = stats.offense.lightningDamage.GetValue() * scaleFactor;
+            statusHandler.ApplyElectrifyEffect(defaultDuration, lightningDamage, electrifyChargeBuildUp);
+        }
     }
 
     protected Collider2D[] GetDetectedColliders()

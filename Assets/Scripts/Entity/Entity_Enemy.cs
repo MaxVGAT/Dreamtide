@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Entity_Enemy : Entity
 {
+
+    private Entity_VFX entityVFX;
+
+
     public EnemyIdleState idleState;
     public EnemyMoveState moveState;
     public EnemyAttackState attackState;
@@ -35,6 +39,12 @@ public class Entity_Enemy : Entity
     [SerializeField] private float playerCheckDistance = 10f;
     public Transform player { get; private set; }
 
+    protected override void Awake()
+    {
+        base.Awake();
+        entityVFX = GetComponent<Entity_VFX>();
+    }
+
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
     {
         float originalMoveSpeed = moveSpeed;
@@ -59,6 +69,9 @@ public class Entity_Enemy : Entity
     public override void EntityDeath()
     {
         base.EntityDeath();
+
+        if (entityVFX != null)
+            entityVFX.StopAllVfx();
 
         stateMachine.ChangeState(deadState);
     }
