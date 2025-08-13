@@ -10,7 +10,7 @@ public class Stats_DefenseGroup
     public Stats evasion;
 
     //Elemental resistance
-    public Stats fireRes;
-    public Stats iceRes;
-    public Stats lightningRes;
+    public Stats fireResistance;
+    public Stats iceResistance;
+    public Stats lightningResistance;
 }

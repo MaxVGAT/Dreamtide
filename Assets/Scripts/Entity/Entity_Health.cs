@@ -73,7 +73,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
         if (canRegenerateHealth == false)
             return;
 
-        float regenAmount = entityStats.resource.healthRegen.GetValue();
+        float regenAmount = entityStats.resources.healthRegen.GetValue();
         IncreaseHealth(regenAmount);
     }
 
