@@ -102,10 +102,14 @@ public class Entity_Health : MonoBehaviour, IDamageable
 
     private void UpdateHealthBar()
     {
-        if (healthBar == null)
+        if (healthBar == null || entityStats == null)
             return;
 
-        healthBar.value = currentHealth / entityStats.GetMaxHealth();
+        float maxHealth = entityStats.GetMaxHealth();
+        if (maxHealth <= 0)
+            return;
+
+        healthBar.value = Mathf.Clamp01(currentHealth / maxHealth);
     }
 
     // Death logic - Override for custom behavior(animation, drops...)
