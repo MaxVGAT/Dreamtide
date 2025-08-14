@@ -9,6 +9,6 @@ public class Skill_DataSO : ScriptableObject
     [Header("Skill description")]
     public string skillName;
     [TextArea]
-    public string description;
-    public Sprite icon;
+    public string skillDescription;
+    public Sprite skillIcon;
 }
