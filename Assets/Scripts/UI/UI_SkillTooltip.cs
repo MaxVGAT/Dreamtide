@@ -21,7 +21,7 @@ public class UI_SkillTooltip : UI_Tooltip
 
         skillName.text = skillData.skillName;
         skillDescription.text = skillData.skillDescription;
-        skillRequirements.text = "         \n\n " +
+        skillRequirements.text = "アンロック: \n\n " +
             " - " + skillData.cost + " スキルポイント";
     }
 }
