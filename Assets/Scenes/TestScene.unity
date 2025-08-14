@@ -1465,7 +1465,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30AF\u30ED\u30FC\u30F3\u304C\u5012\u3055\u308C\u308B\u3068\u3001\u3042\u306A\u305F\u306E\u3082\u3068\u3078\u5411\u304B\u3046\u7652\u3057\u306E\u7CBE\u970A\u3092\u751F\u6210\u3057\u3001\u63A5\u89E6\u6642\u306B\u56DE\u5FA9\u3059\u308B\u3002"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 14d3d843b09eb314885aad499cc08c2e, type: 2}
   m_sharedMaterial: {fileID: -5983723400150429269, guid: 14d3d843b09eb314885aad499cc08c2e, type: 2}
@@ -2311,7 +2311,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30BF\u30A4\u30E0\u30A8\u30B3\u30FC"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 14d3d843b09eb314885aad499cc08c2e, type: 2}
   m_sharedMaterial: {fileID: -5983723400150429269, guid: 14d3d843b09eb314885aad499cc08c2e, type: 2}
@@ -2338,7 +2338,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 49
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
