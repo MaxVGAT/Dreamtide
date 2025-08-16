@@ -7,29 +7,45 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private UI ui;
     private RectTransform rect;
+    private UI_SkillTree skillTree;
 
-    [SerializeField] private Skill_DataSO skillData;
-    [SerializeField] private string skillName;
-    [SerializeField] private Image skillIcon;
-    private string lockedColorHex = "#5A5A5A";
-
-    private Color lastColor;
+    [Header("Unlock Details")]
+    public UI_TreeNode[] neededNodes; // Required nodes to unlock
+    public UI_TreeNode[] conflictNodes; // Locked-out nodes on unlock
     public bool isUnlocked;
     public bool isLocked;
+
+
+    [Header("Skill details")]
+    public Skill_DataSO skillData;
+    [SerializeField] private string skillName;
+    [SerializeField] private Image skillIcon;
+    [SerializeField] private int skillCost;
+
+    private Color baseColorHex = new Color(0.6f, 0.6f, 0.6f, 1f);
+    private Color unlockedColorHex = Color.white;
+    public Color lockedColorHex = new Color(0.2f, 0.2f, 0.2f, 1f);
+    private Color availableColorHex = new Color(1f, 1f, 1f, 1f);
 
 
     private void Awake()
     {
         ui = GetComponentInParent<UI>();
         rect = GetComponent<RectTransform>();
+        skillTree = GetComponentInParent<UI_SkillTree>();
 
-        UpdateIconColor(GetColorByHex(lockedColorHex));
+        UpdateIconColor(baseColorHex);
     }
 
     private void UnlockSkill()
     {
+        if (isLocked)
+            return;
+
         isUnlocked = true;
-        UpdateIconColor(Color.white);
+        skillTree.RemoveSkillPoint(skillData.cost);
+        LockConflictNodes();
+        UpdateIconColor(unlockedColorHex);
     }
 
     private bool CanBeUnlocked()
@@ -37,15 +53,38 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (isLocked || isUnlocked)
             return false;
 
+        if (skillTree.EnoughSkillPoints(skillData.cost) == false)
+            return false;
+
+        foreach(var node in neededNodes)
+        {
+            if (node.isUnlocked == false)
+                return false;
+        }
+        
+        foreach(var node in conflictNodes)
+        {
+            if (node.isUnlocked)
+                return false;
+        }
+
         return true;
+    }
+
+    private void LockConflictNodes()
+    {
+        foreach (var node in conflictNodes)
+        {
+            node.isLocked = true;
+            node.UpdateIconColor(node.lockedColorHex);
+        }
+
     }
 
     private void UpdateIconColor(Color color)
     {
         if (skillIcon == null)
             return;
-
-        lastColor = skillIcon.color;
 
         skillIcon.color = color;
     }
@@ -60,26 +99,31 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ui.skillToolTip.ShowToolTip(true, rect, skillData);
+        ui.skillToolTip.ShowToolTip(true, rect, this);
 
-        if(isUnlocked == false)
-            UpdateIconColor(Color.white * 0.8f);
+        if (!isUnlocked && !isLocked)
+            UpdateIconColor(availableColorHex);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         ui.skillToolTip.ShowToolTip(false, rect);
 
-        if(isUnlocked == false)
-            UpdateIconColor(lastColor);
+        if (isUnlocked)
+            UpdateIconColor(unlockedColorHex);
+        else if(isLocked)
+            UpdateIconColor(lockedColorHex);
+        else
+            UpdateIconColor(baseColorHex);
     }
 
-    private Color GetColorByHex(string hexNumber)
-    {
-        ColorUtility.TryParseHtmlString(hexNumber, out Color color);
+    //private Color GetColorByHex(string hexNumber)
+    //{
+    //    ColorUtility.TryParseHtmlString(hexNumber, out Color color);
 
-        return color;
-    }
+    //    return color;
+    //}
+
     private void OnValidate()
     {
         if (skillData == null)
@@ -87,6 +131,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         skillName = skillData.skillName;
         skillIcon.sprite = skillData.skillIcon;
+        skillCost = skillData.cost;
         gameObject.name = "UI_TreeNode - " + skillData.skillName;
     }
 }

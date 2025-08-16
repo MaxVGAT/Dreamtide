@@ -10,25 +10,19 @@ public class UI_ConnectionDetails
     [Range(0, 300f)] public float length;
 }
 
+[ExecuteAlways]
 public class UI_ConnectionsHandler : MonoBehaviour
 {
-    private RectTransform rect;
+    private RectTransform rect => GetComponent<RectTransform>();
     [SerializeField] private UI_ConnectionDetails[] connectionDetails;
     [SerializeField] private UI_TreeConnections[] connections;
 
     private void OnValidate()
     {
-        if (rect == null)
-            rect = GetComponent<RectTransform>();
-
-        if (connectionDetails.Length != connections.Length)
-        {
-            Debug.Log("Amount of details should be same as amount of connections. - " + gameObject.name);
+        if (connectionDetails.Length <= 0)
             return;
-        }
 
         UpdateConnection();
-        
     }
 
     private void UpdateConnection()
@@ -39,6 +33,7 @@ public class UI_ConnectionsHandler : MonoBehaviour
             var connection = connections[i];
 
             connection.DirectConnection(detail.direction, detail.length);
+
             Vector2 targetPosition = connection.GetConnectionPoint(rect);
             detail.childNode.SetPosition(targetPosition);
         }
