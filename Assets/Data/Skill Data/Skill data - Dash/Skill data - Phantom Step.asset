@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21b3dc8399c21548bdceab170e4329c, type: 3}
+  m_Name: Skill data - Phantom Step
+  m_EditorClassIdentifier: 
+  cost: 2
+  skillType: 0
+  upgradeType: 1
+  skillName: "\u30D5\u30A1\u30F3\u30C8\u30E0\u30B9\u30C6\u30C3\u30D7"
+  skillDescription: "\u30C0\u30C3\u30B7\u30E5\u7D42\u4E86\u5730\u70B9\u306B\u5206\u8EAB\u3092\u6B8B\u3059\u3002"
+  skillIcon: {fileID: 8389134475083476877, guid: 541eb43699439eb46a6d7dbee1bfb863, type: 3}

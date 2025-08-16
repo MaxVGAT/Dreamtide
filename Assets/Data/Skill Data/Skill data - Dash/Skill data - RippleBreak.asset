@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21b3dc8399c21548bdceab170e4329c, type: 3}
+  m_Name: Skill data - RippleBreak
+  m_EditorClassIdentifier: 
+  cost: 3
+  skillType: 0
+  upgradeType: 4
+  skillName: "\u30EA\u30C3\u30D7\u30EB\u30D6\u30EC\u30A4\u30AF"
+  skillDescription: "\u30C0\u30C3\u30B7\u30E5\u7D42\u4E86\u5730\u70B9\u306B\u6642\u306E\u6B20\u7247\u3092\u6B8B\u3059\u3002"
+  skillIcon: {fileID: -4004772778501413904, guid: e1f8fda853222a744b9c84c909746322, type: 3}

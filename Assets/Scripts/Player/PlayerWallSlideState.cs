@@ -24,7 +24,9 @@ public class PlayerWallSlideState : PlayerState
         if (player.isGrounded)
         {
             stateMachine.ChangeState(player.idleState);
-            player.FlipMethod();
+
+            if(player.facingDirection != player.moveInput.x)
+                player.FlipMethod();
         }
     }
 

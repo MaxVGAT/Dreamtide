@@ -53,6 +53,8 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         skillTree.RemoveSkillPoint(skillData.cost);
         LockConflictNodes();
         connectHandler.UnlockConnectionImage(true);
+
+        skillTree.skillManager.GetSkillByType(skillData.skillType).SetSkillUpgrade(skillData.upgradeType);
     }
 
     private bool CanBeUnlocked()
@@ -145,6 +147,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         else
             UpdateIconColor(GetColorByHex(lockedColorHex));
     }
+
     private void OnValidate()
     {
         if (skillData == null)

@@ -38,9 +38,6 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: MainTitleImage
     uniqueID: 60342337
     locked: 0
@@ -49,6 +46,9 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 2395244299
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: Decor
     uniqueID: 2439552263
