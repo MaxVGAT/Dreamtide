@@ -8,6 +8,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private UI ui;
     private RectTransform rect;
     private UI_SkillTree skillTree;
+    private UI_TreeConnectHandler connectHandler;
 
     [Header("Unlock Details")]
     public UI_TreeNode[] neededNodes; // Required nodes to unlock
@@ -21,11 +22,8 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private string skillName;
     [SerializeField] private Image skillIcon;
     [SerializeField] private int skillCost;
-
-    private Color baseColorHex = new Color(0.6f, 0.6f, 0.6f, 1f);
-    private Color unlockedColorHex = Color.white;
-    public Color lockedColorHex = new Color(0.2f, 0.2f, 0.2f, 1f);
-    private Color availableColorHex = new Color(1f, 1f, 1f, 1f);
+    private string lockedColorHex = "#5A5A5A";
+    private Color lastColor;
 
 
     private void Awake()
@@ -33,19 +31,28 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         ui = GetComponentInParent<UI>();
         rect = GetComponent<RectTransform>();
         skillTree = GetComponentInParent<UI_SkillTree>();
+        connectHandler = GetComponent<UI_TreeConnectHandler>();
 
-        UpdateIconColor(baseColorHex);
+        UpdateIconColor(GetColorByHex(lockedColorHex));
+    }
+
+    public void Refund()
+    {
+        isUnlocked = false;
+        isLocked = false;
+        UpdateIconColor(GetColorByHex(lockedColorHex));
+
+        skillTree.AddSkillPoints(skillData.cost);
+        connectHandler.UnlockConnectionImage(false);
     }
 
     private void UnlockSkill()
     {
-        if (isLocked)
-            return;
-
         isUnlocked = true;
+        UpdateIconColor(Color.white);
         skillTree.RemoveSkillPoint(skillData.cost);
         LockConflictNodes();
-        UpdateIconColor(unlockedColorHex);
+        connectHandler.UnlockConnectionImage(true);
     }
 
     private bool CanBeUnlocked()
@@ -56,13 +63,13 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (skillTree.EnoughSkillPoints(skillData.cost) == false)
             return false;
 
-        foreach(var node in neededNodes)
+        foreach (var node in neededNodes)
         {
             if (node.isUnlocked == false)
                 return false;
         }
-        
-        foreach(var node in conflictNodes)
+
+        foreach (var node in conflictNodes)
         {
             if (node.isUnlocked)
                 return false;
@@ -74,17 +81,15 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private void LockConflictNodes()
     {
         foreach (var node in conflictNodes)
-        {
             node.isLocked = true;
-            node.UpdateIconColor(node.lockedColorHex);
-        }
-
     }
 
     private void UpdateIconColor(Color color)
     {
         if (skillIcon == null)
             return;
+
+        lastColor = skillIcon.color;
 
         skillIcon.color = color;
     }
@@ -93,37 +98,42 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (CanBeUnlocked())
             UnlockSkill();
-        else
-            Debug.Log("Can not be unlocked");
+        else if (isUnlocked)
+            ui.skillToolTip.UnlockedSkillEffect();
+        else if (isLocked)
+            ui.skillToolTip.LockedSkillEffect();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         ui.skillToolTip.ShowToolTip(true, rect, this);
 
-        if (!isUnlocked && !isLocked)
-            UpdateIconColor(availableColorHex);
+        if (isUnlocked == false || isLocked == false)
+            ToggleNodeHightlight(true);
     }
+
 
     public void OnPointerExit(PointerEventData eventData)
     {
         ui.skillToolTip.ShowToolTip(false, rect);
 
-        if (isUnlocked)
-            UpdateIconColor(unlockedColorHex);
-        else if(isLocked)
-            UpdateIconColor(lockedColorHex);
-        else
-            UpdateIconColor(baseColorHex);
+        if (isUnlocked == false || isLocked == false)
+            ToggleNodeHightlight(false);
+    }
+    private void ToggleNodeHightlight(bool highlight)
+    {
+        Color highlightColor = Color.white * 9f; highlightColor.a = 1;
+        Color colorToApply = highlight ? highlightColor : lastColor;
+
+        UpdateIconColor(colorToApply);
     }
 
-    //private Color GetColorByHex(string hexNumber)
-    //{
-    //    ColorUtility.TryParseHtmlString(hexNumber, out Color color);
+    private Color GetColorByHex(string hexNumber)
+    {
+        ColorUtility.TryParseHtmlString(hexNumber, out Color color);
 
-    //    return color;
-    //}
-
+        return color;
+    }
     private void OnValidate()
     {
         if (skillData == null)

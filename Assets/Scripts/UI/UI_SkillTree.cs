@@ -1,9 +1,33 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class UI_SkillTree : MonoBehaviour
 {
-    public int skillPoints;
+    [SerializeField] private int skillPoints;
+    [SerializeField] private UI_TreeConnectHandler[] parentNodes;
 
+    [ContextMenu("Refund all skills")]
+    public void RefundAllSkills()
+    {
+        UI_TreeNode[] skillNodes = GetComponentsInChildren<UI_TreeNode>();
+
+        foreach (var node in skillNodes)
+            node.Refund();
+    }
     public bool EnoughSkillPoints(int cost) => skillPoints >= cost;
     public void RemoveSkillPoint(int cost) => skillPoints -= cost;
+    public void AddSkillPoints(int points) => skillPoints = skillPoints + points;
+
+    private void Start()
+    {
+        UpdateAllConnections();
+    }
+
+    public void UpdateAllConnections()
+    {
+        foreach(var node in parentNodes)
+        {
+            node.UpdateAllConnections();
+        }
+    }
 }
