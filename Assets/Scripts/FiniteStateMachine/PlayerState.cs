@@ -1,11 +1,9 @@
-using UnityEditor.Tilemaps;
-using UnityEngine;
-
 public abstract class PlayerState : EntityState
 {
 
     protected Entity_Player player;
     protected PlayerInputSet input;
+    protected Player_SkillManager skills;
 
     public PlayerState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(stateMachine, animBoolName)
     {
@@ -15,16 +13,17 @@ public abstract class PlayerState : EntityState
         rb = player.rb;
         input = player.input;
         stats = player.stats;
+        skills = player.skillManager;
     }
 
     public override void Update()
     {
         base.Update();
 
-        if (player.moveInput.x != 0)
+        if (input.Player.Dash.WasPressedThisFrame() && CanDash())
         {
-            if (input.Player.Dash.WasPressedThisFrame() && CanDash())
-                stateMachine.ChangeState(player.dashState);
+            skills.dash.SetSkillOnCooldown();
+            stateMachine.ChangeState(player.dashState);
         }
 
     }
@@ -36,8 +35,12 @@ public abstract class PlayerState : EntityState
         anim.SetFloat("yVelocity", rb.linearVelocity.y);
     }
 
-private bool CanDash()
+    private bool CanDash()
     {
+
+        if (skills.dash.CanUseSkill() == false)
+            return false;
+
         if (player.isWallDetected)
             return false;
 

@@ -7,7 +7,11 @@ public class Entity_Player : Entity
 {
     public static event Action OnPlayerDeath;
 
+    private UI ui;
     public PlayerInputSet input { get; private set; }
+    public Player_SkillManager skillManager { get; private set; }
+
+    #region State Variables
 
     public PlayerIdleState idleState { get; private set; }
     public PlayerMoveState moveState { get; private set; }
@@ -21,6 +25,8 @@ public class Entity_Player : Entity
     public PlayerDeadState deadState { get; private set; }
     public PlayerBlockState blockState { get; private set; }
     public PlayerCounterAttackState counterAttackState { get; private set; }
+
+    #endregion
 
     [Header("Attack details")]
     public Vector2[] attackVelocity;
@@ -44,7 +50,9 @@ public class Entity_Player : Entity
     {
         base.Awake();
 
+        ui = FindAnyObjectByType<UI>();
         input = new PlayerInputSet();
+        skillManager = GetComponent<Player_SkillManager>();
 
         idleState = new PlayerIdleState(this, stateMachine, "idle");
         moveState = new PlayerMoveState(this, stateMachine, "move");
@@ -132,6 +140,8 @@ public void EnterAttackStateWithDelay()
 
         input.Player.Movement.performed += context => moveInput = context.ReadValue<Vector2>();
         input.Player.Movement.canceled += context => moveInput = Vector2.zero;
+
+        input.Player.ToggleSkillTreeUI.performed += context => ui.ToggleSkillTreeUI();
     }
 
     private void OnDisable()

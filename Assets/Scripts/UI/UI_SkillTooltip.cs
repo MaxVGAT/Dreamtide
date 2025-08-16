@@ -29,7 +29,7 @@ public class UI_SkillTooltip : UI_Tooltip
         base.Awake();
 
         ui = GetComponentInParent<UI>();
-        skillTree = ui.GetComponentInChildren<UI_SkillTree>();
+        skillTree = ui.GetComponentInChildren<UI_SkillTree>(true);
     }
 
     public override void ShowToolTip(bool show, RectTransform targetRect) // Override from Tooltip Script
@@ -54,10 +54,13 @@ public class UI_SkillTooltip : UI_Tooltip
         skillName.text = node.skillData.skillName;
         skillDescription.text = node.skillData.skillDescription;
 
+        string skillUnlockedText = $"{unlockedSkillText}";
+        string skillLockedText = $"{lockedSkillText}";
+
         if (node.isUnlocked)
-            skillRequirements.text = $"<color={metConditionHex}>{unlockedSkillText}</color>";
-        else if(node.isLocked)
-            skillRequirements.text = $"<color={notMetConditionHex}>{lockedSkillText}</color>";
+            skillRequirements.text = GetColoredText(metConditionHex, unlockedSkillText);
+        else if (node.isLocked)
+            skillRequirements.text = GetColoredText(notMetConditionHex, lockedSkillText);
         else
             skillRequirements.text = GetRequirements(node.skillData.cost, node.neededNodes, node.conflictNodes);
     }
@@ -128,11 +131,13 @@ public class UI_SkillTooltip : UI_Tooltip
             return sb.ToString();
 
         sb.AppendLine(); //Spacing
-        sb.AppendLine($"<color={importantInfoHex}>封印： </color>");
+        sb.AppendLine(GetColoredText(importantInfoHex, "封印："));
 
         foreach(var node in conflictNodes)
         {
-            sb.AppendLine($"<color={importantInfoHex}>- {node.skillData.skillName} </color>");
+            string nodeText = $"- {node.skillData.skillName}";
+            string finalNodeText = GetColoredText(importantInfoHex, nodeText);
+            sb.AppendLine(finalNodeText);
         }
 
         return sb.ToString();
