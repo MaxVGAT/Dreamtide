@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d21b3dc8399c21548bdceab170e4329c, type: 3}
   m_Name: Skill data - Nimble Dash
   m_EditorClassIdentifier: 
-  cost: 1
+  cost: 0
+  unlockedByDefault: 1
   skillType: 0
-  upgradeType: 0
+  upgradeData:
+    upgradeType: 0
+    cooldown: 3
   skillName: "\u30CB\u30F3\u30D6\u30EB\u30C0\u30C3\u30B7\u30E5"
   skillDescription: "\u524D\u65B9\u306B\u30C0\u30C3\u30B7\u30E5\u3059\u308B\u3002\u30C0\u30C3\u30B7\u30E5\u4E2D\u306F\u7121\u6575\u3002"
-  skillIcon: {fileID: 4425466908040542854, guid: 728f3979dcdd1c04498c102d006dcb1d, type: 3}
+  skillIcon: {fileID: -8730001272302647166, guid: 87fe95d680bdca34387d8d2464c7acfb, type: 3}

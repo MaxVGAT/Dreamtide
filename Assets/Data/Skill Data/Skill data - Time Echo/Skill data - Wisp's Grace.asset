@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Skill data - Wisp's Grace
   m_EditorClassIdentifier: 
   cost: 1
+  skillType: 1
+  upgradeData:
+    upgradeType: 0
+    cooldown: 0
   skillName: "\u30A6\u30A3\u30B9\u30D7\u30BA\u30B0\u30EC\u30A4\u30B9"
   skillDescription: "\u3059\u3079\u3066\u306E\u60AA\u52B9\u679C\u306E\u6301\u7D9A\u6642\u9593\u30921\u79D2\u77ED\u7E2E\u3059\u308B"
-  skillIcon: {fileID: -855298285791758126, guid: 5c0e0ad61645de04b95a52f64fa3457b, type: 3}
+  skillIcon: {fileID: 7188511161519871862, guid: 89237e9efb83c0943bc324397918a605, type: 3}

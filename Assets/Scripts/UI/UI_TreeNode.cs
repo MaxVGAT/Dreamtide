@@ -1,3 +1,4 @@
+using System.Xml.Schema;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -34,6 +35,14 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         connectHandler = GetComponent<UI_TreeConnectHandler>();
 
         UpdateIconColor(GetColorByHex(lockedColorHex));
+
+    }
+
+    private void Start()
+    {
+        if (skillData.unlockedByDefault)
+            UnlockSkill();
+        
     }
 
     public void Refund()
@@ -54,7 +63,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         LockConflictNodes();
         connectHandler.UnlockConnectionImage(true);
 
-        skillTree.skillManager.GetSkillByType(skillData.skillType).SetSkillUpgrade(skillData.upgradeType);
+        skillTree.skillManager.GetSkillByType(skillData.skillType).SetSkillUpgrade(skillData.upgradeData);
     }
 
     private bool CanBeUnlocked()
@@ -80,10 +89,23 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         return true;
     }
 
-    private void LockConflictNodes()
+    private void LockConflictNodes() // Lock all childs of the clicked node, going until there's no child anymore
     {
         foreach (var node in conflictNodes)
+        {
             node.isLocked = true;
+            node.LockChildNodes();
+        }
+    }
+
+    public void LockChildNodes() // Get the childs and lock them, then lock their childs etc.
+    {
+        isLocked = true;
+
+        foreach(var node in connectHandler.GetChildNodes())
+        {
+            node.LockChildNodes();
+        }
     }
 
     private void UpdateIconColor(Color color)

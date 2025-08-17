@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 1
   skillType: 1
-  upgradeType: 0
+  upgradeData:
+    upgradeType: 0
+    cooldown: 0
   skillName: "\u30BF\u30A4\u30E0\u30A8\u30B3\u30FC"
   skillDescription: "\u81EA\u5206\u306E\u5206\u8EAB\u3092\u4F5C\u308A\u3001\u6575\u306E\u6CE8\u610F\u3092\u5F15\u304D\u3064\u3051\u308B\u3002"
-  skillIcon: {fileID: -963791335356448533, guid: 1ccab8b1dac65924993198152f203861, type: 3}
+  skillIcon: {fileID: 3529693398294363086, guid: b81616cded640dc46a33a291c965668f, type: 3}

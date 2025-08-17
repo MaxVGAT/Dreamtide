@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Skill data - Chrono Wisp
   m_EditorClassIdentifier: 
   cost: 1
+  skillType: 1
+  upgradeData:
+    upgradeType: 0
+    cooldown: 0
   skillName: "\u30AF\u30ED\u30CE\u30A6\u30A3\u30B9\u30D7"
   skillDescription: "\u3059\u3079\u3066\u306E\u30B9\u30AD\u30EB\u306E\u30AF\u30FC\u30EB\u30C0\u30A6\u30F3\u30921\u79D2\u77ED\u7E2E\u3059\u308B"
-  skillIcon: {fileID: 5272401415994956661, guid: 0ffd98cac3be48d4c89146c26de4ccf7, type: 3}
+  skillIcon: {fileID: 1411165286493495576, guid: aa25e5c120dbb8044ad5283d672aa15c, type: 3}

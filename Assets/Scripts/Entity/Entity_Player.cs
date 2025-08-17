@@ -10,6 +10,7 @@ public class Entity_Player : Entity
     private UI ui;
     public PlayerInputSet input { get; private set; }
     public Player_SkillManager skillManager { get; private set; }
+    public Player_VFX vfx { get; private set; }
 
     #region State Variables
 
@@ -53,6 +54,7 @@ public class Entity_Player : Entity
         ui = FindAnyObjectByType<UI>();
         input = new PlayerInputSet();
         skillManager = GetComponent<Player_SkillManager>();
+        vfx = GetComponent<Player_VFX>();
 
         idleState = new PlayerIdleState(this, stateMachine, "idle");
         moveState = new PlayerMoveState(this, stateMachine, "move");
@@ -142,6 +144,7 @@ public void EnterAttackStateWithDelay()
         input.Player.Movement.canceled += context => moveInput = Vector2.zero;
 
         input.Player.ToggleSkillTreeUI.performed += context => ui.ToggleSkillTreeUI();
+        input.Player.Skill.performed += context => skillManager.shard.CreateShard();
     }
 
     private void OnDisable()
