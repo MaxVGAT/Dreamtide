@@ -17,7 +17,7 @@ MonoBehaviour:
   skillType: 2
   upgradeData:
     upgradeType: 9
-    cooldown: 0
-  skillName: 
-  skillDescription: 
-  skillIcon: {fileID: 0}
+    cooldown: 3
+  skillName: "\u30DF\u30B9\u30C6\u30A3\u30C3\u30AF\u30EA\u30D5\u30C8"
+  skillDescription: "\u30BF\u30A4\u30E0\u30B7\u30E3\u30FC\u30C9\u3092\u6700\u59273\u3064\u307E\u3067\u30B9\u30C8\u30C3\u30AF\u3057\u3001\u9023\u7D9A\u3067\u767A\u52D5\u53EF\u80FD\u306B\u306A\u308B\u3002"
+  skillIcon: {fileID: 344023446298822370, guid: e4de12a34fb3bb64c896ebaf85577991, type: 3}

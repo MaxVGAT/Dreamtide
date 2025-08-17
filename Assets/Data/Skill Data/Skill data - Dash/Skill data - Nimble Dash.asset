@@ -16,7 +16,7 @@ MonoBehaviour:
   unlockedByDefault: 1
   skillType: 0
   upgradeData:
-    upgradeType: 0
+    upgradeType: 1
     cooldown: 3
   skillName: "\u30CB\u30F3\u30D6\u30EB\u30C0\u30C3\u30B7\u30E5"
   skillDescription: "\u524D\u65B9\u306B\u30C0\u30C3\u30B7\u30E5\u3059\u308B\u3002\u30C0\u30C3\u30B7\u30E5\u4E2D\u306F\u7121\u6575\u3002"
