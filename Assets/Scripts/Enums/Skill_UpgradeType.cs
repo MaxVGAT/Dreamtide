@@ -14,7 +14,7 @@ public enum Skill_UpgradeType
     // --- Shard Tree ---
     Shard, //Shard explodes on enemy contact or after a delay
     Shard_MoveToEnemy, // Shard moves towards nearest enemy
-    Shard_TripleCast, // Shard can have multiple charges, and you can cast them all in succession
+    Shard_MultiCast, // Shard can have multiple charges, and you can cast them all in succession
     Shard_Teleport, // Swap places with the last shard created
     Shard_TeleportAndHeal, // When swapping with the shard, return to the %HP you had when creating the shard
 
