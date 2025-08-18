@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 142a7a87eaf7ac9489415d7277b1b995
+guid: 281112887890f014dbc8650e4478d1f9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2031465774204177760
-    second: sk3_lightning_gears_C_0
+      213: -8746002371043194218
+    second: sk6_wish_C_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sk3_lightning_gears_C_0
+      name: sk6_wish_C_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 06dcdc4cb57313c10800000000000000
-      internalID: 2031465774204177760
+      spriteID: 69a0f3d8e25ff9680800000000000000
+      internalID: -8746002371043194218
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      sk3_lightning_gears_C_0: 2031465774204177760
+      sk6_wish_C_0: -8746002371043194218
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Skill_Base : MonoBehaviour
 {
+    public Entity_Player player {  get; private set; }
+
     [Header("General details")]
     [SerializeField] protected Skill_Type skillType;
     [SerializeField] protected Skill_UpgradeType upgradeType;
@@ -10,6 +12,7 @@ public class Skill_Base : MonoBehaviour
 
     protected virtual void Awake()
     {
+        player = GetComponentInParent<Entity_Player>();
         lastTimeUsed = lastTimeUsed - cooldown;
     }
 
@@ -41,7 +44,7 @@ public class Skill_Base : MonoBehaviour
 
     protected bool Unlocked(Skill_UpgradeType upgradeToCheck) => upgradeType == upgradeToCheck;
 
-    private bool OnCooldown() => Time.time < lastTimeUsed + cooldown;
+    protected bool OnCooldown() => Time.time < lastTimeUsed + cooldown;
     public void SetSkillOnCooldown() => lastTimeUsed = Time.time;
     public void ResetCoolDownBy(float cooldownReduction) => lastTimeUsed = lastTimeUsed + cooldownReduction;
     public void ResetCooldown() => lastTimeUsed = Time.time;

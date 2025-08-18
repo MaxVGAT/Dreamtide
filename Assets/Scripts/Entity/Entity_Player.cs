@@ -76,6 +76,8 @@ public class Entity_Player : Entity
         stateMachine.Initialize(idleState);
     }
 
+    public void TeleportPlayer(Vector3 position) => transform.position = position;
+
     public override bool isBlocking => stateMachine.currentState is PlayerBlockState;
 
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)

@@ -112,6 +112,14 @@ public class Entity_Health : MonoBehaviour, IDamageable
         healthBar.value = Mathf.Clamp01(currentHealth / maxHealth);
     }
 
+    public float GetHealthPercent() => currentHealth / entityStats.GetMaxHealth();
+
+    public void SetHealthToPercent(float percent)
+    {
+        currentHealth = entityStats.GetMaxHealth() * Mathf.Clamp01(percent);
+        UpdateHealthBar();
+    }
+
     // Death logic - Override for custom behavior(animation, drops...)
     private void Die()
     {

@@ -6149,7 +6149,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2031465774204177760, guid: 142a7a87eaf7ac9489415d7277b1b995, type: 3}
+  m_Sprite: {fileID: -8746002371043194218, guid: 281112887890f014dbc8650e4478d1f9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15627,15 +15627,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89a53083e14c71c44ba4d515fec35c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillType: 0
+  skillType: 2
   upgradeType: 0
   cooldown: 5
   shardPrefab: {fileID: 8289729481560005600, guid: 07e7c79ac7b829449a55efb919f1fe9e, type: 3}
-  detonateTime: 2
+  detonateTime: 2.5
   shardSpeed: 3
   maxCharges: 3
   currentCharges: 0
   isRecharging: 0
+  shardExistDuration: 10
+  savedHealthPercent: 0
 --- !u!224 &8429720005807766515
 RectTransform:
   m_ObjectHideFlags: 0
