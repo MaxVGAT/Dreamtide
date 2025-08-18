@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -21,6 +22,7 @@ public class UI_SkillTree : MonoBehaviour
         foreach (var node in skillNodes)
             node.Refund();
     }
+
     public bool EnoughSkillPoints(int cost) => skillPoints >= cost;
     public void RemoveSkillPoint(int cost) => skillPoints -= cost;
     public void AddSkillPoints(int points) => skillPoints = skillPoints + points;

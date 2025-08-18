@@ -135,7 +135,7 @@ public class Skill_Shard : Skill_Base
 
        GameObject shard = Instantiate(shardPrefab, transform.position, Quaternion.identity);
         currentShard = shard.GetComponent<SkillObject_Shard>();
-        currentShard.SetupShard(detonationTime);
+        currentShard.SetupShard(this);
 
         if (Unlocked(Skill_UpgradeType.Shard_Teleport) || Unlocked(Skill_UpgradeType.Shard_TeleportHPRewind))
             currentShard.OnExplode += ForceCooldown;

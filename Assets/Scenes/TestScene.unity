@@ -13729,6 +13729,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 242d8314f0e9d444c8b05ee73ce078de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basicAttackScale:
+    physical: 1
+    elemental: 1
+    chillDuration: 3
+    chillSlowMultiplier: 0.2
+    burnDuration: 3
+    burnDamageScale: 1
+    shockDuration: 3
+    shockDamageScale: 1
+    shockCharge: 0.4
   targetCheck: {fileID: 5827150283834620397}
   targetCheckRadius: 1
   whatIsTarget:
@@ -14285,10 +14295,10 @@ MonoBehaviour:
       baseValue: 0
       modifiers: []
     iceDamage:
-      baseValue: 10
+      baseValue: 0
       modifiers: []
     lightningDamage:
-      baseValue: 0
+      baseValue: 10
       modifiers: []
   defense:
     armor:
