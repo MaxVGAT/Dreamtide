@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerWallJumpState : PlayerState
+public class Player_WallJumpState : PlayerState
 {
-    public PlayerWallJumpState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public Player_WallJumpState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

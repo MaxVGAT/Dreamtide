@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class PlayerCounterAttackState : PlayerState
+public class Player_CounterAttackState : PlayerState
 {
     private Entity_VFX vfx;
     private Player_Combat combat;
     private bool counteredSomething;
 
-    public PlayerCounterAttackState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public Player_CounterAttackState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
         combat = player.GetComponent<Player_Combat>();
         vfx = player.GetComponent<Entity_VFX>();

@@ -5,16 +5,18 @@ using System;
 
 public class Skill_DataSO : ScriptableObject
 {
-    public int cost;
-    public bool unlockedByDefault;
-    public Skill_Type skillType;
-    public UpgradeData upgradeData;
 
     [Header("Skill description")]
     public string skillName;
     [TextArea]
     public string skillDescription;
     public Sprite skillIcon;
+
+    [Header("Unlock & Upgrade")]
+    public int cost;
+    public bool unlockedByDefault;
+    public Skill_Type skillType;
+    public UpgradeData upgradeData;
 }
 
 [Serializable]

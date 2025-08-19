@@ -11,21 +11,24 @@ public class Entity_Player : Entity
     public PlayerInputSet input { get; private set; }
     public Player_SkillManager skillManager { get; private set; }
     public Player_VFX vfx { get; private set; }
+    public Entity_Health health { get; private set; }
+    public Entity_StatusHandler statusHandler { get; private set; }
 
     #region State Variables
 
-    public PlayerIdleState idleState { get; private set; }
-    public PlayerMoveState moveState { get; private set; }
-    public PlayerJumpState jumpState { get; private set; }
-    public PlayerFallState fallState { get; private set; }
-    public PlayerWallSlideState wallSlideState { get; private set; }
-    public PlayerWallJumpState wallJumpState { get; private set; }
-    public PlayerDashState dashState { get; private set; }
-    public PlayerBasicAttackState basicAttackState { get; private set; }
-    public playerJumpAttackState jumpAttackState { get; private set; }
-    public PlayerDeadState deadState { get; private set; }
-    public PlayerBlockState blockState { get; private set; }
-    public PlayerCounterAttackState counterAttackState { get; private set; }
+    public Player_IdleState idleState { get; private set; }
+    public Player_MoveState moveState { get; private set; }
+    public Player_JumpState jumpState { get; private set; }
+    public Player_FallState fallState { get; private set; }
+    public Player_WallSlideState wallSlideState { get; private set; }
+    public Player_WallJumpState wallJumpState { get; private set; }
+    public Player_DashState dashState { get; private set; }
+    public Player_BasicAttackState basicAttackState { get; private set; }
+    public Player_JumpAttackState jumpAttackState { get; private set; }
+    public Player_DeadState deadState { get; private set; }
+    public Player_BlockState blockState { get; private set; }
+    public Player_CounterAttackState counterAttackState { get; private set; }
+    public Player_SwordThrowState swordThrowState { get; private set; }
 
     #endregion
 
@@ -44,6 +47,7 @@ public class Entity_Player : Entity
     public float wallSlideSlowMultiplier = 0.7f;
     [Space] public float dashDuration = 0.25f;
     public float dashSpeed = 20f;
+    public Vector2 mousePosition {  get; private set; }
 
     public Vector2 moveInput { get; private set; }
 
@@ -51,23 +55,26 @@ public class Entity_Player : Entity
     {
         base.Awake();
 
-        ui = FindAnyObjectByType<UI>();
         input = new PlayerInputSet();
-        skillManager = GetComponent<Player_SkillManager>();
+        ui = FindAnyObjectByType<UI>();
         vfx = GetComponent<Player_VFX>();
+        health = GetComponent<Entity_Health>();
+        skillManager = GetComponent<Player_SkillManager>();
+        statusHandler = GetComponent<Entity_StatusHandler>();
 
-        idleState = new PlayerIdleState(this, stateMachine, "idle");
-        moveState = new PlayerMoveState(this, stateMachine, "move");
-        jumpState = new PlayerJumpState(this, stateMachine, "jumpFall");
-        fallState = new PlayerFallState(this, stateMachine, "jumpFall");
-        wallSlideState = new PlayerWallSlideState(this, stateMachine, "wallSlide");
-        wallJumpState = new PlayerWallJumpState(this, stateMachine, "jumpFall");
-        dashState = new PlayerDashState(this, stateMachine, "dash");
-        basicAttackState = new PlayerBasicAttackState(this, stateMachine, "basicAttack");
-        jumpAttackState = new playerJumpAttackState(this, stateMachine, "jumpAttack");
-        deadState = new PlayerDeadState(this, stateMachine, "death");
-        blockState = new PlayerBlockState(this, stateMachine, "block");
-        counterAttackState = new PlayerCounterAttackState(this, stateMachine, "counterAttack");
+        idleState = new Player_IdleState(this, stateMachine, "idle");
+        moveState = new Player_MoveState(this, stateMachine, "move");
+        jumpState = new Player_JumpState(this, stateMachine, "jumpFall");
+        fallState = new Player_FallState(this, stateMachine, "jumpFall");
+        wallSlideState = new Player_WallSlideState(this, stateMachine, "wallSlide");
+        wallJumpState = new Player_WallJumpState(this, stateMachine, "jumpFall");
+        dashState = new Player_DashState(this, stateMachine, "dash");
+        basicAttackState = new Player_BasicAttackState(this, stateMachine, "basicAttack");
+        jumpAttackState = new Player_JumpAttackState(this, stateMachine, "jumpAttack");
+        deadState = new Player_DeadState(this, stateMachine, "death");
+        blockState = new Player_BlockState(this, stateMachine, "block");
+        counterAttackState = new Player_CounterAttackState(this, stateMachine, "counterAttack");
+        swordThrowState = new Player_SwordThrowState(this, stateMachine, "swordThrow");
     }
 
     protected override void Start()
@@ -78,7 +85,7 @@ public class Entity_Player : Entity
 
     public void TeleportPlayer(Vector3 position) => transform.position = position;
 
-    public override bool isBlocking => stateMachine.currentState is PlayerBlockState;
+    public override bool isBlocking => stateMachine.currentState is Player_BlockState;
 
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
     {
@@ -141,6 +148,8 @@ public void EnterAttackStateWithDelay()
     private void OnEnable()
     {
         input.Enable();
+
+        input.Player.Mouse.performed += context => mousePosition = context.ReadValue<Vector2>();
 
         input.Player.Movement.performed += context => moveInput = context.ReadValue<Vector2>();
         input.Player.Movement.canceled += context => moveInput = Vector2.zero;

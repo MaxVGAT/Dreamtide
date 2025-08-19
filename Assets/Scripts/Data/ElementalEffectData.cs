@@ -1,8 +1,6 @@
 using UnityEngine;
 using System;
 
-[Serializable]
-
 public class ElementalEffectData // Class used to pass values to HandleStatusEffect script
 {
     public float chillDuration;

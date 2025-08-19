@@ -19,16 +19,17 @@ public class SkillObject_Base : MonoBehaviour
             if (damageable == null)
                 continue;
 
-            ElementalEffectData effectData = new ElementalEffectData(playerStats, damageScaleData);
+            AttackData attackData = playerStats.GetAttackData(damageScaleData);
+            Entity_StatusHandler statusHandler = GetComponent<Entity_StatusHandler>();
 
-            float physDamage = playerStats.GetPhysicalDamage(out bool isCrit, damageScaleData.physical);
-            float elemDamage = playerStats.GetElementalDamage(out ElementType element, damageScaleData.elemental);
-
+            float physDamage = attackData.physicalDamage;
+            float elemDamage = attackData.elementalDamage;
+            ElementType element = attackData.element;
 
             damageable.TakeDamage(physDamage, elemDamage, element, transform);
 
             if (element != ElementType.None)
-                target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(element, effectData);
+                statusHandler.ApplyStatusEffect(element, attackData.effectData);
 
             usedElement = element;
         }

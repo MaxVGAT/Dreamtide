@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PlayerBasicAttackState : PlayerState
+public class Player_BasicAttackState : PlayerState
 {
 
     private float attackVelocityTimer;
@@ -13,7 +13,7 @@ public class PlayerBasicAttackState : PlayerState
     private int comboLimit = 3;
     private int attackDirection;
 
-    public PlayerBasicAttackState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public Player_BasicAttackState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
         if (comboLimit != player.attackVelocity.Length)
             comboLimit = player.attackVelocity.Length;

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerIdleState : PlayerGroundedState
+public class Player_IdleState : PlayerGroundedState
 {
-    public PlayerIdleState(Entity_Player player, StateMachine stateMachine, string stateName) : base(player, stateMachine, stateName)
+    public Player_IdleState(Entity_Player player, StateMachine stateMachine, string stateName) : base(player, stateMachine, stateName)
     {
 
     }

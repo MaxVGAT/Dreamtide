@@ -8546,15 +8546,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4311263533504529630, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4311263533504529630, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5463326596169511843, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
       propertyPath: m_Name
       value: PigAssassin
+      objectReference: {fileID: 0}
+    - target: {fileID: 5463326596169511843, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6883548938180043010, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13741,11 +13745,6 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256
-  defaultDuration: 3
-  chillSlowMultiplier: 0.2
-  electrifyChargeBuildUp: 0.4
-  fireScale: 0.8
-  lightningScale: 2.5
   counterRecovery: 0.25
 --- !u!1 &5137344466433247313
 GameObject:

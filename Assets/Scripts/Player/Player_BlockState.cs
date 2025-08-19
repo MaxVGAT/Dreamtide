@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class PlayerBlockState : PlayerState
+public class Player_BlockState : PlayerState
 {
 
     private float blockDuration = 0.5f;
     private float blockTimer;
 
-    public PlayerBlockState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public Player_BlockState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

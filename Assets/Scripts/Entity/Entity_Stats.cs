@@ -12,6 +12,11 @@ public class Entity_Stats : MonoBehaviour
     public Stats_DefenseGroup defense;
     public Stats_MajorGroup major;
 
+    public AttackData GetAttackData(DamageScaleData scaleData)
+    {
+        return new AttackData(this, scaleData);
+    }
+
     public float GetPhysicalDamage(out bool isCrit, float scaleFactor = 1)
     {
         float baseDamage = offense.damage.GetValue();
