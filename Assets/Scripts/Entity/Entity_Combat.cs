@@ -48,10 +48,7 @@ public class Entity_Combat : MonoBehaviour
                 target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(element, effectData);
 
             if (targetGotHit)
-            {
-                vfx.UpdateOnHitColor(element);
-                vfx.CreateOnHitVFX(target.transform, isCrit);
-            }
+                vfx.CreateOnHitVFX(target.transform, isCrit, element);
         }
     }
 

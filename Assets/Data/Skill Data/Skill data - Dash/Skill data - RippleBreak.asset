@@ -13,10 +13,21 @@ MonoBehaviour:
   m_Name: Skill data - RippleBreak
   m_EditorClassIdentifier: 
   cost: 3
+  unlockedByDefault: 0
   skillType: 0
   upgradeData:
-    upgradeType: 4
+    upgradeType: 5
     cooldown: 3
+    damageScaleData:
+      physical: 1
+      elemental: 1
+      chillDuration: 3
+      chillSlowMultiplier: 0.2
+      burnDuration: 3
+      burnDamageScale: 1
+      shockDuration: 3
+      shockDamageScale: 1
+      shockCharge: 0.4
   skillName: "\u30EA\u30C3\u30D7\u30EB\u30D6\u30EC\u30A4\u30AF"
   skillDescription: "\u30C0\u30C3\u30B7\u30E5\u7D42\u4E86\u5730\u70B9\u306B\u6642\u306E\u6B20\u7247\u3092\u6B8B\u3059\u3002"
   skillIcon: {fileID: 874024834286705393, guid: d0f96c9b1edacb344974b92c58065b5d, type: 3}

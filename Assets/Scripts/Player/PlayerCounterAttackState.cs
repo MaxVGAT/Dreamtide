@@ -22,8 +22,11 @@ public class PlayerCounterAttackState : PlayerState
 
         anim.SetBool("counterAttackPerformed", counteredSomething);
 
-        if(counteredSomething && combat.counteredTargetTransform != null)
-            vfx.CreateOnHitVFX(combat.counteredTargetTransform, isCrit);
+        if (counteredSomething && combat.counteredTargetTransform != null)
+        {
+            player.stats.GetElementalDamage(out ElementType element);
+            vfx.CreateOnHitVFX(combat.counteredTargetTransform, isCrit, element);
+        }
     }
 
     public override void Update()

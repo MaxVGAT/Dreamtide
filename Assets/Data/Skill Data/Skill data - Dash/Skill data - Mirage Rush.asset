@@ -18,6 +18,16 @@ MonoBehaviour:
   upgradeData:
     upgradeType: 3
     cooldown: 3
+    damageScaleData:
+      physical: 1
+      elemental: 1
+      chillDuration: 3
+      chillSlowMultiplier: 0.2
+      burnDuration: 3
+      burnDamageScale: 1
+      shockDuration: 3
+      shockDamageScale: 1
+      shockCharge: 0.4
   skillName: "\u30DF\u30E9\u30FC\u30B8\u30E5\u30E9\u30C3\u30B7\u30E5"
-  skillDescription: "\u30C0\u30C3\u30B7\u30E5\u958B\u59CB\u5730\u70B9\u306B\u5206\u8EAB\u3092\u6B8B\u3059\u3002"
+  skillDescription: "\u30C0\u30C3\u30B7\u30E5\u7D42\u4E86\u5730\u70B9\u306B\u5206\u8EAB\u3092\u6B8B\u3059\u3002"
   skillIcon: {fileID: -7833787783344520613, guid: 0e685c5a1e8bedb47a91f1543aa876f8, type: 3}

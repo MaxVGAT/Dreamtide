@@ -141,6 +141,13 @@ public class Skill_Shard : Skill_Base
             currentShard.OnExplode += ForceCooldown;
     }
 
+    public void CreateRawShard()
+    {
+        bool canMove = Unlocked(Skill_UpgradeType.Shard_MoveToEnemy) || Unlocked(Skill_UpgradeType.Shard_MultiCast);
+        GameObject shard = Instantiate(shardPrefab, transform.position, Quaternion.identity);
+        shard.GetComponent<SkillObject_Shard>().SetupShard(this, detonateTime, canMove, shardSpeed);
+    }
+
     public float GetDetonateTime()
     {
         if (Unlocked(Skill_UpgradeType.Shard_Teleport) || Unlocked(Skill_UpgradeType.Shard_TeleportHPRewind))

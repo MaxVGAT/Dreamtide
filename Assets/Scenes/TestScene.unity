@@ -8556,10 +8556,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PigAssassin
       objectReference: {fileID: 0}
-    - target: {fileID: 5463326596169511843, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6883548938180043010, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.14237
@@ -8684,6 +8680,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   neededNodes:
   - {fileID: 413007040}
+  - {fileID: 1635389351}
   conflictNodes:
   - {fileID: 321265622}
   isUnlocked: 0
@@ -14270,7 +14267,7 @@ MonoBehaviour:
   setupSO: {fileID: 11400000, guid: 3e87325d787b0fc4fa80cc03817bdd30, type: 2}
   resources:
     maxHealth:
-      baseValue: 0
+      baseValue: 1000000
       modifiers: []
     healthRegen:
       baseValue: 0
@@ -14286,19 +14283,19 @@ MonoBehaviour:
       baseValue: 0
       modifiers: []
     critChance:
-      baseValue: 0
+      baseValue: 100
       modifiers: []
     armorReduction:
       baseValue: 0
       modifiers: []
     fireDamage:
-      baseValue: 0
+      baseValue: 1
       modifiers: []
     iceDamage:
       baseValue: 0
       modifiers: []
     lightningDamage:
-      baseValue: 10
+      baseValue: 0
       modifiers: []
   defense:
     armor:
@@ -15471,7 +15468,7 @@ MonoBehaviour:
   critHitVfx: {fileID: 2932540793665141418, guid: c85a78c8ddd1aaa48969029749e053f3, type: 3}
   chillVfx: {r: 0, g: 0.68235296, b: 1, a: 1}
   burnVfx: {r: 1, g: 0, b: 0, a: 1}
-  electrifyVfx: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  shockVfx: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   imageEchoInterval: 0.05
   imageEchoPrefab: {fileID: 7879443876130779917, guid: 117fa967d9954d64991e14ccc379f312, type: 3}
 --- !u!1 &7283600354636353571

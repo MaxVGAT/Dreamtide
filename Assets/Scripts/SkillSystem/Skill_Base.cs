@@ -3,6 +3,7 @@ using UnityEngine;
 public class Skill_Base : MonoBehaviour
 {
     public Entity_Player player {  get; private set; }
+    public Player_SkillManager skillManager { get; private set; }
 
     public DamageScaleData damageScaleData {  get; private set; }
 
@@ -15,6 +16,7 @@ public class Skill_Base : MonoBehaviour
     protected virtual void Awake()
     {
         player = GetComponentInParent<Entity_Player>();
+        skillManager = GetComponentInParent<Player_SkillManager>();
         lastTimeUsed = lastTimeUsed - cooldown;
     }
 

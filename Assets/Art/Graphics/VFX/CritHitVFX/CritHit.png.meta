@@ -1,28 +1,97 @@
 fileFormatVersion: 2
-guid: cba94c0f58e1d5b488648244958d6104
+guid: d122aba31c329464d9d26a706a02f677
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -623447813308006230
-    second: Hit Effect 01 3_0
+      213: 8020143640844766479
+    second: spritesheet_0
   - first:
-      213: -8781870586721272024
-    second: Hit Effect 01 3_1
+      213: -6251682230944352461
+    second: spritesheet_1
   - first:
-      213: -3586752702117300977
-    second: Hit Effect 01 3_2
+      213: -1259408508766424310
+    second: spritesheet_2
   - first:
-      213: -2714644189713100859
-    second: Hit Effect 01 3_3
+      213: -5962389079421231736
+    second: spritesheet_3
   - first:
-      213: -8757599939959736079
-    second: Hit Effect 01 3_4
+      213: 2788568348960109317
+    second: spritesheet_4
   - first:
-      213: -204377347997842372
-    second: Hit Effect 01 3_5
+      213: 226702753830753226
+    second: spritesheet_5
   - first:
-      213: -2283663110241815955
-    second: Hit Effect 01 3_6
+      213: -7921052967969465774
+    second: spritesheet_6
+  - first:
+      213: -1370661682523340017
+    second: spritesheet_7
+  - first:
+      213: -8276262488406422588
+    second: spritesheet_8
+  - first:
+      213: -5906973516983679737
+    second: spritesheet_9
+  - first:
+      213: 5777552420452043588
+    second: spritesheet_10
+  - first:
+      213: 1269540525142108225
+    second: spritesheet_11
+  - first:
+      213: -2630129836624287915
+    second: spritesheet_12
+  - first:
+      213: -7676219313036738927
+    second: spritesheet_13
+  - first:
+      213: 6985626698306143173
+    second: spritesheet_14
+  - first:
+      213: 4773514653529381359
+    second: spritesheet_15
+  - first:
+      213: 6413020478584453356
+    second: spritesheet_16
+  - first:
+      213: -6420534950463556919
+    second: spritesheet_17
+  - first:
+      213: 8367830406354533065
+    second: spritesheet_18
+  - first:
+      213: -4721245407534591264
+    second: spritesheet_19
+  - first:
+      213: -2642393358525368334
+    second: spritesheet_20
+  - first:
+      213: 182515998739034355
+    second: spritesheet_21
+  - first:
+      213: 5390129371266227295
+    second: spritesheet_22
+  - first:
+      213: 1111231892956182058
+    second: spritesheet_23
+  - first:
+      213: 3042023047814558122
+    second: spritesheet_24
+  - first:
+      213: -1297572194080285004
+    second: spritesheet_25
+  - first:
+      213: -5351138903708955224
+    second: spritesheet_26
+  - first:
+      213: -5895191231709818157
+    second: spritesheet_27
+  - first:
+      213: 4116411608050698257
+    second: spritesheet_28
+  - first:
+      213: 2696214034221626940
+    second: spritesheet_29
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -69,7 +138,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -118,7 +187,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hit Effect 01 3_0
+      name: CritHit_0
       rect:
         serializedVersion: 2
         x: 0
@@ -126,21 +195,21 @@ TextureImporter:
         width: 48
         height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: aa048c754811957f0800000000000000
-      internalID: -623447813308006230
+      spriteID: 67f0595c787ecdb49aaf71d27f6a60a5
+      internalID: -1815038101
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hit Effect 01 3_1
+      name: CritHit_1
       rect:
         serializedVersion: 2
         x: 48
@@ -148,21 +217,21 @@ TextureImporter:
         width: 48
         height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 82ff60fca37802680800000000000000
-      internalID: -8781870586721272024
+      spriteID: f4428c8bdd8da054ba7433dc2f0066ae
+      internalID: 1977610747
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hit Effect 01 3_2
+      name: CritHit_2
       rect:
         serializedVersion: 2
         x: 96
@@ -170,21 +239,21 @@ TextureImporter:
         width: 48
         height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: f05302dbb6b493ec0800000000000000
-      internalID: -3586752702117300977
+      spriteID: 6e5c0e4092bd83e4a83a56b960de8d1d
+      internalID: 551970075
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hit Effect 01 3_3
+      name: CritHit_3
       rect:
         serializedVersion: 2
         x: 144
@@ -192,21 +261,21 @@ TextureImporter:
         width: 48
         height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 5cf82940e75a35ad0800000000000000
-      internalID: -2714644189713100859
+      spriteID: 6212c3724458be2448c42df05e8944eb
+      internalID: 1405074187
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hit Effect 01 3_4
+      name: CritHit_4
       rect:
         serializedVersion: 2
         x: 192
@@ -214,21 +283,21 @@ TextureImporter:
         width: 48
         height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 1f8b7bd1141c67680800000000000000
-      internalID: -8757599939959736079
+      spriteID: 3daac8c162b2b3e449753ea783b61c8f
+      internalID: -1511484019
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hit Effect 01 3_5
+      name: CritHit_5
       rect:
         serializedVersion: 2
         x: 240
@@ -236,15 +305,59 @@ TextureImporter:
         width: 48
         height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c34c37482e7e92df0800000000000000
-      internalID: -204377347997842372
+      spriteID: 95289e9de7994f44ea0ac653ced15c6f
+      internalID: 1620424881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CritHit_6
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b01d14429461fc5439afad9e4f26145b
+      internalID: 469807117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CritHit_7
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 627bf96f06fb59b488629e12ca619907
+      internalID: -724731894
       vertices: []
       indices: 
       edges: []
@@ -253,7 +366,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: aba308e8ee6c9fb43940435ee109e013
+    spriteID: ef72a66c8d0e28d4eb2560f45a90d2ec
     internalID: 0
     vertices: []
     indices: 
@@ -263,14 +376,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Hit Effect 01 3_0: -623447813308006230
-      Hit Effect 01 3_1: -8781870586721272024
-      Hit Effect 01 3_2: -3586752702117300977
-      Hit Effect 01 3_3: -2714644189713100859
-      Hit Effect 01 3_4: -8757599939959736079
-      Hit Effect 01 3_5: -204377347997842372
+      CritHit_0: -1815038101
+      CritHit_1: 1977610747
+      CritHit_2: 551970075
+      CritHit_3: 1405074187
+      CritHit_4: -1511484019
+      CritHit_5: 1620424881
+      CritHit_6: 469807117
+      CritHit_7: -724731894
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
