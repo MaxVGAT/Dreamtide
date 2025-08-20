@@ -1040,7 +1040,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 141.42139, y: -141.42139}
+  m_AnchoredPosition: {x: 141.4214, y: -141.4214}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &197532668
@@ -1834,7 +1834,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -138.80511, y: -138.80505}
+  m_AnchoredPosition: {x: -138.80511, y: -138.80502}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &321265621
@@ -2660,7 +2660,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -55.57843, y: -263.59814}
+  m_AnchoredPosition: {x: -55.578457, y: -263.59818}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &454971270
@@ -3426,7 +3426,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 263.43726, y: 39.78247}
+  m_AnchoredPosition: {x: 263.43735, y: 39.78247}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &594782634
@@ -6769,7 +6769,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 141.12366, y: -312.02118}
+  m_AnchoredPosition: {x: 141.12372, y: -312.0212}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1038987753
@@ -7722,7 +7722,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -115.68225, y: -134.49304}
+  m_AnchoredPosition: {x: -115.68222, y: -134.49301}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1315881535
@@ -8643,7 +8643,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 108.75299, y: -114.201904}
+  m_AnchoredPosition: {x: 108.75298, y: -114.20192}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1492063591
@@ -10189,7 +10189,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 166.61743, y: -247.91876}
+  m_AnchoredPosition: {x: 166.61745, y: -247.91878}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1705821044
@@ -11828,7 +11828,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -128.08447, y: -276.25156}
+  m_AnchoredPosition: {x: -128.08449, y: -276.25153}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2082854268
@@ -12666,7 +12666,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1899722997
-  m_SortingLayer: -1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -12718,7 +12718,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -418569315
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: -356594966, guid: 3bf776d222e8fea458806ac11a506528, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -13753,7 +13753,7 @@ MonoBehaviour:
     shockDamageScale: 1
     shockCharge: 0.4
   targetCheck: {fileID: 5827150283834620397}
-  targetCheckRadius: 1
+  targetCheckRadius: 1.5
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256
@@ -14167,7 +14167,7 @@ Transform:
   m_GameObject: {fileID: 7579666268053863656}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.4, y: 0, z: 0}
+  m_LocalPosition: {x: 1.731, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15666,14 +15666,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7285913125416241573}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3426b3cf015fff7449ef8668fcb6171f, type: 3}
+  m_Script: {fileID: 11500000, guid: 36b688d5ab6f7a44b89fff0b9a2ba5a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 3
   upgradeType: 11
-  cooldown: 0
-  throwPower: 2.5
-  swordGravity: 3.5
+  cooldown: 1
+  swordPrefab: {fileID: 4212682362137729594, guid: ccef40557bc4b1a46ad64ae735e44d78, type: 3}
+  throwPower: 2
   predictionDot: {fileID: 1155228352080299240, guid: c0f997aaf52fac643a3fd251a58825b1, type: 3}
   numberOfDots: 20
   spaceBetweenDots: 0.04
