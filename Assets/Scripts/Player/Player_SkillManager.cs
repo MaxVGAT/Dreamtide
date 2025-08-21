@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Player_SkillManager : MonoBehaviour
 {
-    public Skill_Dash dash {  get; private set; }
+    public Skill_Dash dash { get; private set; }
     public Skill_Shard shard { get; private set; }
     public Skill_SwordThrow swordThrow { get; private set; }
 
@@ -15,12 +15,14 @@ public class Player_SkillManager : MonoBehaviour
 
     public Skill_Base GetSkillByType(Skill_Type type)
     {
-        switch(type)
+        switch (type)
         {
             case Skill_Type.Dash:
                 return dash;
             case Skill_Type.TimeShard:
                 return shard;
+            case Skill_Type.SwordThrow:
+                return swordThrow;
             default:
                 Debug.Log("Not implemented");
                 return null;

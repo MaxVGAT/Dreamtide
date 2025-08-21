@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEngine;
 
 public class SkillObject_Sword : SkillObject_Base
@@ -10,7 +9,7 @@ public class SkillObject_Sword : SkillObject_Base
     protected bool canComeBack;
     protected float maxAllowedDistance = 25;
 
-    private void Update()
+    protected virtual void Update()
     {
         transform.right = rb.linearVelocity;
         HandleComeback();
@@ -29,7 +28,7 @@ public class SkillObject_Sword : SkillObject_Base
 
     public void GetSwordBackToPlayer() => canComeBack = true;
 
-    protected void HandleComeback()
+    protected virtual void HandleComeback()
     {
         float distance = Vector2.Distance(transform.position, playerTransform.position);
 
@@ -38,6 +37,7 @@ public class SkillObject_Sword : SkillObject_Base
 
         if (canComeBack == false)
             return;
+
 
         transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, comebackSpeed * Time.deltaTime);
 

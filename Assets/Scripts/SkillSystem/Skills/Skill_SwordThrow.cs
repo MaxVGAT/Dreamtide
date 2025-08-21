@@ -9,6 +9,16 @@ public class Skill_SwordThrow : Skill_Base
     [Range(0, 10)]
     [SerializeField] private float throwPower = 5;
 
+    [Header("Pierce sword Upgrade")]
+    [SerializeField] private GameObject pierceSwordPrefab;
+    public int amountToPierce = 2;
+
+    [Header("Spin sword upgrade")]
+    [SerializeField] private GameObject spinSwordPrefab;
+    public int maxDistance = 5;
+    public float attacksPerSecond = 2;
+    public float maxSpinDuration = 3;
+
     [Header("Trajectory Prediction")]
     [SerializeField] private GameObject predictionDot;
     [SerializeField] private int numberOfDots = 20;
@@ -39,10 +49,28 @@ public class Skill_SwordThrow : Skill_Base
 
     public void ThrowSword()
     {
+        GameObject swordPrefab = GetSwordPrefab();
         GameObject newSword = Instantiate(swordPrefab, dots[1].position, Quaternion.identity);
 
         currentSword = newSword.GetComponent<SkillObject_Sword>();
         currentSword.SetupSword(this, GetThrowPower());
+    }
+
+    private GameObject GetSwordPrefab()
+    {
+        if (Unlocked(Skill_UpgradeType.SwordThrow))
+            return swordPrefab;
+
+        if(Unlocked(Skill_UpgradeType.SwordThrow_Pierce))
+            return pierceSwordPrefab;
+
+        if (Unlocked(Skill_UpgradeType.SwordThrow_Spin))
+            return spinSwordPrefab;
+
+        //if (Unlocked(Skill_UpgradeType.SwordThrow_Bounce))
+        //    return bounceSwordPrefab;
+
+        return null;
     }
 
     private Vector2 GetThrowPower() => confirmedDirection * (throwPower * 10);

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: facaff2601b82b54082f938e8a1e534a
+guid: 8536789a0961be0448e21232f77a751e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6395310963527169484
-    second: sk6_afterimage_A_0
+      213: -1786879023519679973
+    second: sk6_coin_toss_C_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sk6_afterimage_A_0
+      name: sk6_coin_toss_C_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 43a4dceff8a4f37a0800000000000000
-      internalID: -6395310963527169484
+      spriteID: b1a3382defab337e0800000000000000
+      internalID: -1786879023519679973
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      sk6_afterimage_A_0: -6395310963527169484
+      sk6_coin_toss_C_0: -1786879023519679973
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

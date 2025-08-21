@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Net;
 
 [Serializable]
 public class UI_ConnectionDetails

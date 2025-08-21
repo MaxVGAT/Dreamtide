@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d21b3dc8399c21548bdceab170e4329c, type: 3}
-  m_Name: Skill data - Nimble Dash
+  m_Name: Skill data - Spin
   m_EditorClassIdentifier: 
-  skillName: "\u30CB\u30F3\u30D6\u30EB\u30C0\u30C3\u30B7\u30E5"
-  skillDescription: "\u524D\u65B9\u306B\u30C0\u30C3\u30B7\u30E5\u3059\u308B\u3002\u30C0\u30C3\u30B7\u30E5\u4E2D\u306F\u7121\u6575\u3002"
-  skillIcon: {fileID: -6395310963527169484, guid: facaff2601b82b54082f938e8a1e534a, type: 3}
-  cost: 0
-  unlockedByDefault: 1
-  skillType: 0
+  skillName: "\u30B9\u30D4\u30F3"
+  skillDescription: "\u5263\u3092\u6295\u3052\u308B\u3002\u5263\u306F\u72B6\u614B\u7570\u5E38\u3092\u4ED8\u4E0E\u3059\u308B\u304C\u3001\u4E00\u5EA6\u306B\u5B58\u5728\u3067\u304D\u308B\u306E\u306F1\u672C\u3060\u3051\u3002"
+  skillIcon: {fileID: 4845848101637370887, guid: f1eba78bf5d9dbb459192961af234b6a, type: 3}
+  cost: 3
+  unlockedByDefault: 0
+  skillType: 3
   upgradeData:
-    upgradeType: 1
-    cooldown: 3
+    upgradeType: 12
+    cooldown: 1
     damageScaleData:
       physical: 1
       elemental: 1

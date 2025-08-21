@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: facaff2601b82b54082f938e8a1e534a
+guid: 1c342a18fc6e56442a5b399534bd1a22
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6395310963527169484
-    second: sk6_afterimage_A_0
+      213: 4125080749675456884
+    second: sk6_katana_C_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sk6_afterimage_A_0
+      name: sk6_katana_C_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 43a4dceff8a4f37a0800000000000000
-      internalID: -6395310963527169484
+      spriteID: 4792532161b3f3930800000000000000
+      internalID: 4125080749675456884
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      sk6_afterimage_A_0: -6395310963527169484
+      sk6_katana_C_0: 4125080749675456884
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

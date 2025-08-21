@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: facaff2601b82b54082f938e8a1e534a
+guid: f1eba78bf5d9dbb459192961af234b6a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6395310963527169484
-    second: sk6_afterimage_A_0
+      213: 4845848101637370887
+    second: sk1_magic_dagger_C_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sk6_afterimage_A_0
+      name: sk1_magic_dagger_C_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 43a4dceff8a4f37a0800000000000000
-      internalID: -6395310963527169484
+      spriteID: 704b89d8c29ef3340800000000000000
+      internalID: 4845848101637370887
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      sk6_afterimage_A_0: -6395310963527169484
+      sk1_magic_dagger_C_0: 4845848101637370887
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -13,6 +13,7 @@ public class Skill_Base : MonoBehaviour
     [SerializeField] protected float cooldown;
     private float lastTimeUsed;
 
+
     protected virtual void Awake()
     {
         player = GetComponentInParent<Entity_Player>();

@@ -12,10 +12,12 @@ public class SkillObject_Base : MonoBehaviour
     protected ElementType usedElement;
     protected bool targetGotHit;
     protected Rigidbody2D rb;
+    protected Animator anim;
 
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     protected void DamageEnemiesInRadius(Transform t, float radius)
