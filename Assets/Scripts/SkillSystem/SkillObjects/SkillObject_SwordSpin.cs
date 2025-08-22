@@ -51,6 +51,7 @@ public class SkillObject_SwordSpin : SkillObject_Sword
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        anim?.SetTrigger("spin");
         rb.simulated = false;
     }
 }
