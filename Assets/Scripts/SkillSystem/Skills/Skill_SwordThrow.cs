@@ -19,6 +19,11 @@ public class Skill_SwordThrow : Skill_Base
     public float attacksPerSecond = 2;
     public float maxSpinDuration = 3;
 
+    [Header("Bounce Sword Upgrade")]
+    [SerializeField] private GameObject bounceSwordPrefab;
+    public int bounceCount = 5;
+    public float bounceSpeed = 12;
+
     [Header("Trajectory Prediction")]
     [SerializeField] private GameObject predictionDot;
     [SerializeField] private int numberOfDots = 20;
@@ -42,9 +47,7 @@ public class Skill_SwordThrow : Skill_Base
             return false;
         }
 
-
-
-            return base.CanUseSkill();
+        return base.CanUseSkill();
     }
 
     public void ThrowSword()
@@ -61,14 +64,14 @@ public class Skill_SwordThrow : Skill_Base
         if (Unlocked(Skill_UpgradeType.SwordThrow))
             return swordPrefab;
 
-        if(Unlocked(Skill_UpgradeType.SwordThrow_Pierce))
+        if (Unlocked(Skill_UpgradeType.SwordThrow_Pierce))
             return pierceSwordPrefab;
 
         if (Unlocked(Skill_UpgradeType.SwordThrow_Spin))
             return spinSwordPrefab;
 
-        //if (Unlocked(Skill_UpgradeType.SwordThrow_Bounce))
-        //    return bounceSwordPrefab;
+        if (Unlocked(Skill_UpgradeType.SwordThrow_Bounce))
+            return bounceSwordPrefab;
 
         return null;
     }

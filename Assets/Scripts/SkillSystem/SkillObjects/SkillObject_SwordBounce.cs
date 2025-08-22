@@ -10,9 +10,24 @@ public class SkillObject_SwordBounce : SkillObject_Sword
     private Transform nextTarget;
     private List<Transform> selectedBefore = new List<Transform>();
 
+    public override void SetupSword(Skill_SwordThrow swordManager, Vector2 direction)
+    {
+        anim.SetTrigger("spin");
+        base.SetupSword(swordManager, direction);
+
+        bounceSpeed = swordManager.bounceSpeed;
+        bounceCount = swordManager.bounceCount;
+    }
+
+    protected override void Update()
+    {
+        HandleComeback();
+        HandleBounce();
+    }
+
     private void HandleBounce()
     {
-        if (nextTarget != null)
+        if (nextTarget == null)
             return;
 
         transform.position = Vector2.MoveTowards(transform.position, nextTarget.position, bounceSpeed * Time.deltaTime);
