@@ -6105,75 +6105,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802170695}
   m_CullTransparentMesh: 1
---- !u!1001 &802983014
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4311263533504529630, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4311263533504529630, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5463326596169511843, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_Name
-      value: PigAssassin (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5463326596169511843, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6883548938180043010, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6883548938180043010, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.66
-      objectReference: {fileID: 0}
-    - target: {fileID: 6883548938180043010, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6883548938180043010, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6883548938180043010, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6883548938180043010, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6883548938180043010, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6883548938180043010, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6883548938180043010, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6883548938180043010, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e6bafd378ff4c0341a6cdede811ac60a, type: 3}
 --- !u!1 &808316234
 GameObject:
   m_ObjectHideFlags: 0
@@ -17524,14 +17455,17 @@ MonoBehaviour:
   upgradeType: 12
   cooldown: 1
   swordPrefab: {fileID: 4212682362137729594, guid: ccef40557bc4b1a46ad64ae735e44d78, type: 3}
-  throwPower: 3
+  regularThrowPower: 2.33
   pierceSwordPrefab: {fileID: 2876334873049795171, guid: 53a44c7370de4184d9c8b927c211df74, type: 3}
   amountToPierce: 2
+  pierceThrowPower: 7.56
   spinSwordPrefab: {fileID: 6260285781140495967, guid: 6812a57840a667f489dd9716ad50dd98, type: 3}
+  spinThrowPower: 2
   maxDistance: 10
   attacksPerSecond: 6
   maxSpinDuration: 3
   bounceSwordPrefab: {fileID: 5384331784343048631, guid: bd8de2fe43ec77147a45ddf8f2216b65, type: 3}
+  bounceThrowPower: 7.22
   bounceCount: 5
   bounceSpeed: 12
   predictionDot: {fileID: 1155228352080299240, guid: c0f997aaf52fac643a3fd251a58825b1, type: 3}
@@ -17596,4 +17530,3 @@ SceneRoots:
   - {fileID: 3537350215821079486}
   - {fileID: 475259033}
   - {fileID: 1489712750}
-  - {fileID: 802983014}

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class SkillObject_SwordBounce : SkillObject_Sword
 {
@@ -12,7 +13,6 @@ public class SkillObject_SwordBounce : SkillObject_Sword
 
     public override void SetupSword(Skill_SwordThrow swordManager, Vector2 direction)
     {
-        anim.SetTrigger("spin");
         base.SetupSword(swordManager, direction);
 
         bounceSpeed = swordManager.bounceSpeed;
@@ -21,6 +21,7 @@ public class SkillObject_SwordBounce : SkillObject_Sword
 
     protected override void Update()
     {
+        transform.right = rb.linearVelocity;
         HandleComeback();
         HandleBounce();
     }
@@ -35,6 +36,9 @@ public class SkillObject_SwordBounce : SkillObject_Sword
         if (Vector2.Distance(transform.position, nextTarget.position) < 0.75f)
         {
             DamageEnemiesInRadius(transform, 1);
+
+            enemyTargets = GetEnemiesAround(transform, 10);
+
             BounceToNextTarget();
 
             if (bounceCount == 0 || nextTarget == null)
@@ -47,12 +51,19 @@ public class SkillObject_SwordBounce : SkillObject_Sword
 
     private void BounceToNextTarget()
     {
-        nextTarget = GetNextTarget();
-        bounceCount--;
+        Transform target = GetNextTarget();
+        if (target != null)
+        {
+            nextTarget = target;
+            bounceCount--;
+        }
+        else
+            nextTarget = null;
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision) // Get enemies detected the skill's zone
     {
+        anim?.SetTrigger("spin");
         if (enemyTargets == null)
         {
             enemyTargets = GetEnemiesAround(transform, 10);
@@ -64,7 +75,7 @@ public class SkillObject_SwordBounce : SkillObject_Sword
         if (enemyTargets.Length <= 1 || bounceCount == 0)
             GetSwordBackToPlayer();
         else
-            BounceToNextTarget();
+            nextTarget = GetNextTarget();
     }
 
     private List<Transform> GetAliveTargets() // Goes through enemyTargets (found by OnTriggerEnter) and return the ones that are non-null.
@@ -102,6 +113,9 @@ public class SkillObject_SwordBounce : SkillObject_Sword
     private Transform GetNextTarget() // Picks a random target from the ValidTargets list, remembers with selectedBefore, then returns it for next attack.
     {
         List<Transform> validTarget = GetValidTargets();
+
+        if (validTarget.Count == 0)
+            return null;
 
         int randomIndex = Random.Range(0, validTarget.Count);
 
