@@ -59,8 +59,14 @@ TagManager:
   - name: Skills
     uniqueID: 1903266617
     locked: 0
+  - name: Lights
+    uniqueID: 1573877629
+    locked: 0
   - name: Player
     uniqueID: 3876397981
+    locked: 0
+  - name: Grass
+    uniqueID: 1126279583
     locked: 0
   m_RenderingLayers:
   - Default

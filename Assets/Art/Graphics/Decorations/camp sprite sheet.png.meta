@@ -1,0 +1,1045 @@
+fileFormatVersion: 2
+guid: 804b5e518cb3a4b4d91cd3a7fa82b33c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3815665990340081308
+    second: camp sprite sheet_0
+  - first:
+      213: -5440558087761993232
+    second: camp sprite sheet_1
+  - first:
+      213: -8490805927014210297
+    second: camp sprite sheet_2
+  - first:
+      213: -4077780758982867640
+    second: camp sprite sheet_3
+  - first:
+      213: 7811009450407190601
+    second: camp sprite sheet_4
+  - first:
+      213: -5837779456203263534
+    second: camp sprite sheet_5
+  - first:
+      213: -3204125399891208720
+    second: camp sprite sheet_6
+  - first:
+      213: 6512121209945411955
+    second: camp sprite sheet_7
+  - first:
+      213: -3103437422834456548
+    second: camp sprite sheet_8
+  - first:
+      213: -2309350257995546103
+    second: camp sprite sheet_9
+  - first:
+      213: 5761234464196269603
+    second: camp sprite sheet_10
+  - first:
+      213: -5716915513942484404
+    second: camp sprite sheet_11
+  - first:
+      213: 90095886684415495
+    second: camp sprite sheet_12
+  - first:
+      213: 6658216581125828934
+    second: camp sprite sheet_13
+  - first:
+      213: 3032603717410337373
+    second: camp sprite sheet_14
+  - first:
+      213: -5742853988688623012
+    second: camp sprite sheet_15
+  - first:
+      213: -8795100640931408335
+    second: camp sprite sheet_16
+  - first:
+      213: 3871570465843560516
+    second: camp sprite sheet_17
+  - first:
+      213: 3350896351298844203
+    second: camp sprite sheet_18
+  - first:
+      213: 2741296811463024516
+    second: camp sprite sheet_19
+  - first:
+      213: -2298877954574941850
+    second: camp sprite sheet_20
+  - first:
+      213: 7541072250548848985
+    second: camp sprite sheet_21
+  - first:
+      213: 4844393555337557588
+    second: camp sprite sheet_22
+  - first:
+      213: 5131811553012361723
+    second: camp sprite sheet_23
+  - first:
+      213: -1564970405569315636
+    second: camp sprite sheet_24
+  - first:
+      213: -1400166722024018201
+    second: camp sprite sheet_25
+  - first:
+      213: 5566898854398512234
+    second: camp sprite sheet_26
+  - first:
+      213: 4234501127745258860
+    second: camp sprite sheet_27
+  - first:
+      213: 7292892521578087364
+    second: camp sprite sheet_28
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: camp sprite sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9672cf7008f3f430800000000000000
+      internalID: 3815665990340081308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9406dbce5b7466c60800000000000000
+      internalID: 7811009450407190601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_5
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d17ee3b38a0cfea0800000000000000
+      internalID: -5837779456203263534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_6
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f59dabcce8a883d0800000000000000
+      internalID: -3204125399891208720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_7
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 371551ddcb3bf5a50800000000000000
+      internalID: 6512121209945411955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_11
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 160
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4ad98c21af69a0b0800000000000000
+      internalID: -5716915513942484404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_17
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 440cf7383d49ab530800000000000000
+      internalID: 3871570465843560516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_19
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48f1a2f0dea0b0620800000000000000
+      internalID: 2741296811463024516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_21
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 160
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 959058fe14547a860800000000000000
+      internalID: 7541072250548848985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_31
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9399a068b63824c43963751f2961fdc1
+      internalID: -1544317709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_33
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85fbdfaa16b901e499b83840933012ce
+      internalID: 1157756053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_35
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 144
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c62deda850ed5b8498ee5bc927075217
+      internalID: 729343054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_38
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad8ffc0c27d2c3346b2735fdfc7d3d40
+      internalID: -133863023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_40
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 48
+        height: 112
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9ff3b66bbc8d7f448a234dad8b34079
+      internalID: -1871618485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_44
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 96
+        width: 80
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b94b34e6d955cef439a9b7b895785b43
+      internalID: 1411481452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9d1fd3289b6eea40896617d37b9da2e
+      internalID: 650557885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_47
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a91ad33f0114134ba08af62cad8e77d
+      internalID: -738190210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_48
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e4eb14a05c9a9045956aed450cc360b
+      internalID: 2059943523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_58
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0637268ff4b7abe47a0036c5f9088ec6
+      internalID: -723189141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_60
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b09a3377829e004a984f3d79326b758
+      internalID: -313309428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_70
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c855a43c7ab22d49b3c32fc49da6c54
+      internalID: -1046662491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_72
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d0ea8653f24ee0449f74bcb060db1df
+      internalID: -1034339561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_83
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 48
+        width: 80
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7859d318f78c6849b755294cc8fd9bb
+      internalID: -1561979723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_84
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9841ad384b7216d46bab429543101a0f
+      internalID: -986687477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_86
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 514cd519d0a73564b84faeec9a2e33b2
+      internalID: 1577980946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_87
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e314f51c38139d4aa5eeb6699c6ca96
+      internalID: 622929135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_113
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 516fa56622e5cdc4ba830f468fc8aae0
+      internalID: 602303220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_123
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 32
+        width: 48
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9804d97ec8853642b395d0b7742caf5
+      internalID: 1661851301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_127
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 0
+        width: 80
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8143521cd8235674981cd90ccf965d49
+      internalID: -1383686876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_136
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 96
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9899f0767eebcf24a8859bebaa2e378a
+      internalID: -841777462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: camp sprite sheet_142
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 80
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 542a5a8f84944324b9645f8eafff091e
+      internalID: -1002814676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 9fdb1858e8905474bbbdc9fbc71d5790
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      camp sprite sheet_0: 3815665990340081308
+      camp sprite sheet_1: -5440558087761993232
+      camp sprite sheet_10: 5761234464196269603
+      camp sprite sheet_100: -1685284779
+      camp sprite sheet_101: -1777828764
+      camp sprite sheet_102: 1428111880
+      camp sprite sheet_103: 652389968
+      camp sprite sheet_104: 1803703629
+      camp sprite sheet_105: -29164783
+      camp sprite sheet_106: -223312888
+      camp sprite sheet_107: 2050828418
+      camp sprite sheet_108: -1411233103
+      camp sprite sheet_109: 1365424956
+      camp sprite sheet_11: -5716915513942484404
+      camp sprite sheet_110: 550353986
+      camp sprite sheet_111: 201997392
+      camp sprite sheet_112: 802744759
+      camp sprite sheet_113: 602303220
+      camp sprite sheet_114: 908655535
+      camp sprite sheet_115: 510157401
+      camp sprite sheet_116: 970889424
+      camp sprite sheet_117: 1391875015
+      camp sprite sheet_118: 188078862
+      camp sprite sheet_119: -1633331970
+      camp sprite sheet_12: 90095886684415495
+      camp sprite sheet_120: -671269062
+      camp sprite sheet_121: -998487974
+      camp sprite sheet_122: -1529525746
+      camp sprite sheet_123: 1661851301
+      camp sprite sheet_124: 116868016
+      camp sprite sheet_125: -1476464096
+      camp sprite sheet_126: 1847006073
+      camp sprite sheet_127: -1383686876
+      camp sprite sheet_128: 1198908606
+      camp sprite sheet_129: 1451278278
+      camp sprite sheet_13: 6658216581125828934
+      camp sprite sheet_130: 641372210
+      camp sprite sheet_131: -2038000912
+      camp sprite sheet_132: -63380193
+      camp sprite sheet_133: 11618248
+      camp sprite sheet_134: 1101457566
+      camp sprite sheet_135: 452630694
+      camp sprite sheet_136: -841777462
+      camp sprite sheet_137: -1708173039
+      camp sprite sheet_138: 504336047
+      camp sprite sheet_139: -1575957482
+      camp sprite sheet_14: 3032603717410337373
+      camp sprite sheet_140: 1596847528
+      camp sprite sheet_141: -1961082198
+      camp sprite sheet_142: -1002814676
+      camp sprite sheet_143: -1765823085
+      camp sprite sheet_144: 1225175661
+      camp sprite sheet_145: -380565621
+      camp sprite sheet_146: -736384014
+      camp sprite sheet_147: -23148058
+      camp sprite sheet_148: 380116169
+      camp sprite sheet_149: -788306222
+      camp sprite sheet_15: -5742853988688623012
+      camp sprite sheet_150: -1094413648
+      camp sprite sheet_151: -2095008148
+      camp sprite sheet_152: 1591822590
+      camp sprite sheet_153: 1495711384
+      camp sprite sheet_154: 315185036
+      camp sprite sheet_155: -1953237589
+      camp sprite sheet_156: 2134069840
+      camp sprite sheet_16: -8795100640931408335
+      camp sprite sheet_17: 3871570465843560516
+      camp sprite sheet_18: 3350896351298844203
+      camp sprite sheet_19: 2741296811463024516
+      camp sprite sheet_2: -8490805927014210297
+      camp sprite sheet_20: -2298877954574941850
+      camp sprite sheet_21: 7541072250548848985
+      camp sprite sheet_22: 4844393555337557588
+      camp sprite sheet_23: 5131811553012361723
+      camp sprite sheet_24: -1564970405569315636
+      camp sprite sheet_25: -1400166722024018201
+      camp sprite sheet_26: 5566898854398512234
+      camp sprite sheet_27: 4234501127745258860
+      camp sprite sheet_28: 7292892521578087364
+      camp sprite sheet_29: -1996924357
+      camp sprite sheet_3: -4077780758982867640
+      camp sprite sheet_30: 2003219161
+      camp sprite sheet_31: -1544317709
+      camp sprite sheet_32: -1854670952
+      camp sprite sheet_33: 1157756053
+      camp sprite sheet_34: 211116137
+      camp sprite sheet_35: 729343054
+      camp sprite sheet_36: 1311453566
+      camp sprite sheet_37: 1353139333
+      camp sprite sheet_38: -133863023
+      camp sprite sheet_39: 1903827419
+      camp sprite sheet_4: 7811009450407190601
+      camp sprite sheet_40: -1871618485
+      camp sprite sheet_41: 446594574
+      camp sprite sheet_42: 138392162
+      camp sprite sheet_43: 1567888876
+      camp sprite sheet_44: 1411481452
+      camp sprite sheet_45: 650557885
+      camp sprite sheet_46: 455324671
+      camp sprite sheet_47: -738190210
+      camp sprite sheet_48: 2059943523
+      camp sprite sheet_49: 1773524211
+      camp sprite sheet_5: -5837779456203263534
+      camp sprite sheet_50: 200918421
+      camp sprite sheet_51: -1523813086
+      camp sprite sheet_52: 2099132273
+      camp sprite sheet_53: 1531120164
+      camp sprite sheet_54: -441074099
+      camp sprite sheet_55: -1179839863
+      camp sprite sheet_56: -1141190130
+      camp sprite sheet_57: 1507442547
+      camp sprite sheet_58: -723189141
+      camp sprite sheet_59: -1286907005
+      camp sprite sheet_6: -3204125399891208720
+      camp sprite sheet_60: -313309428
+      camp sprite sheet_61: 122014493
+      camp sprite sheet_62: 1663665849
+      camp sprite sheet_63: -2141590866
+      camp sprite sheet_64: -1970422437
+      camp sprite sheet_65: 1575721075
+      camp sprite sheet_66: -583471915
+      camp sprite sheet_67: 2043196282
+      camp sprite sheet_68: -561989801
+      camp sprite sheet_69: -2118188731
+      camp sprite sheet_7: 6512121209945411955
+      camp sprite sheet_70: -1046662491
+      camp sprite sheet_71: -1505887399
+      camp sprite sheet_72: -1034339561
+      camp sprite sheet_73: 1914888246
+      camp sprite sheet_74: 1098220969
+      camp sprite sheet_75: 1792379657
+      camp sprite sheet_76: -1893801441
+      camp sprite sheet_77: -950166365
+      camp sprite sheet_78: -1861105319
+      camp sprite sheet_79: 1370622071
+      camp sprite sheet_8: -3103437422834456548
+      camp sprite sheet_80: -132157733
+      camp sprite sheet_81: -1880871354
+      camp sprite sheet_82: -2083038214
+      camp sprite sheet_83: -1561979723
+      camp sprite sheet_84: -986687477
+      camp sprite sheet_85: -370306006
+      camp sprite sheet_86: 1577980946
+      camp sprite sheet_87: 622929135
+      camp sprite sheet_88: 1796193729
+      camp sprite sheet_89: -1854423416
+      camp sprite sheet_9: -2309350257995546103
+      camp sprite sheet_90: -1066207293
+      camp sprite sheet_91: 305130590
+      camp sprite sheet_92: -478928996
+      camp sprite sheet_93: -1327991790
+      camp sprite sheet_94: -1248469572
+      camp sprite sheet_95: -1643877801
+      camp sprite sheet_96: 1387173685
+      camp sprite sheet_97: 685897771
+      camp sprite sheet_98: -742070232
+      camp sprite sheet_99: -372991569
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
