@@ -6,11 +6,22 @@ public class SkillObject_TimeEcho : SkillObject_Base
     [SerializeField] private LayerMask whatIsGround;
     private Skill_TimeEcho echoManager;
 
+    public int maxAttacks {  get; private set; }
+
     public void SetupEcho(Skill_TimeEcho echoManager)
     {
         this.echoManager = echoManager;
+        playerStats = echoManager.player.stats;
+        damageScaleData = echoManager.damageScaleData;
+        maxAttacks = echoManager.GetMaxAttacks();
+        anim.SetBool("canAttack", maxAttacks > 0);
 
         Invoke(nameof(HandleDeath), echoManager.GetEchoDuration());
+    }
+
+    public void PerformAttack()
+    {
+        DamageEnemiesInRadius(targetCheck, 1);
     }
 
     private void Update()

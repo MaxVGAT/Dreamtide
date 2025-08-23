@@ -105,7 +105,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -588197671
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 02ec4178a4aceb249a81a0126e5e17e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -561,15 +561,10 @@ MonoBehaviour:
     shockDamageScale: 1
     shockCharge: 0.4
   targetCheck: {fileID: 7023654529809457470}
-  targetCheckRadius: 1
+  targetCheckRadius: 0.7
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
-  defaultDuration: 1
-  chillSlowMultiplier: 0.2
-  electrifyChargeBuildUp: 0.4
-  fireScale: 0.8
-  lightningScale: 2.5
 --- !u!114 &6340157036594224701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -731,7 +726,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.02, y: -0.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6883548938180043010}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -985,7 +980,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -588197671
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 1483054248, guid: 2a1c09e986041b142b37c905b28b3749, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

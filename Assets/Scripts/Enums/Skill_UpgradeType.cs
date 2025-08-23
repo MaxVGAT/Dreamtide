@@ -22,7 +22,7 @@ public enum Skill_UpgradeType
     TimeEcho, // Create a clone of a player, which can take damage from enemies.
     TimeEcho_SingleAttack, // The clone can perform a single attack
     TimeEcho_MultiAttack, // The clone can perform N attacks
-    TimeEcho_ChanceToMultiply, // The clone has a chance to create another clone on attacks
+    TimeEcho_ChanceToDuplicate, // The clone has a chance to create another clone on attacks
     TimeEcho_HealWisp, // When the clone dies, it creates a wisp that flies towards the player and heal it
     TimeEcho_CleanseWisp, // Wisp now also removes negative effects on player
     TimeEcho_CooldownWisp, // Wisp now reduces cooldown of all skills by N second

@@ -42,10 +42,8 @@ public class SkillObject_Base : MonoBehaviour
             if (element != ElementType.None)
                 statusHandler.ApplyStatusEffect(element, attackData.effectData);
 
-            if (targetGotHit)
-                Instantiate(onHitVfx, target.transform.position, Quaternion.identity);
-
-
+            if(targetGotHit)
+                    Instantiate(onHitVfx, target.transform.position, Quaternion.identity);
             usedElement = element;
         }
     }
