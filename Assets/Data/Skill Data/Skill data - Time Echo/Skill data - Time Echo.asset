@@ -12,11 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d21b3dc8399c21548bdceab170e4329c, type: 3}
   m_Name: Skill data - Time Echo
   m_EditorClassIdentifier: 
-  cost: 1
-  skillType: 1
-  upgradeData:
-    upgradeType: 0
-    cooldown: 0
   skillName: "\u30BF\u30A4\u30E0\u30A8\u30B3\u30FC"
   skillDescription: "\u81EA\u5206\u306E\u5206\u8EAB\u3092\u4F5C\u308A\u3001\u6575\u306E\u6CE8\u610F\u3092\u5F15\u304D\u3064\u3051\u308B\u3002"
   skillIcon: {fileID: 3529693398294363086, guid: b81616cded640dc46a33a291c965668f, type: 3}
+  cost: 1
+  unlockedByDefault: 0
+  skillType: 1
+  upgradeData:
+    upgradeType: 11
+    cooldown: 0
+    damageScaleData:
+      physical: 1
+      elemental: 1
+      chillDuration: 3
+      chillSlowMultiplier: 0.2
+      burnDuration: 3
+      burnDamageScale: 1
+      shockDuration: 3
+      shockDamageScale: 1
+      shockCharge: 0.4

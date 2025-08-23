@@ -13,6 +13,7 @@ public class SkillObject_Base : MonoBehaviour
     protected bool targetGotHit;
     protected Rigidbody2D rb;
     protected Animator anim;
+    protected Transform lastTarget;
 
     protected virtual void Awake()
     {
@@ -37,13 +38,15 @@ public class SkillObject_Base : MonoBehaviour
             ElementType element = attackData.element;
 
             targetGotHit = damageable.TakeDamage(physDamage, elemDamage, element, transform);
-            Debug.Log(statusHandler);
 
             if (element != ElementType.None)
                 statusHandler.ApplyStatusEffect(element, attackData.effectData);
 
             if(targetGotHit)
-                    Instantiate(onHitVfx, target.transform.position, Quaternion.identity);
+            {
+                lastTarget = target.transform;
+                Instantiate(onHitVfx, target.transform.position, Quaternion.identity);
+            }
             usedElement = element;
         }
     }
