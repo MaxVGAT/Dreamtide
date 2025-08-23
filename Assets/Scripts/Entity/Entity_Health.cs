@@ -1,4 +1,4 @@
- using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Entity_Health : MonoBehaviour, IDamageable
@@ -31,9 +31,16 @@ public class Entity_Health : MonoBehaviour, IDamageable
         entityVfx = GetComponent<Entity_VFX>();
         entityStats = GetComponent<Entity_Stats>();
 
+        SetupHealth();
+    }
+
+    private void SetupHealth()
+    {
+        if (entityStats == null)
+            return;
+
         currentHealth = entityStats.GetMaxHealth();
         UpdateHealthBar();
-
         InvokeRepeating(nameof(RegenerateHealth), 0, regenInterval);
     }
 
@@ -60,13 +67,20 @@ public class Entity_Health : MonoBehaviour, IDamageable
 
     private void ApplyPhysAndElemRes(float damage, float elementalDamage, ElementType element, float armorReduction, out float physicalDamageTaken, out float elementalDamageTaken)
     {
-        float mitigation = entityStats.GetArmorMitigation(armorReduction);
+        float mitigation = entityStats != null ? entityStats.GetArmorMitigation(armorReduction) : 0;
+        float resistance = entityStats != null ? entityStats.GetElementalResistance(element) : 0;
+
         physicalDamageTaken = damage * (1 - mitigation);
-        float resistance = entityStats.GetElementalResistance(element);
         elementalDamageTaken = elementalDamage * (1 - resistance);
     }
 
-    private bool AttackAvoided() => Random.Range(0, 100) < entityStats.GetEvasion();
+    private bool AttackAvoided()
+    {
+        if (entityStats == null)
+            return false;
+        else
+            return Random.Range(0, 100) < entityStats.GetEvasion();
+    }
 
     private void RegenerateHealth()
     {
@@ -92,7 +106,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
     // Reduces health and checks for death.
     public void ReduceHealth(float damage)
     {
-        entityVfx.HandleHitColor(Entity_VFX.FlashType.Red);
+        entityVfx?.HandleHitColor(Entity_VFX.FlashType.Red);
         currentHealth -= damage;
         UpdateHealthBar();
 
@@ -121,7 +135,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
     }
 
     // Death logic - Override for custom behavior(animation, drops...)
-    private void Die()
+    protected virtual void Die()
     {
         isDead = true;
         entity.EntityDeath();
@@ -132,7 +146,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
         Vector2 knockback = CalculateKnockback(finalDamage, damageDealer);
         float duration = CalculateKnockbackDuration(finalDamage);
 
-        if (entity.isBlocking)
+        if (entity != null && entity.isBlocking)
         {
             entityVfx.HandleHitColor(Entity_VFX.FlashType.Yellow);
             finalDamage /= 2;
@@ -156,5 +170,11 @@ public class Entity_Health : MonoBehaviour, IDamageable
 
     private float CalculateKnockbackDuration(float damage) => IsHeavyDamage(damage) ? heavyKnockbackDuration : knockbackDuration;
 
-    private bool IsHeavyDamage(float damage) => damage / entityStats.GetMaxHealth() > heavyDamageThreshold;
+    private bool IsHeavyDamage(float damage)
+    {
+        if (entityStats == null)
+            return false;
+        else
+            return damage / entityStats.GetMaxHealth() > heavyDamageThreshold;
+    }
 }

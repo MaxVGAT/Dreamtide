@@ -155,7 +155,9 @@ public void EnterAttackStateWithDelay()
         input.Player.Movement.canceled += context => moveInput = Vector2.zero;
 
         input.Player.ToggleSkillTreeUI.performed += context => ui.ToggleSkillTreeUI();
+
         input.Player.Skill.performed += context => skillManager.shard.TryUseSkill();
+        input.Player.Skill.performed += context => skillManager.timeEcho.TryUseSkill();
     }
 
     private void OnDisable()
