@@ -6,6 +6,7 @@ public class Player_SkillManager : MonoBehaviour
     public Skill_Shard shard { get; private set; }
     public Skill_SwordThrow swordThrow { get; private set; }
     public Skill_TimeEcho timeEcho { get; private set; }
+    public Skill_Domain domain { get; private set; }
 
     private Skill_Base[] allSkills;
 
@@ -15,6 +16,7 @@ public class Player_SkillManager : MonoBehaviour
         shard = GetComponentInChildren<Skill_Shard>();
         swordThrow = GetComponentInChildren<Skill_SwordThrow>();
         timeEcho = GetComponentInChildren<Skill_TimeEcho>();
+        domain = GetComponentInChildren<Skill_Domain>();
 
         allSkills = GetComponentsInChildren<Skill_Base>();
     }
@@ -40,6 +42,9 @@ public class Player_SkillManager : MonoBehaviour
 
             case Skill_Type.TimeEcho:
                 return timeEcho;
+
+            case Skill_Type.Domain:
+                return domain;
 
             default:
                 Debug.Log("Not implemented");

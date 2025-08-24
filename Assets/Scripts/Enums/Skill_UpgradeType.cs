@@ -31,5 +31,10 @@ public enum Skill_UpgradeType
     SwordThrow, // Throw a sword to damage enemies from afar
     SwordThrow_Spin, // Sword will stop at one point and spin to deal damages
     SwordThrow_Pierce, // Sword will pierce N targets
-    SwordThrow_Bounce // Sword will bound between enemies
+    SwordThrow_Bounce, // Sword will bound between enemies
+
+    // --- Domain Expansion Tree ---
+    Domain_Slow, // Create an area where enemies are frozen but you can fight freely
+    Domain_Echo, // You can no longer move, but you can spam Time Echo ability
+    Domain_Shard // You can no longer move, but you can spam Time Shard ability
 }

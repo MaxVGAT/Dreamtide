@@ -26,6 +26,18 @@ public abstract class PlayerState : EntityState
             stateMachine.ChangeState(player.dashState);
         }
 
+        if(input.Player.UltimateSkill.WasPressedThisFrame() && skillManager.domain.CanUseSkill())
+        {
+            if (skillManager.domain.InstantDomain())
+            {
+                skillManager.domain.CreateDomain();
+            }
+            else
+                stateMachine.ChangeState(player.domainState);
+
+            skillManager.domain.SetSkillOnCooldown();
+        }
+
     }
 
     public override void UpdateAnimationParameters()

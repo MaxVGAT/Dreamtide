@@ -17430,6 +17430,8 @@ MonoBehaviour:
   jumpAttackVelocity: {x: 2, y: -4}
   attackVelocityDuration: 0.1
   comboAttackWindow: 1
+  riseSpeed: 25
+  riseMaxDistance: 1
   moveSpeed: 6
   jumpForce: 10
   wallJumpDir: {x: 5, y: 12}
@@ -18579,6 +18581,7 @@ GameObject:
   - component: {fileID: 8181214123877492996}
   - component: {fileID: 8181214123877492997}
   - component: {fileID: 8181214123877492998}
+  - component: {fileID: 8181214123877492999}
   m_Layer: 7
   m_Name: SkillsHolder
   m_TagString: Untagged
@@ -18769,14 +18772,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 1
-  upgradeType: 15
+  upgradeType: 11
   cooldown: 0
   timeEchoPrefab: {fileID: 7132634595356191802, guid: a9b6f8d7799aebb45935b81aa2ec8bfd, type: 3}
   timeEchoDuration: 50
   maxAttacks: 3
   duplicateChance: 0.15
   damagePercentHealed: 0.3
-  cooldownReducedInSeconds: 0
+  cooldownReducedInSeconds: 1
+--- !u!114 &8181214123877492999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7285913125416241573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b25b9633759d77b48beb5314d8bd8a73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillType: 4
+  upgradeType: 23
+  cooldown: 10
 --- !u!224 &8429720005807766515
 RectTransform:
   m_ObjectHideFlags: 0

@@ -29,6 +29,7 @@ public class Entity_Player : Entity
     public Player_BlockState blockState { get; private set; }
     public Player_CounterAttackState counterAttackState { get; private set; }
     public Player_SwordThrowState swordThrowState { get; private set; }
+    public Player_DomainState domainState { get; private set; }
 
     #endregion
 
@@ -38,6 +39,10 @@ public class Entity_Player : Entity
     public float attackVelocityDuration = 0.1f;
     public float comboAttackWindow = 1f;
     private Coroutine queuedAttackCo;
+
+    [Header("Domain Ability Details")]
+    public float riseSpeed = 25;
+    public float riseMaxDistance;
 
     [Header("Movement details")]
     public float moveSpeed;
@@ -75,6 +80,7 @@ public class Entity_Player : Entity
         blockState = new Player_BlockState(this, stateMachine, "block");
         counterAttackState = new Player_CounterAttackState(this, stateMachine, "counterAttack");
         swordThrowState = new Player_SwordThrowState(this, stateMachine, "swordThrow");
+        domainState = new Player_DomainState(this, stateMachine, "jumpFall");
     }
 
     protected override void Start()

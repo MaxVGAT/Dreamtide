@@ -17,7 +17,7 @@ public class Entity : MonoBehaviour
     private bool facingRight = true;
 
     [Header("Collision detection")]
-    [SerializeField] protected LayerMask whatIsGround;
+    [SerializeField] public LayerMask whatIsGround;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private Transform groundCheck;
