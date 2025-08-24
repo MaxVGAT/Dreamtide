@@ -65,13 +65,22 @@ public class Entity : MonoBehaviour
 
     }
 
-    public virtual void SlowDownEntityBy(float duration, float slowMultiplier)
+    public virtual void StopSlowDown()
+    {
+        slowDownCo = null;
+    }
+
+    public virtual void SlowDownEntityBy(float duration, float slowMultiplier, bool canOverrideSlowEffect = false)
     {
         if(slowDownCo != null)
-            StopCoroutine(slowDownCo);
+        {
+            if (canOverrideSlowEffect)
+                StopCoroutine(slowDownCo);
+            else
+                return;
+        }
 
         slowDownCo = StartCoroutine(SlowDownEntityCo(duration, slowMultiplier));
-
     }
 
     protected virtual IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
