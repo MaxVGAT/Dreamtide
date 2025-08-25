@@ -10,6 +10,7 @@ public class EnemyIdleState : EnemyGroundState
     {
         base.Enter();
 
+        // 敵が各アクション間（壁に当たる、バトル状態から抜けるなど）に待機する時間
         stateTimer = enemy.idleTime;
     }
 
@@ -17,8 +18,8 @@ public class EnemyIdleState : EnemyGroundState
     {
         base.Update();
 
+        // 待機時間が0未満になったら移動状態に遷移
         if (stateTimer < 0)
             stateMachine.ChangeState(enemy.moveState);
     }
-
 }

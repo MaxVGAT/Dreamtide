@@ -14,7 +14,6 @@ public class Entity_Enemy : Entity
     public EnemyBattleState battleState;
     public EnemyDeadState deadState;
     public EnemyStunnedState stunnedState;
-    public EnemyBlockState blockState;
 
     [Header("Battle details")]
     public float battleMoveSpeed = 4;

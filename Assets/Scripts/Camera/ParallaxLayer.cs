@@ -11,15 +11,19 @@ public class ParallaxLayer
 
     public void CalculateImageWidth()
     {
+        // 画像の全幅を取得して半分の幅を計算するために必要
         imageFullWidth = background.GetComponent<SpriteRenderer>().bounds.size.x;
+        // シームレスな背景ループで使うために半分の幅を計算する
         imageHalfWidth = imageFullWidth / 2;
     }
 
-    public void Move(float distanceToMove)
+    // カメラの移動距離に応じて背景を動かし、大きな動きを避ける
+    public void MoveParallaxImages(float distanceToMove)
     {
         background.position += Vector3.right * (distanceToMove * parallaxMultiplier);
     }
 
+    // 3枚の画像（中央、左、右）だけで無限背景を作るために、範囲外になった画像の位置を入れ替える
     public void LoopBackground(float cameraLeftEdge, float cameraRightEdge)
     {
         float imageRightEdge = background.position.x + imageHalfWidth;

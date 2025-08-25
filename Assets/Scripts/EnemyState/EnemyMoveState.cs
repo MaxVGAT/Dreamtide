@@ -10,6 +10,7 @@ public class EnemyMoveState : EnemyGroundState
     {
         base.Enter();
 
+        // Flip the enemy when close to a hole or next to a wall, for patrolling-like action
         if (enemy.isGrounded == false || enemy.isWallDetected)
             enemy.FlipMethod();
     }
@@ -18,8 +19,10 @@ public class EnemyMoveState : EnemyGroundState
     {
         base.Update();
 
+        // Apply direction based on movespeed and diretion
         enemy.SetVelocity(enemy.GetMoveSpeed() * enemy.facingDirection, rb.linearVelocityY);
 
+        // Make the enemy idle when next to a hole or next to a wall
         if (enemy.isGrounded == false || enemy.isWallDetected)
             stateMachine.ChangeState(enemy.idleState);
     }
