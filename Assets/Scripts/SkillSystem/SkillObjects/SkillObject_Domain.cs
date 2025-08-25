@@ -38,7 +38,15 @@ public class SkillObject_Domain : SkillObject_Base
             transform.localScale = Vector3.Lerp(transform.localScale, targetScale, expansionSpeed * Time.deltaTime);
 
         if (isShrinking && sizeDifference < 0.1f)
-            Destroy(gameObject);
+        {
+            TerminateDomain();
+        }
+    }
+
+    private void TerminateDomain()
+    {
+        domainManager.ClearTargets();
+        Destroy(gameObject);
     }
 
     private void ShrinkDomain()
@@ -54,6 +62,7 @@ public class SkillObject_Domain : SkillObject_Base
         if (enemy == null)
             return;
 
+        domainManager.AddTarget(enemy);
         enemy.SlowDownEntityBy(duration, slowDownPercent, true);
     }
 

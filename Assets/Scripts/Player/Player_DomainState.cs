@@ -34,10 +34,14 @@ public class Player_DomainState : PlayerState
 
         if(isLevitating)
         {
-            //skill manager cast spells
+            skillManager.domain.DoSpellCasting();
 
             if(stateTimer < 0)
+            {
+                rb.gravityScale = originalGravity;
+                isLevitating = false;
                 stateMachine.ChangeState(player.idleState);
+            }
         }
     }
 
@@ -45,8 +49,6 @@ public class Player_DomainState : PlayerState
     {
         base.Exit();
 
-        rb.gravityScale = originalGravity;
-        isLevitating = false;
         createdDomain = false;
     }
 
@@ -57,7 +59,7 @@ public class Player_DomainState : PlayerState
         rb.gravityScale = 0;
 
         stateTimer = 2;
-        // get levitation duration
+        stateTimer = skillManager.domain.GetDomainDuration();
 
         if(createdDomain == false)
         {
