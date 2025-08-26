@@ -1,8 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class Inventory_Base : MonoBehaviour
 {
+
+    public event Action OnInventoryChange;
+
     public int maxInventorySize = 10;
     public List<Inventory_Item> itemList = new List<Inventory_Item>();
 
@@ -10,6 +14,18 @@ public class Inventory_Base : MonoBehaviour
 
     public void AddItem(Inventory_Item itemToAdd)
     {
-        itemList.Add(itemToAdd);
+        Inventory_Item itemInInventory = FindItem(itemToAdd.itemData);
+
+        if (itemInInventory != null)
+            itemInInventory.AddStack();
+        else
+            itemList.Add(itemToAdd);
+
+            OnInventoryChange?.Invoke();
+    }
+
+    public Inventory_Item FindItem(Item_DataSO itemData)
+    {
+        return itemList.Find(item => item.itemData == itemData && item.CanAddStack());
     }
 }

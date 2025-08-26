@@ -16,7 +16,7 @@ MonoBehaviour:
   skillDescription: "\u524D\u65B9\u306B\u30C0\u30C3\u30B7\u30E5\u3059\u308B\u3002\u30C0\u30C3\u30B7\u30E5\u4E2D\u306F\u7121\u6575\u3002"
   skillIcon: {fileID: -6395310963527169484, guid: facaff2601b82b54082f938e8a1e534a, type: 3}
   cost: 0
-  unlockedByDefault: 1
+  unlockedByDefault: 0
   skillType: 0
   upgradeData:
     upgradeType: 1
