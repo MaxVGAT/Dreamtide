@@ -1,19 +1,22 @@
 using UnityEngine;
 
-public class Enemy_Health : Entity_Health // ‚·‚×‚Ä‚Ì‘Ì—Í‚ğ‚ÂƒGƒ“ƒeƒBƒeƒB‚ÌŠî–{ƒNƒ‰ƒX
+public class Enemy_Health : Entity_Health // ï¿½ï¿½ï¿½×‚Ä‚Ì‘Ì—Í‚ï¿½ï¿½ï¿½ÂƒGï¿½ï¿½ï¿½eï¿½Bï¿½eï¿½Bï¿½ÌŠï¿½{ï¿½Nï¿½ï¿½ï¿½X
 {
-    private Entity_Enemy enemy => GetComponent<Entity_Enemy>(); // ƒ_ƒ[ƒWˆ—‚Ì‚½‚ß‚ÉEntity_EnemyƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
+    private Entity_Enemy enemy => GetComponent<Entity_Enemy>(); // ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ß‚ï¿½Entity_Enemyï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½ï¿½æ“¾
 
     public override bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageDealer)
     {
-        // “G‚ªUŒ‚‚ğó‚¯‚½‚©Šm”F‚µAƒ_ƒ[ƒW‚ğ“K—pB‚»‚ÌŒãA‰Â”\‚È‚çií“¬ó‘Ô‚Å‚È‚¯‚ê‚Îjí“¬ó‘Ô‚ÖˆÚs
+        if (canTakeDamage == false)
+            return false;
+
+        // ï¿½Gï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½ï¿½ó‚¯‚ï¿½ï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½ï¿½Aï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½Kï¿½pï¿½Bï¿½ï¿½ï¿½ÌŒï¿½Aï¿½Â”\ï¿½È‚ï¿½iï¿½í“¬ï¿½ï¿½Ô‚Å‚È‚ï¿½ï¿½ï¿½Îjï¿½í“¬ï¿½ï¿½Ô‚ÖˆÚs
         bool wasHit = base.TakeDamage(damage, elementalDamage, element, damageDealer);
 
-        // “G‚ª€–S‚µ‚Ä‚¢‚ê‚Îí“¬ó‘Ô‚É“ü‚é•K—v‚ª‚È‚¢‚Ì‚Åˆ—‚ğI—¹
+        // ï¿½Gï¿½ï¿½ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Îí“¬ï¿½ï¿½Ô‚É“ï¿½ï¿½ï¿½Kï¿½vï¿½ï¿½ï¿½È‚ï¿½ï¿½Ì‚Åï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½
         if (isDead)
             return false;
 
-        // ƒ_ƒ[ƒW‚ğ—^‚¦‚½‚Ì‚ªƒvƒŒƒCƒ„[‚È‚çA“G‚Íí“¬ó‘Ô‚ÖˆÚs‚ğ‚İ‚é
+        // ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½È‚ï¿½Aï¿½Gï¿½Íí“¬ï¿½ï¿½Ô‚ÖˆÚsï¿½ï¿½ï¿½ï¿½İ‚ï¿½
         if (damageDealer.GetComponent<Entity_Player>() != null)
             enemy.TryEnterBattleState(damageDealer);
 

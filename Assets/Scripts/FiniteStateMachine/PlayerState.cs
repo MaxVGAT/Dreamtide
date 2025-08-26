@@ -56,7 +56,7 @@ public abstract class PlayerState : EntityState
         if (player.isWallDetected)
             return false;
 
-        if (stateMachine.currentState == player.dashState)
+        if (stateMachine.currentState == player.dashState || stateMachine.currentState == player.domainState)
             return false;
 
         return true;

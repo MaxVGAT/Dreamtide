@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Text;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class UI_SkillTooltip : UI_Tooltip
@@ -12,6 +10,7 @@ public class UI_SkillTooltip : UI_Tooltip
 
     [SerializeField] private TextMeshProUGUI skillName;
     [SerializeField] private TextMeshProUGUI skillDescription;
+    [SerializeField] private TextMeshProUGUI skillCooldown;
     [SerializeField] private TextMeshProUGUI skillRequirements;
 
     [Space]
@@ -53,6 +52,7 @@ public class UI_SkillTooltip : UI_Tooltip
 
         skillName.text = node.skillData.skillName;
         skillDescription.text = node.skillData.skillDescription;
+        skillCooldown.text = "クールダウン：" + node.skillData.upgradeData.cooldown + "秒";
 
         string skillUnlockedText = $"{unlockedSkillText}";
         string skillLockedText = $"{lockedSkillText}";

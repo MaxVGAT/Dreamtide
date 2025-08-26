@@ -6,7 +6,7 @@ public class Entity_Enemy : Entity
 {
 
     private Entity_VFX entityVFX;
-
+    public Enemy_Health health { get; private set; }
 
     public EnemyIdleState idleState;
     public EnemyMoveState moveState;
@@ -47,6 +47,7 @@ public class Entity_Enemy : Entity
     {
         base.Awake();
         entityVFX = GetComponent<Entity_VFX>();
+        health = GetComponent<Enemy_Health>();
     }
 
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
