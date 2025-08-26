@@ -160,8 +160,7 @@ public void EnterAttackStateWithDelay()
         input.Player.Movement.performed += context => moveInput = context.ReadValue<Vector2>();
         input.Player.Movement.canceled += context => moveInput = Vector2.zero;
 
-        input.Player.ToggleSkillTreeUI.performed += context => ui.ToggleSkillTreeUI();
-        input.Player.Inventory.performed += context => ui.ToggleInventoryUI();
+        input.Player.ToggleUI.performed += context => ui.ToggleUI();
 
         input.Player.Skill.performed += context => skillManager.shard.TryUseSkill();
         input.Player.Skill.performed += context => skillManager.timeEcho.TryUseSkill();

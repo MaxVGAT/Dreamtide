@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class UI_Inventory : MonoBehaviour
 {
@@ -29,5 +30,12 @@ public class UI_Inventory : MonoBehaviour
                 uiItemSlots[i].UpdateSlot(null);
             }
         }
+    }
+
+    public void RefreshInventoryUI()
+    {
+        UpdateInventorySlots();
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
     }
 }

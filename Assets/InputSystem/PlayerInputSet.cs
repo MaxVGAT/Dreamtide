@@ -156,7 +156,7 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ToggleSkillTreeUI"",
+                    ""name"": ""ToggleUI"",
                     ""type"": ""Button"",
                     ""id"": ""fc906b28-0940-430b-9fd4-89edd92adf47"",
                     ""expectedControlType"": """",
@@ -195,15 +195,6 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                     ""name"": ""UltimateSkill"",
                     ""type"": ""Button"",
                     ""id"": ""8e36c5ba-5b26-48f5-8327-b58c5eaae5d3"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Inventory"",
-                    ""type"": ""Button"",
-                    ""id"": ""ac679d9a-90a0-4022-bd11-ccd1ce339ccc"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -455,17 +446,6 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""02e10922-6c72-4db1-a0d2-07ea28b4ea6d"",
-                    ""path"": ""<Keyboard>/k"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""ToggleSkillTreeUI"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""d0fe0cfe-a2d0-43ac-8132-5f493ea71c3e"",
                     ""path"": ""<Keyboard>/g"",
                     ""interactions"": """",
@@ -510,12 +490,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1c795d50-aa59-4655-bc2b-6502fc78b9e2"",
-                    ""path"": ""<Keyboard>/i"",
+                    ""id"": ""8f449c59-8cf7-4927-87e8-542eaccc7a45"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Inventory"",
+                    ""action"": ""ToggleUI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -566,12 +546,11 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
         m_Player_Counter = m_Player.FindAction("Counter", throwIfNotFound: true);
-        m_Player_ToggleSkillTreeUI = m_Player.FindAction("ToggleSkillTreeUI", throwIfNotFound: true);
+        m_Player_ToggleUI = m_Player.FindAction("ToggleUI", throwIfNotFound: true);
         m_Player_Skill = m_Player.FindAction("Skill", throwIfNotFound: true);
         m_Player_RangeAttack = m_Player.FindAction("RangeAttack", throwIfNotFound: true);
         m_Player_Mouse = m_Player.FindAction("Mouse", throwIfNotFound: true);
         m_Player_UltimateSkill = m_Player.FindAction("UltimateSkill", throwIfNotFound: true);
-        m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
     }
 
     ~@PlayerInputSet()
@@ -659,12 +638,11 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Block;
     private readonly InputAction m_Player_Counter;
-    private readonly InputAction m_Player_ToggleSkillTreeUI;
+    private readonly InputAction m_Player_ToggleUI;
     private readonly InputAction m_Player_Skill;
     private readonly InputAction m_Player_RangeAttack;
     private readonly InputAction m_Player_Mouse;
     private readonly InputAction m_Player_UltimateSkill;
-    private readonly InputAction m_Player_Inventory;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -705,9 +683,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Counter => m_Wrapper.m_Player_Counter;
         /// <summary>
-        /// Provides access to the underlying input action "Player/ToggleSkillTreeUI".
+        /// Provides access to the underlying input action "Player/ToggleUI".
         /// </summary>
-        public InputAction @ToggleSkillTreeUI => m_Wrapper.m_Player_ToggleSkillTreeUI;
+        public InputAction @ToggleUI => m_Wrapper.m_Player_ToggleUI;
         /// <summary>
         /// Provides access to the underlying input action "Player/Skill".
         /// </summary>
@@ -724,10 +702,6 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/UltimateSkill".
         /// </summary>
         public InputAction @UltimateSkill => m_Wrapper.m_Player_UltimateSkill;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Inventory".
-        /// </summary>
-        public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -775,9 +749,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @Counter.started += instance.OnCounter;
             @Counter.performed += instance.OnCounter;
             @Counter.canceled += instance.OnCounter;
-            @ToggleSkillTreeUI.started += instance.OnToggleSkillTreeUI;
-            @ToggleSkillTreeUI.performed += instance.OnToggleSkillTreeUI;
-            @ToggleSkillTreeUI.canceled += instance.OnToggleSkillTreeUI;
+            @ToggleUI.started += instance.OnToggleUI;
+            @ToggleUI.performed += instance.OnToggleUI;
+            @ToggleUI.canceled += instance.OnToggleUI;
             @Skill.started += instance.OnSkill;
             @Skill.performed += instance.OnSkill;
             @Skill.canceled += instance.OnSkill;
@@ -790,9 +764,6 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @UltimateSkill.started += instance.OnUltimateSkill;
             @UltimateSkill.performed += instance.OnUltimateSkill;
             @UltimateSkill.canceled += instance.OnUltimateSkill;
-            @Inventory.started += instance.OnInventory;
-            @Inventory.performed += instance.OnInventory;
-            @Inventory.canceled += instance.OnInventory;
         }
 
         /// <summary>
@@ -825,9 +796,9 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @Counter.started -= instance.OnCounter;
             @Counter.performed -= instance.OnCounter;
             @Counter.canceled -= instance.OnCounter;
-            @ToggleSkillTreeUI.started -= instance.OnToggleSkillTreeUI;
-            @ToggleSkillTreeUI.performed -= instance.OnToggleSkillTreeUI;
-            @ToggleSkillTreeUI.canceled -= instance.OnToggleSkillTreeUI;
+            @ToggleUI.started -= instance.OnToggleUI;
+            @ToggleUI.performed -= instance.OnToggleUI;
+            @ToggleUI.canceled -= instance.OnToggleUI;
             @Skill.started -= instance.OnSkill;
             @Skill.performed -= instance.OnSkill;
             @Skill.canceled -= instance.OnSkill;
@@ -840,9 +811,6 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
             @UltimateSkill.started -= instance.OnUltimateSkill;
             @UltimateSkill.performed -= instance.OnUltimateSkill;
             @UltimateSkill.canceled -= instance.OnUltimateSkill;
-            @Inventory.started -= instance.OnInventory;
-            @Inventory.performed -= instance.OnInventory;
-            @Inventory.canceled -= instance.OnInventory;
         }
 
         /// <summary>
@@ -959,12 +927,12 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCounter(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "ToggleSkillTreeUI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "ToggleUI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnToggleSkillTreeUI(InputAction.CallbackContext context);
+        void OnToggleUI(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Skill" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -993,12 +961,5 @@ public partial class @PlayerInputSet: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnUltimateSkill(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Inventory" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnInventory(InputAction.CallbackContext context);
     }
 }

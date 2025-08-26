@@ -2,29 +2,22 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
-    public UI_SkillTooltip skillToolTip;
-    public UI_SkillTree skillTree;
-    public UI_Inventory inventory;
-    private bool skillTreeEnabled;
-    private bool inventoryEnabled;
+    [SerializeField] private GameObject tabMenuRoot;
+    [SerializeField] private UI_SkillTree skillTree;
+
+    private bool menuEnabled;
 
     private void Awake()
     {
-        skillToolTip = GetComponentInChildren<UI_SkillTooltip>();
-        skillTree = GetComponentInChildren<UI_SkillTree>(true);
-        inventory = GetComponentInChildren<UI_Inventory>(true);
+        tabMenuRoot.SetActive(false);
+
+        if(skillTree == null)
+            skillTree = FindAnyObjectByType<UI_SkillTree>();
     }
 
-    public void ToggleSkillTreeUI()
+    public void ToggleUI()
     {
-        skillTreeEnabled = !skillTreeEnabled;
-        skillTree.gameObject.SetActive(skillTreeEnabled);
-        skillToolTip.ShowToolTip(false, null);
-    }
-
-    public void ToggleInventoryUI()
-    {
-        inventoryEnabled = !inventoryEnabled;
-        inventory.gameObject.SetActive(inventoryEnabled);
+        menuEnabled = !menuEnabled;
+        tabMenuRoot.SetActive(menuEnabled);
     }
 }

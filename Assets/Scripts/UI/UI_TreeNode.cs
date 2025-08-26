@@ -10,6 +10,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private RectTransform rect;
     private UI_SkillTree skillTree;
     private UI_TreeConnectHandler connectHandler;
+    private UI_SkillTooltip skillToolTip;
 
     [Header("Unlock Details")]
     public UI_TreeNode[] neededNodes; // Required nodes to unlock
@@ -33,6 +34,8 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         rect = GetComponent<RectTransform>();
         skillTree = GetComponentInParent<UI_SkillTree>();
         connectHandler = GetComponent<UI_TreeConnectHandler>();
+
+        skillToolTip = skillTree.SkillTooltip;
 
         UpdateIconColor(GetColorByHex(lockedColorHex));
 
@@ -123,23 +126,22 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (CanBeUnlocked())
             UnlockSkill();
         else if (isUnlocked)
-            ui.skillToolTip.UnlockedSkillEffect();
+            skillToolTip.UnlockedSkillEffect();
         else if (isLocked)
-            ui.skillToolTip.LockedSkillEffect();
+            skillToolTip.LockedSkillEffect();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ui.skillToolTip.ShowToolTip(true, rect, this);
+        skillToolTip.ShowToolTip(true, rect, this);
 
         if (!isUnlocked && !isLocked)
             ToggleNodeHightlight(true);
     }
 
-
     public void OnPointerExit(PointerEventData eventData)
     {
-        ui.skillToolTip.ShowToolTip(false, rect);
+        skillToolTip.ShowToolTip(false, rect);
 
         if (!isUnlocked && !isLocked)
             ToggleNodeHightlight(false);

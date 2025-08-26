@@ -70,7 +70,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ToggleSkillTreeUI",
+                    "name": "ToggleUI",
                     "type": "Button",
                     "id": "fc906b28-0940-430b-9fd4-89edd92adf47",
                     "expectedControlType": "",
@@ -109,15 +109,6 @@
                     "name": "UltimateSkill",
                     "type": "Button",
                     "id": "8e36c5ba-5b26-48f5-8327-b58c5eaae5d3",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Inventory",
-                    "type": "Button",
-                    "id": "ac679d9a-90a0-4022-bd11-ccd1ce339ccc",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -369,17 +360,6 @@
                 },
                 {
                     "name": "",
-                    "id": "02e10922-6c72-4db1-a0d2-07ea28b4ea6d",
-                    "path": "<Keyboard>/k",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard & Mouse",
-                    "action": "ToggleSkillTreeUI",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "d0fe0cfe-a2d0-43ac-8132-5f493ea71c3e",
                     "path": "<Keyboard>/g",
                     "interactions": "",
@@ -424,12 +404,12 @@
                 },
                 {
                     "name": "",
-                    "id": "1c795d50-aa59-4655-bc2b-6502fc78b9e2",
-                    "path": "<Keyboard>/i",
+                    "id": "8f449c59-8cf7-4927-87e8-542eaccc7a45",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard & Mouse",
-                    "action": "Inventory",
+                    "action": "ToggleUI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

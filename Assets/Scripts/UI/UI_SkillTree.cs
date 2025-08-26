@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UI_SkillTree : MonoBehaviour
 {
+    [SerializeField] private UI_SkillTooltip skillTooltip;
+
     [SerializeField] private int skillPoints;
     [SerializeField] private UI_TreeConnectHandler[] parentNodes;
 
@@ -22,6 +24,8 @@ public class UI_SkillTree : MonoBehaviour
         foreach (var node in skillNodes)
             node.Refund();
     }
+
+    public UI_SkillTooltip SkillTooltip => skillTooltip;
 
     public bool EnoughSkillPoints(int cost) => skillPoints >= cost;
     public void RemoveSkillPoint(int cost) => skillPoints -= cost;
