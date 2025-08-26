@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: eadc314d8b4402e4eb4b1838bcd62d43
+guid: 5054a8457aa1e1e4c94cf035c9f10132
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5221211114639085148
-    second: IconD07_0
+      213: 7357848190852369835
+    second: sk4_crossed_swords_C_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IconD07_0
+      name: sk4_crossed_swords_C_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 82
-        height: 62
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4a1bd9687288a87b0800000000000000
-      internalID: -5221211114639085148
+      spriteID: bad810f22f35c1660800000000000000
+      internalID: 7357848190852369835
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IconD07_0: -5221211114639085148
+      sk4_crossed_swords_C_0: 7357848190852369835
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

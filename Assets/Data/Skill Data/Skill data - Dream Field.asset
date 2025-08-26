@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d21b3dc8399c21548bdceab170e4329c, type: 3}
   m_Name: Skill data - Dream Field
   m_EditorClassIdentifier: 
-  skillName: 
-  skillDescription: 
-  skillIcon: {fileID: 0}
-  cost: 0
+  skillName: "\u30C9\u30EA\u30FC\u30E0\u30D5\u30A3\u30FC\u30EB\u30C9"
+  skillDescription: "\u30D5\u30A3\u30FC\u30EB\u30C9\u3092\u5C55\u958B\u3057\u3001\u5185\u90E8\u306E\u6575\u306E\u52D5\u304D\u3092\u5927\u5E45\u306B\u30B9\u30ED\u30FC\u30C0\u30A6\u30F3\u3002"
+  skillIcon: {fileID: 6514812304656959556, guid: 9740765edb60cd44e90eb1d42b699c11, type: 3}
+  cost: 5
   unlockedByDefault: 0
-  skillType: 0
+  skillType: 4
   upgradeData:
-    upgradeType: 0
-    cooldown: 0
+    upgradeType: 22
+    cooldown: 120
     damageScaleData:
       physical: 1
       elemental: 1

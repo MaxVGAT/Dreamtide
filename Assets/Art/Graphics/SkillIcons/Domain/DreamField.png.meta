@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9774f680f4e5f6e439d843a2f3933fc0
+guid: 9740765edb60cd44e90eb1d42b699c11
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2576233745636892240
-    second: IconD06_0
+      213: 6514812304656959556
+    second: sk3_enrage_C_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IconD06_0
+      name: sk3_enrage_C_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 82
-        height: 62
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0b160fcce016f3cd0800000000000000
-      internalID: -2576233745636892240
+      spriteID: 4480c6d2643496a50800000000000000
+      internalID: 6514812304656959556
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IconD06_0: -2576233745636892240
+      sk3_enrage_C_0: 6514812304656959556
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

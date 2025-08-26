@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d21b3dc8399c21548bdceab170e4329c, type: 3}
   m_Name: Skill data - Shattered Dreamscape
   m_EditorClassIdentifier: 
-  skillName: 
-  skillDescription: 
-  skillIcon: {fileID: 0}
-  cost: 0
+  skillName: "\u30B7\u30E3\u30C3\u30BF\u30FC\u30C9\u30C9\u30EA\u30FC\u30E0\u30B9\u30B1\u30FC\u30D7"
+  skillDescription: "\u30C9\u30EA\u30FC\u30E0\u30D5\u30A3\u30FC\u30EB\u30C9\u306B\u56DA\u308F\u308C\u305F\u6575\u306B\u3001\u7121\u6570\u306E\u30BF\u30A4\u30E0\u30B7\u30E3\u30FC\u30C9\u304C\u7A81\u304D\u523A\u3055\u308B\u3002"
+  skillIcon: {fileID: 995936511236989578, guid: de7b2551462266d4eb4170f418f1ace2, type: 3}
+  cost: 8
   unlockedByDefault: 0
-  skillType: 0
+  skillType: 4
   upgradeData:
-    upgradeType: 0
-    cooldown: 0
+    upgradeType: 24
+    cooldown: 120
     damageScaleData:
       physical: 1
       elemental: 1

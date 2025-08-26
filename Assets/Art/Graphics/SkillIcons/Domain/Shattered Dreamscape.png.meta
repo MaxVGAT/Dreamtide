@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ef2af329c51b9f944a1c0b5dcf076f24
+guid: de7b2551462266d4eb4170f418f1ace2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8706873535052038835
-    second: IconD08_0
+      213: 995936511236989578
+    second: sk5_atom_C_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IconD08_0
+      name: sk5_atom_C_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 82
-        height: 62
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d4d39fe96a8fa2780800000000000000
-      internalID: -8706873535052038835
+      spriteID: a826f13faf642dd00800000000000000
+      internalID: 995936511236989578
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IconD08_0: -8706873535052038835
+      sk5_atom_C_0: 995936511236989578
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
