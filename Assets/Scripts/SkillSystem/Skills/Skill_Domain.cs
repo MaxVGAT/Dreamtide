@@ -24,7 +24,6 @@ public class Skill_Domain : Skill_Base
     [SerializeField] private int echoToCast = 8;
     [SerializeField] private float echoCastDomainSlow = 1f;
     [SerializeField] private float echoCastDomainDuration = 5f;
-    [SerializeField] private float healthToRestoreWithWispEcho = 0.05f;
 
     private List<Entity_Enemy> trappedTargets = new List<Entity_Enemy>();
     private Transform currentTarget;
