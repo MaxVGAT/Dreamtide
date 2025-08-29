@@ -5,6 +5,7 @@ public class Item_DataSO : ScriptableObject
 {
     public string itemName;
     public Sprite itemIcon;
+    public Item_Rarity itemRarity;
     public Item_Type itemType;
     public int maxStackSize = 1;
 }

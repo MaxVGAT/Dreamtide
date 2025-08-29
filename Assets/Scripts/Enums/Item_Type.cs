@@ -17,6 +17,6 @@ public enum Item_Type
     Boots,
 
     // --- Accessories (rings, amulets, books etc;)
-    Rings, 
-    Runes
+    Ring, 
+    Rune
 }

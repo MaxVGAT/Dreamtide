@@ -17,7 +17,7 @@ public class Inventory_Item
 
         modifiers = EquipmentData()?.modifiers;
 
-        itemID = itemData.itemName + Guid.NewGuid();
+        itemID = itemData.itemName + " - " +  Guid.NewGuid();
     }
 
     public void AddModifiers(Entity_Stats playerStats)

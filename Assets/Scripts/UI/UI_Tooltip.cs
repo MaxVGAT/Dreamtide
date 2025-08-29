@@ -3,7 +3,7 @@ using UnityEngine;
 public class UI_Tooltip : MonoBehaviour
 {
 
-    private RectTransform rect;
+    protected RectTransform rect;
     [SerializeField] private Vector2 offset = new Vector2(300, 20);
 
     protected virtual void Awake()
