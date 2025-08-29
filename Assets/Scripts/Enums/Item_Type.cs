@@ -3,7 +3,20 @@ using UnityEngine;
 public enum Item_Type
 {
     Material,
+
     Weapon,
-    Armor,
-    Trinket // Accessories (rings, amulets, books etc;)
+
+    // --- Armor parts
+    Helmet,
+    Shoulders,
+    Chest,
+    Pants,
+    Cape,
+    Bracers,
+    Gloves,
+    Boots,
+
+    // --- Accessories (rings, amulets, books etc;)
+    Rings, 
+    Runes
 }

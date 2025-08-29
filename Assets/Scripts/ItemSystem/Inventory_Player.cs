@@ -10,16 +10,6 @@ public class Inventory_Player : Inventory_Base
     {
         base.Awake();
         playerStats = GetComponent<Entity_Stats>();
-
-        equipList = new List<Inventory_EquipmentSlot>()
-    {
-        new Inventory_EquipmentSlot(Item_Type.Weapon),
-        new Inventory_EquipmentSlot(Item_Type.Trinket),
-        new Inventory_EquipmentSlot(Item_Type.Trinket),
-        new Inventory_EquipmentSlot(Item_Type.Trinket)
-        // Adjust ItemType enums to match your actual types
-    };
-
     }
 
     public void TryEquipItem(Inventory_Item item)
@@ -28,9 +18,9 @@ public class Inventory_Player : Inventory_Base
         List<Inventory_EquipmentSlot> matchingSlots = equipList.FindAll(slot => slot.slotType == item.itemData.itemType);
 
         //Step 1: Try to find empty slot and equip item
-        foreach(var slot in matchingSlots)
+        foreach (var slot in matchingSlots)
         {
-            if(slot.HasItem() == false)
+            if (slot.HasItem() == false)
             {
                 EquipItem(inventoryItem, slot);
                 return;
@@ -48,15 +38,15 @@ public class Inventory_Player : Inventory_Base
 
     public void UnequipItem(Inventory_Item itemToUnequip)
     {
-        if(CanAddItem() == false)
+        if (CanAddItem() == false)
         {
             Debug.Log("No space");
             return;
         }
 
-        foreach(var slot in equipList)
+        foreach (var slot in equipList)
         {
-            if(slot.equippedItem == itemToUnequip)
+            if (slot.equippedItem == itemToUnequip)
             {
                 slot.equippedItem.RemoveModifiers(playerStats);
                 slot.equippedItem = null;
