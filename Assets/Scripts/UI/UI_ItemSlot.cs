@@ -6,22 +6,22 @@ using UnityEngine.UI;
 public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
 {
     public Inventory_Item itemInSlot { get; private set; }
-    private Inventory_Player inventory;
+    protected Inventory_Player inventory;
 
     [Header("UI Slot Setup")]
     [SerializeField] private Image itemIcon;
     [SerializeField] private TextMeshProUGUI itemStackSize;
 
     // double click
-    private float lastClickTime;
-    private const float DoubleClickThreshold = 0.3f; // seconds
+    protected float lastClickTime;
+    protected const float DoubleClickThreshold = 0.3f; // seconds
 
-    private void Awake()
+    protected void Awake()
     {
         inventory = FindAnyObjectByType<Inventory_Player>();
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public virtual void OnPointerDown(PointerEventData eventData)
     {
         if (itemInSlot == null)
             return;
@@ -41,17 +41,23 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
 
         if (itemInSlot == null)
         {
-            itemStackSize.text = " ";
-            itemIcon.color = Color.clear;
+            if (itemStackSize != null) itemStackSize.text = " ";
+            if (itemIcon != null) itemIcon.color = Color.clear;
             return;
         }
 
-        Color color = Color.white; color.a = 0.9f;
-        itemIcon.color = color;
-        itemIcon.sprite = itemInSlot.itemData.itemIcon;
-        itemStackSize.text = item.stackSize > 1 ? item.stackSize.ToString() : " ";
-        itemStackSize.color = item.stackSize < itemInSlot.itemData.maxStackSize ? itemStackSize.color : Color.yellow;
+        if (itemIcon != null)
+        {
+            Color color = Color.white;
+            color.a = 0.9f;
+            itemIcon.color = color;
+            itemIcon.sprite = itemInSlot.itemData.itemIcon;
+        }
+
+        if (itemStackSize != null)
+        {
+            itemStackSize.text = item.stackSize > 1 ? item.stackSize.ToString() : " ";
+            itemStackSize.color = item.stackSize < itemInSlot.itemData.maxStackSize ? itemStackSize.color : Color.yellow;
+        }
     }
-
-
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UI_EquipSlot : UI_ItemSlot
 {
@@ -7,5 +8,19 @@ public class UI_EquipSlot : UI_ItemSlot
     private void OnValidate()
     {
         gameObject.name = "UI_EquipmentSlot - " + slotType.ToString();
+    }
+
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        if (itemInSlot == null)
+            return;
+
+        if (Time.time - lastClickTime < DoubleClickThreshold)
+        {
+            inventory.UnequipItem(itemInSlot);
+            lastClickTime = 0;
+        }
+        else
+            lastClickTime = Time.time;
     }
 }
