@@ -14,8 +14,18 @@ public class UI_ItemTooltip : UI_Tooltip
     {
         base.ShowToolTip(show, targetRect);
 
+
+        if (!show || itemToShow == null)
+        {
+            itemName.text = "";
+            itemType.text = "";
+            itemInfo.text = "";
+            itemRarity.text = "";
+            return;
+        }
+
         itemName.text = itemToShow.itemData.itemName;
-        itemType.text = itemToShow.itemData.itemType.ToString();
+        itemType.text = SetItemTypeJP(itemToShow.itemData.itemType);
         itemInfo.text = GetItemInfo(itemToShow);
         SetRarityText(itemToShow.itemData.itemRarity);
     }
@@ -101,6 +111,26 @@ public class UI_ItemTooltip : UI_Tooltip
                 return true;
             default:
                 return false;
+        }
+    }
+
+    private string SetItemTypeJP(Item_Type type)
+    {
+        switch(type)
+        {
+            case Item_Type.Helmet: return "ヘルメット";
+            case Item_Type.Shoulders: return "ショルダー";
+            case Item_Type.Chest: return "チェスト";
+            case Item_Type.Pants: return "ズボン";
+            case Item_Type.Cape: return "ケープ";
+            case Item_Type.Bracers: return "ブレイサー";
+            case Item_Type.Gloves: return "グローブ";
+            case Item_Type.Boots: return "ブーツ";
+            case Item_Type.Weapon: return "ウェポン";
+            case Item_Type.Ring: return "リング";
+            case Item_Type.Rune: return "ルーン";
+            case Item_Type.Material: return "マテリアル";
+            default: return null;             
         }
     }
 }

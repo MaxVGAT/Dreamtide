@@ -22,6 +22,13 @@ public class UI : MonoBehaviour
     public void ToggleUI()
     {
         menuEnabled = !menuEnabled;
-        tabMenuRoot.SetActive(menuEnabled);
+
+        if (tabMenuRoot != null)
+            tabMenuRoot.SetActive(!menuEnabled);
+
+        if (itemTooltip != null)
+            itemTooltip.ShowToolTip(false, null, null);
+        else
+            return;
     }
 }
