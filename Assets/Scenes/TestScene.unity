@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 26635517}
   - component: {fileID: 26635516}
   m_Layer: 5
-  m_Name: UI_EquipmentSlot - Rings
+  m_Name: UI_EquipmentSlot - Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7938,6 +7938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tabMenuRoot: {fileID: 1259086584}
   skillTree: {fileID: 89269304}
+  itemTooltip: {fileID: 0}
 --- !u!1 &480393538
 GameObject:
   m_ObjectHideFlags: 0
@@ -9743,7 +9744,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 319.45923, y: 60.87359}
+  m_AnchoredPosition: {x: 319.4592, y: 60.873585}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &594782634
@@ -20535,7 +20536,7 @@ GameObject:
   - component: {fileID: 1269017724}
   - component: {fileID: 1269017727}
   m_Layer: 5
-  m_Name: UI_EquipmentSlot - Runes
+  m_Name: UI_EquipmentSlot - Rune
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22794,7 +22795,7 @@ GameObject:
   - component: {fileID: 1423568268}
   - component: {fileID: 1423568271}
   m_Layer: 5
-  m_Name: UI_EquipmentSlot - Rings
+  m_Name: UI_EquipmentSlot - Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26176,7 +26177,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -53.671875, y: -119.54434}
+  m_AnchoredPosition: {x: -53.67187, y: -119.544334}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1569720279
@@ -30516,7 +30517,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.0005288, y: 33.994114}
+  m_AnchoredPosition: {x: -2.0005288, y: 33.99411}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1812211889
