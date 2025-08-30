@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Strength Ring
   itemIcon: {fileID: 74012778399228409, guid: 781c8573924832849beb6a5bee5f9534, type: 3}
+  itemRarity: 3
   itemType: 10
   maxStackSize: 1
   modifiers:

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Ring of Luck
   itemIcon: {fileID: 4670026126009521960, guid: 478b3c649014183428f8dc533a6d58ee, type: 3}
+  itemRarity: 2
   itemType: 10
   maxStackSize: 1
   modifiers:
