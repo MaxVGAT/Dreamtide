@@ -27,7 +27,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
-        if (itemInSlot == null)
+        if (itemInSlot == null || itemInSlot.itemData.itemType == Item_Type.Material)
             return;
 
         if (Time.time - lastClickTime < DoubleClickThreshold)

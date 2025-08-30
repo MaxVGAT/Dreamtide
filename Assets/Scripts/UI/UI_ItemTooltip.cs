@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -22,7 +23,7 @@ public class UI_ItemTooltip : UI_Tooltip
     public string GetItemInfo(Inventory_Item item)
     {
         if (item.itemData.itemType == Item_Type.Material)
-            return "Used for crafting.";
+            return "クラフティング専用なリソース。";
 
         StringBuilder sb = new StringBuilder();
 
@@ -30,9 +31,9 @@ public class UI_ItemTooltip : UI_Tooltip
 
         foreach (var mod in item.modifiers)
         {
-            string modType = mod.statType.ToString();
-            string modValue = mod.value.ToString();
-            sb.AppendLine("+ " + mod.value + " " + modType);
+            string modType = GetStatTypeText(mod.statType);
+            string modValue = IsPercentageStat(mod.statType) ? mod.value.ToString() + "%" : mod.value.ToString();
+            sb.AppendLine(modType + " - " + " +" + modValue);
         }
 
         return sb.ToString();
@@ -40,7 +41,7 @@ public class UI_ItemTooltip : UI_Tooltip
 
     private void SetRarityText(Item_Rarity rarity)
     {
-        var(color, text) = GetRarityColorAndText(rarity);
+        var (color, text) = GetRarityColorAndText(rarity);
         itemRarity.text = text;
         itemRarity.color = color;
     }
@@ -55,6 +56,51 @@ public class UI_ItemTooltip : UI_Tooltip
             case Item_Rarity.Epic: return (new Color(0.64f, 0.21f, 0.93f), "エピック");
             case Item_Rarity.Legendary: return (new Color(1f, 0.5f, 0f), "レジェンダリー");
             default: return (Color.white, "不明");
+        }
+    }
+
+    private string GetStatTypeText(StatType type)
+    {
+        switch (type)
+        {
+            case StatType.MaxHealth: return "体力";
+            case StatType.HealthRegen: return "回復力";
+            case StatType.Strength: return "破壊力";
+            case StatType.Agility: return "俊敏さ";
+            case StatType.Intelligence: return "魔力";
+            case StatType.Vitality: return "耐久力";
+            case StatType.AttackSpeed: return "連撃速度";
+            case StatType.Damage: return "攻撃力";
+            case StatType.CritChance: return "会心率";
+            case StatType.CritPower: return "会心ダメージ";
+            case StatType.ArmorReduction: return "防御貫通";
+            case StatType.FireDamage: return "火炎ダメージ";
+            case StatType.IceDamage: return "氷結ダメージ";
+            case StatType.LightningDamage: return "雷撃ダメージ";
+            case StatType.Armor: return "防御力";
+            case StatType.Evasion: return "回避率";
+            case StatType.IceResistance: return "氷耐性";
+            case StatType.FireResistance: return "火耐性";
+            case StatType.LightningResistance: return "雷耐性";
+            default: return type.ToString();
+        }
+    }
+
+    private bool IsPercentageStat(StatType type)
+    {
+        switch (type)
+        {
+            case StatType.CritChance:
+            case StatType.CritPower:
+            case StatType.ArmorReduction:
+            case StatType.IceResistance:
+            case StatType.FireResistance:
+            case StatType.LightningResistance:
+            case StatType.AttackSpeed:
+            case StatType.Evasion:
+                return true;
+            default:
+                return false;
         }
     }
 }

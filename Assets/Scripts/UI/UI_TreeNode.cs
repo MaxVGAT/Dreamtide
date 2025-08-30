@@ -133,7 +133,8 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        skillToolTip.ShowToolTip(true, rect, this);
+        bool hasEnoughPoints = skillTree.EnoughSkillPoints(skillData.cost);
+        skillToolTip.ShowToolTip(true, rect, this, hasEnoughPoints);
 
         if (!isUnlocked && !isLocked)
             ToggleNodeHightlight(true);

@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class UI_SkillTooltip : UI_Tooltip
 {
-    private UI ui;
-    private UI_SkillTree skillTree;
-
     [SerializeField] private TextMeshProUGUI skillName;
     [SerializeField] private TextMeshProUGUI skillDescription;
     [SerializeField] private TextMeshProUGUI skillCooldown;
@@ -26,9 +23,6 @@ public class UI_SkillTooltip : UI_Tooltip
     protected override void Awake()
     {
         base.Awake();
-
-        ui = GetComponentInParent<UI>();
-        skillTree = ui.GetComponentInChildren<UI_SkillTree>(true);
     }
 
     public override void ShowToolTip(bool show, RectTransform targetRect) // Override from Tooltip Script
@@ -37,7 +31,7 @@ public class UI_SkillTooltip : UI_Tooltip
     }
 
     
-    public void ShowToolTip(bool show, RectTransform targetRect, UI_TreeNode node) // Overload ShowToolTip with Skill SO
+    public void ShowToolTip(bool show, RectTransform targetRect, UI_TreeNode node, bool hasEnoughPoints) // Overload ShowToolTip with Skill SO
     {
         base.ShowToolTip(show, targetRect);
 
@@ -62,7 +56,10 @@ public class UI_SkillTooltip : UI_Tooltip
         else if (node.isLocked)
             skillRequirements.text = GetColoredText(notMetConditionHex, lockedSkillText);
         else
-            skillRequirements.text = GetRequirements(node.skillData.cost, node.neededNodes, node.conflictNodes);
+        {
+
+            skillRequirements.text = GetRequirements(node.skillData.cost, node.neededNodes, node.conflictNodes, hasEnoughPoints);
+        }
     }
 
     public void LockedSkillEffect()
@@ -106,13 +103,13 @@ public class UI_SkillTooltip : UI_Tooltip
         }
     }
 
-    private string GetRequirements(int skillCost, UI_TreeNode[] neededNodes, UI_TreeNode[] conflictNodes) 
+    private string GetRequirements(int skillCost, UI_TreeNode[] neededNodes, UI_TreeNode[] conflictNodes, bool hasEnoughPoints) 
     {
         StringBuilder sb = new StringBuilder();
 
         sb.AppendLine("解放条件：");
 
-        string costColor = skillTree.EnoughSkillPoints(skillCost) ? metConditionHex : notMetConditionHex;
+        string costColor = hasEnoughPoints ? metConditionHex : notMetConditionHex;
         string costText = $"- {skillCost} スキルポイント";
         string finalCostText = GetColoredText(costColor, costText);
 
