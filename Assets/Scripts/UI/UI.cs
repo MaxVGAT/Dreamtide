@@ -5,6 +5,7 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject tabMenuRoot;
     [SerializeField] private UI_SkillTree skillTree;
     public UI_ItemTooltip itemTooltip;
+    public UI_StatTooltip statTooltip;
 
     private bool menuEnabled;
 
@@ -12,11 +13,9 @@ public class UI : MonoBehaviour
     {
         tabMenuRoot.SetActive(false);
 
-        if (skillTree == null)
-            skillTree = FindAnyObjectByType<UI_SkillTree>();
-
-        if (itemTooltip == null)
-            itemTooltip = FindAnyObjectByType<UI_ItemTooltip>();
+        skillTree = GetComponentInChildren<UI_SkillTree>();
+        itemTooltip = GetComponentInChildren<UI_ItemTooltip>();
+        statTooltip = GetComponentInChildren<UI_StatTooltip>();
     }
 
     public void ToggleUI()

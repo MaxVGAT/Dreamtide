@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class Inventory_Base : MonoBehaviour
 {
@@ -17,35 +16,35 @@ public class Inventory_Base : MonoBehaviour
     }
 
     public bool CanAddItem() => itemList.Count < maxInventorySize;
-    public bool CanAddToStack(Inventory_Item itemToAdd)
+    public Inventory_Item FindStackable(Inventory_Item itemToAdd)
     {
         List<Inventory_Item> stackableItems = itemList.FindAll(item => item.itemData == itemToAdd.itemData);
 
-        foreach(var stack in stackableItems)
+        foreach (var stackableItem in stackableItems)
         {
-            if (stack.CanAddStack())
-                return true;
+            if (stackableItem.CanAddStack())
+                return stackableItem;
         }
 
-        return false;
+        return null;
     }
 
     public void AddItem(Inventory_Item itemToAdd)
     {
-        Inventory_Item itemInInventory = FindItem(itemToAdd.itemData);
+        Inventory_Item itemInInventory = FindStackable(itemToAdd);
 
-        if (itemInInventory != null && itemInInventory.CanAddStack())
+        if (itemInInventory != null)
             itemInInventory.AddStack();
         else
             itemList.Add(itemToAdd);
 
-            OnInventoryChange?.Invoke();
+        OnInventoryChange?.Invoke();
     }
 
     public void RemoveItem(Inventory_Item itemToRemove)
     {
         itemList.Remove(FindItem(itemToRemove.itemData));
-        OnInventoryChange?.Invoke(); 
+        OnInventoryChange?.Invoke();
     }
 
     public Inventory_Item FindItem(Item_DataSO itemData)
