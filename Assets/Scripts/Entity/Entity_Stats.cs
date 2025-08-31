@@ -19,24 +19,19 @@ public class Entity_Stats : MonoBehaviour
 
     public float GetPhysicalDamage(out bool isCrit, float scaleFactor = 1)
     {
-        float baseDamage = offense.damage.GetValue();
-        float bonusDamage = major.strength.GetValue(); // +1 bonus dmg per STR
-        float totalBaseDamage = baseDamage + bonusDamage;
-
-        float baseCritChance = offense.critChance.GetValue();
-        float bonusCritChance = major.agility.GetValue() * 0.3f; // +0.3% crit chance per AGI
-        float critChance = baseCritChance + bonusCritChance;
-
-        float baseCritPower = offense.critPower.GetValue();
-        float bonusCritPower = major.strength.GetValue() * 1; // +1% crit power per STR
-
-        float critPower = (baseCritPower + bonusCritPower) / 100; // Crit power as multiplier (eg. 150 / 100 = 1.5 - multiplier)
+        float baseDamage = GetBaseDamage();
+        float critChance = GetCritChance();
+        float critPower = GetCritPower();
 
         isCrit = Random.Range(0, 100) < critChance;
-        float finalPhysicalDamage = isCrit ? totalBaseDamage * critPower : totalBaseDamage;
+        float finalPhysicalDamage = isCrit ? baseDamage * critPower : baseDamage;
 
         return finalPhysicalDamage * scaleFactor;
     }
+
+    public float GetBaseDamage() => offense.damage.GetValue() + major.strength.GetValue(); // +1 bonus damage per STR
+    public float GetCritChance() => offense.critChance.GetValue() + (major.agility.GetValue() * 0.3f); // +0.3% crit chance per AGI
+    public float GetCritPower() => offense.critPower.GetValue() + (major.strength.GetValue() * 1); // +1% crit power per STR
 
     public float GetElementalDamage(out ElementType element, float scaleFactor = 1)
     {
@@ -114,9 +109,7 @@ public class Entity_Stats : MonoBehaviour
 
     public float GetArmorMitigation(float armorReduction)
     {
-        float baseArmor = defense.armor.GetValue();
-        float bonusArmor = major.vitality.GetValue(); // Bonus from vitality, 1 point per VIT
-        float totalArmor = baseArmor + bonusArmor;
+        float totalArmor = GetBaseArmor();
 
         float reductionMultiplier = Mathf.Clamp(1 - armorReduction, 0, 1);
         float effectiveArmor = totalArmor * reductionMultiplier;
@@ -127,6 +120,8 @@ public class Entity_Stats : MonoBehaviour
         float finalMitigation = Mathf.Clamp(mitigation, 0, mitigationCap);
         return finalMitigation;
     }
+
+    public float GetBaseArmor() => defense.armor.GetValue() + major.vitality.GetValue(); // +1 point per VIT
 
     public float GetArmorReduction()
     {
