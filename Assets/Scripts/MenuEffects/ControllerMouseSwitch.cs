@@ -3,17 +3,20 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
+// コントローラーとマウス入力を切り替え、UIの選択状態を管理
 public class ControllerMouseSwitch : MonoBehaviour
 {
-    public GameObject firstSelected;
-    public GameObject settingsSelected;
-    public GameObject exitSelected;
-    public InputActionReference closeWindow;
+    [Header("UI選択オブジェクト")]
+    public GameObject firstSelected;    // メニュー初期選択
+    public GameObject settingsSelected; // 設定画面選択
+    public GameObject exitSelected;     // 終了確認画面選択
 
-    void Start()
+    [Header("入力アクション")]
+    public InputActionReference closeWindow; // ウィンドウ閉じる入力
+
+    private void Start()
     {
         SetSelectedOnMenu();
-
         Cursor.visible = true;
 
         if (closeWindow != null)
@@ -23,33 +26,22 @@ public class ControllerMouseSwitch : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-
-    }
-
+    // 入力デバイス変更を監視（マウスかコントローラーか）
     private void OnInputActionChange(object obj, InputActionChange change)
     {
-        if (change == InputActionChange.ActionPerformed)
-        {
-            InputAction inputAction = (InputAction)obj;
-            InputControl lastControl = inputAction.activeControl;
-            InputDevice lastDevice = lastControl.device;
+        if (change != InputActionChange.ActionPerformed) return;
 
-            if (lastDevice.displayName == "Mouse")
-            {
-                Cursor.visible = true;
-            }
-            else
-            {
-                Cursor.visible = false;
-            }
-        }
+        InputAction inputAction = (InputAction)obj;
+        InputControl lastControl = inputAction.activeControl;
+        InputDevice lastDevice = lastControl.device;
+
+        Cursor.visible = lastDevice.displayName == "Mouse"; // マウスならカーソル表示
     }
 
     private void OnEnable()
     {
         InputSystem.onActionChange += OnInputActionChange;
+
         if (closeWindow != null)
         {
             closeWindow.action.Enable();
@@ -60,6 +52,7 @@ public class ControllerMouseSwitch : MonoBehaviour
     private void OnDisable()
     {
         InputSystem.onActionChange -= OnInputActionChange;
+
         if (closeWindow != null)
         {
             closeWindow.action.performed -= OnCloseWindow;
@@ -67,51 +60,43 @@ public class ControllerMouseSwitch : MonoBehaviour
         }
     }
 
+    // ウィンドウ閉じる操作
     public void OnCloseWindow(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
 
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            Debug.Log("Pressed escape");
-        }
-
+        // 設定・クレジット・終了画面を閉じる処理
         if (ShowHideSettings.Instance != null)
         {
-            if (ShowHideSettings.Instance.settingsGroup != null && ShowHideSettings.Instance.settingsGroup.alpha > 0)
+            var shs = ShowHideSettings.Instance;
+
+            if (shs.settingsGroup != null && shs.settingsGroup.alpha > 0)
             {
-                ShowHideSettings.Instance.HideSettings();
+                shs.HideSettings();
                 SoundManager.Instance.PlayCloseButtonSFX();
             }
 
-            if (ShowHideSettings.Instance.creditsGroup != null && ShowHideSettings.Instance.creditsGroup.alpha > 0)
+            if (shs.creditsGroup != null && shs.creditsGroup.alpha > 0)
             {
-                ShowHideSettings.Instance.HideCredits();
+                shs.HideCredits();
                 SoundManager.Instance.PlayCloseButtonSFX();
-                ShowHideSettings.Instance.ShowSettings();
+                shs.ShowSettings();
             }
 
-            if (ShowHideSettings.Instance.exitGroup != null && ShowHideSettings.Instance.exitGroup.alpha > 0)
+            if (shs.exitGroup != null && shs.exitGroup.alpha > 0)
             {
-                ShowHideSettings.Instance.HideExit();
+                shs.HideExit();
                 SoundManager.Instance.PlayCloseButtonSFX();
             }
         }
     }
 
-    public void SetSelectedOnMenu()
-    {
-        EventSystem.current.SetSelectedGameObject(firstSelected);
-    }
-
+    // メニュー、設定、終了画面でのUI選択状態設定
+    public void SetSelectedOnMenu() => EventSystem.current.SetSelectedGameObject(firstSelected);
     public void SetSelectedOnSettings()
     {
         Debug.Log("SetSelectedOnSettings called!");
         EventSystem.current.SetSelectedGameObject(settingsSelected);
     }
-
-    public void SetSelectedOnExit()
-    {
-        EventSystem.current.SetSelectedGameObject(exitSelected);
-    }
+    public void SetSelectedOnExit() => EventSystem.current.SetSelectedGameObject(exitSelected);
 }

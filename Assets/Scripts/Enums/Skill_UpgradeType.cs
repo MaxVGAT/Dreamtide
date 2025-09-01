@@ -1,40 +1,41 @@
 using UnityEngine;
 
+// スキルのアップグレード種類を表す列挙型
 public enum Skill_UpgradeType
 {
-    None,
+    None, // アップグレードなし
 
-    // --- Dash Tree ---
-    Dash, // Dash to avoid damage
-    Dash_CloneOnStart, // Create a clone when dash starts
-    Dash_CloneOnStartAndArrival,
-    Dash_ShardOnStart, // Create a time shard when dash starts
-    Dash_ShardOnStartAndArrival,
+    // --- ダッシュツリー ---
+    Dash, // ダッシュでダメージ回避
+    Dash_CloneOnStart, // ダッシュ開始時にクローンを作る
+    Dash_CloneOnStartAndArrival, // ダッシュ開始と到達時にクローンを作る
+    Dash_ShardOnStart, // ダッシュ開始時にタイムシャードを作る
+    Dash_ShardOnStartAndArrival, // ダッシュ開始と到達時にタイムシャードを作る
 
-    // --- Shard Tree ---
-    Shard, //Shard explodes on enemy contact or after a delay
-    Shard_MoveToEnemy, // Shard moves towards nearest enemy
-    Shard_MultiCast, // Shard can have multiple charges, and you can cast them all in succession
-    Shard_Teleport, // Swap places with the last shard created
-    Shard_TeleportHPRewind, // When swapping with the shard, return to the %HP you had when creating the shard
+    // --- シャードツリー ---
+    Shard, // シャードは敵接触または遅延後に爆発
+    Shard_MoveToEnemy, // シャードが最も近い敵に向かって移動
+    Shard_MultiCast, // シャードのチャージを複数持て、連続で発動可能
+    Shard_Teleport, // 作成した最後のシャードと位置を入れ替える
+    Shard_TeleportHPRewind, // シャードと入れ替えた際、作成時のHP%に戻る
 
-    // --- TimeEcho Tree ---
-    TimeEcho, // Create a clone of a player, which can take damage from enemies.
-    TimeEcho_SingleAttack, // The clone can perform a single attack
-    TimeEcho_MultiAttack, // The clone can perform N attacks
-    TimeEcho_ChanceToDuplicate, // The clone has a chance to create another clone on attacks
-    TimeEcho_HealWisp, // When the clone dies, it creates a wisp that flies towards the player and heal it
-    TimeEcho_CleanseWisp, // Wisp now also removes negative effects on player
-    TimeEcho_CooldownWisp, // Wisp now reduces cooldown of all skills by N second
+    // --- タイムエコーツリー ---
+    TimeEcho, // プレイヤーのクローンを作る。クローンは敵のダメージを受ける
+    TimeEcho_SingleAttack, // クローンは単発攻撃可能
+    TimeEcho_MultiAttack, // クローンは複数回攻撃可能
+    TimeEcho_ChanceToDuplicate, // クローンが攻撃時に別のクローンを作る確率
+    TimeEcho_HealWisp, // クローン死亡時、プレイヤーに向かうウィスプを生成して回復
+    TimeEcho_CleanseWisp, // ウィスプがプレイヤーのデバフも解除するようになる
+    TimeEcho_CooldownWisp, // ウィスプが全スキルのクールダウンをN秒短縮
 
-    // --- Sword Throw Tree ---
-    SwordThrow, // Throw a sword to damage enemies from afar
-    SwordThrow_Spin, // Sword will stop at one point and spin to deal damages
-    SwordThrow_Pierce, // Sword will pierce N targets
-    SwordThrow_Bounce, // Sword will bound between enemies
+    // --- ソードスローツリー ---
+    SwordThrow, // 剣を投げて遠距離の敵にダメージ
+    SwordThrow_Spin, // 剣が回転してダメージを与える
+    SwordThrow_Pierce, // 剣が複数の敵を貫通
+    SwordThrow_Bounce, // 剣が敵間で跳ね返る
 
-    // --- Domain Expansion Tree ---
-    Domain_Slow, // Create an area where enemies are frozen but you can fight freely
-    Domain_Echo, // You can no longer move, but you can spam Time Echo ability
-    Domain_Shard // You can no longer move, but you can spam Time Shard ability
+    // --- ドメインエクスパンションツリー ---
+    Domain_Slow, // 敵が凍る範囲を作るがプレイヤーは自由に戦える
+    Domain_Echo, // 移動不可だがタイムエコーを連続で使用可能
+    Domain_Shard // 移動不可だがタイムシャードを連続で使用可能
 }

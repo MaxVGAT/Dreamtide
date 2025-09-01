@@ -3,10 +3,11 @@ using UnityEngine.UI;
 
 public class UI_TreeConnections : MonoBehaviour
 {
-    [SerializeField] private RectTransform rotationPoint;
-    [SerializeField] private RectTransform connectLength;
-    [SerializeField] private RectTransform childNodeConnectionPoint;
+    [SerializeField] private RectTransform rotationPoint;         // 線の回転の基点
+    [SerializeField] private RectTransform connectLength;         // 線の長さを制御
+    [SerializeField] private RectTransform childNodeConnectionPoint; // 子ノード接続位置
 
+    // 線を方向・長さ・オフセットで設定
     public void DirectConnection(NodeDirectionType direction, float length, float offset)
     {
         bool shouldBeActive = direction != NodeDirectionType.None;
@@ -17,8 +18,10 @@ public class UI_TreeConnections : MonoBehaviour
         connectLength.sizeDelta = new Vector2(finalLength, connectLength.sizeDelta.y);
     }
 
+    // 線のImageを取得（色変更などに使用）
     public Image GetConnectionImage() => connectLength.GetComponent<Image>();
 
+    // 子ノード接続位置を取得（親のRectTransform基準の座標）
     public Vector2 GetConnectionPoint(RectTransform rect)
     {
         RectTransformUtility.ScreenPointToLocalPointInRectangle
@@ -32,7 +35,7 @@ public class UI_TreeConnections : MonoBehaviour
         return localPosition;
     }
 
-
+    // NodeDirectionTypeに応じた角度を返す
     private float GetDirectionAngle(NodeDirectionType type)
     {
         switch (type)
@@ -50,7 +53,7 @@ public class UI_TreeConnections : MonoBehaviour
     }
 }
 
-
+// 接続方向の列挙
 public enum NodeDirectionType
 {
     None,

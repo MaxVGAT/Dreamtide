@@ -1,8 +1,10 @@
 using UnityEngine;
 
+// プレイヤーのジャンプ状態（空中にいる間の移動管理）
 public class Player_JumpState : PlayerAiredState
 {
-    public Player_JumpState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public Player_JumpState(Entity_Player player, StateMachine stateMachine, string animBoolName)
+        : base(player, stateMachine, animBoolName)
     {
     }
 
@@ -10,6 +12,7 @@ public class Player_JumpState : PlayerAiredState
     {
         base.Enter();
 
+        // ジャンプ開始時の垂直速度を設定（横速度は維持）
         player.SetVelocity(rb.linearVelocity.x, player.jumpForce);
     }
 
@@ -17,7 +20,7 @@ public class Player_JumpState : PlayerAiredState
     {
         base.Update();
 
-        // Make sure player is not doing jump attack when transfering to fall state
+        // 下方向に移動中で、ジャンプ攻撃中でなければ落下状態に移行
         if (rb.linearVelocity.y < 0 && stateMachine.currentState != player.jumpAttackState)
             stateMachine.ChangeState(player.fallState);
     }

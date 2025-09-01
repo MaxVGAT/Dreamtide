@@ -2,22 +2,21 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Net;
 
 [Serializable]
 public class UI_ConnectionDetails
 {
-    public UI_TreeConnectHandler childNode;
-    public NodeDirectionType direction;
-    [Range(0, 300f)] public float length;
-    [Range(-50f, 50f)] public float rotation;
+    public UI_TreeConnectHandler childNode;   // 接続先の子ノード
+    public NodeDirectionType direction;       // 接続方向
+    [Range(0, 300f)] public float length;    // 接続線の長さ
+    [Range(-50f, 50f)] public float rotation;// 接続線の回転
 }
 
 [ExecuteAlways]
 public class UI_TreeConnectHandler : MonoBehaviour
 {
-
     private RectTransform rect => GetComponent<RectTransform>();
+
     [SerializeField] private UI_ConnectionDetails[] connectionDetails;
     [SerializeField] private UI_TreeConnections[] connections;
 
@@ -33,19 +32,19 @@ public class UI_TreeConnectHandler : MonoBehaviour
         ColorUtility.TryParseHtmlString("#F6A765", out unlockedConnectionColor);
     }
 
-    public UI_TreeNode[] GetChildNodes() // Get all child nodes from a node and add them to TreeNode array
+    // 子ノードをすべて取得
+    public UI_TreeNode[] GetChildNodes()
     {
         List<UI_TreeNode> childrenToReturn = new List<UI_TreeNode>();
-
-        foreach(var node in connectionDetails)
+        foreach (var node in connectionDetails)
         {
-            if(node.childNode != null)
+            if (node.childNode != null)
                 childrenToReturn.Add(node.childNode.GetComponent<UI_TreeNode>());
         }
-
         return childrenToReturn.ToArray();
     }
 
+    // 接続線の更新
     public void UpdateConnections()
     {
         for (int i = 0; i < connectionDetails.Length; i++)
@@ -61,15 +60,16 @@ public class UI_TreeConnectHandler : MonoBehaviour
             if (detail.childNode == null)
                 continue;
 
+            // 子ノードの位置を接続線の先端に設定
             detail.childNode.SetPosition(targetPosition);
             detail.childNode?.SetConnectionImage(connectionImage);
         }
     }
 
+    // 再帰的に全接続を更新
     public void UpdateAllConnections()
     {
         UpdateConnections();
-
         foreach (var node in connectionDetails)
         {
             if (node.childNode == null) continue;
@@ -77,11 +77,10 @@ public class UI_TreeConnectHandler : MonoBehaviour
         }
     }
 
+    // 接続線の色をアンロック状態に応じて変更
     public void UnlockConnectionImage(bool unlocked)
     {
-        if (connectionImage == null)
-            return;
-
+        if (connectionImage == null) return;
         connectionImage.color = unlocked ? unlockedConnectionColor : originalColor;
     }
 
@@ -91,10 +90,9 @@ public class UI_TreeConnectHandler : MonoBehaviour
 
     private void OnValidate()
     {
-        if (connectionDetails.Length <= 0)
-            return;
+        if (connectionDetails.Length <= 0) return;
 
-        if(connectionDetails.Length != connections.Length)
+        if (connectionDetails.Length != connections.Length)
         {
             Debug.Log("Amount of details should be same as amount of connections. - " + gameObject.name);
             return;
@@ -102,5 +100,4 @@ public class UI_TreeConnectHandler : MonoBehaviour
 
         UpdateConnections();
     }
-
 }

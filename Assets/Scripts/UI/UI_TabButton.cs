@@ -2,29 +2,34 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+// タブボタン用クラス
 [RequireComponent(typeof(Image))]
 public class UI_TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
-    public UI_TabGroup tabGroup;
-
-    public Image background;
+    public UI_TabGroup tabGroup; // 所属するタブグループ
+    public Image background;     // ボタン背景
 
     private void Start()
     {
+        // Image コンポーネントを取得
         background = GetComponent<Image>();
+        // タブグループにこのボタンを登録
         tabGroup.Subscribe(this);
     }
 
+    // クリック時に選択
     public void OnPointerClick(PointerEventData eventData)
     {
         tabGroup.OnTabSelected(this);
     }
 
+    // マウスオーバー時
     public void OnPointerEnter(PointerEventData eventData)
     {
         tabGroup.OnTabEnter(this);
     }
 
+    // マウスが離れた時
     public void OnPointerExit(PointerEventData eventData)
     {
         tabGroup.OnTabExit(this);

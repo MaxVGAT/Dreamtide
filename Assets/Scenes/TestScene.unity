@@ -2966,7 +2966,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 21b17b98d07663f4c97dba73f7eca1b1, type: 2}
-  skillName: "\u30B9\u30D4\u30F3"
   skillIcon: {fileID: 1516866519}
   skillCost: 3
 --- !u!1 &153459156
@@ -3941,7 +3940,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 9707d5411361dc544824c6e8fba70217, type: 2}
-  skillName: "\u30DF\u30B9\u30C6\u30A3\u30C3\u30AF\u30EA\u30D5\u30C8"
   skillIcon: {fileID: 838964075}
   skillCost: 2
 --- !u!1 &198499217
@@ -7484,7 +7482,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: d9b6e731102ec0446b4c13b805abebc4, type: 2}
-  skillName: "\u30D5\u30A1\u30F3\u30C8\u30E0\u30B9\u30C6\u30C3\u30D7"
   skillIcon: {fileID: 1777616333}
   skillCost: 2
 --- !u!1 &321470568
@@ -8970,7 +8967,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: ece4b5113c55c714a94630d128abb7de, type: 2}
-  skillName: "\u30CB\u30F3\u30D6\u30EB\u30C0\u30C3\u30B7\u30E5"
   skillIcon: {fileID: 802170697}
   skillCost: 0
 --- !u!1 &419668434
@@ -9720,7 +9716,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 181e4bdf9afa2154585a3dc519f4b328, type: 2}
-  skillName: "\u30DF\u30E9\u30FC\u30B8\u30E5\u30E9\u30C3\u30B7\u30E5"
   skillIcon: {fileID: 1092910582}
   skillCost: 2
 --- !u!1 &455994018
@@ -10472,6 +10467,7 @@ MonoBehaviour:
   tabMenuRoot: {fileID: 1259086584}
   skillTree: {fileID: 89269304}
   itemTooltip: {fileID: 0}
+  statTooltip: {fileID: 0}
 --- !u!1 &475305032
 GameObject:
   m_ObjectHideFlags: 0
@@ -11817,7 +11813,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 2b6278d30fe09244ca59ff787e137419, type: 2}
-  skillName: "\u30A8\u30BF\u30FC\u30CA\u30EB\u30A4\u30EA\u30E5\u30FC\u30B8\u30E7\u30F3"
   skillIcon: {fileID: 1105958079}
   skillCost: 8
 --- !u!114 &556392881
@@ -12670,7 +12665,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: c2db10efa18a90b409d3bae8a3c6c154, type: 2}
-  skillName: "\u30BF\u30A4\u30E0\u30EC\u30B9\u30A2\u30BF\u30C3\u30AF"
   skillIcon: {fileID: 867428979}
   skillCost: 3
 --- !u!1 &602698772
@@ -17816,7 +17810,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 70546dd864c69d54f9a6361a0534ad6d, type: 2}
-  skillName: "\u30D4\u30A2\u30FC\u30B9"
   skillIcon: {fileID: 773759765}
   skillCost: 3
 --- !u!114 &876493564
@@ -21834,7 +21827,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: aa5db9b9165e0bf44b610ce48f4a0ead, type: 2}
-  skillName: "\u30EA\u30EF\u30A4\u30F3\u30C9"
   skillIcon: {fileID: 1028890172}
   skillCost: 4
 --- !u!1 &1049656060
@@ -23416,7 +23408,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 650e7c2197d99ef489332146ba5f1e67, type: 2}
-  skillName: "\u30D0\u30A6\u30F3\u30B9"
   skillIcon: {fileID: 3872761}
   skillCost: 3
 --- !u!114 &1141706036
@@ -25799,7 +25790,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: ceccad6be26345942ad2a5324208adce, type: 2}
-  skillName: "\u30B7\u30E3\u30C3\u30BF\u30FC\u30C9\u30C9\u30EA\u30FC\u30E0\u30B9\u30B1\u30FC\u30D7"
   skillIcon: {fileID: 1569347612}
   skillCost: 8
 --- !u!114 &1261665794
@@ -26767,7 +26757,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 1d759f76ceb92464288124402bb39bf5, type: 2}
-  skillName: "\u30BF\u30A4\u30E0\u30A8\u30B3\u30FC"
   skillIcon: {fileID: 505016520}
   skillCost: 1
 --- !u!114 &1306111646
@@ -27080,7 +27069,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 26602342ee55fb34dbc2d2f66009c456, type: 2}
-  skillName: "\u30AF\u30ED\u30CE\u30D1\u30FC\u30B9\u30FC\u30C8"
   skillIcon: {fileID: 950331105}
   skillCost: 2
 --- !u!1 &1316072177
@@ -28168,7 +28156,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: fbe3fd01ba57da0438ab44d526641574, type: 2}
-  skillName: "\u30C0\u30BA\u30EA\u30F3\u30B0\u30FB\u30B9\u30E9\u30C3\u30B7\u30FC\u30BA"
   skillIcon: {fileID: 2103474873}
   skillCost: 3
 --- !u!224 &1370677743
@@ -29553,7 +29540,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 8cffb2bfd17de564eafb0cf1fe419c46, type: 2}
-  skillName: "\u30A4\u30F3\u30D5\u30A3\u30CB\u30C3\u30C8\u30FB\u30D1\u30E9\u30C9\u30C3\u30AF\u30B9"
   skillIcon: {fileID: 68961277}
   skillCost: 3
 --- !u!114 &1452785047
@@ -30525,7 +30511,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 50fe6c830f63f094ab55e7594da23892, type: 2}
-  skillName: "\u30D5\u30A7\u30A4\u30BA\u30B7\u30D5\u30C8"
   skillIcon: {fileID: 615883769}
   skillCost: 3
 --- !u!1 &1495247344
@@ -32028,7 +32013,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 320e7c568403cb742ba4795217b1974f, type: 2}
-  skillName: "\u30AF\u30ED\u30CE\u30A6\u30A3\u30B9\u30D7"
   skillIcon: {fileID: 275469458}
   skillCost: 1
 --- !u!1 &1545619310
@@ -33036,7 +33020,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 06917d567d0fc1147a0e082d589d0cfd, type: 2}
-  skillName: "\u30A6\u30A3\u30B9\u30D7\u30BA\u30B0\u30EC\u30A4\u30B9"
   skillIcon: {fileID: 1676007452}
   skillCost: 1
 --- !u!1 &1573778049
@@ -34955,7 +34938,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 1d8574bcf7ffd6b49b2ede46ac966a8a, type: 2}
-  skillName: "\u30BF\u30A4\u30E0\u30B7\u30E3\u30FC\u30C9"
   skillIcon: {fileID: 319620046}
   skillCost: 0
 --- !u!1 &1638028560
@@ -36527,7 +36509,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: e7422bc01c2030d428363fac8fb6b093, type: 2}
-  skillName: "\u30EA\u30C3\u30D7\u30EB\u30D6\u30EC\u30A4\u30AF"
   skillIcon: {fileID: 318795579}
   skillCost: 3
 --- !u!1 &1713854940
@@ -38659,7 +38640,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: fbacbcbd20e302a43981c8f1d04832ef, type: 2}
-  skillName: "\u30D2\u30FC\u30EA\u30F3\u30B0\u30A6\u30A3\u30B9\u30D7"
   skillIcon: {fileID: 676172076}
   skillCost: 2
 --- !u!1 &1817028285
@@ -42391,7 +42371,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: a7f76e885c5924e47b6897f782adca2e, type: 2}
-  skillName: "\u30BD\u30FC\u30C9\u30B9\u30ED\u30FC"
   skillIcon: {fileID: 275415299}
   skillCost: 0
 --- !u!114 &2020143505
@@ -43860,7 +43839,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 38082916692199e41ac576bdd0618c25, type: 2}
-  skillName: "\u30DE\u30EB\u30C1\u30D0\u30FC\u30B9\u30C8"
   skillIcon: {fileID: 301200777}
   skillCost: 4
 --- !u!1 &2086540250
@@ -44701,7 +44679,6 @@ MonoBehaviour:
   isUnlocked: 0
   isLocked: 0
   skillData: {fileID: 11400000, guid: 7e5afde5ff114964883eed009112e300, type: 2}
-  skillName: "\u30C9\u30EA\u30FC\u30E0\u30D5\u30A3\u30FC\u30EB\u30C9"
   skillIcon: {fileID: 778845970}
   skillCost: 5
 --- !u!114 &2130679716

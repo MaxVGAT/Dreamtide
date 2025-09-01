@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class SkillObject_SwordBounce : SkillObject_Sword
 {
-    [SerializeField] private float bounceSpeed;
-    private int bounceCount;
+    [SerializeField] private float bounceSpeed;   // 次のターゲットに跳ねる速度
+    private int bounceCount;                       // 残りの跳ね回数
 
-    private Collider2D[] enemyTargets;
-    private Transform nextTarget;
-    private List<Transform> selectedBefore = new List<Transform>();
+    private Collider2D[] enemyTargets;            // スキル範囲内の敵
+    private Transform nextTarget;                  // 次の跳ねる対象
+    private List<Transform> selectedBefore = new List<Transform>(); // 以前選ばれたターゲット記録
 
     public override void SetupSword(Skill_SwordThrow swordManager, Vector2 direction)
     {
@@ -21,11 +20,12 @@ public class SkillObject_SwordBounce : SkillObject_Sword
 
     protected override void Update()
     {
-        transform.right = rb.linearVelocity;
-        HandleComeback();
-        HandleBounce();
+        transform.right = rb.linearVelocity; // 剣の向きを移動方向に合わせる
+        HandleComeback();                    // プレイヤーへの戻り処理
+        HandleBounce();                      // 次の敵への跳ね処理
     }
 
+    // 次のターゲットへの移動・攻撃処理
     private void HandleBounce()
     {
         if (nextTarget == null)
@@ -35,20 +35,20 @@ public class SkillObject_SwordBounce : SkillObject_Sword
 
         if (Vector2.Distance(transform.position, nextTarget.position) < 0.75f)
         {
-            DamageEnemiesInRadius(transform, 1);
+            DamageEnemiesInRadius(transform, 1); // 衝突時にダメージ
 
-            enemyTargets = GetEnemiesAround(transform, 10);
-
+            enemyTargets = GetEnemiesAround(transform, 10); // 周囲の敵を更新
             BounceToNextTarget();
 
             if (bounceCount == 0 || nextTarget == null)
             {
                 nextTarget = null;
-                GetSwordBackToPlayer();
+                GetSwordBackToPlayer(); // 跳ね終了でプレイヤーに戻す
             }
         }
     }
 
+    // 次のターゲットを決定
     private void BounceToNextTarget()
     {
         Transform target = GetNextTarget();
@@ -61,24 +61,28 @@ public class SkillObject_SwordBounce : SkillObject_Sword
             nextTarget = null;
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision) // Get enemies detected the skill's zone
+    // 当たり判定に入ったときの処理
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        anim?.SetTrigger("spin");
+        anim?.SetTrigger("spin"); // 回転アニメーション
+
         if (enemyTargets == null)
         {
-            enemyTargets = GetEnemiesAround(transform, 10);
-            rb.simulated = false;
+            enemyTargets = GetEnemiesAround(transform, 10); // 範囲内の敵を取得
+            rb.simulated = false;                            // 移動停止
         }
 
-        DamageEnemiesInRadius(transform, 1);
+        DamageEnemiesInRadius(transform, 1); // 範囲攻撃
 
+        // 跳ねる対象がいない、または跳ね回数終了
         if (enemyTargets.Length <= 1 || bounceCount == 0)
             GetSwordBackToPlayer();
         else
             nextTarget = GetNextTarget();
     }
 
-    private List<Transform> GetAliveTargets() // Goes through enemyTargets (found by OnTriggerEnter) and return the ones that are non-null.
+    // aliveな敵だけを返す
+    private List<Transform> GetAliveTargets()
     {
         List<Transform> aliveTargets = new List<Transform>();
 
@@ -90,27 +94,28 @@ public class SkillObject_SwordBounce : SkillObject_Sword
 
         return aliveTargets;
     }
-    private List<Transform> GetValidTargets() // Return a validTarget only if it has never been picked before. If all alive targets have been marked as valid, then the list resets.
+
+    // 過去に選ばれていない敵だけを返す。すべて選ばれた場合はリストをリセット
+    private List<Transform> GetValidTargets()
     {
         List<Transform> validTargets = new List<Transform>();
         List<Transform> aliveTargets = GetAliveTargets();
 
         foreach (var enemy in aliveTargets)
         {
-            if (enemy != null && selectedBefore.Contains(enemy.transform) == false)
+            if (enemy != null && !selectedBefore.Contains(enemy.transform))
                 validTargets.Add(enemy.transform);
         }
 
         if (validTargets.Count > 0)
             return validTargets;
-        else
-        {
-            selectedBefore.Clear();
-            return aliveTargets;
-        }
+
+        selectedBefore.Clear();
+        return aliveTargets;
     }
 
-    private Transform GetNextTarget() // Picks a random target from the ValidTargets list, remembers with selectedBefore, then returns it for next attack.
+    // ランダムに次のターゲットを決定してselectedBeforeに記録
+    private Transform GetNextTarget()
     {
         List<Transform> validTarget = GetValidTargets();
 
@@ -118,12 +123,9 @@ public class SkillObject_SwordBounce : SkillObject_Sword
             return null;
 
         int randomIndex = Random.Range(0, validTarget.Count);
-
         Transform nextTarget = validTarget[randomIndex];
         selectedBefore.Add(nextTarget);
 
         return nextTarget;
     }
-
-
 }
