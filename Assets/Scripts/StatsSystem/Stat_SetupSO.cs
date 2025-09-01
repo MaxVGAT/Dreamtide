@@ -1,37 +1,37 @@
 using UnityEngine;
 
-// ƒLƒƒƒ‰ƒNƒ^[‚ÌƒfƒtƒHƒ‹ƒgƒXƒe[ƒ^ƒX‚ğ•Û‘¶‚·‚éScriptableObject
+// ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½^ï¿½[ï¿½Ìƒfï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½ScriptableObject
 [CreateAssetMenu(menuName = "RPG Setup/Default Stat Setup", fileName = "Default Stat Setup")]
 public class Stat_SetupSO : ScriptableObject
 {
-    [Header("ƒŠƒ\[ƒX")]
-    public float maxHealth = 100; // Å‘å‘Ì—Í
-    public float healthRegen;     // 1•b‚ ‚½‚è‚Ì‘Ì—Í‰ñ•œ—Ê
+    [Header("ï¿½ï¿½ï¿½ï¿½[ï¿½X")]
+    public float maxHealth = 100; // ï¿½Å‘ï¿½Ì—ï¿½
+    public float healthRegen;     // 1ï¿½bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‘Ì—Í‰ñ•œ—ï¿½
 
-    [Header("UŒ‚—Í - •¨—ƒ_ƒ[ƒW")]
-    public float attackSpeed = 1; // UŒ‚‘¬“xi•b‚ ‚½‚è‚ÌUŒ‚‰ñ”j
-    public float damage = 10;     // Šî–{•¨—ƒ_ƒ[ƒW
-    public float critChance;      // ƒNƒŠƒeƒBƒJƒ‹”­¶Šm—¦
-    public float critPower = 150; // ƒNƒŠƒeƒBƒJƒ‹‚Ìƒ_ƒ[ƒW”{—¦i%j
+    [Header("ï¿½Uï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W")]
+    public float attackSpeed = 1; // ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½xï¿½iï¿½bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌUï¿½ï¿½ï¿½ñ”j
+    public float damage = 10;     // ï¿½ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W
+    public float critChance;      // ï¿½Nï¿½ï¿½ï¿½eï¿½Bï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½ï¿½
+    public float critPower = 150; // ï¿½Nï¿½ï¿½ï¿½eï¿½Bï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìƒ_ï¿½ï¿½ï¿½[ï¿½Wï¿½{ï¿½ï¿½ï¿½i%ï¿½j
 
-    [Header("UŒ‚—Í - ‘®«ƒ_ƒ[ƒW")]
-    public float fireDamage;      // ‰Î‘®«ƒ_ƒ[ƒW
-    public float iceDamage;       // •X‘®«ƒ_ƒ[ƒW
-    public float lightningDamage; // —‹‘®«ƒ_ƒ[ƒW
+    [Header("ï¿½Uï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W")]
+    public float fireDamage;      // ï¿½Î‘ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W
+    public float iceDamage;       // ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W
+    public float lightningDamage; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W
 
-    [Header("–hŒä—Í - •¨—ƒ_ƒ[ƒW")]
-    public float armorReduction;  // •¨—ƒ_ƒ[ƒWŒ¸­—¦i%j
-    public float evasion;         // ‰ñ”ğ—¦
-    public float armor;           // ŒÅ’è–hŒä—Íiƒ_ƒ[ƒWŒ¸­‚ÉŠñ—^j
+    [Header("ï¿½hï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W")]
+    public float armorReduction;  // ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½i%ï¿½j
+    public float evasion;         // ï¿½ï¿½ï¿½
+    public float armor;           // ï¿½Å’ï¿½hï¿½ï¿½Íiï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ÉŠï¿½^ï¿½j
 
-    [Header("–hŒä—Í - ‘®«ƒ_ƒ[ƒW")]
-    public float fireResistance;      // ‰Î‘®«ƒ_ƒ[ƒW‘Ï«i%j
-    public float iceResistance;       // •X‘®«ƒ_ƒ[ƒW‘Ï«i%j
-    public float lightningResistance; // —‹‘®«ƒ_ƒ[ƒW‘Ï«i%j
+    [Header("ï¿½hï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W")]
+    public float fireResistance;      // ï¿½Î‘ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½Ïï¿½ï¿½i%ï¿½j
+    public float iceResistance;       // ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½Ïï¿½ï¿½i%ï¿½j
+    public float lightningResistance; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½Ïï¿½ï¿½i%ï¿½j
 
-    [Header("å—vƒXƒe[ƒ^ƒX")]
-    public float strength;     // ’ÊíA•¨—UŒ‚—Í‚â‹ßÚƒ_ƒ[ƒW‚É‰e‹¿
-    public float agility;      // UŒ‚‘¬“xA‰ñ”ğ—¦AˆÚ“®‘¬“x‚É‰e‹¿
-    public float intelligence; // –‚–@UŒ‚—Í‚âƒXƒLƒ‹Œø‰Ê‚É‰e‹¿
-    public float vitality;     // Å‘å‘Ì—Í‚â‘Ï‹v—Í‚É‰e‹¿
+    [Header("ï¿½ï¿½vï¿½Xï¿½eï¿½[ï¿½^ï¿½X")]
+    public float strength;     // ï¿½Êï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½Í‚ï¿½ßÚƒ_ï¿½ï¿½ï¿½[ï¿½Wï¿½É‰eï¿½ï¿½
+    public float agility;      // ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½xï¿½Aï¿½ï¿½ğ—¦Aï¿½Ú“ï¿½ï¿½ï¿½ï¿½xï¿½É‰eï¿½ï¿½
+    public float intelligence; // ï¿½ï¿½ï¿½@ï¿½Uï¿½ï¿½ï¿½Í‚ï¿½Xï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Ê‚É‰eï¿½ï¿½
+    public float vitality;     // ï¿½Å‘ï¿½Ì—Í‚ï¿½Ï‹vï¿½Í‚É‰eï¿½ï¿½
 }
