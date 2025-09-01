@@ -2,6 +2,9 @@ using UnityEngine;
 
 public interface ICounterable
 {
-    public bool CanBeCountered { get;}
+    // カウンター可能かどうか
+    public bool CanBeCountered { get; }
+
+    // カウンター攻撃を処理
     public void HandleCounterAttack();
 }

@@ -1,22 +1,23 @@
-using System.Collections;
 using System.Text;
 using TMPro;
 using UnityEngine;
 
+// アイテムのツールチップUIを管理するクラス
 public class UI_ItemTooltip : UI_Tooltip
 {
-    [SerializeField] private TextMeshProUGUI itemName;
-    [SerializeField] private TextMeshProUGUI itemRarity;
-    [SerializeField] private TextMeshProUGUI itemType;
-    [SerializeField] private TextMeshProUGUI itemInfo;
+    [SerializeField] private TextMeshProUGUI itemName;   // アイテム名
+    [SerializeField] private TextMeshProUGUI itemRarity; // レアリティ
+    [SerializeField] private TextMeshProUGUI itemType;   // アイテム種別
+    [SerializeField] private TextMeshProUGUI itemInfo;   // ステータス詳細
 
+    // ツールチップの表示・非表示
     public void ShowToolTip(bool show, RectTransform targetRect, Inventory_Item itemToShow)
     {
         base.ShowToolTip(show, targetRect);
 
-
         if (!show || itemToShow == null)
         {
+            // 非表示時は全てクリア
             itemName.text = "";
             itemType.text = "";
             itemInfo.text = "";
@@ -24,24 +25,25 @@ public class UI_ItemTooltip : UI_Tooltip
             return;
         }
 
+        // 表示時に内容を更新
         itemName.text = itemToShow.itemData.itemName;
         itemType.text = SetItemTypeJP(itemToShow.itemData.itemType);
         itemInfo.text = GetItemInfo(itemToShow);
         SetRarityText(itemToShow.itemData.itemRarity);
     }
 
+    // アイテムのステータス情報を文字列で返す
     public string GetItemInfo(Inventory_Item item)
     {
         if (item.itemData.itemType == Item_Type.Material)
             return "クラフティング専用なリソース。";
 
         StringBuilder sb = new StringBuilder();
-
         sb.AppendLine("");
 
         foreach (var mod in item.modifiers)
         {
-            string modType = GetStatTypeText(mod.statType);
+            string modType = GetStatTypeText(mod.statType); // ステータス名
             string modValue = IsPercentageStat(mod.statType) ? mod.value.ToString() + "%" : mod.value.ToString();
             sb.AppendLine(modType + " - " + " +" + modValue);
         }
@@ -49,6 +51,7 @@ public class UI_ItemTooltip : UI_Tooltip
         return sb.ToString();
     }
 
+    // レアリティ表示を更新
     private void SetRarityText(Item_Rarity rarity)
     {
         var (color, text) = GetRarityColorAndText(rarity);
@@ -56,6 +59,7 @@ public class UI_ItemTooltip : UI_Tooltip
         itemRarity.color = color;
     }
 
+    // レアリティに応じた色とテキストを取得
     private (Color, string) GetRarityColorAndText(Item_Rarity rarity)
     {
         switch (rarity)
@@ -69,6 +73,7 @@ public class UI_ItemTooltip : UI_Tooltip
         }
     }
 
+    // ステータスの日本語表示を返す
     private string GetStatTypeText(StatType type)
     {
         switch (type)
@@ -96,6 +101,7 @@ public class UI_ItemTooltip : UI_Tooltip
         }
     }
 
+    // パーセンテージ表記が必要か判定
     private bool IsPercentageStat(StatType type)
     {
         switch (type)
@@ -114,9 +120,10 @@ public class UI_ItemTooltip : UI_Tooltip
         }
     }
 
+    // アイテム種別の日本語表記
     private string SetItemTypeJP(Item_Type type)
     {
-        switch(type)
+        switch (type)
         {
             case Item_Type.Helmet: return "ヘルメット";
             case Item_Type.Shoulders: return "ショルダー";
@@ -130,7 +137,7 @@ public class UI_ItemTooltip : UI_Tooltip
             case Item_Type.Ring: return "リング";
             case Item_Type.Rune: return "ルーン";
             case Item_Type.Material: return "マテリアル";
-            default: return null;             
+            default: return null;
         }
     }
 }

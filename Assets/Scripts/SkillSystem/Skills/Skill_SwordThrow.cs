@@ -2,63 +2,65 @@ using UnityEngine;
 
 public class Skill_SwordThrow : Skill_Base
 {
-    private SkillObject_Sword currentSword;
-    private float currentThrowPower;
+    private SkillObject_Sword currentSword; // 現在投げている剣
+    private float currentThrowPower;        // 現在のスロー強度
 
     [Header("Regular Sword Upgrade")]
-    [SerializeField] private GameObject swordPrefab;
+    [SerializeField] private GameObject swordPrefab; // 通常剣のプレハブ
     [Range(0, 10)]
     [SerializeField] private float regularThrowPower = 5;
 
-    [Header("Pierce sword Upgrade")]
-    [SerializeField] private GameObject pierceSwordPrefab;
-    public int amountToPierce = 2;
+    [Header("Pierce Sword Upgrade")]
+    [SerializeField] private GameObject pierceSwordPrefab; // 貫通剣
+    public int amountToPierce = 2; // 貫通回数
     [Range(0, 10)]
     [SerializeField] private float pierceThrowPower = 5;
 
-    [Header("Spin sword upgrade")]
+    [Header("Spin Sword Upgrade")]
     [SerializeField] private GameObject spinSwordPrefab;
     [Range(0, 10)]
     [SerializeField] private float spinThrowPower = 5;
-    public int maxDistance = 5;
-    public float attacksPerSecond = 2;
-    public float maxSpinDuration = 3;
+    public int maxDistance = 5; // 回転剣の最大距離
+    public float attacksPerSecond = 2; // 攻撃頻度
+    public float maxSpinDuration = 3; // 最大回転時間
 
     [Header("Bounce Sword Upgrade")]
     [SerializeField] private GameObject bounceSwordPrefab;
     [Range(0, 10)]
     [SerializeField] private float bounceThrowPower = 5;
-    public int bounceCount = 5;
-    public float bounceSpeed = 12;
+    public int bounceCount = 5; // バウンス回数
+    public float bounceSpeed = 12; // バウンス速度
 
     [Header("Trajectory Prediction")]
-    [SerializeField] private GameObject predictionDot;
-    [SerializeField] private int numberOfDots = 20;
-    [SerializeField] private float spaceBetweenDots = 0.05f;
-    private float swordGravity;
-    private Transform[] dots;
-    private Vector2 confirmedDirection;
+    [SerializeField] private GameObject predictionDot; // 予測表示用ドット
+    [SerializeField] private int numberOfDots = 20;    // ドット数
+    [SerializeField] private float spaceBetweenDots = 0.05f; // ドット間隔
+    private float swordGravity;  // 剣にかかる重力スケール
+    private Transform[] dots;    // 軌道予測ドット
+    private Vector2 confirmedDirection; // 投擲確定方向
 
     protected override void Awake()
     {
         base.Awake();
-        swordGravity = swordPrefab.GetComponent<Rigidbody2D>().gravityScale;
-        dots = GenerateDots();
+        swordGravity = swordPrefab.GetComponent<Rigidbody2D>().gravityScale; // 剣の重力スケール取得
+        dots = GenerateDots(); // 軌道予測ドット生成
     }
 
+    // スキル使用可能か判定
     public override bool CanUseSkill()
     {
-        UpdateThrowPower();
+        UpdateThrowPower(); // 現在のアップグレードに応じた投擲力更新
 
         if (currentSword != null)
         {
-            currentSword.GetSwordBackToPlayer();
+            currentSword.GetSwordBackToPlayer(); // 既存剣を戻す
             return false;
         }
 
         return base.CanUseSkill();
     }
 
+    // 剣を投げる
     public void ThrowSword()
     {
         GameObject swordPrefab = GetSwordPrefab();
@@ -67,9 +69,10 @@ public class Skill_SwordThrow : Skill_Base
         currentSword = newSword.GetComponent<SkillObject_Sword>();
         currentSword.SetupSword(this, GetThrowPower());
 
-        SetSkillOnCooldown();
+        SetSkillOnCooldown(); // 使用後にクールダウン開始
     }
 
+    // 現在のアップグレードに応じた剣プレハブを返す
     private GameObject GetSwordPrefab()
     {
         if (Unlocked(Skill_UpgradeType.SwordThrow))
@@ -87,9 +90,10 @@ public class Skill_SwordThrow : Skill_Base
         return null;
     }
 
+    // 現在のアップグレードに応じて投擲力を設定
     private void UpdateThrowPower()
     {
-        switch(upgradeType)
+        switch (upgradeType)
         {
             case Skill_UpgradeType.SwordThrow:
                 currentThrowPower = regularThrowPower;
@@ -109,8 +113,10 @@ public class Skill_SwordThrow : Skill_Base
         }
     }
 
+    // 投擲速度ベクトルを計算
     private Vector2 GetThrowPower() => confirmedDirection * (currentThrowPower * 10);
 
+    // 軌道予測更新
     public void PredictTrajectory(Vector2 direction)
     {
         for (int i = 0; i < dots.Length; i++)
@@ -119,16 +125,13 @@ public class Skill_SwordThrow : Skill_Base
         }
     }
 
+    // 時間t後の予測位置を計算
     private Vector2 GetTrajectoryPoint(Vector2 direction, float t)
     {
         float scaledThrowPower = currentThrowPower * 10;
-
-        Vector2 initialVelocity = direction * scaledThrowPower; // Starting speed and direction of the throw
-
-        Vector2 gravityEffect = 0.5f * Physics2D.gravity * swordGravity * (t * t); // Gravity pulls the sword down, dropping the direction with air time, and calculate how far the sword will fly after time 't'
-
-        Vector2 predictedPoint = (initialVelocity * t) + gravityEffect; // Combine initial direction and gravity pull
-
+        Vector2 initialVelocity = direction * scaledThrowPower; // 初速ベクトル
+        Vector2 gravityEffect = 0.5f * Physics2D.gravity * swordGravity * (t * t); // 重力による位置変化
+        Vector2 predictedPoint = (initialVelocity * t) + gravityEffect; // 合成位置
         Vector2 playerPosition = transform.root.position;
 
         return playerPosition + predictedPoint;
@@ -136,12 +139,14 @@ public class Skill_SwordThrow : Skill_Base
 
     public void ConfirmTrajectory(Vector2 direction) => confirmedDirection = direction;
 
+    // ドットの表示切替
     public void EnableDots(bool enable)
     {
         foreach (Transform t in dots)
             t.gameObject.SetActive(enable);
     }
 
+    // ドット生成
     private Transform[] GenerateDots()
     {
         Transform[] newDots = new Transform[numberOfDots];

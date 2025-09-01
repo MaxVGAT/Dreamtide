@@ -1,22 +1,23 @@
 using UnityEngine;
 
+// アイテムの種類を表す列挙型
 public enum Item_Type
 {
-    Material,
+    Material,   // 素材アイテム。クラフトや強化用に使用
 
-    Weapon,
+    Weapon,     // 武器アイテム。攻撃力や特殊効果を持つ
 
-    // --- Armor parts
-    Helmet,
-    Shoulders,
-    Chest,
-    Pants,
-    Cape,
-    Bracers,
-    Gloves,
-    Boots,
+    // --- 防具部位
+    Helmet,     // 頭部装備
+    Shoulders,  // 肩装備
+    Chest,      // 胴装備
+    Pants,      // 脚装備
+    Cape,       // マント装備
+    Bracers,    // 腕装備
+    Gloves,     // 手装備
+    Boots,      // 足装備
 
-    // --- Accessories (rings, amulets, books etc;)
-    Ring, 
-    Rune
+    // --- アクセサリー類（指輪、護符、書物など）
+    Ring,       // 指輪
+    Rune        // ルーン、特殊効果付与用
 }
