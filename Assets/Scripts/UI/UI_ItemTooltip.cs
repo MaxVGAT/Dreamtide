@@ -38,6 +38,9 @@ public class UI_ItemTooltip : UI_Tooltip
         if (item.itemData.itemType == Item_Type.Material)
             return "クラフティング専用なリソース。";
 
+        if (item.itemData.itemType == Item_Type.Consumables)
+            return item.itemData.itemEFfect.effectDescription;
+
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("");
 

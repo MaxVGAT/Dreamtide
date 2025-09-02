@@ -62,6 +62,9 @@ TagManager:
   - name: Lights
     uniqueID: 1573877629
     locked: 0
+  - name: Consumables
+    uniqueID: 1208918587
+    locked: 0
   - name: Player
     uniqueID: 3876397981
     locked: 0

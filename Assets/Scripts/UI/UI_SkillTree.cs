@@ -1,49 +1,49 @@
 using UnityEngine;
 
-// ƒXƒLƒ‹ƒcƒŠ[UI‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+// ï¿½Xï¿½Lï¿½ï¿½ï¿½cï¿½ï¿½ï¿½[UIï¿½ï¿½Ç—ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½X
 public class UI_SkillTree : MonoBehaviour
 {
-    [SerializeField] private UI_SkillTooltip skillTooltip; // ƒXƒLƒ‹‚ÌÚ×ƒc[ƒ‹ƒ`ƒbƒvUI
-    [SerializeField] private int skillPoints;             // ƒvƒŒƒCƒ„[‚Ìc‚èƒXƒLƒ‹ƒ|ƒCƒ“ƒg
-    [SerializeField] private UI_TreeConnectHandler[] parentNodes; // Ú‘±ƒnƒ“ƒhƒ‰[”z—ñ
+    [SerializeField] private UI_SkillTooltip skillTooltip; // ï¿½Xï¿½Lï¿½ï¿½ï¿½ÌÚ×ƒcï¿½[ï¿½ï¿½ï¿½`ï¿½bï¿½vUI
+    [SerializeField] private int skillPoints;             // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìcï¿½ï¿½Xï¿½Lï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½g
+    [SerializeField] private UI_TreeConnectHandler[] parentNodes; // ï¿½Ú‘ï¿½ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½[ï¿½zï¿½ï¿½
 
-    public Player_SkillManager skillManager { get; private set; } // ƒvƒŒƒCƒ„[‚ÌƒXƒLƒ‹ŠÇ—ƒNƒ‰ƒXQÆ
+    public Player_SkillManager skillManager { get; private set; } // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌƒXï¿½Lï¿½ï¿½ï¿½Ç—ï¿½ï¿½Nï¿½ï¿½ï¿½Xï¿½Qï¿½ï¿½
 
     private void Awake()
     {
-        // ƒV[ƒ““à‚©‚çPlayer_SkillManager‚ğŒŸõ‚µ‚Äæ“¾
+        // ï¿½Vï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Player_SkillManagerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äæ“¾
         skillManager = FindAnyObjectByType<Player_SkillManager>();
     }
 
-    // ƒRƒ“ƒeƒLƒXƒgƒƒjƒ…[‚©‚ç‘SƒXƒLƒ‹‚ğƒŠƒZƒbƒg
+    // ï¿½Rï¿½ï¿½ï¿½eï¿½Lï¿½Xï¿½gï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½Sï¿½Xï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
     [ContextMenu("Refund all skills")]
     public void RefundAllSkills()
     {
         UI_TreeNode[] skillNodes = GetComponentsInChildren<UI_TreeNode>();
 
         foreach (var node in skillNodes)
-            node.Refund(); // Šeƒm[ƒh‚ÌƒXƒLƒ‹‚ğ•Ô‹p
+            node.Refund(); // ï¿½eï¿½mï¿½[ï¿½hï¿½ÌƒXï¿½Lï¿½ï¿½ï¿½ï¿½Ô‹p
     }
 
-    // ƒXƒLƒ‹ƒc[ƒ‹ƒ`ƒbƒv‚ğæ“¾
+    // ï¿½Xï¿½Lï¿½ï¿½ï¿½cï¿½[ï¿½ï¿½ï¿½`ï¿½bï¿½vï¿½ï¿½æ“¾
     public UI_SkillTooltip SkillTooltip => skillTooltip;
 
-    // ƒXƒLƒ‹ƒ|ƒCƒ“ƒg‚ª‘«‚è‚é‚©”»’è
+    // ï¿½Xï¿½Lï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚©ï¿½ï¿½ï¿½ï¿½
     public bool EnoughSkillPoints(int cost) => skillPoints >= cost;
 
-    // ƒXƒLƒ‹ƒ|ƒCƒ“ƒg‚ğÁ”ï
+    // ï¿½Xï¿½Lï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½
     public void RemoveSkillPoint(int cost) => skillPoints -= cost;
 
-    // ƒXƒLƒ‹ƒ|ƒCƒ“ƒg‚ğ’Ç‰Á
+    // ï¿½Xï¿½Lï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½gï¿½ï¿½Ç‰ï¿½
     public void AddSkillPoints(int points) => skillPoints += points;
 
     private void Start()
     {
-        // ƒXƒLƒ‹ƒcƒŠ[‚ÌÚ‘±ó‘Ô‚ğXV
+        // ï¿½Xï¿½Lï¿½ï¿½ï¿½cï¿½ï¿½ï¿½[ï¿½ÌÚ‘ï¿½ï¿½ï¿½Ô‚ï¿½Xï¿½V
         UpdateAllConnections();
     }
 
-    // ‘S‚Ä‚Ìeƒm[ƒh‚ÌÚ‘±‚ğXV
+    // ï¿½Sï¿½Ä‚Ìeï¿½mï¿½[ï¿½hï¿½ÌÚ‘ï¿½ï¿½ï¿½Xï¿½V
     public void UpdateAllConnections()
     {
         foreach (var node in parentNodes)

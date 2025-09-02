@@ -114,13 +114,34 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // Refund node
     public void Refund()
     {
+
+        if (isUnlocked == false || skillData.unlockedByDefault)
+            return;
+
         isUnlocked = false;
         isLocked = false;
         UpdateIconColor(GetColorByHex(lockedColorHex));
 
         skillTree.AddSkillPoints(skillData.cost);  // Return points
         connectHandler.UnlockConnectionImage(false); // Reset connection visuals
+
+        foreach (var node in conflictNodes)
+        {
+            UnlockRefundedNode(node);
+        }
     }
+
+    private void UnlockRefundedNode(UI_TreeNode node)
+    {
+        if (node.isLocked)
+            node.isLocked = false;
+
+        foreach (var child in node.connectHandler.GetChildNodes())
+        {
+            UnlockRefundedNode(child);
+        }
+    }
+
 
     // Check if node can be unlocked
     private bool CanBeUnlocked()

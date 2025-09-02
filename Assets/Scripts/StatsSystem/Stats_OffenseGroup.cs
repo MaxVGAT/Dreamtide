@@ -2,19 +2,20 @@ using UnityEngine;
 using System;
 
 [Serializable]
-// UŒ‚ƒXƒe[ƒ^ƒXiƒIƒtƒFƒ“ƒXŒn”\—Í’lj‚ğ‚Ü‚Æ‚ß‚½ƒNƒ‰ƒX
+// ï¿½Uï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½iï¿½Iï¿½tï¿½Fï¿½ï¿½ï¿½Xï¿½nï¿½\ï¿½Í’lï¿½jï¿½ï¿½Ü‚Æ‚ß‚ï¿½ï¿½Nï¿½ï¿½ï¿½X
 public class Stats_OffenseGroup
 {
-    public Stats attackSpeed;   // UŒ‚‘¬“xFUŒ‚‚ÌŠÔŠu‚É‰e‹¿
+    public Stats attackSpeed;   // ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½xï¿½Fï¿½Uï¿½ï¿½ï¿½ÌŠÔŠuï¿½É‰eï¿½ï¿½
 
-    // •¨—UŒ‚ŠÖ˜A
-    public Stats damage;        // Šî–{ƒ_ƒ[ƒW
-    public Stats critPower;     // ƒNƒŠƒeƒBƒJƒ‹‚Ìƒ_ƒ[ƒW”{—¦
-    public Stats critChance;    // ƒNƒŠƒeƒBƒJƒ‹”­¶—¦
-    public Stats armorReduction; // “G‚Ì–hŒä—ÍŒ¸­—Ê
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½Ö˜A
+    public Stats damage;        // ï¿½ï¿½{ï¿½_ï¿½ï¿½ï¿½[ï¿½W
+    public Stats critPower;     // ï¿½Nï¿½ï¿½ï¿½eï¿½Bï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìƒ_ï¿½ï¿½ï¿½[ï¿½Wï¿½{ï¿½ï¿½
+    public Stats critChance;    // ï¿½Nï¿½ï¿½ï¿½eï¿½Bï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public Stats armorReduction; // ï¿½Gï¿½Ì–hï¿½ï¿½ÍŒï¿½ï¿½ï¿½ï¿½ï¿½
 
-    // ‘®«UŒ‚ŠÖ˜A
-    public Stats fireDamage;    // ‰Î‘®«ƒ_ƒ[ƒW
-    public Stats iceDamage;     // •X‘®«ƒ_ƒ[ƒW
-    public Stats lightningDamage; // —‹‘®«ƒ_ƒ[ƒW
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½Ö˜A
+    public Stats fireDamage;    // ï¿½Î‘ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W
+    public Stats iceDamage;     // ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W
+    public Stats lightningDamage; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W
+    public Stats elementalDamage;
 }

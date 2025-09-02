@@ -1,28 +1,30 @@
 using System;
 using UnityEngine;
 
-// ƒCƒ“ƒxƒ“ƒgƒŠ“à‚ÌƒAƒCƒeƒ€ƒf[ƒ^ŠÇ—ƒNƒ‰ƒX
+// ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ÌƒAï¿½Cï¿½eï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½Ç—ï¿½ï¿½Nï¿½ï¿½ï¿½X
 [Serializable]
 public class Inventory_Item
 {
-    private string itemID; // ƒAƒCƒeƒ€‚Ìƒ†ƒj[ƒNIDiƒXƒ^ƒbƒN‚âCüŽq—pj
+    private string itemID; // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ìƒï¿½ï¿½jï¿½[ï¿½NIDï¿½iï¿½Xï¿½^ï¿½bï¿½Nï¿½ï¿½Cï¿½ï¿½ï¿½qï¿½pï¿½j
 
-    public Item_DataSO itemData; // Œ³ƒf[ƒ^ScriptableObject
-    public int stackSize = 1;    // Œ»Ý‚ÌƒXƒ^ƒbƒN”
+    public Item_DataSO itemData; // ï¿½ï¿½ï¿½fï¿½[ï¿½^ScriptableObject
+    public int stackSize = 1;    // ï¿½ï¿½ï¿½Ý‚ÌƒXï¿½^ï¿½bï¿½Nï¿½ï¿½
 
-    public ItemModifier[] modifiers { get; private set; } // ‘•”õŒø‰Ê‚ÌCüŽq
+    public ItemModifier[] modifiers { get; private set; } // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê‚ÌCï¿½ï¿½ï¿½q
+    public Item_EffectDataSO itemEffect;
 
-    // ƒRƒ“ƒXƒgƒ‰ƒNƒ^FScriptableObject‚©‚ç¶¬
+    // ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^ï¿½FScriptableObjectï¿½ï¿½ï¿½ç¶ï¿½ï¿½
     public Inventory_Item(Item_DataSO itemData)
     {
         this.itemData = itemData;
 
-        modifiers = EquipmentData()?.modifiers; // ‘•”õƒf[ƒ^‚ª‚ ‚ê‚ÎCüŽq‚ðŽæ“¾
+        modifiers = EquipmentData()?.modifiers; // ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎCï¿½ï¿½ï¿½qï¿½ï¿½æ“¾
+        itemEffect = itemData.itemEFfect;
 
-        itemID = itemData.itemName + " - " + Guid.NewGuid(); // ƒ†ƒj[ƒNID¶¬
+        itemID = itemData.itemName + " - " + Guid.NewGuid(); // ï¿½ï¿½ï¿½jï¿½[ï¿½NIDï¿½ï¿½ï¿½ï¿½
     }
 
-    // ƒvƒŒƒCƒ„[‚ÉCüŽq‚ð“K—p
+    // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÉCï¿½ï¿½ï¿½qï¿½ï¿½Kï¿½p
     public void AddModifiers(Entity_Stats playerStats)
     {
         foreach (var mod in modifiers)
@@ -32,7 +34,7 @@ public class Inventory_Item
         }
     }
 
-    // ƒvƒŒƒCƒ„[‚©‚çCüŽq‚ðíœ
+    // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½qï¿½ï¿½íœ
     public void RemoveModifiers(Entity_Stats playerStats)
     {
         foreach (var mod in modifiers)
@@ -42,7 +44,7 @@ public class Inventory_Item
         }
     }
 
-    // Equipment_DataSO‚Ö‚ÌƒLƒƒƒXƒgi‘•”õƒAƒCƒeƒ€‚Ìê‡j
+    // Equipment_DataSOï¿½Ö‚ÌƒLï¿½ï¿½ï¿½Xï¿½gï¿½iï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ìê‡ï¿½j
     private Equipment_DataSO EquipmentData()
     {
         if (itemData is Equipment_DataSO equipment)
@@ -51,12 +53,12 @@ public class Inventory_Item
         return null;
     }
 
-    // ƒXƒ^ƒbƒN‰Â”\‚©”»’è
+    // ï¿½Xï¿½^ï¿½bï¿½Nï¿½Â”\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public bool CanAddStack() => stackSize < itemData.maxStackSize;
 
-    // ƒXƒ^ƒbƒN‚ð‘‚â‚·
+    // ï¿½Xï¿½^ï¿½bï¿½Nï¿½ð‘‚â‚·
     public void AddStack() => stackSize++;
 
-    // ƒXƒ^ƒbƒN‚ðŒ¸‚ç‚·
+    // ï¿½Xï¿½^ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ç‚·
     public void RemoveStack() => stackSize--;
 }

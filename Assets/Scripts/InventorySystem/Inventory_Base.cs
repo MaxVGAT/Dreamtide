@@ -2,25 +2,25 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ƒCƒ“ƒxƒ“ƒgƒŠŠÇ—‚ÌŠî’êƒNƒ‰ƒX
+// ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Ç—ï¿½ï¿½ÌŠï¿½ï¿½Nï¿½ï¿½ï¿½X
 public class Inventory_Base : MonoBehaviour
 {
-    // ƒCƒ“ƒxƒ“ƒgƒŠ“à—e‚ª•Ï‚í‚Á‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éƒCƒxƒ“ƒg
+    // ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½eï¿½ï¿½ï¿½Ï‚ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ÉŒÄ‚Î‚ï¿½ï¿½Cï¿½xï¿½ï¿½ï¿½g
     public event Action OnInventoryChange;
 
-    [Header("ƒCƒ“ƒxƒ“ƒgƒŠİ’è")]
-    public int maxInventorySize = 10; // Å‘åƒAƒCƒeƒ€”
-    public List<Inventory_Item> itemList = new List<Inventory_Item>(); // ŠƒAƒCƒeƒ€ƒŠƒXƒg
+    [Header("ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½İ’ï¿½")]
+    public int maxInventorySize = 10; // ï¿½Å‘ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½
+    public List<Inventory_Item> itemList = new List<Inventory_Item>(); // ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½g
 
     protected virtual void Awake()
     {
-        // •K—v‚É‰‚¶‚ÄŒp³æ‚Å‰Šú‰»
+        // ï¿½Kï¿½vï¿½É‰ï¿½ï¿½ï¿½ï¿½ÄŒpï¿½ï¿½ï¿½ï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½
     }
 
-    // ƒAƒCƒeƒ€‚ğ’Ç‰Á‚Å‚«‚é‚©
+    // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½Ç‰ï¿½ï¿½Å‚ï¿½ï¿½é‚©
     public bool CanAddItem() => itemList.Count < maxInventorySize;
 
-    // ƒXƒ^ƒbƒN‰Â”\‚È“¯ˆêƒAƒCƒeƒ€‚ğ’T‚·
+    // ï¿½Xï¿½^ï¿½bï¿½Nï¿½Â”\ï¿½È“ï¿½ï¿½ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½Tï¿½ï¿½
     public Inventory_Item FindStackable(Inventory_Item itemToAdd)
     {
         List<Inventory_Item> stackableItems = itemList.FindAll(item => item.itemData == itemToAdd.itemData);
@@ -34,27 +34,44 @@ public class Inventory_Base : MonoBehaviour
         return null;
     }
 
-    // ƒAƒCƒeƒ€‚ğ’Ç‰Á‚·‚é
+    public void TryUseItem(Inventory_Item itemToUse)
+    {
+        Inventory_Item consumable = itemList.Find(item => item == itemToUse);
+
+        if (consumable == null)
+            return;
+
+        consumable.itemEffect.ExecuteEffect();
+
+        if (consumable.stackSize > 1)
+            consumable.RemoveStack();
+        else
+            RemoveItem(consumable);
+
+        OnInventoryChange?.Invoke();
+    }
+
+    // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½
     public void AddItem(Inventory_Item itemToAdd)
     {
         Inventory_Item itemInInventory = FindStackable(itemToAdd);
 
         if (itemInInventory != null)
-            itemInInventory.AddStack(); // ƒXƒ^ƒbƒN‚É’Ç‰Á
+            itemInInventory.AddStack(); // ï¿½Xï¿½^ï¿½bï¿½Nï¿½É’Ç‰ï¿½
         else
-            itemList.Add(itemToAdd); // V‹K’Ç‰Á
+            itemList.Add(itemToAdd); // ï¿½Vï¿½Kï¿½Ç‰ï¿½
 
-        OnInventoryChange?.Invoke(); // ƒCƒxƒ“ƒg’Ê’m
+        OnInventoryChange?.Invoke(); // ï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½Ê’m
     }
 
-    // ƒAƒCƒeƒ€‚ğíœ‚·‚é
+    // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½íœï¿½ï¿½ï¿½ï¿½
     public void RemoveItem(Inventory_Item itemToRemove)
     {
-        itemList.Remove(FindItem(itemToRemove.itemData));
-        OnInventoryChange?.Invoke(); // ƒCƒxƒ“ƒg’Ê’m
+        itemList.Remove(itemToRemove);
+        OnInventoryChange?.Invoke(); // ï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½Ê’m
     }
 
-    // ƒAƒCƒeƒ€‚ğƒf[ƒ^‚©‚çŒŸõ
+    // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½çŒŸï¿½ï¿½
     public Inventory_Item FindItem(Item_DataSO itemData)
     {
         return itemList.Find(item => item.itemData == itemData);

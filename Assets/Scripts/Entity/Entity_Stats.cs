@@ -1,51 +1,51 @@
 using UnityEngine;
 
-// ƒLƒƒƒ‰ƒNƒ^[‚ÌƒXƒe[ƒ^ƒX‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+// ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½^ï¿½[ï¿½ÌƒXï¿½eï¿½[ï¿½^ï¿½Xï¿½ï¿½Ç—ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½X
 public class Entity_Stats : MonoBehaviour
 {
-    public Stat_SetupSO setupSO; // ƒfƒtƒHƒ‹ƒgƒXƒe[ƒ^ƒXİ’è
+    public Stat_SetupSO setupSO; // ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½İ’ï¿½
 
-    public Stats_ResourceGroup resources; // ‘Ì—Í‚â‰ñ•œ‚È‚Ç‚ÌƒŠƒ\[ƒX
-    public Stats_OffenseGroup offense; // UŒ‚ŒnƒXƒe[ƒ^ƒX
-    public Stats_DefenseGroup defense; // –hŒäŒnƒXƒe[ƒ^ƒX
-    public Stats_MajorGroup major; // Šî–{”\—Í’l
+    public Stats_ResourceGroup resources; // ï¿½Ì—Í‚ï¿½ñ•œ‚È‚Ç‚Ìƒï¿½ï¿½\ï¿½[ï¿½X
+    public Stats_OffenseGroup offense; // ï¿½Uï¿½ï¿½ï¿½nï¿½Xï¿½eï¿½[ï¿½^ï¿½X
+    public Stats_DefenseGroup defense; // ï¿½hï¿½ï¿½nï¿½Xï¿½eï¿½[ï¿½^ï¿½X
+    public Stats_MajorGroup major; // ï¿½ï¿½{ï¿½\ï¿½Í’l
 
-    // UŒ‚ƒf[ƒ^‚ğæ“¾
+    // ï¿½Uï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½æ“¾
     public AttackData GetAttackData(DamageScaleData scaleData)
     {
         return new AttackData(this, scaleData);
     }
 
-    // •¨—ƒ_ƒ[ƒWŒvZ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½vï¿½Z
     public float GetPhysicalDamage(out bool isCrit, float scaleFactor = 1)
     {
-        float baseDamage = GetBaseDamage(); // Šî–{ƒ_ƒ[ƒW
-        float critChance = GetCritChance(); // ƒNƒŠƒeƒBƒJƒ‹—¦
-        float critPower = GetCritPower(); // ƒNƒŠƒeƒBƒJƒ‹”{—¦
+        float baseDamage = GetBaseDamage(); // ï¿½ï¿½{ï¿½_ï¿½ï¿½ï¿½[ï¿½W
+        float critChance = GetCritChance(); // ï¿½Nï¿½ï¿½ï¿½eï¿½Bï¿½Jï¿½ï¿½ï¿½ï¿½
+        float critPower = GetCritPower(); // ï¿½Nï¿½ï¿½ï¿½eï¿½Bï¿½Jï¿½ï¿½ï¿½{ï¿½ï¿½
 
-        isCrit = Random.Range(0, 100) < critChance; // ƒNƒŠƒeƒBƒJƒ‹”»’è
+        isCrit = Random.Range(0, 100) < critChance; // ï¿½Nï¿½ï¿½ï¿½eï¿½Bï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         float finalPhysicalDamage = isCrit ? baseDamage * critPower : baseDamage;
 
-        return finalPhysicalDamage * scaleFactor; // ƒXƒP[ƒ‹‚ğŠ|‚¯‚Ä•Ô‚·
+        return finalPhysicalDamage * scaleFactor; // ï¿½Xï¿½Pï¿½[ï¿½ï¿½ï¿½ï¿½|ï¿½ï¿½ï¿½Ä•Ô‚ï¿½
     }
 
-    public float GetBaseDamage() => offense.damage.GetValue() + major.strength.GetValue(); // STR‚É‚æ‚éƒ{[ƒiƒX
-    public float GetCritChance() => offense.critChance.GetValue() + (major.agility.GetValue() * 0.3f); // AGI‚É‚æ‚éƒNƒŠ—¦‰ÁZ
-    public float GetCritPower() => offense.critPower.GetValue() + (major.strength.GetValue() * 1); // STR‚É‚æ‚éƒNƒŠ”{—¦‰ÁZ
+    public float GetBaseDamage() => offense.damage.GetValue() + major.strength.GetValue(); // STRï¿½É‚ï¿½ï¿½{ï¿½[ï¿½iï¿½X
+    public float GetCritChance() => offense.critChance.GetValue() + (major.agility.GetValue() * 0.3f); // AGIï¿½É‚ï¿½ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Z
+    public float GetCritPower() => offense.critPower.GetValue() + (major.strength.GetValue() * 1); // STRï¿½É‚ï¿½ï¿½Nï¿½ï¿½ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½Z
 
-    // ‘®«ƒ_ƒ[ƒWŒvZ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½vï¿½Z
     public float GetElementalDamage(out ElementType element, float scaleFactor = 1)
     {
         float fireDamage = offense.fireDamage.GetValue();
         float iceDamage = offense.iceDamage.GetValue();
         float lightningDamage = offense.lightningDamage.GetValue();
 
-        float bonusElementalDamage = major.intelligence.GetValue(); // INT‚É‚æ‚éƒ{[ƒiƒX
+        float bonusElementalDamage = major.intelligence.GetValue(); // INTï¿½É‚ï¿½ï¿½{ï¿½[ï¿½iï¿½X
 
         float highestDamage = fireDamage;
         element = ElementType.Fire;
 
-        // ˆê”Ô‚‚¢‘®«ƒ_ƒ[ƒW‚ğŒˆ’è
+        // ï¿½ï¿½Ôï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½
         if (iceDamage > highestDamage)
         {
             highestDamage = iceDamage;
@@ -60,11 +60,11 @@ public class Entity_Stats : MonoBehaviour
 
         if (highestDamage <= 0)
         {
-            element = ElementType.None; // ‘®«‚È‚µ
+            element = ElementType.None; // ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
             return 0;
         }
 
-        // ‘¼‘®«‚Ì50%ƒ_ƒ[ƒW‚ğ’Ç‰Á
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½50%ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½Ç‰ï¿½
         float bonusFire = (element == ElementType.Fire) ? 0 : fireDamage * 0.5f;
         float bonusIce = (element == ElementType.Ice) ? 0 : iceDamage * 0.5f;
         float bonusLightning = (element == ElementType.Lightning) ? 0 : lightningDamage * 0.5f;
@@ -72,14 +72,16 @@ public class Entity_Stats : MonoBehaviour
         float weakerElementsDamage = bonusFire + bonusIce + bonusLightning;
         float finalElementalDamage = highestDamage + weakerElementsDamage + bonusElementalDamage;
 
-        return finalElementalDamage * scaleFactor;
+        float elementalDamage = finalElementalDamage * scaleFactor;
+
+        return elementalDamage;
     }
 
-    // ‘®«‘Ï«æ“¾
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ïï¿½ï¿½æ“¾
     public float GetElementalResistance(ElementType element)
     {
         float baseResistance = 0;
-        float bonusResistance = major.intelligence.GetValue() * 0.5f; // INT‚Å0.5%’Ç‰Á
+        float bonusResistance = major.intelligence.GetValue() * 0.5f; // INTï¿½ï¿½0.5%ï¿½Ç‰ï¿½
 
         switch (element)
         {
@@ -89,57 +91,57 @@ public class Entity_Stats : MonoBehaviour
         }
 
         float resistance = baseResistance + bonusResistance;
-        float resistanceCap = 75f; // Å‘å‘Ï«75%
+        float resistanceCap = 75f; // ï¿½Å‘ï¿½Ïï¿½75%
         float finalResistance = Mathf.Clamp(resistance, 0, resistanceCap) / 100;
 
         return finalResistance;
     }
 
-    // Å‘å‘Ì—ÍŒvZ
+    // ï¿½Å‘ï¿½Ì—ÍŒvï¿½Z
     public float GetMaxHealth()
     {
         float baseHealth = resources.maxHealth.GetValue();
-        float bonusHealth = major.vitality.GetValue() * 5; // VIT‚É‚æ‚éƒ{[ƒiƒX
+        float bonusHealth = major.vitality.GetValue() * 5; // VITï¿½É‚ï¿½ï¿½{ï¿½[ï¿½iï¿½X
         float finalMaxHealth = baseHealth + bonusHealth;
         return finalMaxHealth;
     }
 
-    // ƒA[ƒ}[‚É‚æ‚éƒ_ƒ[ƒWŒyŒ¸ŒvZ
+    // ï¿½Aï¿½[ï¿½}ï¿½[ï¿½É‚ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½yï¿½ï¿½ï¿½vï¿½Z
     public float GetArmorMitigation(float armorReduction)
     {
         float totalArmor = GetBaseArmor();
-        float reductionMultiplier = Mathf.Clamp(1 - armorReduction, 0, 1); // ƒA[ƒ}[Œ¸­‚ğ“K—p
+        float reductionMultiplier = Mathf.Clamp(1 - armorReduction, 0, 1); // ï¿½Aï¿½[ï¿½}ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Kï¿½p
         float effectiveArmor = totalArmor * reductionMultiplier;
 
-        float mitigation = effectiveArmor / (effectiveArmor + 100); // Šî–{ŒyŒ¸ŒvZ
-        float mitigationCap = 70f; // ŒyŒ¸Å‘å70%
+        float mitigation = effectiveArmor / (effectiveArmor + 100); // ï¿½ï¿½{ï¿½yï¿½ï¿½ï¿½vï¿½Z
+        float mitigationCap = 70f; // ï¿½yï¿½ï¿½ï¿½Å‘ï¿½70%
         float finalMitigation = Mathf.Clamp(mitigation, 0, mitigationCap);
 
         return finalMitigation;
     }
 
-    public float GetBaseArmor() => defense.armor.GetValue() + major.vitality.GetValue(); // VIT‚É‚æ‚éƒA[ƒ}[‰ÁZ
+    public float GetBaseArmor() => defense.armor.GetValue() + major.vitality.GetValue(); // VITï¿½É‚ï¿½ï¿½Aï¿½[ï¿½}ï¿½[ï¿½ï¿½ï¿½Z
 
     public float GetArmorReduction()
     {
-        float finalArmorReduction = offense.armorReduction.GetValue() / 100; // %ŒvZ
+        float finalArmorReduction = offense.armorReduction.GetValue() / 100; // %ï¿½vï¿½Z
         return finalArmorReduction;
     }
 
-    // ‰ñ”ğ—¦ŒvZ
+    // ï¿½ï¿½ğ—¦Œvï¿½Z
     public float GetEvasion()
     {
         float baseEvasion = defense.evasion.GetValue();
-        float bonusEvasion = major.agility.GetValue() * 0.5f; // AGI‚É‚æ‚éƒ{[ƒiƒX
+        float bonusEvasion = major.agility.GetValue() * 0.5f; // AGIï¿½É‚ï¿½ï¿½{ï¿½[ï¿½iï¿½X
 
         float totalEvasion = baseEvasion + bonusEvasion;
-        float evasionCap = 25f; // Å‘å25%
+        float evasionCap = 25f; // ï¿½Å‘ï¿½25%
         float finalEvasion = Mathf.Clamp(totalEvasion, 0, evasionCap);
 
         return finalEvasion;
     }
 
-    // ƒXƒe[ƒ^ƒX‚ğƒ^ƒCƒv•Ê‚Åæ“¾
+    // ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½ï¿½^ï¿½Cï¿½vï¿½Ê‚Åæ“¾
     public Stats GetStatByType(StatType type)
     {
         switch (type)
@@ -156,6 +158,7 @@ public class Entity_Stats : MonoBehaviour
             case StatType.Damage: return offense.damage;
             case StatType.CritChance: return offense.critChance;
             case StatType.CritPower: return offense.critPower;
+            case StatType.ArmorReduction: return offense.armorReduction;
 
             case StatType.Armor: return defense.armor;
             case StatType.Evasion: return defense.evasion;
@@ -163,6 +166,7 @@ public class Entity_Stats : MonoBehaviour
             case StatType.FireDamage: return offense.fireDamage;
             case StatType.IceDamage: return offense.iceDamage;
             case StatType.LightningDamage: return offense.lightningDamage;
+            case StatType.ElementalDamage: return offense.elementalDamage;
 
             case StatType.FireResistance: return defense.fireResistance;
             case StatType.IceResistance: return defense.iceResistance;
@@ -174,7 +178,7 @@ public class Entity_Stats : MonoBehaviour
         }
     }
 
-    // ƒfƒtƒHƒ‹ƒgƒXƒe[ƒ^ƒX‚ğ“K—p
+    // ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½ï¿½Kï¿½p
     public void ApplyDefaultStatSetup()
     {
         if (setupSO == null)

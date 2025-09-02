@@ -3,42 +3,47 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// ƒCƒ“ƒxƒ“ƒgƒŠ‚Ì1ƒXƒƒbƒgUI‚ğŠÇ—‚·‚éƒNƒ‰ƒX
-// ƒ}ƒeƒŠƒAƒ‹ˆÈŠO‚ÌƒAƒCƒeƒ€‚ÍƒNƒŠƒbƒN‚Å‘•”õ‰Â”\
+// ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½1ï¿½Xï¿½ï¿½ï¿½bï¿½gUIï¿½ï¿½Ç—ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½X
+// ï¿½}ï¿½eï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ÈŠOï¿½ÌƒAï¿½Cï¿½eï¿½ï¿½ï¿½ÍƒNï¿½ï¿½ï¿½bï¿½Nï¿½Å‘ï¿½ï¿½ï¿½ï¿½Â”\
 public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public Inventory_Item itemInSlot { get; private set; } // ‚±‚ÌƒXƒƒbƒg‚É“ü‚Á‚Ä‚¢‚éƒAƒCƒeƒ€
-    protected Inventory_Player inventory; // ƒvƒŒƒCƒ„[‚ÌƒCƒ“ƒxƒ“ƒgƒŠ
-    protected UI ui; // UI‘S‘Ì‚Ö‚ÌQÆ
-    protected RectTransform rect; // ƒXƒƒbƒg‚ÌRectTransform
+    public Inventory_Item itemInSlot { get; private set; } // ï¿½ï¿½ï¿½ÌƒXï¿½ï¿½ï¿½bï¿½gï¿½É“ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Aï¿½Cï¿½eï¿½ï¿½
+    protected Inventory_Player inventory; // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌƒCï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½
+    protected UI ui; // UIï¿½Sï¿½Ì‚Ö‚ÌQï¿½ï¿½
+    protected RectTransform rect; // ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½ï¿½RectTransform
 
     [Header("UI Slot Setup")]
-    [SerializeField] private Image itemIcon; // ƒAƒCƒeƒ€ƒAƒCƒRƒ“
-    [SerializeField] private TextMeshProUGUI itemStackSize; // ƒAƒCƒeƒ€‚ÌƒXƒ^ƒbƒN”•\¦
+    [SerializeField] private Image itemIcon; // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Aï¿½Cï¿½Rï¿½ï¿½
+    [SerializeField] private TextMeshProUGUI itemStackSize; // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ÌƒXï¿½^ï¿½bï¿½Nï¿½ï¿½ï¿½\ï¿½ï¿½
 
-    // ƒ_ƒuƒ‹ƒNƒŠƒbƒN—p
+    // ï¿½_ï¿½uï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½p
     protected float lastClickTime;
-    protected const float DoubleClickThreshold = 0.3f; // ƒ_ƒuƒ‹ƒNƒŠƒbƒN‚Æ”F¯‚·‚é•b”
+    protected const float DoubleClickThreshold = 0.3f; // ï¿½_ï¿½uï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½Æ”Fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½ï¿½
 
     protected void Awake()
     {
-        ui = GetComponentInParent<UI>(); // UIƒRƒ“ƒ|[ƒlƒ“ƒgæ“¾
-        inventory = FindAnyObjectByType<Inventory_Player>(); // ƒvƒŒƒCƒ„[ƒCƒ“ƒxƒ“ƒgƒŠæ“¾
-        rect = GetComponent<RectTransform>(); // RectTransformæ“¾
+        ui = GetComponentInParent<UI>(); // UIï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½æ“¾
+        inventory = FindAnyObjectByType<Inventory_Player>(); // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½æ“¾
+        rect = GetComponent<RectTransform>(); // RectTransformï¿½æ“¾
     }
 
-    // ƒXƒƒbƒgƒNƒŠƒbƒN
+    // ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½
     public virtual void OnPointerDown(PointerEventData eventData)
     {
-        // ƒXƒƒbƒg‚ª‹óA‚Ü‚½‚Íƒ}ƒeƒŠƒAƒ‹‚Íˆ—‚µ‚È‚¢
+        // ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½ï¿½ï¿½ï¿½Aï¿½Ü‚ï¿½ï¿½Íƒ}ï¿½eï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
         if (itemInSlot == null || itemInSlot.itemData.itemType == Item_Type.Material)
             return;
 
-        // ƒ_ƒuƒ‹ƒNƒŠƒbƒN”»’è
+        
+
+        // ï¿½_ï¿½uï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½
         if (Time.time - lastClickTime < DoubleClickThreshold)
         {
-            inventory.TryEquipItem(itemInSlot); // ƒAƒCƒeƒ€‘•”õ‚ğ‚İ‚é
-            lastClickTime = 0;
+            if (itemInSlot.itemData.itemType == Item_Type.Consumables)
+                inventory.TryUseItem(itemInSlot);
+            else
+                inventory.TryEquipItem(itemInSlot);
+                lastClickTime = 0;
         }
         else
             lastClickTime = Time.time;
@@ -47,29 +52,29 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
             ui.itemTooltip.ShowToolTip(false, null);
     }
 
-    // ƒXƒƒbƒg‚Ì“à—e‚ğXV
+    // ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½Ì“ï¿½eï¿½ï¿½Xï¿½V
     public void UpdateSlot(Inventory_Item item)
     {
         itemInSlot = item;
 
         if (itemInSlot == null)
         {
-            // ƒXƒƒbƒg‚ª‹ó‚È‚çƒAƒCƒRƒ“‚ÆƒXƒ^ƒbƒN”‚ğ”ñ•\¦
+            // ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½ï¿½ï¿½ï¿½È‚ï¿½Aï¿½Cï¿½Rï¿½ï¿½ï¿½ÆƒXï¿½^ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½
             if (itemStackSize != null) itemStackSize.text = " ";
             if (itemIcon != null) itemIcon.color = Color.clear;
             return;
         }
 
-        // ƒAƒCƒRƒ“‚ğXV
+        // ï¿½Aï¿½Cï¿½Rï¿½ï¿½ï¿½ï¿½Xï¿½V
         if (itemIcon != null)
         {
             Color color = Color.white;
-            color.a = 0.9f; // ­‚µ“§–¾
+            color.a = 0.9f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             itemIcon.color = color;
             itemIcon.sprite = itemInSlot.itemData.itemIcon;
         }
 
-        // ƒXƒ^ƒbƒN”‚ğXV
+        // ï¿½Xï¿½^ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½Xï¿½V
         if (itemStackSize != null)
         {
             itemStackSize.text = item.stackSize > 1 ? item.stackSize.ToString() : " ";
@@ -77,7 +82,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         }
     }
 
-    // ƒ}ƒEƒXƒI[ƒo[‚Åƒc[ƒ‹ƒ`ƒbƒv•\¦
+    // ï¿½}ï¿½Eï¿½Xï¿½Iï¿½[ï¿½oï¿½[ï¿½Åƒcï¿½[ï¿½ï¿½ï¿½`ï¿½bï¿½vï¿½\ï¿½ï¿½
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (itemInSlot == null)
@@ -86,7 +91,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         ui.itemTooltip.ShowToolTip(true, rect, itemInSlot);
     }
 
-    // ƒ}ƒEƒX‚ª—£‚ê‚½‚çƒc[ƒ‹ƒ`ƒbƒv”ñ•\¦
+    // ï¿½}ï¿½Eï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½cï¿½[ï¿½ï¿½ï¿½`ï¿½bï¿½vï¿½ï¿½\ï¿½ï¿½
     public void OnPointerExit(PointerEventData eventData)
     {
         ui.itemTooltip.ShowToolTip(false, null);

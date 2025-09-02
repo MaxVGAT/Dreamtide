@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3610e90778134994d8dc4e90f1e15d41, type: 3}
+  m_Name: Consumable data - Book of Fate
+  m_EditorClassIdentifier: 
+  itemName: "\u904B\u547D\u306E\u66F8"
+  itemIcon: {fileID: 8901744300859924994, guid: 9c87bbd6fe6e03f4fbf087ba890b91f3, type: 3}
+  itemRarity: 3
+  itemType: 12
+  maxStackSize: 1
+  itemEFfect: {fileID: 11400000, guid: 656eaa856ea459d438805195f5306952, type: 2}

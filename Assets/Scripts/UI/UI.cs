@@ -1,36 +1,36 @@
 using UnityEngine;
 
-// ƒQ[ƒ€‚ÌUI‘S‘Ì‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+// ï¿½Qï¿½[ï¿½ï¿½ï¿½ï¿½UIï¿½Sï¿½Ì‚ï¿½Ç—ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½X
 public class UI : MonoBehaviour
 {
-    [SerializeField] private GameObject tabMenuRoot; // ƒ^ƒuƒƒjƒ…[‘S‘Ì‚Ìƒ‹[ƒgƒIƒuƒWƒFƒNƒg
-    [SerializeField] private UI_SkillTree skillTree; // ƒXƒLƒ‹ƒcƒŠ[UI
-    public UI_ItemTooltip itemTooltip;               // ƒAƒCƒeƒ€ƒc[ƒ‹ƒ`ƒbƒvUI
-    public UI_StatTooltip statTooltip;               // ƒXƒe[ƒ^ƒXƒc[ƒ‹ƒ`ƒbƒvUI
+    [SerializeField] private GameObject tabMenuRoot; // ï¿½^ï¿½uï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Sï¿½Ì‚Ìƒï¿½ï¿½[ï¿½gï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g
+    public UI_SkillTree skillTree; // ï¿½Xï¿½Lï¿½ï¿½ï¿½cï¿½ï¿½ï¿½[UI
+    public UI_ItemTooltip itemTooltip;               // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½cï¿½[ï¿½ï¿½ï¿½`ï¿½bï¿½vUI
+    public UI_StatTooltip statTooltip;               // ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½cï¿½[ï¿½ï¿½ï¿½`ï¿½bï¿½vUI
 
-    private bool menuEnabled; // ƒƒjƒ…[‚Ì•\¦ó‘Ô
+    private bool menuEnabled; // ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Ì•\ï¿½ï¿½ï¿½ï¿½ï¿½
 
     private void Awake()
     {
-        // ƒƒjƒ…[‚ğ‰Šú”ñ•\¦‚Éİ’è
+        // ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½Éİ’ï¿½
         tabMenuRoot.SetActive(false);
 
-        // qƒIƒuƒWƒFƒNƒg‚©‚çUIƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
-        skillTree = GetComponentInChildren<UI_SkillTree>();
+        // ï¿½qï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½UIï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½ï¿½æ“¾
+        skillTree = GetComponentInChildren<UI_SkillTree>(true);
         itemTooltip = GetComponentInChildren<UI_ItemTooltip>();
         statTooltip = GetComponentInChildren<UI_StatTooltip>();
     }
 
-    // UI‚Ì•\¦E”ñ•\¦‚ğØ‚è‘Ö‚¦‚é
+    // UIï¿½Ì•\ï¿½ï¿½ï¿½Eï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½Ø‚ï¿½Ö‚ï¿½ï¿½ï¿½
     public void ToggleUI()
     {
         menuEnabled = !menuEnabled;
 
         if (tabMenuRoot != null)
-            tabMenuRoot.SetActive(!menuEnabled); // ƒƒjƒ…[‚Ì•\¦ó‘Ô‚ğ”½“]
+            tabMenuRoot.SetActive(!menuEnabled); // ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Ì•\ï¿½ï¿½ï¿½ï¿½Ô‚ğ”½“]
 
         if (itemTooltip != null)
-            itemTooltip.ShowToolTip(false, null, null); // ƒc[ƒ‹ƒ`ƒbƒv‚ğ”ñ•\¦‚É
+            itemTooltip.ShowToolTip(false, null, null); // ï¿½cï¿½[ï¿½ï¿½ï¿½`ï¿½bï¿½vï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½
         else
             return;
     }

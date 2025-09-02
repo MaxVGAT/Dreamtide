@@ -1,35 +1,35 @@
 using UnityEngine;
 
-// ‘®«‚Ìí—Ş
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½
 public enum ElementType
 {
-    None,       // ‘®«‚È‚µ
-    Fire,       // ‰Î‘®«
-    Ice,        // •X‘®«
-    Lightning   // —‹‘®«
+    None,       // ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
+    Fire,       // ï¿½Î‘ï¿½ï¿½ï¿½
+    Ice,        // ï¿½Xï¿½ï¿½ï¿½ï¿½
+    Lightning   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 }
 
-// ƒXƒe[ƒ^ƒX‚Ìí—Ş
+// ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½Ìï¿½ï¿½
 public enum StatType
 {
-    MaxHealth,      // Å‘å‘Ì—Í
-    HealthRegen,    // ‘Ì—Í‰ñ•œ—Ê
-    Strength,       // —Í
-    Agility,        // •q·
-    Intelligence,   // ’m«
-    Vitality,       // ‘Ì—ÍE‘Ï‹v
-    AttackSpeed,    // UŒ‚‘¬“x
-    Damage,         // •¨—ƒ_ƒ[ƒW
-    CritChance,     // ƒNƒŠƒeƒBƒJƒ‹—¦
-    CritPower,      // ƒNƒŠƒeƒBƒJƒ‹ˆĞ—Í
-    ArmorReduction, // “G–hŒäŠÑ’Ê—¦
-    FireDamage,     // ‰Î‘®«ƒ_ƒ[ƒW
-    IceDamage,      // •X‘®«ƒ_ƒ[ƒW
-    LightningDamage,// —‹‘®«ƒ_ƒ[ƒW
-    Armor,          // –hŒä—Í
-    Evasion,        // ‰ñ”ğ—¦
-    IceResistance,  // •X‘®«‘Ï«
-    FireResistance, // ‰Î‘®«‘Ï«
-    LightningResistance, // —‹‘®«‘Ï«
-    ElementalDamage // ‘‘®«ƒ_ƒ[ƒWiŒvZ—pj
+    MaxHealth,      // ï¿½Å‘ï¿½Ì—ï¿½
+    HealthRegen,    // ï¿½Ì—Í‰ñ•œ—ï¿½
+    Strength,       // ï¿½ï¿½
+    Agility,        // ï¿½qï¿½ï¿½
+    Intelligence,   // ï¿½mï¿½ï¿½
+    Vitality,       // ï¿½Ì—ÍEï¿½Ï‹v
+    AttackSpeed,    // ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½x
+    Damage,         // ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W
+    CritChance,     // ï¿½Nï¿½ï¿½ï¿½eï¿½Bï¿½Jï¿½ï¿½ï¿½ï¿½
+    CritPower,      // ï¿½Nï¿½ï¿½ï¿½eï¿½Bï¿½Jï¿½ï¿½ï¿½Ğ—ï¿½
+    ArmorReduction, // ï¿½Gï¿½hï¿½ï¿½Ñ’Ê—ï¿½
+    FireDamage,     // ï¿½Î‘ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W
+    IceDamage,      // ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W
+    LightningDamage,// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W
+    Armor,          // ï¿½hï¿½ï¿½ï¿½
+    Evasion,        // ï¿½ï¿½ï¿½
+    IceResistance,  // ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½Ïï¿½
+    FireResistance, // ï¿½Î‘ï¿½ï¿½ï¿½ï¿½Ïï¿½
+    LightningResistance, // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïï¿½
+    ElementalDamage // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½iï¿½vï¿½Zï¿½pï¿½j
 }
