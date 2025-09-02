@@ -15,7 +15,7 @@ public class Entity_Player : Entity
     public Entity_StatusHandler statusHandler { get; private set; }
 
     #region State Variables
-    // ƒvƒŒƒCƒ„[‚ÌŠeó‘Ô
+    // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌŠeï¿½ï¿½ï¿½
     public Player_IdleState idleState { get; private set; }
     public Player_MoveState moveState { get; private set; }
     public Player_JumpState jumpState { get; private set; }
@@ -37,7 +37,7 @@ public class Entity_Player : Entity
     public Vector2 jumpAttackVelocity;
     public float attackVelocityDuration = 0.1f;
     public float comboAttackWindow = 1f;
-    private Coroutine queuedAttackCo; // UŒ‚“ü—Í’x‰„—pƒRƒ‹[ƒ`ƒ“
+    private Coroutine queuedAttackCo; // ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½Í’xï¿½ï¿½ï¿½pï¿½Rï¿½ï¿½ï¿½[ï¿½`ï¿½ï¿½
 
     [Header("Domain Ability Details")]
     public float riseSpeed = 25;
@@ -58,7 +58,7 @@ public class Entity_Player : Entity
     {
         base.Awake();
 
-        // •K—v‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
+        // ï¿½Kï¿½vï¿½ÈƒRï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½ï¿½æ“¾
         input = new PlayerInputSet();
         ui = FindAnyObjectByType<UI>();
         vfx = GetComponent<Player_VFX>();
@@ -66,7 +66,7 @@ public class Entity_Player : Entity
         skillManager = GetComponent<Player_SkillManager>();
         statusHandler = GetComponent<Entity_StatusHandler>();
 
-        // Šeó‘Ô‚ğ‰Šú‰»
+        // ï¿½eï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         idleState = new Player_IdleState(this, stateMachine, "idle");
         moveState = new Player_MoveState(this, stateMachine, "move");
         jumpState = new Player_JumpState(this, stateMachine, "jumpFall");
@@ -86,20 +86,20 @@ public class Entity_Player : Entity
     protected override void Start()
     {
         base.Start();
-        // ‰Šúó‘Ô‚ğIdle‚Éİ’è
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½Idleï¿½Éİ’ï¿½
         stateMachine.Initialize(idleState);
     }
 
-    // ƒvƒŒƒCƒ„[‚ğuŠÔˆÚ“®
+    // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½uï¿½ÔˆÚ“ï¿½
     public void TeleportPlayer(Vector3 position) => transform.position = position;
 
-    // ƒK[ƒhó‘Ô‚©‚Ç‚¤‚©
+    // ï¿½Kï¿½[ï¿½hï¿½ï¿½Ô‚ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½
     public override bool isBlocking => stateMachine.currentState is Player_BlockState;
 
-    // ƒXƒ[ƒ_ƒEƒ“ˆ—iƒXƒLƒ‹‚âó‘ÔˆÙí‚Å‘¬“x’á‰ºj
+    // ï¿½Xï¿½ï¿½ï¿½[ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½Xï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ÔˆÙï¿½Å‘ï¿½ï¿½xï¿½á‰ºï¿½j
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
     {
-        // Œ³‚Ì’l‚ğ•Û‘¶
+        // ï¿½ï¿½ï¿½Ì’lï¿½ï¿½Û‘ï¿½
         float originalMoveSpeed = moveSpeed;
         float originalJumpForce = jumpForce;
         float originalAnimSpeed = anim.speed;
@@ -109,7 +109,7 @@ public class Entity_Player : Entity
 
         float speedMultiplier = 1 - slowMultiplier;
 
-        // ‘¬“x‚ğ’á‰º
+        // ï¿½ï¿½ï¿½xï¿½ï¿½á‰º
         moveSpeed *= speedMultiplier;
         jumpForce *= speedMultiplier;
         anim.speed *= speedMultiplier;
@@ -117,12 +117,12 @@ public class Entity_Player : Entity
         jumpAttackVelocity *= speedMultiplier;
         for (int i = 0; i < attackVelocity.Length; i++)
         {
-            attackVelocity[i] *= speedMultiplier; // ‘SUŒ‚‘¬“x‚à’á‰º
+            attackVelocity[i] *= speedMultiplier; // ï¿½Sï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½á‰º
         }
 
         yield return new WaitForSeconds(duration);
 
-        // Œ³‚Ì’l‚É–ß‚·
+        // ï¿½ï¿½ï¿½Ì’lï¿½É–ß‚ï¿½
         moveSpeed = originalMoveSpeed;
         jumpForce = originalJumpForce;
         anim.speed = originalAnimSpeed;
@@ -134,16 +134,16 @@ public class Entity_Player : Entity
         }
     }
 
-    // €–Sˆ—
+    // ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½
     public override void EntityDeath()
     {
         base.EntityDeath();
 
-        OnPlayerDeath?.Invoke(); // ‘¼ƒNƒ‰ƒX‚É€–S’Ê’m
-        stateMachine.ChangeState(deadState); // €–Só‘Ô‚ÉˆÚs
+        OnPlayerDeath?.Invoke(); // ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½Xï¿½Éï¿½ï¿½Sï¿½Ê’m
+        stateMachine.ChangeState(deadState); // ï¿½ï¿½ï¿½Sï¿½ï¿½Ô‚ÉˆÚs
     }
 
-    // UŒ‚“ü—Í’x‰„ˆ—
+    // ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½Í’xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void EnterAttackStateWithDelay()
     {
         if (queuedAttackCo != null)
@@ -154,25 +154,25 @@ public class Entity_Player : Entity
 
     private IEnumerator EnterAttackStateWithDelayCO()
     {
-        yield return new WaitForEndOfFrame(); // ƒtƒŒ[ƒ€‚ªI‚í‚é‚Ü‚Å‘Ò‚Â
-        stateMachine.ChangeState(basicAttackState); // UŒ‚ó‘Ô‚ÉˆÚs
+        yield return new WaitForEndOfFrame(); // ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½Ü‚Å‘Ò‚ï¿½
+        stateMachine.ChangeState(basicAttackState); // ï¿½Uï¿½ï¿½ï¿½ï¿½Ô‚ÉˆÚs
     }
 
     private void OnEnable()
     {
         input.Enable();
 
-        // ƒ}ƒEƒXÀ•Wæ“¾
+        // ï¿½}ï¿½Eï¿½Xï¿½ï¿½ï¿½Wï¿½æ“¾
         input.Player.Mouse.performed += context => mousePosition = context.ReadValue<Vector2>();
 
-        // ˆÚ“®“ü—Í
+        // ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½
         input.Player.Movement.performed += context => moveInput = context.ReadValue<Vector2>();
         input.Player.Movement.canceled += context => moveInput = Vector2.zero;
 
-        // UIØ‚è‘Ö‚¦
+        // UIï¿½Ø‚ï¿½Ö‚ï¿½
         input.Player.ToggleUI.performed += context => ui.ToggleUI();
 
-        // ƒXƒLƒ‹g—p
+        // ï¿½Xï¿½Lï¿½ï¿½ï¿½gï¿½p
         input.Player.Skill.performed += context => skillManager.shard.TryUseSkill();
         input.Player.Skill.performed += context => skillManager.timeEcho.TryUseSkill();
     }

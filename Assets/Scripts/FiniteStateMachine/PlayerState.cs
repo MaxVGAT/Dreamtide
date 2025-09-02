@@ -1,10 +1,10 @@
 public abstract class PlayerState : EntityState
 {
-    protected Entity_Player player;           // ƒvƒŒƒCƒ„[–{‘Ì‚Ö‚ÌQÆ
-    protected PlayerInputSet input;           // ƒvƒŒƒCƒ„[‚Ì“ü—Íî•ñ
-    protected Player_SkillManager skillManager; // ƒvƒŒƒCƒ„[‚ÌƒXƒLƒ‹ŠÇ—
+    protected Entity_Player player;           // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½{ï¿½Ì‚Ö‚ÌQï¿½ï¿½
+    protected PlayerInputSet input;           // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ì“ï¿½ï¿½Íï¿½ï¿½
+    protected Player_SkillManager skillManager; // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌƒXï¿½Lï¿½ï¿½ï¿½Ç—ï¿½
 
-    // ƒRƒ“ƒXƒgƒ‰ƒNƒ^FƒvƒŒƒCƒ„[‚ÆƒXƒe[ƒgƒ}ƒVƒ“AƒAƒjƒ[ƒVƒ‡ƒ“–¼‚ğ‰Šú‰»
+    // ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^ï¿½Fï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÆƒXï¿½eï¿½[ï¿½gï¿½}ï¿½Vï¿½ï¿½ï¿½Aï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public PlayerState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(stateMachine, animBoolName)
     {
         this.player = player;
@@ -16,50 +16,50 @@ public abstract class PlayerState : EntityState
         skillManager = player.skillManager;
     }
 
-    // –ˆƒtƒŒ[ƒ€XV
+    // ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Xï¿½V
     public override void Update()
     {
         base.Update();
 
-        // ƒ_ƒbƒVƒ…“ü—Íˆ—
+        // ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½
         if (input.Player.Dash.WasPressedThisFrame() && CanDash())
         {
-            skillManager.dash.SetSkillOnCooldown(); // ƒ_ƒbƒVƒ…ƒXƒLƒ‹‚ğƒN[ƒ‹ƒ_ƒEƒ“‚Éİ’è
-            stateMachine.ChangeState(player.dashState); // ƒ_ƒbƒVƒ…ƒXƒe[ƒg‚ÖØ‚è‘Ö‚¦
+            skillManager.dash.SetSkillOnCooldown(); // ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½Xï¿½Lï¿½ï¿½ï¿½ï¿½Nï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½Éİ’ï¿½
+            stateMachine.ChangeState(player.dashState); // ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½gï¿½ÖØ‚ï¿½Ö‚ï¿½
         }
 
-        // ƒAƒ‹ƒeƒBƒƒbƒgƒXƒLƒ‹“ü—Íˆ—
+        // ï¿½Aï¿½ï¿½ï¿½eï¿½Bï¿½ï¿½ï¿½bï¿½gï¿½Xï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½
         if (input.Player.UltimateSkill.WasPressedThisFrame() && skillManager.domain.CanUseSkill())
         {
-            if (skillManager.domain.InstantDomain()) // ‘¦”­“®‰Â”\‚È‚ç
+            if (skillManager.domain.InstantDomain()) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â”\ï¿½È‚ï¿½
             {
-                skillManager.domain.CreateDomain();   // ƒhƒƒCƒ“‚ğ¶¬
+                skillManager.domain.CreateDomain();   // ï¿½hï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ğ¶ï¿½
             }
             else
-                stateMachine.ChangeState(player.domainState); // ‚»‚¤‚Å‚È‚¯‚ê‚ÎƒXƒe[ƒgØ‚è‘Ö‚¦
+                stateMachine.ChangeState(player.domainState); // ï¿½ï¿½ï¿½ï¿½ï¿½Å‚È‚ï¿½ï¿½ï¿½ÎƒXï¿½eï¿½[ï¿½gï¿½Ø‚ï¿½Ö‚ï¿½
 
-            skillManager.domain.SetSkillOnCooldown(); // ƒXƒLƒ‹‚ğƒN[ƒ‹ƒ_ƒEƒ“‚Éİ’è
+            skillManager.domain.SetSkillOnCooldown(); // ï¿½Xï¿½Lï¿½ï¿½ï¿½ï¿½Nï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½Éİ’ï¿½
         }
     }
 
-    // ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ‰ƒ[ƒ^XV
+    // ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^ï¿½Xï¿½V
     public override void UpdateAnimationParameters()
     {
         base.UpdateAnimationParameters();
-        anim.SetFloat("yVelocity", rb.linearVelocity.y); // Y²‘¬“x‚ğƒAƒjƒ[ƒ^[‚É”½‰f
+        anim.SetFloat("yVelocity", rb.linearVelocity.y); // Yï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½^ï¿½[ï¿½É”ï¿½ï¿½f
     }
 
-    // ƒ_ƒbƒVƒ…‰Â”\‚©”»’è
+    // ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½Â”\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private bool CanDash()
     {
-        if (!skillManager.dash.CanUseSkill())   // ƒXƒLƒ‹g—p•s‰Â
+        if (!skillManager.dash.CanUseSkill())   // ï¿½Xï¿½Lï¿½ï¿½ï¿½gï¿½pï¿½sï¿½ï¿½
             return false;
 
-        if (player.isWallDetected)               // •ÇÚG’†‚Í•s‰Â
+        if (player.isWallDetected)               // ï¿½ÇÚGï¿½ï¿½ï¿½Í•sï¿½ï¿½
             return false;
 
         if (stateMachine.currentState == player.dashState || stateMachine.currentState == player.domainState)
-            return false;                        // Šù‚Éƒ_ƒbƒVƒ…’†‚âƒhƒƒCƒ“’†‚Í•s‰Â
+            return false;                        // ï¿½ï¿½ï¿½Éƒ_ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Í•sï¿½ï¿½
 
         return true;
     }

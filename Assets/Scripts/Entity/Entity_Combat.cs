@@ -1,18 +1,18 @@
 using UnityEngine;
 
-public class Entity_Combat : MonoBehaviour // ƒ^[ƒQƒbƒgŒŸo‚Ì‚½‚ß‚ÌŠî’êƒNƒ‰ƒX
+public class Entity_Combat : MonoBehaviour // ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½oï¿½Ì‚ï¿½ï¿½ß‚ÌŠï¿½ï¿½Nï¿½ï¿½ï¿½X
 {
-    private Entity_Stats stats; // UŒ‚ŠÖ”‚Åg—p‚·‚éƒXƒe[ƒ^ƒX‚ğƒLƒƒƒbƒVƒ…
-    protected Entity_Stats Stats => stats; // ƒTƒuƒNƒ‰ƒX‚©‚ç“Ç‚İæ‚è‰Â”\‚É‚·‚é‚½‚ß‚ÌƒvƒƒpƒeƒB
+    private Entity_Stats stats; // ï¿½Uï¿½ï¿½ï¿½Öï¿½ï¿½Ågï¿½pï¿½ï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½ï¿½Lï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½
+    protected Entity_Stats Stats => stats; // ï¿½Tï¿½uï¿½Nï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½Ç‚İï¿½ï¿½Â”\ï¿½É‚ï¿½ï¿½é‚½ï¿½ß‚Ìƒvï¿½ï¿½ï¿½pï¿½eï¿½B
 
-    private Entity_VFX vfx; // ”í’e‚Ég‚¤VFXƒXƒNƒŠƒvƒg‚ğƒLƒƒƒbƒVƒ…
+    private Entity_VFX vfx; // ï¿½ï¿½eï¿½ï¿½ï¿½Égï¿½ï¿½VFXï¿½Xï¿½Nï¿½ï¿½ï¿½vï¿½gï¿½ï¿½Lï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½
 
-    public DamageScaleData basicAttackScale; // PerformAttackŠÖ”‚Åg—p‚·‚éƒ_ƒ[ƒWƒXƒP[ƒ‹ƒf[ƒ^
+    public DamageScaleData basicAttackScale; // PerformAttackï¿½Öï¿½ï¿½Ågï¿½pï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½Xï¿½Pï¿½[ï¿½ï¿½ï¿½fï¿½[ï¿½^
 
-    [Header("ƒ^[ƒQƒbƒgŒŸo")]
+    [Header("ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½o")]
     [SerializeField] private Transform targetCheck;
-    [SerializeField] private float targetCheckRadius = 1; // UŒ‚”ÍˆÍ
-    [SerializeField] private LayerMask whatIsTarget; // ‘ÎÛƒŒƒCƒ„[‚Ìİ’è
+    [SerializeField] private float targetCheckRadius = 1; // ï¿½Uï¿½ï¿½ï¿½Íˆï¿½
+    [SerializeField] private LayerMask whatIsTarget; // ï¿½ÎÛƒï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìİ’ï¿½
 
     private void Awake()
     {
@@ -22,15 +22,15 @@ public class Entity_Combat : MonoBehaviour // ƒ^[ƒQƒbƒgŒŸo‚Ì‚½‚ß‚ÌŠî’êƒNƒ‰ƒX
 
     public void PerformAttack()
     {
-        // ”ÍˆÍ“à‚Ì‘Sƒ^[ƒQƒbƒg‚É‘Î‚µ‚Äƒ_ƒ[ƒW‚ğ—^‚¦‚é
+        // ï¿½ÍˆÍ“ï¿½Ì‘Sï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½É‘Î‚ï¿½ï¿½Äƒ_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½^ï¿½ï¿½ï¿½ï¿½
         foreach (var target in GetDetectedColliders())
         {
             IDamageable damageable = target.GetComponent<IDamageable>();
 
             if (damageable == null)
-                continue; // ‘ÎÛ‚ª–³Œø‚È‚çƒXƒLƒbƒv
+                continue; // ï¿½ÎÛ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½Xï¿½Lï¿½bï¿½v
 
-            // •K—v‚ÈƒXƒe[ƒ^ƒXî•ñ‚ğæ“¾
+            // ï¿½Kï¿½vï¿½ÈƒXï¿½eï¿½[ï¿½^ï¿½Xï¿½ï¿½ï¿½ï¿½æ“¾
             AttackData attackData = stats.GetAttackData(basicAttackScale);
             Entity_StatusHandler statusHandler = target.GetComponent<Entity_StatusHandler>();
 
@@ -38,26 +38,26 @@ public class Entity_Combat : MonoBehaviour // ƒ^[ƒQƒbƒgŒŸo‚Ì‚½‚ß‚ÌŠî’êƒNƒ‰ƒX
             float elementalDamage = attackData.elementalDamage;
             ElementType element = attackData.element;
 
-            // ”í’eˆ—F¬Œ÷‚·‚ê‚Îtrue
+            // ï¿½ï¿½eï¿½ï¿½ï¿½ï¿½ï¿½Fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½true
             bool targetGotHit = damageable.TakeDamage(physDamage, elementalDamage, element, transform);
 
-            // ‘®«UŒ‚‚ª‚ ‚éê‡‚ÍƒXƒe[ƒ^ƒXŒø‰Ê‚ğ•t—^
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½ÍƒXï¿½eï¿½[ï¿½^ï¿½Xï¿½ï¿½ï¿½Ê‚ï¿½tï¿½^
             if (element != ElementType.None)
                 statusHandler?.ApplyStatusEffect(element, attackData.effectData);
 
-            // ”í’e‚µ‚½‘ÎÛ‚ÉƒqƒbƒgŠm”F—p‚ÌÔ‚¢VFX‚ğ¶¬
+            // ï¿½ï¿½eï¿½ï¿½ï¿½ï¿½ï¿½ÎÛ‚Éƒqï¿½bï¿½gï¿½mï¿½Fï¿½pï¿½ÌÔ‚ï¿½VFXï¿½ğ¶ï¿½
             if (targetGotHit)
                 vfx.CreateOnHitVFX(target.transform, attackData.isCrit, element);
         }
     }
 
-    // ‰~Œ`”ÍˆÍ“à‚É‚¢‚é‚·‚×‚Ä‚Ìƒ^[ƒQƒbƒg‚ğ”z—ñ‚Æ‚µ‚Äæ“¾
+    // ï¿½~ï¿½`ï¿½ÍˆÍ“ï¿½É‚ï¿½ï¿½é‚·ï¿½×‚Ä‚Ìƒ^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½zï¿½ï¿½Æ‚ï¿½ï¿½Äæ“¾
     protected Collider2D[] GetDetectedColliders()
     {
         return Physics2D.OverlapCircleAll(targetCheck.position, targetCheckRadius, whatIsTarget);
     }
 
-    // ƒGƒfƒBƒ^ã‚ÅUŒ‚”ÍˆÍ‚ğ‹Šo‰»
+    // ï¿½Gï¿½fï¿½Bï¿½^ï¿½ï¿½ÅUï¿½ï¿½ï¿½ÍˆÍ‚ï¿½ï¿½ï¿½oï¿½ï¿½
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

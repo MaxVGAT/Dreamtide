@@ -1,21 +1,21 @@
 using UnityEngine;
 
-// ƒvƒŒƒCƒ„[—p‚Ìí“¬ƒNƒ‰ƒX
+// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½pï¿½Ìí“¬ï¿½Nï¿½ï¿½ï¿½X
 public class Player_Combat : Entity_Combat
 {
-    public Transform counteredTargetTransform { get; private set; } // ƒJƒEƒ“ƒ^[‘ÎÛ‚ÌTransform
+    public Transform counteredTargetTransform { get; private set; } // ï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½ÎÛ‚ï¿½Transform
 
     [Header("Counter Attack details")]
-    [SerializeField] private float counterRecovery = 1f; // ƒJƒEƒ“ƒ^[Œã‚ÌƒŠƒJƒoƒŠ[ŠÔ
+    [SerializeField] private float counterRecovery = 1f; // ï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½ï¿½Ìƒï¿½ï¿½Jï¿½oï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½
 
-    // ƒJƒEƒ“ƒ^[UŒ‚‚ğÀs
+    // ï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s
     public bool CounterAttackPerformed(out bool isCrit)
     {
         bool hasPerformedCounter = false;
         counteredTargetTransform = null;
         isCrit = false;
 
-        // üˆÍ‚Ì‘ÎÛ‚ğæ“¾‚µ‚ÄƒJƒEƒ“ƒ^[‰Â”\‚©Šm”F
+        // ï¿½ï¿½ï¿½Í‚Ì‘ÎÛ‚ï¿½æ“¾ï¿½ï¿½ï¿½ÄƒJï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½Â”\ï¿½ï¿½ï¿½mï¿½F
         foreach (var target in GetDetectedColliders())
         {
             ICounterable counterable = target.GetComponent<ICounterable>();
@@ -27,8 +27,8 @@ public class Player_Combat : Entity_Combat
             {
                 counteredTargetTransform = target.transform;
 
-                float damage = Stats.GetPhysicalDamage(out isCrit); // •¨—ƒ_ƒ[ƒWŒvZ
-                counterable.HandleCounterAttack(); // ƒJƒEƒ“ƒ^[ˆ—Às
+                float damage = Stats.GetPhysicalDamage(out isCrit); // ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½vï¿½Z
+                counterable.HandleCounterAttack(); // ï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s
                 hasPerformedCounter = true;
                 break;
             }
@@ -36,6 +36,6 @@ public class Player_Combat : Entity_Combat
         return hasPerformedCounter;
     }
 
-    // ƒJƒEƒ“ƒ^[Œã‚Ì‰ñ•œŠÔ‚ğæ“¾
+    // ï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½ï¿½Ì‰ñ•œï¿½ï¿½Ô‚ï¿½æ“¾
     public float GetCounterRecovery() => counterRecovery;
 }

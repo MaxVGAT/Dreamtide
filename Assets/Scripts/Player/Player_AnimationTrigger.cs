@@ -1,16 +1,16 @@
 using UnityEngine;
 
-// ƒvƒŒƒCƒ„[—pƒAƒjƒ[ƒVƒ‡ƒ“ƒgƒŠƒK[
+// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½pï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Kï¿½[
 public class Player_AnimationTrigger : Entity_AnimationTriggers
 {
-    private Entity_Player player; // eƒvƒŒƒCƒ„[QÆ
+    private Entity_Player player; // ï¿½eï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Qï¿½ï¿½
 
     protected override void Awake()
     {
         base.Awake();
-        player = GetComponentInParent<Entity_Player>(); // e‚©‚çƒvƒŒƒCƒ„[æ“¾
+        player = GetComponentInParent<Entity_Player>(); // ï¿½eï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½æ“¾
     }
 
-    // ƒAƒjƒ[ƒVƒ‡ƒ“ƒCƒxƒ“ƒg—p: Œ•‚ğ“Š‚°‚é
+    // ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½p: ï¿½ï¿½ï¿½ğ“Š‚ï¿½ï¿½ï¿½
     private void ThrowSword() => player.skillManager.swordThrow.ThrowSword();
 }
