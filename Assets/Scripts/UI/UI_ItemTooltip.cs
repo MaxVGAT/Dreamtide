@@ -140,6 +140,7 @@ public class UI_ItemTooltip : UI_Tooltip
             case Item_Type.Ring: return "リング";
             case Item_Type.Rune: return "ルーン";
             case Item_Type.Material: return "マテリアル";
+            case Item_Type.Consumables: return "コンシュマブル";
             default: return null;
         }
     }
