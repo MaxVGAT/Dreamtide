@@ -4,13 +4,13 @@ using UnityEngine;
 // プレイヤー専用インベントリ（装備管理含む）
 public class Inventory_Player : Inventory_Base
 {
-    private Entity_Stats playerStats; // プレイヤーのステータス参照
+    private Entity_Player player; // プレイヤーのステータス参照
     public List<Inventory_EquipmentSlot> equipList; // 装備スロットリスト
 
     protected override void Awake()
     {
         base.Awake();
-        playerStats = GetComponent<Entity_Stats>(); // プレイヤーのステータス取得
+        player = GetComponent<Entity_Player>(); // プレイヤーのステータス取得
     }
 
     // アイテムを装備しようとする
@@ -40,8 +40,11 @@ public class Inventory_Player : Inventory_Base
     // 指定スロットにアイテムを装備
     private void EquipItem(Inventory_Item itemToEquip, Inventory_EquipmentSlot slot)
     {
+        float savedHealthPercent = player.health.GetHealthPercent();
         slot.equippedItem = itemToEquip;
-        slot.equippedItem.AddModifiers(playerStats); // ステータスに修飾子を適用
+        slot.equippedItem.AddModifiers(player.stats); // ステータスに修飾子を適用
+
+        player.health.SetHealthToPercent(savedHealthPercent);
 
         RemoveItem(itemToEquip); // インベントリから削除
     }
@@ -55,6 +58,8 @@ public class Inventory_Player : Inventory_Base
             return;
         }
 
+        float savedHealthPercent = player.health.GetHealthPercent();
+
         // 装備スロットから削除
         foreach (var slot in equipList)
         {
@@ -65,7 +70,9 @@ public class Inventory_Player : Inventory_Base
             }
         }
 
-        itemToUnequip.RemoveModifiers(playerStats); // ステータス修飾子を削除
+        itemToUnequip.RemoveModifiers(player.stats); // ステータス修飾子を削除
+
+        player.health.SetHealthToPercent(savedHealthPercent);
         AddItem(itemToUnequip); // インベントリに戻す
     }
 }

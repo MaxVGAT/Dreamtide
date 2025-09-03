@@ -17,6 +17,9 @@ MonoBehaviour:
   itemRarity: 4
   itemType: 1
   maxStackSize: 1
+  itemEFfect: {fileID: 0}
   modifiers:
-  - statType: 0
-    value: 10
+  - statType: 4
+    value: 27
+  - statType: 11
+    value: 15

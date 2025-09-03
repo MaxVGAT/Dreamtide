@@ -4,9 +4,9 @@ using UnityEngine;
 public class UI : MonoBehaviour
 {
     [SerializeField] private GameObject tabMenuRoot; // �^�u���j���[�S�̂̃��[�g�I�u�W�F�N�g
-    public UI_SkillTree skillTree; // �X�L���c���[UI
-    public UI_ItemTooltip itemTooltip;               // �A�C�e���c�[���`�b�vUI
-    public UI_StatTooltip statTooltip;               // �X�e�[�^�X�c�[���`�b�vUI
+    public UI_SkillTree skillTree { get; private set; } // �X�L���c���[UI
+    public UI_ItemTooltip itemTooltip { get; private set; }         // �A�C�e���c�[���`�b�vUI
+    public UI_StatTooltip statTooltip {get; private set;}           // �X�e�[�^�X�c�[���`�b�vUI
 
     private bool menuEnabled; // ���j���[�̕\�����
 
