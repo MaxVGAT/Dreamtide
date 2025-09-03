@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3686f0a71a8e8445992dda416f45e68, type: 3}
   m_Name: Item Effect data - Power Orb
   m_EditorClassIdentifier: 
-  effectDescription: 
+  effectDescription: 'Gives +20 Strength and 10% attack speed for 20s
+
+'
   buffsToApply:
   - type: 2
     value: 20
   - type: 6
-    value: 0.05
-  duration: 5
+    value: 0.1
+  duration: 2
   source: e37a4290-44c3-4928-9ec7-31b60c6bd848

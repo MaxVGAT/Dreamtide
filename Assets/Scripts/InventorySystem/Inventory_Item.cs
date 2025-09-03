@@ -44,6 +44,9 @@ public class Inventory_Item
         }
     }
 
+    public void AddItemEffect(Entity_Player player) => itemEffect?.Subscribe (player);
+    public void RemoveItemEffect() => itemEffect?.Unsubscribe ();
+
     // Equipment_DataSO�ւ̃L���X�g�i�����A�C�e���̏ꍇ�j
     private Equipment_DataSO EquipmentData()
     {

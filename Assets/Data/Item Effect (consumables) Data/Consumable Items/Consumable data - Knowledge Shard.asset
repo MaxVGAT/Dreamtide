@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3610e90778134994d8dc4e90f1e15d41, type: 3}
   m_Name: Consumable data - Knowledge Shard
   m_EditorClassIdentifier: 
-  itemName: 
-  itemIcon: {fileID: 0}
-  itemRarity: 0
-  itemType: 0
-  maxStackSize: 1
-  itemEFfect: {fileID: 0}
+  itemName: Knowledge Shard
+  itemIcon: {fileID: -471410683480259835, guid: 99ea96a51c85951408eae8872b7d5ffb, type: 3}
+  itemRarity: 3
+  itemType: 12
+  maxStackSize: 10
+  itemEFfect: {fileID: 11400000, guid: f1016a45c7cf2bc41a5db4e34e107a19, type: 2}

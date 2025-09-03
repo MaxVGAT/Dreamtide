@@ -51,6 +51,13 @@ public class UI_ItemTooltip : UI_Tooltip
             sb.AppendLine(modType + " - " + " +" + modValue);
         }
 
+        if(item.itemEffect != null)
+        {
+            sb.AppendLine("");
+            sb.AppendLine("Unique Effect: ");
+            sb.AppendLine(item.itemEffect.effectDescription);
+        }
+
         return sb.ToString();
     }
 
@@ -72,6 +79,7 @@ public class UI_ItemTooltip : UI_Tooltip
             case Item_Rarity.Rare: return (Color.blue, "レア");
             case Item_Rarity.Epic: return (new Color(0.64f, 0.21f, 0.93f), "エピック");
             case Item_Rarity.Legendary: return (new Color(1f, 0.5f, 0f), "レジェンダリー");
+            case Item_Rarity.Unique: return (new Color(0, 1f, 0.73f), "ユニック");
             default: return (Color.white, "不明");
         }
     }

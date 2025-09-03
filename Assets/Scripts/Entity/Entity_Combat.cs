@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Entity_Combat : MonoBehaviour // �^�[�Q�b�g���o�̂��߂̊��N���X
 {
+    public event Action<float> OnDoingPhysicalDamage;
+
     private Entity_Stats stats; // �U���֐��Ŏg�p����X�e�[�^�X��L���b�V��
     protected Entity_Stats Stats => stats; // �T�u�N���X����ǂݎ��\�ɂ��邽�߂̃v���p�e�B
 
@@ -47,7 +50,10 @@ public class Entity_Combat : MonoBehaviour // �^�[�Q�b�g���o��
 
             // ��e�����ΏۂɃq�b�g�m�F�p�̐Ԃ�VFX�𐶐�
             if (targetGotHit)
+            {
+                OnDoingPhysicalDamage?.Invoke(physDamage);
                 vfx.CreateOnHitVFX(target.transform, attackData.isCrit, element);
+            }
         }
     }
 

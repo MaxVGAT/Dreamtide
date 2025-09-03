@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Orb of Wrath
   itemIcon: {fileID: 2498528736212369741, guid: 4a5ca9f2ee417744dbd492597787734a, type: 3}
-  itemRarity: 0
-  itemType: 0
+  itemRarity: 2
+  itemType: 12
   maxStackSize: 1
   itemEFfect: {fileID: 11400000, guid: e4ee678c677c06a4e9b227b70bd1fd59, type: 2}

@@ -4,11 +4,16 @@ using UnityEngine;
 public class Player_VFX : Entity_VFX
 {
     [Header("Image Echo VFX")]
-    [SerializeField, Range(0.01f, 0.2f)] private float imageEchoInterval = 0.05f; // ƒGƒR[ŠÔŠu
-    [SerializeField] private GameObject imageEchoPrefab; // ƒGƒR[—pƒvƒŒƒnƒu
+    [SerializeField, Range(0.01f, 0.2f)] private float imageEchoInterval = 0.05f; // ï¿½Gï¿½Rï¿½[ï¿½ÔŠu
+    [SerializeField] private GameObject imageEchoPrefab; // ï¿½Gï¿½Rï¿½[ï¿½pï¿½vï¿½ï¿½ï¿½nï¿½u
     private Coroutine imageEchoCo;
 
-    // w’èŠÔ‚¾‚¯ƒCƒ[ƒWƒGƒR[‚ğ”­¶‚³‚¹‚é
+    public void CreateEffectOf(GameObject effect, Transform target)
+    {
+        Instantiate(effect, target.position, Quaternion.identity);
+    }
+
+    // ï¿½wï¿½èï¿½Ô‚ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Wï¿½Gï¿½Rï¿½[ï¿½ğ”­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void DoImageEchoEffect(float duration)
     {
         if (imageEchoCo != null)
@@ -17,21 +22,21 @@ public class Player_VFX : Entity_VFX
         imageEchoCo = StartCoroutine(ImageEchoEffectCo(duration));
     }
 
-    // ƒGƒR[ˆ—ƒRƒ‹[ƒ`ƒ“
+    // ï¿½Gï¿½Rï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½ï¿½ï¿½[ï¿½`ï¿½ï¿½
     private IEnumerator ImageEchoEffectCo(float duration)
     {
         float time = 0;
 
         while (time < duration)
         {
-            CreateImageEcho(); // ƒGƒR[¶¬
+            CreateImageEcho(); // ï¿½Gï¿½Rï¿½[ï¿½ï¿½ï¿½ï¿½
 
             yield return new WaitForSeconds(imageEchoInterval);
             time = time + imageEchoInterval;
         }
     }
 
-    // Œ»İ‚ÌƒXƒvƒ‰ƒCƒg‚ğƒRƒs[‚µ‚ÄƒGƒR[¶¬
+    // ï¿½ï¿½ï¿½İ‚ÌƒXï¿½vï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½Rï¿½sï¿½[ï¿½ï¿½ï¿½ÄƒGï¿½Rï¿½[ï¿½ï¿½ï¿½ï¿½
     private void CreateImageEcho()
     {
         GameObject imageEcho = Instantiate(imageEchoPrefab, transform.position, transform.rotation);

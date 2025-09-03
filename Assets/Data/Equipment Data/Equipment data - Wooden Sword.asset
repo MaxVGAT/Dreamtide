@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "\u30E2\u30C3\u30B1\u30F3"
   itemIcon: {fileID: -3589749343192059577, guid: 3c13e1468f70d674c933fa7fe77f52b3, type: 3}
-  itemRarity: 4
+  itemRarity: 0
   itemType: 1
   maxStackSize: 1
   itemEFfect: {fileID: 0}

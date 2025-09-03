@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Item Effect data - Grant Skill Point
   m_EditorClassIdentifier: 
   effectDescription: 
-  pointsToAdd: 0
+  pointsToAdd: 1

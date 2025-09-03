@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-// ‘Ì—Í‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+// ï¿½Ì—Í‚ï¿½Ç—ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½X
 public class Entity_Health : MonoBehaviour, IDamageable
 {
+    public event Action OnTakingDamage;
+
     private Slider healthBar;
     private Entity_VFX entityVfx;
     private Entity entity;
@@ -14,23 +17,23 @@ public class Entity_Health : MonoBehaviour, IDamageable
     public bool isDead { get; private set; }
     protected bool canTakeDamage = true;
 
-    [Header("Health Regen")] // ‘Ì—Í‰ñ•œİ’è
+    [Header("Health Regen")] // ï¿½Ì—Í‰ñ•œİ’ï¿½
     [SerializeField] private float regenInterval = 1;
     [SerializeField] private bool canRegenerateHealth = true;
     public float lastDamageTaken { get; private set; }
 
-    [Header("On Damage Knockback")] // ƒ_ƒ[ƒW‚ÌƒmƒbƒNƒoƒbƒNİ’è
+    [Header("On Damage Knockback")] // ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½Ìƒmï¿½bï¿½Nï¿½oï¿½bï¿½Nï¿½İ’ï¿½
     [SerializeField] private Vector2 knockbackPower = new Vector2(1.5f, 2.5f);
     [SerializeField] private Vector2 heavyKnockbackPower = new Vector2(7f, 7f);
     [SerializeField] private float knockbackDuration = 0.3f;
     [SerializeField] private float heavyKnockbackDuration = 0.6f;
 
-    [Header("On Heavy damages")] // ‘åƒ_ƒ[ƒW‚Æ”»’è‚·‚éŠ„‡
+    [Header("On Heavy damages")] // ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½Æ”ï¿½ï¿½è‚·ï¿½éŠ„ï¿½ï¿½
     [SerializeField] private float heavyDamageThreshold = 0.3f;
 
     protected virtual void Awake()
     {
-        // •K—v‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
+        // ï¿½Kï¿½vï¿½ÈƒRï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½ï¿½æ“¾
         healthBar = GetComponentInChildren<Slider>();
         entity = GetComponent<Entity>();
         entityVfx = GetComponent<Entity_VFX>();
@@ -47,74 +50,75 @@ public class Entity_Health : MonoBehaviour, IDamageable
         currentHealth = entityStats.GetMaxHealth();
         UpdateHealthBar();
 
-        // ˆê’èŠÔŠu‚ÅHP‰ñ•œˆ—‚ğŒÄ‚Ô
+        // ï¿½ï¿½ï¿½ÔŠuï¿½ï¿½HPï¿½ñ•œï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½
         InvokeRepeating(nameof(RegenerateHealth), 0, regenInterval);
     }
 
-    // ƒ_ƒ[ƒW‚ğó‚¯‚éˆ—
+    // ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ó‚¯‚éˆï¿½ï¿½
     public virtual bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageDealer)
     {
-        // ‚·‚Å‚É€‚ñ‚Å‚¢‚éA‚Ü‚½‚Í–³“Gó‘Ô‚È‚ç–³‹
+        // ï¿½ï¿½ï¿½Å‚Éï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½Aï¿½Ü‚ï¿½ï¿½Í–ï¿½ï¿½Gï¿½ï¿½Ô‚È‚ç–³ï¿½ï¿½
         if (isDead || canTakeDamage == false)
             return false;
 
-        // ‰ñ”ğ‚É¬Œ÷‚µ‚½‚ç–³Œø
+        // ï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç–³ï¿½ï¿½
         if (AttackAvoided())
             return false;
 
-        // UŒ‚Ò‚ÌƒXƒe[ƒ^ƒX‚©‚ç–hŒä—Í‚ğæ“¾
+        // ï¿½Uï¿½ï¿½ï¿½Ò‚ÌƒXï¿½eï¿½[ï¿½^ï¿½Xï¿½ï¿½ï¿½ï¿½hï¿½ï¿½Í‚ï¿½æ“¾
         Entity_Stats attackerStats = damageDealer.GetComponent<Entity_Stats>();
         float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;
 
         float physicalDamageTaken, elementalDamageTaken;
 
-        // –hŒäE‘Ï«‚ğl—¶‚µ‚½ÅIƒ_ƒ[ƒW‚ğŒvZ
+        // ï¿½hï¿½ï¿½Eï¿½Ïï¿½ï¿½ï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÅIï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½vï¿½Z
         ApplyPhysAndElemRes(damage, elementalDamage, element, armorReduction, out physicalDamageTaken, out elementalDamageTaken);
 
-        // ƒmƒbƒNƒoƒbƒN“K—p
+        // ï¿½mï¿½bï¿½Nï¿½oï¿½bï¿½Nï¿½Kï¿½p
         TakeKnockback(damageDealer, physicalDamageTaken);
 
-        // HP‚ğŒ¸‚ç‚·
+        // HPï¿½ï¿½ï¿½ï¿½ç‚·
         ReduceHealth(physicalDamageTaken + elementalDamageTaken);
 
-        // ÅŒã‚Éó‚¯‚½ƒ_ƒ[ƒW‚ğ‹L˜^
+        // ï¿½ÅŒï¿½Éó‚¯‚ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½Lï¿½^
         lastDamageTaken = physicalDamageTaken + elementalDamageTaken;
 
+        OnTakingDamage?.Invoke();
         return true;
     }
 
     public void SetCanTakeDamage(bool canTakeDamage) => this.canTakeDamage = canTakeDamage;
 
-    // ƒ_ƒ[ƒWŒvZi•¨—E‘®«j
+    // ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½vï¿½Zï¿½iï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½j
     private void ApplyPhysAndElemRes(float damage, float elementalDamage, ElementType element, float armorReduction, out float physicalDamageTaken, out float elementalDamageTaken)
     {
-        float mitigation = entityStats != null ? entityStats.GetArmorMitigation(armorReduction) : 0; // •¨—ŒyŒ¸—¦
-        float resistance = entityStats != null ? entityStats.GetElementalResistance(element) : 0;   // ‘®«‘Ï«
+        float mitigation = entityStats != null ? entityStats.GetArmorMitigation(armorReduction) : 0; // ï¿½ï¿½ï¿½ï¿½ï¿½yï¿½ï¿½ï¿½ï¿½
+        float resistance = entityStats != null ? entityStats.GetElementalResistance(element) : 0;   // ï¿½ï¿½ï¿½ï¿½ï¿½Ïï¿½
 
         physicalDamageTaken = damage * (1 - mitigation);
         elementalDamageTaken = elementalDamage * (1 - resistance);
     }
 
-    // ‰ñ”ğ”»’èi‰ñ”ğ—¦‚Åƒ‰ƒ“ƒ_ƒ€”»’èj
+    // ï¿½ï¿½ğ”»’ï¿½iï¿½ï¿½ğ—¦‚Åƒï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½j
     private bool AttackAvoided()
     {
         if (entityStats == null)
             return false;
         else
-            return Random.Range(0, 100) < entityStats.GetEvasion();
+            return UnityEngine.Random.Range(0, 100) < entityStats.GetEvasion();
     }
 
-    // ‘Ì—Í‰ñ•œˆ—
+    // ï¿½Ì—Í‰ñ•œï¿½ï¿½ï¿½
     private void RegenerateHealth()
     {
         if (canRegenerateHealth == false)
             return;
 
-        float regenAmount = entityStats.resources.healthRegen.GetValue(); // ‰ñ•œ—Ê‚ğæ“¾
+        float regenAmount = entityStats.resources.healthRegen.GetValue(); // ï¿½ñ•œ—Ê‚ï¿½æ“¾
         IncreaseHealth(regenAmount);
     }
 
-    // HP‚ğ‰ñ•œ‚·‚é
+    // HPï¿½ï¿½ñ•œ‚ï¿½ï¿½ï¿½
     public void IncreaseHealth(float healAmount)
     {
         if (isDead)
@@ -123,16 +127,16 @@ public class Entity_Health : MonoBehaviour, IDamageable
         float newHealth = currentHealth + healAmount;
         float maxHealth = entityStats.GetMaxHealth();
 
-        // Å‘å’l‚ğ’´‚¦‚È‚¢‚æ‚¤‚É’²®
+        // ï¿½Å‘ï¿½lï¿½ğ’´‚ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½É’ï¿½ï¿½ï¿½
         currentHealth = Mathf.Min(newHealth, maxHealth);
 
         UpdateHealthBar();
     }
 
-    // HP‚ğŒ¸‚ç‚·i0ˆÈ‰º‚È‚ç€–Sˆ—j
+    // HPï¿½ï¿½ï¿½ï¿½ç‚·ï¿½i0ï¿½È‰ï¿½ï¿½È‚ç€ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½j
     public void ReduceHealth(float damage)
     {
-        entityVfx?.HandleHitColor(Entity_VFX.FlashType.Red); // ƒqƒbƒg‚ÌVFX
+        entityVfx?.HandleHitColor(Entity_VFX.FlashType.Red); // ï¿½qï¿½bï¿½gï¿½ï¿½ï¿½ï¿½VFX
         currentHealth -= damage;
         UpdateHealthBar();
 
@@ -140,7 +144,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
             Die();
     }
 
-    // HPƒo[XV
+    // HPï¿½oï¿½[ï¿½Xï¿½V
     private void UpdateHealthBar()
     {
         if (healthBar == null || entityStats == null)
@@ -150,7 +154,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
         if (maxHealth <= 0)
             return;
 
-        healthBar.value = Mathf.Clamp01(currentHealth / maxHealth); // 0`1‚É³‹K‰»
+        healthBar.value = Mathf.Clamp01(currentHealth / maxHealth); // 0ï¿½`1ï¿½Éï¿½ï¿½Kï¿½ï¿½
     }
 
     public float GetHealthPercent() => currentHealth / entityStats.GetMaxHealth();
@@ -161,56 +165,56 @@ public class Entity_Health : MonoBehaviour, IDamageable
         UpdateHealthBar();
     }
 
-    // €–Sˆ—iƒI[ƒo[ƒ‰ƒCƒh‰Â”\j
+    // ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½iï¿½Iï¿½[ï¿½oï¿½[ï¿½ï¿½ï¿½Cï¿½hï¿½Â”\ï¿½j
     protected virtual void Die()
     {
         isDead = true;
         entity.EntityDeath();
     }
 
-    // ƒmƒbƒNƒoƒbƒNˆ—
+    // ï¿½mï¿½bï¿½Nï¿½oï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½
     private float TakeKnockback(Transform damageDealer, float finalDamage)
     {
         Vector2 knockback = CalculateKnockback(finalDamage, damageDealer);
         float duration = CalculateKnockbackDuration(finalDamage);
 
-        // ƒK[ƒh’†‚È‚çƒmƒbƒNƒoƒbƒN‚¹‚¸ƒ_ƒ[ƒW”¼Œ¸
+        // ï¿½Kï¿½[ï¿½hï¿½ï¿½ï¿½È‚ï¿½mï¿½bï¿½Nï¿½oï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½
         if (entity != null && entity.isBlocking)
         {
-            entityVfx.HandleHitColor(Entity_VFX.FlashType.Yellow); // ƒK[ƒh‚ÌF
+            entityVfx.HandleHitColor(Entity_VFX.FlashType.Yellow); // ï¿½Kï¿½[ï¿½hï¿½ï¿½ï¿½ÌF
             finalDamage /= 2;
         }
         else
         {
-            entity?.ReceiveKnockback(knockback, duration); // ƒmƒbƒNƒoƒbƒN‚ğ“K—p
+            entity?.ReceiveKnockback(knockback, duration); // ï¿½mï¿½bï¿½Nï¿½oï¿½bï¿½Nï¿½ï¿½Kï¿½p
         }
 
         return finalDamage;
     }
 
-    // ƒmƒbƒNƒoƒbƒN•ûŒü‚Æ‹­‚³‚ğŒvZ
+    // ï¿½mï¿½bï¿½Nï¿½oï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½Æ‹ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Z
     private Vector2 CalculateKnockback(float damage, Transform damageDealer)
     {
-        // ‚Ç‚¿‚ç‚Ì•ûŒü‚É”ò‚Î‚·‚©”»’èi‰E or ¶j
+        // ï¿½Ç‚ï¿½ï¿½ï¿½Ì•ï¿½ï¿½ï¿½ï¿½É”ï¿½Î‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½E or ï¿½ï¿½ï¿½j
         int direction = transform.position.x > damageDealer.position.x ? 1 : -1;
 
-        // ‘åƒ_ƒ[ƒW‚È‚ç‹­‚¢ƒmƒbƒNƒoƒbƒN
+        // ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½È‚ç‹­ï¿½ï¿½ï¿½mï¿½bï¿½Nï¿½oï¿½bï¿½N
         Vector2 knockback = IsHeavyDamage(damage) ? heavyKnockbackPower : knockbackPower;
 
-        knockback.x *= direction; // UŒ‚Ò‚ÌˆÊ’u‚Å•ûŒü”½“]
+        knockback.x *= direction; // ï¿½Uï¿½ï¿½ï¿½Ò‚ÌˆÊ’uï¿½Å•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]
 
         return knockback;
     }
 
-    // ƒmƒbƒNƒoƒbƒNŠÔ‚ğŒvZ
+    // ï¿½mï¿½bï¿½Nï¿½oï¿½bï¿½Nï¿½ï¿½ï¿½Ô‚ï¿½vï¿½Z
     private float CalculateKnockbackDuration(float damage) => IsHeavyDamage(damage) ? heavyKnockbackDuration : knockbackDuration;
 
-    // ‘åƒ_ƒ[ƒW‚©‚Ç‚¤‚©”»’è
+    // ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private bool IsHeavyDamage(float damage)
     {
         if (entityStats == null)
             return false;
         else
-            return damage / entityStats.GetMaxHealth() > heavyDamageThreshold; // ƒ_ƒ[ƒWŠ„‡‚ª‚µ‚«‚¢’lˆÈã‚©
+            return damage / entityStats.GetMaxHealth() > heavyDamageThreshold; // ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½Èã‚©
     }
 }

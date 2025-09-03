@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
+[Serializable]
 public class ElementalEffectData // HandleStatusEffect に渡すステータス効果の値をまとめたクラス
 {
     public float chillDuration; // チル状態の継続時間（秒）
