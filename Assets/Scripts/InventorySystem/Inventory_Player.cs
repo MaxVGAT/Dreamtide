@@ -1,25 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// ƒvƒŒƒCƒ„[ê—pƒCƒ“ƒxƒ“ƒgƒŠi‘•”õŠÇ—ŠÜ‚Şj
+// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½pï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½Ç—ï¿½ï¿½Ü‚Şj
 public class Inventory_Player : Inventory_Base
 {
-    private Entity_Player player; // ƒvƒŒƒCƒ„[‚ÌƒXƒe[ƒ^ƒXQÆ
-    public List<Inventory_EquipmentSlot> equipList; // ‘•”õƒXƒƒbƒgƒŠƒXƒg
+    private Entity_Player player; // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌƒXï¿½eï¿½[ï¿½^ï¿½Xï¿½Qï¿½ï¿½
+    public List<Inventory_EquipmentSlot> equipList; // ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½ï¿½ï¿½Xï¿½g
 
     protected override void Awake()
     {
         base.Awake();
-        player = GetComponent<Entity_Player>(); // ƒvƒŒƒCƒ„[‚ÌƒXƒe[ƒ^ƒXæ“¾
+        player = GetComponent<Entity_Player>(); // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌƒXï¿½eï¿½[ï¿½^ï¿½Xï¿½æ“¾
     }
 
-    // ƒAƒCƒeƒ€‚ğ‘•”õ‚µ‚æ‚¤‚Æ‚·‚é
+    // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ğ‘•”ï¿½ï¿½ï¿½ï¿½æ‚¤ï¿½Æ‚ï¿½ï¿½ï¿½
     public void TryEquipItem(Inventory_Item item)
     {
-        Inventory_Item inventoryItem = FindItem(item.itemData); // ƒCƒ“ƒxƒ“ƒgƒŠ“à‚ÌƒAƒCƒeƒ€æ“¾
+        Inventory_Item inventoryItem = FindItem(item.itemData); // ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ÌƒAï¿½Cï¿½eï¿½ï¿½ï¿½æ“¾
         List<Inventory_EquipmentSlot> matchingSlots = equipList.FindAll(slot => slot.slotType == item.itemData.itemType);
 
-        // ‹ó‚«ƒXƒƒbƒg‚ğ’T‚µ‚Ä‘•”õ
+        // ï¿½ó‚«ƒXï¿½ï¿½ï¿½bï¿½gï¿½ï¿½Tï¿½ï¿½ï¿½Ä‘ï¿½ï¿½ï¿½
         foreach (var slot in matchingSlots)
         {
             if (slot.HasItem() == false)
@@ -29,7 +29,7 @@ public class Inventory_Player : Inventory_Base
             }
         }
 
-        // ‹ó‚«‚ª‚È‚¯‚ê‚ÎÅ‰‚ÌƒXƒƒbƒg‚ÌƒAƒCƒeƒ€‚Æ“ü‚ê‘Ö‚¦
+        // ï¿½ó‚«‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ÎÅï¿½ï¿½ÌƒXï¿½ï¿½ï¿½bï¿½gï¿½ÌƒAï¿½Cï¿½eï¿½ï¿½ï¿½Æ“ï¿½ï¿½ï¿½Ö‚ï¿½
         var slotToReplace = matchingSlots[0];
         var itemToUnequip = slotToReplace.equippedItem;
 
@@ -37,42 +37,38 @@ public class Inventory_Player : Inventory_Base
         UnequipItem(itemToUnequip);
     }
 
-    // w’èƒXƒƒbƒg‚ÉƒAƒCƒeƒ€‚ğ‘•”õ
+    // ï¿½wï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½ÉƒAï¿½Cï¿½eï¿½ï¿½ï¿½ğ‘•”ï¿½
     private void EquipItem(Inventory_Item itemToEquip, Inventory_EquipmentSlot slot)
     {
         float savedHealthPercent = player.health.GetHealthPercent();
         slot.equippedItem = itemToEquip;
-        slot.equippedItem.AddModifiers(player.stats); // ƒXƒe[ƒ^ƒX‚ÉCüq‚ğ“K—p
+        slot.equippedItem.AddModifiers(player.stats); // ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½ÉCï¿½ï¿½ï¿½qï¿½ï¿½Kï¿½p
 
         player.health.SetHealthToPercent(savedHealthPercent);
 
-        RemoveItem(itemToEquip); // ƒCƒ“ƒxƒ“ƒgƒŠ‚©‚çíœ
+        RemoveItem(itemToEquip); // ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½íœ
     }
 
-    // ƒAƒCƒeƒ€‚ğ‘•”õ‰ğœ
+    // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ğ‘•”ï¿½ï¿½ï¿½ï¿½
     public void UnequipItem(Inventory_Item itemToUnequip)
     {
         if (CanAddItem() == false)
         {
-            Debug.Log("ƒCƒ“ƒxƒ“ƒgƒŠ‚É‹ó‚«‚ª‚ ‚è‚Ü‚¹‚ñ");
+            Debug.Log("ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½É‹ó‚«‚ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
             return;
         }
 
         float savedHealthPercent = player.health.GetHealthPercent();
 
-        // ‘•”õƒXƒƒbƒg‚©‚çíœ
-        foreach (var slot in equipList)
-        {
-            if (slot.equippedItem == itemToUnequip)
-            {
-                slot.equippedItem = null;
-                break;
-            }
-        }
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½ï¿½ï¿½ï¿½íœ
+        var slotToUnequip = equipList.Find(slot => slot.equippedItem == itemToUnequip);
 
-        itemToUnequip.RemoveModifiers(player.stats); // ƒXƒe[ƒ^ƒXCüq‚ğíœ
+        if (slotToUnequip != null)
+            slotToUnequip.equippedItem = null;
+
+        itemToUnequip.RemoveModifiers(player.stats); // ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½Cï¿½ï¿½ï¿½qï¿½ï¿½íœ
 
         player.health.SetHealthToPercent(savedHealthPercent);
-        AddItem(itemToUnequip); // ƒCƒ“ƒxƒ“ƒgƒŠ‚É–ß‚·
+        AddItem(itemToUnequip); // ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½É–ß‚ï¿½
     }
 }

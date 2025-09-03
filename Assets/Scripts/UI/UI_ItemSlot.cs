@@ -40,7 +40,12 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         if (Time.time - lastClickTime < DoubleClickThreshold)
         {
             if (itemInSlot.itemData.itemType == Item_Type.Consumables)
+            {
+                if (itemInSlot.itemEffect.CanBeUsed() == false)
+                    return;
+
                 inventory.TryUseItem(itemInSlot);
+            }
             else
                 inventory.TryEquipItem(itemInSlot);
                 lastClickTime = 0;

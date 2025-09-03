@@ -10,11 +10,17 @@ public class Entity_Stats : MonoBehaviour
     public Stats_DefenseGroup defense; // �h��n�X�e�[�^�X
     public Stats_MajorGroup major; // ��{�\�͒l
 
+    protected virtual void Awake()
+    {
+
+    }
+
     // �U���f�[�^��擾
     public AttackData GetAttackData(DamageScaleData scaleData)
     {
         return new AttackData(this, scaleData);
     }
+
 
     // �����_���[�W�v�Z
     public float GetPhysicalDamage(out bool isCrit, float scaleFactor = 1)

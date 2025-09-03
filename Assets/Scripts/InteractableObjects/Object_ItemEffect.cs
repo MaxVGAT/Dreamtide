@@ -1,43 +1,33 @@
 using System.Collections;
 using UnityEngine;
 
-[System.Serializable]
-public class Buff
-{
-    public StatType type;  // ‘ÎÛ‚ÌƒXƒe[ƒ^ƒX
-    public float value;    // ƒoƒt—Ê
-}
-
 public class Object_ItemEffect : MonoBehaviour
 {
-    private SpriteRenderer sr;              // •\¦—pƒXƒvƒ‰ƒCƒg
-    private Entity_Stats statsToModify;     // ƒoƒt‘ÎÛ‚ÌƒXƒe[ƒ^ƒX
+    private Player_Stats statsToModify;     // ï¿½oï¿½tï¿½ÎÛ‚ÌƒXï¿½eï¿½[ï¿½^ï¿½X
 
     [Header("Buff details")]
-    [SerializeField] private Buff[] buffs;        // “K—p‚·‚éƒoƒtˆê——
-    [SerializeField] private string buffName;     // ƒoƒt–¼i¯•Ê—pj
-    [SerializeField] private float buffDuration = 4f; // ƒoƒt‚Ì‘±ŠÔ
-    [SerializeField] private bool canBeUsed = true;   // g—p‰Â”\ƒtƒ‰ƒO
+    [SerializeField] private BuffEffectData[] buffs;        // ï¿½Kï¿½pï¿½ï¿½ï¿½ï¿½oï¿½tï¿½ê——
+    [SerializeField] private string buffName;     // ï¿½oï¿½tï¿½ï¿½ï¿½iï¿½ï¿½ï¿½Ê—pï¿½j
+    [SerializeField] private float buffDuration = 4f; // ï¿½oï¿½tï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     [Header("Pulse details")]
-    [SerializeField] private float pulseSpeed = 1;    // ƒpƒ‹ƒX‘¬“x
-    [SerializeField] private float minScale = 0.8f;  // Å¬ƒXƒP[ƒ‹
-    [SerializeField] private float maxScale = 1.2f;  // Å‘åƒXƒP[ƒ‹
-    [SerializeField] private float timeOffset = 0f;  // ƒAƒjƒ[ƒVƒ‡ƒ“ˆÊ‘ŠƒIƒtƒZƒbƒg
+    [SerializeField] private float pulseSpeed = 1;    // ï¿½pï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½x
+    [SerializeField] private float minScale = 0.8f;  // ï¿½Åï¿½ï¿½Xï¿½Pï¿½[ï¿½ï¿½
+    [SerializeField] private float maxScale = 1.2f;  // ï¿½Å‘ï¿½Xï¿½Pï¿½[ï¿½ï¿½
+    [SerializeField] private float timeOffset = 0f;  // ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ê‘ï¿½ï¿½Iï¿½tï¿½Zï¿½bï¿½g
 
-    private Vector3 originalScale;  // Œ³‚ÌƒXƒP[ƒ‹
+    private Vector3 originalScale;  // ï¿½ï¿½ï¿½ÌƒXï¿½Pï¿½[ï¿½ï¿½
 
     private void Awake()
     {
-        sr = GetComponentInChildren<SpriteRenderer>();
         originalScale = this.transform.localScale;
 
-        timeOffset = Random.Range(0f, Mathf.PI * 2); // ƒoƒt‚²‚Æ‚ÉƒAƒjƒ[ƒVƒ‡ƒ“‚¸‚ç‚·
+        timeOffset = Random.Range(0f, Mathf.PI * 2); // ï¿½oï¿½tï¿½ï¿½ï¿½Æ‚ÉƒAï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç‚·
     }
 
     private void Update()
     {
-        // ƒpƒ‹ƒXƒAƒjƒ[ƒVƒ‡ƒ“ŒvZ
+        // ï¿½pï¿½ï¿½ï¿½Xï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Z
         float sineValue = Mathf.Sin((Time.time + timeOffset) * pulseSpeed);
         float pulseScale = Mathf.Lerp(minScale, maxScale, (sineValue + 1f) / 2f);
 
@@ -46,35 +36,12 @@ public class Object_ItemEffect : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!canBeUsed) return;
+        statsToModify = collision.GetComponent<Player_Stats>();
 
-        statsToModify = collision.GetComponent<Entity_Stats>();
-        StartCoroutine(BuffCo(buffDuration)); // ƒoƒt“K—pŠJn
-    }
-
-    // ƒoƒt“K—pƒRƒ‹[ƒ`ƒ“
-    private IEnumerator BuffCo(float duration)
-    {
-        canBeUsed = false;
-        sr.color = Color.clear;    // ‹Šo“I‚ÉÁ‚·
-
-        ApplyBuff(true);           // ƒoƒt“K—p
-
-        yield return new WaitForSeconds(duration);
-
-        ApplyBuff(false);          // ƒoƒt‰ğœ
-        Destroy(gameObject);       // ƒIƒuƒWƒFƒNƒg”jŠü
-    }
-
-    // ƒoƒt‚Ì“K—p/‰ğœ
-    private void ApplyBuff(bool apply)
-    {
-        foreach (var buff in buffs)
+        if (statsToModify.CanApplyBuffOf(buffName))
         {
-            if (apply)
-                statsToModify.GetStatByType(buff.type).AddModifier(buff.value, buffName);
-            else
-                statsToModify.GetStatByType(buff.type).RemoveModifier(buffName);
+            statsToModify.ApplyBuff(buffs, buffDuration, buffName); // ï¿½oï¿½tï¿½Kï¿½pï¿½Jï¿½n
+            Destroy(gameObject);
         }
     }
 }
