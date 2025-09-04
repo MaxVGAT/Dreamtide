@@ -33,8 +33,8 @@ public class Inventory_Player : Inventory_Base
         var slotToReplace = matchingSlots[0];
         var itemToUnequip = slotToReplace.equippedItem;
 
+        UnequipItem(itemToUnequip, slotToReplace != null);
         EquipItem(inventoryItem, slotToReplace);
-        UnequipItem(itemToUnequip);
     }
 
     // �w��X���b�g�ɃA�C�e���𑕔�
@@ -51,9 +51,9 @@ public class Inventory_Player : Inventory_Base
     }
 
     // �A�C�e���𑕔����
-    public void UnequipItem(Inventory_Item itemToUnequip)
+    public void UnequipItem(Inventory_Item itemToUnequip, bool replacingItem = false)
     {
-        if (CanAddItem() == false)
+        if (CanAddItem() == false && replacingItem == false)
         {
             Debug.Log("�C���x���g���ɋ󂫂�����܂���");
             return;
