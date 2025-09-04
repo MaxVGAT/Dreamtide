@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Xml;
 using UnityEngine;
 
 public class Entity_Player : Entity
@@ -160,6 +159,34 @@ public class Entity_Player : Entity
         stateMachine.ChangeState(basicAttackState); // �U����ԂɈڍs
     }
 
+    private void TryInteract()
+    {
+        Transform closest = null;
+
+        float closestDistance = Mathf.Infinity;
+
+        Collider2D[] objectsAround = Physics2D.OverlapCircleAll(transform.position, 1.5f);
+
+        foreach (var target in objectsAround)
+        {
+            IInteractable interactable = target.GetComponent<IInteractable>();
+            if (interactable == null) continue;
+
+            float distance = Vector2.Distance(transform.position, target.transform.position);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closest = target.transform;
+            }
+        }
+
+        if (closest == null)
+            return;
+
+        closest.GetComponent<IInteractable>().Interact();
+    }
+
     private void OnEnable()
     {
         input.Enable();
@@ -173,6 +200,7 @@ public class Entity_Player : Entity
 
         // UI�؂�ւ�
         input.Player.ToggleUI.performed += context => ui.ToggleUI();
+        input.Player.Interact.performed += context => TryInteract();
 
         // �X�L���g�p
         input.Player.Skill.performed += context => skillManager.shard.TryUseSkill();
