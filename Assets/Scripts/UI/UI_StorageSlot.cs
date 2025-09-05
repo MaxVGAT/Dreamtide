@@ -31,15 +31,17 @@ public class UI_StorageSlot : UI_ItemSlot
         float timeSinceLastClick = Time.time - lastClickTime;
         lastClickTime = Time.time;
 
+        bool transferAll = Input.GetKey(KeyCode.LeftControl);
+
         if (timeSinceLastClick < DoubleClickThreshold)
         {
             if (storage != null && uiStorage != null && uiStorage.storageRoot != null
                 && uiStorage.storageRoot.activeInHierarchy)
             {
                 if (slotType == StorageSlotType.StorageSlot)
-                    storage.FromStorageToPlayer(itemInSlot);
+                    storage.FromStorageToPlayer(itemInSlot, transferAll);
                 else if (slotType == StorageSlotType.PlayerInventorySlot)
-                    storage.FromPlayerToStorage(itemInSlot);
+                    storage.FromPlayerToStorage(itemInSlot, transferAll);
 
                 ui?.itemTooltip.ShowToolTip(false, null);
                 return;

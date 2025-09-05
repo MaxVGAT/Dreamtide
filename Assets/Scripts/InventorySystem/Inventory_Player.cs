@@ -47,7 +47,7 @@ public class Inventory_Player : Inventory_Base
 
         player.health.SetHealthToPercent(savedHealthPercent);
 
-        RemoveItem(itemToEquip); // �C���x���g������폜
+        RemoveOneItem(itemToEquip); // �C���x���g������폜
     }
 
     // �A�C�e���𑕔����

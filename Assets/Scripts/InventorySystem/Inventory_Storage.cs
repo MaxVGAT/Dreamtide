@@ -6,23 +6,35 @@ public class Inventory_Storage : Inventory_Base
 
     public void SetInventory(Inventory_Player inventory) => this.playerInventory = inventory;
 
-    public void FromPlayerToStorage(Inventory_Item item)
+    public void FromPlayerToStorage(Inventory_Item item, bool transferAll)
     {
-        if(CanAddItem(item))
+        int transferAmount = transferAll ? item.stackSize : 1;
+
+        for(int i = 0; i < transferAmount; i++)
         {
-            playerInventory.RemoveItem(item);
-            AddItem(item);
+            if (CanAddItem(item))
+            {
+                var itemToAdd = new Inventory_Item(item.itemData);
+                playerInventory.RemoveOneItem(item);
+                AddItem(itemToAdd);
+            }
         }
 
         TriggerUpdateUI();
     }
 
-    public void FromStorageToPlayer(Inventory_Item item)
+    public void FromStorageToPlayer(Inventory_Item item, bool transferAll)
     {
-        if(playerInventory.CanAddItem(item))
+        int transferAmount = transferAll ? item.stackSize : 1;
+
+        for (int i = 0; i < transferAmount; i++)
         {
-            RemoveItem(item);
-            playerInventory.AddItem(item);
+            if (playerInventory.CanAddItem(item))
+            {
+                var itemToAdd = new Inventory_Item(item.itemData);
+                RemoveOneItem(item);
+                playerInventory.AddItem(itemToAdd);
+            }
         }
 
         TriggerUpdateUI();

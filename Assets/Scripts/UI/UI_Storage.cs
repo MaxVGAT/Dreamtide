@@ -26,20 +26,14 @@ public class UI_Storage : MonoBehaviour
 
     private void SetupStorageSlots()
     {
-        Debug.Log("Setting up storage slots...");
-
         // Get all storage slots in the UI
         UI_StorageSlot[] allSlots = GetComponentsInChildren<UI_StorageSlot>();
-        Debug.Log($"Found {allSlots.Length} total slots");
 
         foreach (var slot in allSlots)
         {
             // Set references for all slots
             slot.SetStorage(storage);
             slot.SetUIStorage(this);
-
-            // Log for debugging
-            Debug.Log($"Setup slot: {slot.name} as {slot.slotType}");
         }
 
         // Alternative approach: Setup slots by parent
@@ -57,7 +51,6 @@ public class UI_Storage : MonoBehaviour
                 slot.slotType = UI_StorageSlot.StorageSlotType.StorageSlot;
                 slot.SetStorage(storage);
                 slot.SetUIStorage(this);
-                Debug.Log($"Setup STORAGE slot: {slot.name}");
             }
         }
 
@@ -70,7 +63,6 @@ public class UI_Storage : MonoBehaviour
                 slot.slotType = UI_StorageSlot.StorageSlotType.PlayerInventorySlot;
                 slot.SetStorage(storage);
                 slot.SetUIStorage(this);
-                Debug.Log($"Setup INVENTORY slot: {slot.name}");
             }
         }
     }
