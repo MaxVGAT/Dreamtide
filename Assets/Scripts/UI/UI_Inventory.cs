@@ -2,44 +2,42 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-// ƒvƒŒƒCƒ„[‚ÌƒCƒ“ƒxƒ“ƒgƒŠUI‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌƒCï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½UIï¿½ï¿½Ç—ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½X
 public class UI_Inventory : MonoBehaviour
 {
-    private Inventory_Player inventory; // ƒvƒŒƒCƒ„[‚ÌƒCƒ“ƒxƒ“ƒgƒŠƒf[ƒ^
-    private UI_ItemSlot[] uiItemSlots; // ƒAƒCƒeƒ€ƒXƒƒbƒgUI‚Ì”z—ñ
-    private UI_EquipSlot[] uiWeaponTrinketSlots; // •ŠíEƒAƒNƒZƒTƒŠƒXƒƒbƒgUI
-    private UI_EquipSlot[] uiArmorSlots; // –h‹ïƒXƒƒbƒgUI
+    private Inventory_Player inventory; // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌƒCï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½fï¿½[ï¿½^
+    private UI_EquipSlot[] uiWeaponTrinketSlots; // ï¿½ï¿½ï¿½ï¿½Eï¿½Aï¿½Nï¿½Zï¿½Tï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½gUI
+    private UI_EquipSlot[] uiArmorSlots; // ï¿½hï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½gUI
 
-    [SerializeField] private Transform uiItemSlotParent; // ƒAƒCƒeƒ€ƒXƒƒbƒg‚ÌeƒIƒuƒWƒFƒNƒg
-    [SerializeField] private Transform uiWeaponTrinketParent; // •ŠíEƒAƒNƒZƒTƒŠƒXƒƒbƒg‚Ìe
-    [SerializeField] private Transform uiArmorSlotParent; // –h‹ïƒXƒƒbƒg‚Ìe
+    [SerializeField] private UI_ItemSlotParent inventorySlotsParent; // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½Ìeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g
+    [SerializeField] private Transform uiWeaponTrinketParent; // ï¿½ï¿½ï¿½ï¿½Eï¿½Aï¿½Nï¿½Zï¿½Tï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½Ìe
+    [SerializeField] private Transform uiArmorSlotParent; // ï¿½hï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½Ìe
 
-    // ‰Šú‰»
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private void Awake()
     {
-        // ŠeƒXƒƒbƒgUI‚ğeƒIƒuƒWƒFƒNƒg‚©‚çæ“¾
-        uiItemSlots = uiItemSlotParent.GetComponentsInChildren<UI_ItemSlot>();
+        // ï¿½eï¿½Xï¿½ï¿½ï¿½bï¿½gUIï¿½ï¿½eï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½æ“¾
         uiWeaponTrinketSlots = uiWeaponTrinketParent.GetComponentsInChildren<UI_EquipSlot>();
         uiArmorSlots = uiArmorSlotParent.GetComponentsInChildren<UI_EquipSlot>();
 
-        // ƒvƒŒƒCƒ„[ƒCƒ“ƒxƒ“ƒgƒŠ‚ğŒŸõ‚µ‚Äæ“¾
+        // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äæ“¾
         inventory = FindFirstObjectByType<Inventory_Player>();
-        inventory.OnInventoryChange += UpdateUI; // ƒCƒ“ƒxƒ“ƒgƒŠXV‚ÉUIXV
+        inventory.OnInventoryChange += UpdateUI; // ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½UIï¿½Xï¿½V
 
-        UpdateUI(); // Å‰‚ÉUI‚ğXV
+        UpdateUI(); // ï¿½Åï¿½ï¿½ï¿½UIï¿½ï¿½Xï¿½V
     }
 
-    // ƒCƒ“ƒxƒ“ƒgƒŠ‘S‘Ì‚ÌUIXV
+    // ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Sï¿½Ì‚ï¿½UIï¿½Xï¿½V
     private void UpdateUI()
     {
-        UpdateInventorySlots();   // ƒAƒCƒeƒ€ƒXƒƒbƒgXV
-        UpdateEquipmentSlots();   // ‘•”õƒXƒƒbƒgXV
+        inventorySlotsParent.UpdateSlots(inventory.itemList);  // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½Xï¿½V
+        UpdateEquipmentSlots();   // ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½Xï¿½V
     }
 
-    // ‘•”õƒXƒƒbƒgUI‚ÌXV
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½gUIï¿½ÌXï¿½V
     private void UpdateEquipmentSlots()
     {
-        // •ŠíEƒAƒNƒZƒTƒŠƒXƒƒbƒg
+        // ï¿½ï¿½ï¿½ï¿½Eï¿½Aï¿½Nï¿½Zï¿½Tï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½g
         for (int i = 0; i < uiWeaponTrinketSlots.Length; i++)
         {
             if (i < inventory.equipList.Count)
@@ -49,10 +47,10 @@ public class UI_Inventory : MonoBehaviour
             }
         }
 
-        // –h‹ïƒXƒƒbƒg
+        // ï¿½hï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½g
         for (int i = 0; i < uiArmorSlots.Length; i++)
         {
-            int equipListIndex = i + 4; // –h‹ïƒXƒƒbƒg‚ÍequipList‚Ì4”Ô–ÚˆÈ~
+            int equipListIndex = i + 4; // ï¿½hï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½ï¿½equipListï¿½ï¿½4ï¿½Ô–ÚˆÈ~
             if (equipListIndex < inventory.equipList.Count)
             {
                 var slot = inventory.equipList[equipListIndex];
@@ -61,28 +59,10 @@ public class UI_Inventory : MonoBehaviour
         }
     }
 
-    // ƒAƒCƒeƒ€ƒXƒƒbƒgUI‚ÌXV
-    private void UpdateInventorySlots()
-    {
-        List<Inventory_Item> itemList = inventory.itemList;
-
-        for (int i = 0; i < uiItemSlots.Length; i++)
-        {
-            if (i < itemList.Count)
-            {
-                uiItemSlots[i].UpdateSlot(itemList[i]); // ƒAƒCƒeƒ€‚ª‚ ‚ê‚Î•\¦
-            }
-            else
-            {
-                uiItemSlots[i].UpdateSlot(null); // ‹óƒXƒƒbƒg‚É‚·‚é
-            }
-        }
-    }
-
-    // ƒCƒ“ƒxƒ“ƒgƒŠUI‚ğ‹­§“I‚ÉXViƒŒƒCƒAƒEƒg‚à‘¦Ä\’zj
+    // ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½UIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ÉXï¿½Vï¿½iï¿½ï¿½ï¿½Cï¿½Aï¿½Eï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä\ï¿½zï¿½j
     public void RefreshInventoryUI()
     {
-        UpdateInventorySlots();
+        inventorySlotsParent.UpdateSlots(inventory.itemList);
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
     }
 }

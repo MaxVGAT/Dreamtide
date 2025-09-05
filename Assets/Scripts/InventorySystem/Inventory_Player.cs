@@ -53,7 +53,7 @@ public class Inventory_Player : Inventory_Base
     // �A�C�e���𑕔����
     public void UnequipItem(Inventory_Item itemToUnequip, bool replacingItem = false)
     {
-        if (CanAddItem() == false && replacingItem == false)
+        if (CanAddItem(itemToUnequip) == false && replacingItem == false)
         {
             Debug.Log("�C���x���g���ɋ󂫂�����܂���");
             return;

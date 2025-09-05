@@ -2,34 +2,37 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-// ƒ^ƒuƒ{ƒ^ƒ“—pƒNƒ‰ƒX
+// ã‚¿ãƒ–ãƒœã‚¿ãƒ³ç”¨ã‚¯ãƒ©ã‚¹
 [RequireComponent(typeof(Image))]
 public class UI_TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
-    public UI_TabGroup tabGroup; // Š‘®‚·‚éƒ^ƒuƒOƒ‹[ƒv
-    public Image background;     // ƒ{ƒ^ƒ“”wŒi
+    public UI_TabGroup tabGroup; // å±ã™ã‚‹ã‚¿ãƒ–ã‚°ãƒ«ãƒ¼ãƒ—
+    public Image background;     // ãƒœã‚¿ãƒ³èƒŒæ™¯
+
+    [Header("Tab Settings")]
+    public int tabIndex = -1;    // ã“ã®ã‚¿ãƒ–ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ï¼ˆ-1ãªã‚‰è‡ªå‹•ï¼‰
 
     private void Start()
     {
-        // Image ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
+        // Image ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—
         background = GetComponent<Image>();
-        // ƒ^ƒuƒOƒ‹[ƒv‚É‚±‚Ìƒ{ƒ^ƒ“‚ğ“o˜^
+        // ã‚¿ãƒ–ã‚°ãƒ«ãƒ¼ãƒ—ã«ã“ã®ãƒœã‚¿ãƒ³ã‚’ç™»éŒ²
         tabGroup.Subscribe(this);
     }
 
-    // ƒNƒŠƒbƒN‚É‘I‘ğ
+    // ã‚¯ãƒªãƒƒã‚¯æ™‚ã«é¸æŠ
     public void OnPointerClick(PointerEventData eventData)
     {
         tabGroup.OnTabSelected(this);
     }
 
-    // ƒ}ƒEƒXƒI[ƒo[
+    // ãƒã‚¦ã‚¹ã‚ªãƒ¼ãƒãƒ¼æ™‚
     public void OnPointerEnter(PointerEventData eventData)
     {
         tabGroup.OnTabEnter(this);
     }
 
-    // ƒ}ƒEƒX‚ª—£‚ê‚½
+    // ãƒã‚¦ã‚¹ãŒé›¢ã‚ŒãŸæ™‚
     public void OnPointerExit(PointerEventData eventData)
     {
         tabGroup.OnTabExit(this);

@@ -13,11 +13,14 @@ public class UI_ItemTooltip : UI_Tooltip
     // ツールチップの表示・非表示
     public void ShowToolTip(bool show, RectTransform targetRect, Inventory_Item itemToShow)
     {
+        // if no item, never show tooltip
+        if (itemToShow == null)
+            show = false;
+
         base.ShowToolTip(show, targetRect);
 
-        if (!show || itemToShow == null)
+        if (!show)
         {
-            // 非表示時は全てクリア
             itemName.text = "";
             itemType.text = "";
             itemInfo.text = "";
@@ -25,7 +28,7 @@ public class UI_ItemTooltip : UI_Tooltip
             return;
         }
 
-        // 表示時に内容を更新
+        // rest of your code unchanged
         itemName.text = itemToShow.itemData.itemName;
         itemType.text = SetItemTypeJP(itemToShow.itemData.itemType);
         itemInfo.text = GetItemInfo(itemToShow);

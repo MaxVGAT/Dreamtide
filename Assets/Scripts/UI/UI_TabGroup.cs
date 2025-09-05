@@ -1,55 +1,84 @@
-using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
+using UnityEngine;
 
-// タブグループ用クラス
 public class UI_TabGroup : MonoBehaviour
 {
-    public List<UI_TabButton> tabButtons;     // グループ内のタブボタン
-    public List<GameObject> objectsToSwap;    // タブ切替対象のUIオブジェクト
+    public List<UI_TabButton> tabButtons;
+    public List<GameObject> objectsToSwap;
+    public Sprite tabIdle;
+    public Sprite tabHover;
+    public Sprite tabActive;
+    public UI_TabButton selectedTab;
+    public int defaultTabIndex = 0;
 
-    public Sprite tabIdle;   // 非選択時スプライト
-    public Sprite tabHover;  // ホバー時スプライト
-    public Sprite tabActive; // 選択時スプライト
-    public UI_TabButton selectedTab; // 現在選択されているタブ
+    private UI ui; // Reference to UI manager
 
-    // タブボタンを登録
+    void Start()
+    {
+        ui = GetComponentInParent<UI>(); // Get UI component
+        if (tabButtons != null && tabButtons.Count > 0)
+        {
+            if (defaultTabIndex >= 0 && defaultTabIndex < tabButtons.Count)
+            {
+                OnTabSelected(tabButtons[defaultTabIndex]);
+            }
+            else
+            {
+                OnTabSelected(tabButtons[0]);
+            }
+        }
+    }
+
     public void Subscribe(UI_TabButton button)
     {
         if (tabButtons == null)
             tabButtons = new List<UI_TabButton>();
-
         tabButtons.Add(button);
     }
 
-    // マウスオーバー
     public void OnTabEnter(UI_TabButton button)
     {
         ResetTabs();
-
         if (selectedTab == null || button != selectedTab)
             button.background.sprite = tabHover;
     }
 
-    // マウス離脱
     public void OnTabExit(UI_TabButton button)
     {
         ResetTabs();
     }
 
-    // タブ選択時
     public void OnTabSelected(UI_TabButton button)
     {
         selectedTab = button;
         ResetTabs();
         button.background.sprite = tabActive;
 
-        int index = button.transform.GetSiblingIndex();
+        int index;
+        if (button.TryGetComponent<UI_TabButton>(out var tabButton) && tabButton.tabIndex >= 0)
+        {
+            index = tabButton.tabIndex;
+        }
+        else
+        {
+            index = tabButtons.IndexOf(button);
+        }
+
+        // Hide storage unless selecting inventory tab (index 0) and inside shop trigger
+        if (ui != null && index != 0) // Assuming inventory tab is at index 0
+        {
+            ui.ShowStorageInInventory(false);
+        }
+        else if (ui != null && index == 0)
+        {
+            ui.ShowStorageInInventory(ui.IsInsideShopTrigger()); // Show storage only if in trigger
+        }
+
         for (int i = 0; i < objectsToSwap.Count; i++)
         {
-            objectsToSwap[i].SetActive(i == index);
+            bool shouldActivate = (i == index);
+            objectsToSwap[i].SetActive(shouldActivate);
 
-            // Inventory UIなら更新
             if (i == index && objectsToSwap[i].TryGetComponent<UI_Inventory>(out var inventory))
             {
                 inventory.RefreshInventoryUI();
@@ -57,7 +86,6 @@ public class UI_TabGroup : MonoBehaviour
         }
     }
 
-    // タブを初期状態に戻す（非選択スプライト）
     public void ResetTabs()
     {
         foreach (UI_TabButton button in tabButtons)

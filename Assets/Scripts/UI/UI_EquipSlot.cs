@@ -1,31 +1,31 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-// ‘•”õƒXƒƒbƒgUI‚ðŠÇ—‚·‚éƒNƒ‰ƒX
-// UI_ItemSlot ‚ðŒp³‚µ‚ÄA‘•”õ‰Â”\‚ÈƒAƒCƒeƒ€ƒ^ƒCƒv‚ðŽw’è‚Å‚«‚é
+// ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½gUIï¿½ï¿½Ç—ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½X
+// UI_ItemSlot ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ÄAï¿½ï¿½ï¿½ï¿½ï¿½Â”\ï¿½ÈƒAï¿½Cï¿½eï¿½ï¿½ï¿½^ï¿½Cï¿½vï¿½ï¿½wï¿½ï¿½Å‚ï¿½ï¿½ï¿½
 public class UI_EquipSlot : UI_ItemSlot
 {
-    public Item_Type slotType; // ‚±‚ÌƒXƒƒbƒg‚Å‘•”õ‰Â”\‚ÈƒAƒCƒeƒ€ƒ^ƒCƒv
+    public Item_Type slotType; // ï¿½ï¿½ï¿½ÌƒXï¿½ï¿½ï¿½bï¿½gï¿½Å‘ï¿½ï¿½ï¿½ï¿½Â”\ï¿½ÈƒAï¿½Cï¿½eï¿½ï¿½ï¿½^ï¿½Cï¿½v
 
-    // ƒGƒfƒBƒ^ã‚ÅƒXƒƒbƒg–¼‚ðŽ©“®XV‚·‚é
+    // ï¿½Gï¿½fï¿½Bï¿½^ï¿½ï¿½ÅƒXï¿½ï¿½ï¿½bï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½
     private void OnValidate()
     {
         gameObject.name = "UI_EquipmentSlot - " + slotType.ToString();
     }
 
-    // ƒXƒƒbƒg‚ªƒNƒŠƒbƒN‚³‚ê‚½Žž‚Ìˆ—
+    // ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if (itemInSlot == null) // ƒXƒƒbƒg‚ÉƒAƒCƒeƒ€‚ª‚È‚¯‚ê‚Î‰½‚à‚µ‚È‚¢
+        if (itemInSlot == null) // ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½ÉƒAï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½Î‰ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
             return;
 
-        // ƒ_ƒuƒ‹ƒNƒŠƒbƒN”»’è
+        // ï¿½_ï¿½uï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½
         if (Time.time - lastClickTime < DoubleClickThreshold)
         {
-            inventory.UnequipItem(itemInSlot); // ƒAƒCƒeƒ€‚ðŠO‚·
-            lastClickTime = 0;                 // ƒNƒŠƒbƒNƒ^ƒCƒ}[‚ðƒŠƒZƒbƒg
+            inventory.UnequipItem(itemInSlot); // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½Oï¿½ï¿½
+            lastClickTime = 0;                 // ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½^ï¿½Cï¿½}ï¿½[ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
         }
         else
-            lastClickTime = Time.time;         // ƒNƒŠƒbƒNŽžŠÔ‚ðXV
+            lastClickTime = Time.time;         // ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½Ô‚ï¿½Xï¿½V
     }
 }

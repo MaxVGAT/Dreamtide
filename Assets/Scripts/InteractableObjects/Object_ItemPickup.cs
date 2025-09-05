@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class Object_ItemPickup : MonoBehaviour
 {
-    private SpriteRenderer sr;                // •\¦—pƒXƒvƒ‰ƒCƒg
+    private SpriteRenderer sr;                // ï¿½\ï¿½ï¿½ï¿½pï¿½Xï¿½vï¿½ï¿½ï¿½Cï¿½g
 
-    [SerializeField] private Item_DataSO itemData; // ƒAƒCƒeƒ€ƒf[ƒ^
+    [SerializeField] private Item_DataSO itemData; // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½fï¿½[ï¿½^
 
-    private Inventory_Item itemToAdd;         // ƒCƒ“ƒxƒ“ƒgƒŠ‚É’Ç‰Á‚·‚éƒAƒCƒeƒ€
-    private Inventory_Base inventory;         // ÚG‚µ‚½ƒCƒ“ƒxƒ“ƒgƒŠQÆ
+    private Inventory_Item itemToAdd;         // ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½É’Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Cï¿½eï¿½ï¿½
+    private Inventory_Base inventory;         // ï¿½ÚGï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Qï¿½ï¿½
 
     private void Awake()
     {
-        itemToAdd = new Inventory_Item(itemData); // ƒAƒCƒeƒ€ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+        itemToAdd = new Inventory_Item(itemData); // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½
     }
 
     private void OnValidate()
@@ -19,23 +19,22 @@ public class Object_ItemPickup : MonoBehaviour
         if (itemData == null) return;
 
         sr = GetComponent<SpriteRenderer>();
-        sr.sprite = itemData.itemIcon;   // ƒAƒCƒRƒ“İ’è
-        gameObject.name = "Object_ItemPickup - " + itemData.itemName; // –¼‘OXV
+        sr.sprite = itemData.itemIcon;   // ï¿½Aï¿½Cï¿½Rï¿½ï¿½ï¿½İ’ï¿½
+        gameObject.name = "Object_ItemPickup - " + itemData.itemName; // ï¿½ï¿½ï¿½Oï¿½Xï¿½V
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        inventory = collision.GetComponent<Inventory_Base>(); // ƒCƒ“ƒxƒ“ƒgƒŠæ“¾
+        inventory = collision.GetComponent<Inventory_Base>(); // ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½æ“¾
 
-        if (inventory == null) return;
+        if (inventory == null)
+            return;
 
-        // ƒAƒCƒeƒ€‚ğ’Ç‰Á‰Â”\‚©ƒ`ƒFƒbƒN
-        bool canAddItem = inventory.CanAddItem() || inventory.FindStackable(itemToAdd) != null;
 
-        if (canAddItem)
+        if (inventory.CanAddItem(itemToAdd))
         {
-            inventory.AddItem(itemToAdd); // ƒAƒCƒeƒ€’Ç‰Á
-            Destroy(gameObject);           // ƒIƒuƒWƒFƒNƒg”jŠü
+            inventory.AddItem(itemToAdd); // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ç‰ï¿½
+            Destroy(gameObject);           // ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½jï¿½ï¿½
         }
     }
 }

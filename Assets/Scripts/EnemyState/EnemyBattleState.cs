@@ -1,5 +1,3 @@
-using Unity.VisualScripting;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class EnemyBattleState : EnemyState
@@ -17,12 +15,12 @@ public class EnemyBattleState : EnemyState
     {
         base.Enter();
 
-        UpdateBattleTimer(); // “G‚Ìƒoƒgƒ‹ó‘Ô‚Ì‘Œp‘±ŽžŠÔ‚Ìƒ^ƒCƒ}[‚ðXV‚·‚é
+        UpdateBattleTimer(); // ï¿½Gï¿½Ìƒoï¿½gï¿½ï¿½ï¿½ï¿½Ô‚Ì‘ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Ô‚Ìƒ^ï¿½Cï¿½}ï¿½[ï¿½ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½
 
         if (player == null)
             player = enemy.GetPlayerReference();
 
-        if (ShouldRetreat()) // ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£‚ð‘‚â‚·‚×‚«‚©‚ðƒ`ƒFƒbƒN‚µAƒvƒŒƒCƒ„[‚Ì•ûŒü‚ÉŠî‚Ã‚¢‚Ä”½“]‚µAƒ_ƒbƒVƒ…‘¬“x‚âƒAƒNƒeƒBƒu‚ÈƒXƒƒEƒfƒoƒt‚ðl—¶‚·‚é
+        if (ShouldRetreat()) // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Æ‚Ì‹ï¿½ï¿½ï¿½ï¿½ð‘‚â‚·ï¿½×‚ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½Nï¿½ï¿½ï¿½Aï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ì•ï¿½ï¿½ï¿½ï¿½ÉŠï¿½Ã‚ï¿½ï¿½Ä”ï¿½ï¿½]ï¿½ï¿½ï¿½Aï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½Aï¿½Nï¿½eï¿½Bï¿½uï¿½ÈƒXï¿½ï¿½ï¿½Eï¿½fï¿½oï¿½tï¿½ï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
             rb.linearVelocity = new Vector2((enemy.retreatVelocity.x * enemy.activeSlowMultiplier) * -DirectionToPlayer(), enemy.retreatVelocity.y);
             enemy.HandleFlip(DirectionToPlayer());
@@ -36,29 +34,29 @@ public class EnemyBattleState : EnemyState
 
         if (enemy.PlayerIsDetected())
         {
-            UpdateTargetIfNeeded(); // Œ»Ý‚Ìƒ^[ƒQƒbƒg‚ª“¯‚¶‚©‚Ç‚¤‚©A‚Ü‚½‚ÍƒNƒ[ƒ“‚âƒ^[ƒQƒbƒg‚È‚µ‚É•Ï‚í‚Á‚½‚©‚ðƒ`ƒFƒbƒN‚·‚é
-            UpdateBattleTimer(); // ƒ^[ƒQƒbƒg‚ªŽ‹ŠE“à‚É‚¢‚éê‡Aƒ^ƒCƒ}[‚ðˆÛŽ‚·‚é
+            UpdateTargetIfNeeded(); // ï¿½ï¿½ï¿½Ý‚Ìƒ^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½ï¿½Aï¿½Ü‚ï¿½ï¿½ÍƒNï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½È‚ï¿½ï¿½É•Ï‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½
+            UpdateBattleTimer(); // ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½É‚ï¿½ï¿½ï¿½ê‡ï¿½Aï¿½^ï¿½Cï¿½}ï¿½[ï¿½ï¿½ÛŽï¿½ï¿½ï¿½ï¿½ï¿½
         }
 
-        if (BattleTimeIsOver()) // ƒvƒŒƒCƒ„[‚ªˆê’èŽžŠÔŽ‹ŠE‚©‚çŠO‚ê‚½‚ç‘Ò‹@ó‘Ô‚É–ß‚é
+        if (BattleTimeIsOver()) // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½èŽžï¿½ÔŽï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½Oï¿½ê‚½ï¿½ï¿½Ò‹@ï¿½ï¿½Ô‚É–ß‚ï¿½
             stateMachine.ChangeState(enemy.idleState);
 
-        if (WithinAttackRange() && enemy.PlayerIsDetected()) // ƒvƒŒƒCƒ„[‚ª‹ß‚­‚É‚¢‚ÄŒŸo‚³‚ê‚Ä‚¢‚ê‚ÎUŒ‚‚·‚é
+        if (WithinAttackRange() && enemy.PlayerIsDetected()) // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ß‚ï¿½ï¿½É‚ï¿½ï¿½ÄŒï¿½ï¿½oï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ÎUï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             stateMachine.ChangeState(enemy.attackState);
-        else // ƒvƒŒƒCƒ„[‚ªŽË’öŠO‚Ì‚½‚ßAƒoƒgƒ‹ó‘Ô‚ÌˆÚ“®‘¬“x‚ðã‚°‚ÄÚ‹ß‚·‚é
+        else // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ë’ï¿½ï¿½Oï¿½Ì‚ï¿½ï¿½ßAï¿½oï¿½gï¿½ï¿½ï¿½ï¿½Ô‚ÌˆÚ“ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ã‚°ï¿½ÄÚ‹ß‚ï¿½ï¿½ï¿½
         {
             enemy.SetVelocity(enemy.GetBattleMoveSpeed() * DirectionToPlayer(), rb.linearVelocityY);
         }
     }
 
-    private void UpdateTargetIfNeeded() // ƒvƒŒƒCƒ„[‚âƒNƒ[ƒ“A‚Ü‚½‚Í‰½‚àŒŸo‚³‚ê‚Ä‚¢‚È‚¢ê‡‚É‰ž‚¶‚Äƒ^[ƒQƒbƒg‚ðXV‚·‚é
+    private void UpdateTargetIfNeeded() // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Aï¿½Ü‚ï¿½ï¿½Í‰ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½É‰ï¿½ï¿½ï¿½ï¿½Äƒ^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½
     {
         if (enemy.PlayerIsDetected() == false)
             return;
 
         Transform newTarget = enemy.PlayerIsDetected().transform;
 
-        if (newTarget != lastTarget) // –ˆƒtƒŒ[ƒ€Œ»Ý‚Ìƒ^[ƒQƒbƒg‚ª“¯‚¶‚©‚Ç‚¤‚©‚ðƒ`ƒFƒbƒN‚µAˆÙ‚È‚ê‚Îƒ^[ƒQƒbƒg‚ðXV‚·‚é
+        if (newTarget != lastTarget) // ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Ý‚Ìƒ^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½Nï¿½ï¿½ï¿½Aï¿½Ù‚È‚ï¿½Îƒ^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½
         {
             lastTarget = newTarget;
             player = newTarget;
@@ -86,6 +84,6 @@ public class EnemyBattleState : EnemyState
         if (player == null)
             return 0;
 
-        return player.position.x > enemy.transform.position.x ? 1 : -1; // ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚ÉŠî‚Ã‚¢‚Ä“G‚Ì•ûŒü‚ð•ÏX‚·‚é
+        return player.position.x > enemy.transform.position.x ? 1 : -1; // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌˆÊ’uï¿½ÉŠï¿½Ã‚ï¿½ï¿½Ä“Gï¿½Ì•ï¿½ï¿½ï¿½ï¿½ï¿½ÏXï¿½ï¿½ï¿½ï¿½
     }
 }

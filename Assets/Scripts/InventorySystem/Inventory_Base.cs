@@ -18,7 +18,12 @@ public class Inventory_Base : MonoBehaviour
     }
 
     // �A�C�e����ǉ��ł��邩
-    public bool CanAddItem() => itemList.Count < maxInventorySize;
+    public bool CanAddItem(Inventory_Item itemToAdd)
+    {
+        bool hasStackable = FindStackable(itemToAdd) != null;
+
+        return hasStackable || itemList.Count < maxInventorySize;
+    }
 
     // �X�^�b�N�\�ȓ���A�C�e����T��
     public Inventory_Item FindStackable(Inventory_Item itemToAdd)
