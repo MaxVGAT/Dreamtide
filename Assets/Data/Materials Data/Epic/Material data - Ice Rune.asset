@@ -10,10 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80600184fa92d5e44a37200b5e7bdac7, type: 3}
-  m_Name: Material data - Leather
+  m_Name: Material data - Ice Rune
   m_EditorClassIdentifier: 
-  itemName: "\u9769"
-  itemIcon: {fileID: 4446923789081652509, guid: 90df25f1ddb10194fb73a2900fe9be9a, type: 3}
-  itemRarity: 4
+  itemName: "\u6C37\u306E\u30EB\u30FC\u30F3"
+  itemIcon: {fileID: -1859543687529345773, guid: 3b56084ed47d28b479a97fc41b6bf5fd, type: 3}
+  itemRarity: 3
   itemType: 0
-  maxStackSize: 4
+  maxStackSize: 20
+  itemEFfect: {fileID: 0}
+  craftRecipe:
+  - itemData: {fileID: 11400000, guid: 79ee74d5bd95dd44c9beabe3b6b341ab, type: 2}
+    stackSize: 3
+    itemEffect: {fileID: 0}

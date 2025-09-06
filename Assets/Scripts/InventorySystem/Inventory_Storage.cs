@@ -4,6 +4,25 @@ public class Inventory_Storage : Inventory_Base
 {
     private Inventory_Player playerInventory;
 
+    public int GetAvailableAmountOf(Item_DataSO requiredItem)
+    {
+        int amount = 0;
+
+        foreach(var item in playerInventory.itemList)
+        {
+            if (item.itemData == requiredItem)
+                amount += item.stackSize;
+        }
+
+        foreach(var item in itemList)
+        {
+            if(item.itemData == requiredItem)
+                amount += item.stackSize;
+        }
+
+        return amount;
+    }
+
     public void SetInventory(Inventory_Player inventory) => this.playerInventory = inventory;
 
     public void FromPlayerToStorage(Inventory_Item item, bool transferAll)

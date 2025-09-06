@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using UnityEngine;
 
 // �C���x���g����̃A�C�e���f�[�^�Ǘ��N���X
@@ -64,4 +65,81 @@ public class Inventory_Item
 
     // �X�^�b�N����炷
     public void RemoveStack() => stackSize--;
+
+    public string GetItemInfo()
+    {
+        if (itemData.itemType == Item_Type.Material)
+            return "クラフティング専用なリソース。";
+
+        if (itemData.itemType == Item_Type.Consumables)
+            return itemData.itemEFfect.effectDescription;
+
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("");
+
+        foreach (var mod in modifiers)
+        {
+            string modType = GetStatTypeText(mod.statType); // ステータス名
+            string modValue = IsPercentageStat(mod.statType) ? mod.value.ToString() + "%" : mod.value.ToString();
+            sb.AppendLine(modType + " - " + " +" + modValue);
+        }
+
+        if (itemEffect != null)
+        {
+            sb.AppendLine("");
+            sb.AppendLine("Unique Effect: ");
+            sb.AppendLine(itemEffect.effectDescription);
+        }
+
+        return sb.ToString();
+    }
+
+    // ステータスの日本語表示を返す
+    private string GetStatTypeText(StatType type)
+    {
+        switch (type)
+        {
+            case StatType.MaxHealth: return "体力";
+            case StatType.HealthRegen: return "回復力";
+            case StatType.Strength: return "破壊力";
+            case StatType.Agility: return "俊敏さ";
+            case StatType.Intelligence: return "魔力";
+            case StatType.Vitality: return "耐久力";
+            case StatType.AttackSpeed: return "連撃速度";
+            case StatType.Damage: return "攻撃力";
+            case StatType.CritChance: return "会心率";
+            case StatType.CritPower: return "会心ダメージ";
+            case StatType.ArmorReduction: return "防御貫通";
+            case StatType.FireDamage: return "火炎ダメージ";
+            case StatType.IceDamage: return "氷結ダメージ";
+            case StatType.LightningDamage: return "雷撃ダメージ";
+            case StatType.Armor: return "防御力";
+            case StatType.Evasion: return "回避率";
+            case StatType.IceResistance: return "氷耐性";
+            case StatType.FireResistance: return "火耐性";
+            case StatType.LightningResistance: return "雷耐性";
+            default: return type.ToString();
+        }
+    }
+
+    // パーセンテージ表記が必要か判定
+    private bool IsPercentageStat(StatType type)
+    {
+        switch (type)
+        {
+            case StatType.CritChance:
+            case StatType.CritPower:
+            case StatType.ArmorReduction:
+            case StatType.IceResistance:
+            case StatType.FireResistance:
+            case StatType.LightningResistance:
+            case StatType.AttackSpeed:
+            case StatType.Evasion:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    
 }

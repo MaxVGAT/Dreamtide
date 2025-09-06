@@ -1,40 +1,53 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-// アイテムのツールチップUIを管理するクラス
-public class UI_ItemTooltip : UI_Tooltip
+public class UI_CraftPreview : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI itemName;   // アイテム名
-    [SerializeField] private TextMeshProUGUI itemRarity; // レアリティ
-    [SerializeField] private TextMeshProUGUI itemType;   // アイテム種別
-    [SerializeField] private TextMeshProUGUI itemInfo;   // ステータス詳細
+    private Inventory_Item itemToCraft;
+    private Inventory_Storage storage;
+    private UI_CraftPreviewSlot[] craftPreviewSlots;
 
-    // ツールチップの表示・非表示
-    public void ShowToolTip(bool show, RectTransform targetRect, Inventory_Item itemToShow)
+    [Header("Item Preview Setup")]
+    [SerializeField] private Image itemIcon;
+    [SerializeField] private TextMeshProUGUI itemName;
+    [SerializeField] private TextMeshProUGUI itemInfo;
+    [SerializeField] private TextMeshProUGUI itemRarity;
+
+    public void SetupCraftPreview(Inventory_Storage storage)
     {
-        // if no item, never show tooltip
-        if (itemToShow == null)
-            show = false;
+        this.storage = storage;
 
-        base.ShowToolTip(show, targetRect);
+        craftPreviewSlots = GetComponentsInChildren<UI_CraftPreviewSlot>();
 
-        if (!show)
-        {
-            itemName.text = "";
-            itemType.text = "";
-            itemInfo.text = "";
-            itemRarity.text = "";
-            return;
-        }
-
-        // rest of your code unchanged
-        itemName.text = itemToShow.itemData.itemName;
-        itemType.text = SetItemTypeJP(itemToShow.itemData.itemType);
-        itemInfo.text = itemToShow.GetItemInfo();
-        SetRarityText(itemToShow.itemData.itemRarity);
+        foreach(var slot in craftPreviewSlots)
+            slot.gameObject.SetActive(false);
     }
 
-    // レアリティ表示を更新
+    public void UpdateCraftPreview(Item_DataSO itemData)
+    {
+        itemToCraft = new Inventory_Item(itemData);
+
+        itemIcon.sprite = itemData.itemIcon;
+        itemName.text = itemData.itemName;
+        itemInfo.text = itemToCraft.GetItemInfo();
+
+        SetRarityText(itemData.itemRarity);
+
+        foreach (var slot in craftPreviewSlots)
+            slot.gameObject.SetActive(false);
+
+        for(int i = 0; i < itemToCraft.itemData.craftRecipe.Length; i++)
+        {
+            Inventory_Item requiredItem = itemToCraft.itemData.craftRecipe[i];
+            int availableAmount = storage.GetAvailableAmountOf(requiredItem.itemData);
+            int requiredAmount = requiredItem.stackSize;
+
+            craftPreviewSlots[i].gameObject.SetActive(true);
+            craftPreviewSlots[i].SetupPreviewSlot(requiredItem.itemData, availableAmount, requiredAmount);
+        }
+    }
+
     private void SetRarityText(Item_Rarity rarity)
     {
         var (color, text) = GetRarityColorAndText(rarity);
