@@ -14,9 +14,8 @@ public class Object_Banker : Object_NPC, IInteractable
 
     public void Interact()
     {
-        ui.storageUI.SetupStorage(inventory, storage);
+        ui.storageUI.SetupStorage(storage);
         ui.SetInsideShopTrigger(true); // Set trigger state
-        ui.ShowStorageInInventory(true);
         ui.OpenInventoryWithStorage();
     }
 

@@ -9,10 +9,10 @@ public class UI_Storage : MonoBehaviour
     [SerializeField] private UI_ItemSlotParent storageParent;
     public GameObject storageRoot;
 
-    public void SetupStorage(Inventory_Player inventory, Inventory_Storage storage)
+    public void SetupStorage(Inventory_Storage storage)
     {
-        this.inventory = inventory;
         this.storage = storage;
+        inventory = storage.playerInventory;
 
         // Subscribe to inventory changes
         storage.OnInventoryChange += UpdateUI;

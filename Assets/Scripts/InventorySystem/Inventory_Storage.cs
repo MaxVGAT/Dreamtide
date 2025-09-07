@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Inventory_Storage : Inventory_Base
 {
-    private Inventory_Player playerInventory;
+    public Inventory_Player playerInventory {  get; private set; }
 
     public int GetAvailableAmountOf(Item_DataSO requiredItem)
     {

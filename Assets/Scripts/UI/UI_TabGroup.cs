@@ -68,10 +68,12 @@ public class UI_TabGroup : MonoBehaviour
         if (ui != null && index != 0) // Assuming inventory tab is at index 0
         {
             ui.ShowStorageInInventory(false);
+            ui.ShowCraftInInventory(false);
         }
         else if (ui != null && index == 0)
         {
             ui.ShowStorageInInventory(ui.IsInsideShopTrigger()); // Show storage only if in trigger
+            ui.ShowCraftInInventory(ui.IsInsideCraftTrigger());
         }
 
         for (int i = 0; i < objectsToSwap.Count; i++)
