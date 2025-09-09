@@ -17,7 +17,7 @@ MonoBehaviour:
   itemRarity: 5
   itemType: 1
   maxStackSize: 1
-  itemEFfect: {fileID: 11400000, guid: 4f6dcf17ffb08f840b1c7e51ef6e1fd9, type: 2}
+  itemEffect: {fileID: 11400000, guid: 4f6dcf17ffb08f840b1c7e51ef6e1fd9, type: 2}
   craftRecipe:
   - itemData: {fileID: 11400000, guid: afb27b2a6e079554caef6133700dc9a4, type: 2}
     stackSize: 3

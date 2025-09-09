@@ -18,7 +18,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
     // �_�u���N���b�N�p
     protected float lastClickTime;
-    protected const float DoubleClickThreshold = 0.3f; // �_�u���N���b�N�ƔF������b��
+    protected const float DoubleClickThreshold = 0.2f; // �_�u���N���b�N�ƔF������b��
 
     protected void Awake()
     {
@@ -30,28 +30,20 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     // �X���b�g�N���b�N��
     public virtual void OnPointerDown(PointerEventData eventData)
     {
-        // �X���b�g����A�܂��̓}�e���A���͏������Ȃ�
+        // �X���b�g����A�܂��̓}�e���A���͏������Ȃ�
         if (itemInSlot == null || itemInSlot.itemData.itemType == Item_Type.Material)
             return;
-
-        
 
         // �_�u���N���b�N����
         if (Time.time - lastClickTime < DoubleClickThreshold)
         {
-            if (itemInSlot.itemData.itemType == Item_Type.Consumables)
-            {
-                if (itemInSlot.itemEffect.CanBeUsed() == false)
-                    return;
-
-                inventory.TryUseItem(itemInSlot);
-            }
-            else
-                inventory.TryEquipItem(itemInSlot);
-                lastClickTime = 0;
+            inventory.TryUseItem(itemInSlot);
+            lastClickTime = 0;
         }
         else
+        {
             lastClickTime = Time.time;
+        }
 
         if (itemInSlot == null)
             ui.itemTooltip.ShowToolTip(false, null);

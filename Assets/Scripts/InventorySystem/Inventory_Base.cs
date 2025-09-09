@@ -39,23 +39,6 @@ public class Inventory_Base : MonoBehaviour
         return null;
     }
 
-    public void TryUseItem(Inventory_Item itemToUse)
-    {
-        Inventory_Item consumable = itemList.Find(item => item == itemToUse);
-
-        if (consumable == null)
-            return;
-
-        consumable.itemEffect.ExecuteEffect();
-
-        if (consumable.stackSize > 1)
-            consumable.RemoveStack();
-        else
-            RemoveOneItem(consumable);
-
-        OnInventoryChange?.Invoke();
-    }
-
     // �A�C�e����ǉ�����
     public void AddItem(Inventory_Item itemToAdd)
     {

@@ -20,7 +20,7 @@ public class Inventory_Item
         this.itemData = itemData;
 
         modifiers = EquipmentData()?.modifiers; // �����f�[�^������ΏC���q��擾
-        itemEffect = itemData.itemEFfect;
+        itemEffect = itemData.itemEffect;
 
         itemID = itemData.itemName + " - " + Guid.NewGuid(); // ���j�[�NID����
     }
@@ -72,7 +72,7 @@ public class Inventory_Item
             return "クラフティング専用なリソース。";
 
         if (itemData.itemType == Item_Type.Consumables)
-            return itemData.itemEFfect.effectDescription;
+            return itemData.itemEffect.effectDescription;
 
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("");

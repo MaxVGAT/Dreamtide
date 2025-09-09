@@ -10,7 +10,7 @@ public class Item_DataSO : ScriptableObject
     public int maxStackSize = 1;
 
     [Header("Item effect")]
-    public Item_EffectDataSO itemEFfect;
+    public Item_EffectDataSO itemEffect;
 
     [Header("Craft Details")]
     public Inventory_Item[] craftRecipe;

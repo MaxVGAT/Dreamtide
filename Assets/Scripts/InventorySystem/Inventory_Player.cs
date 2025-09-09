@@ -16,10 +16,24 @@ public class Inventory_Player : Inventory_Base
     // �A�C�e���𑕔����悤�Ƃ���
     public void TryEquipItem(Inventory_Item item)
     {
-        Inventory_Item inventoryItem = FindItem(item.itemData); // �C���x���g����̃A�C�e���擾
+
+        // --- Handle consumables first ---
+        if (item.itemData.itemType == Item_Type.Consumables)
+        {
+            UseConsumable(item); // executes effect and reduces stack
+            return; // stop here, do NOT touch equip slots
+        }
+
+        Inventory_Item inventoryItem = FindItem(item.itemData);
         List<Inventory_EquipmentSlot> matchingSlots = equipList.FindAll(slot => slot.slotType == item.itemData.itemType);
 
-        // �󂫃X���b�g��T���đ���
+        // Add this check for consumables or items with no matching slots
+        if (matchingSlots.Count == 0)
+        {
+            return;
+        }
+
+        // Rest of your existing code...
         foreach (var slot in matchingSlots)
         {
             if (slot.HasItem() == false)
@@ -29,12 +43,29 @@ public class Inventory_Player : Inventory_Base
             }
         }
 
-        // �󂫂��Ȃ���΍ŏ��̃X���b�g�̃A�C�e���Ɠ���ւ�
-        var slotToReplace = matchingSlots[0];
+        var slotToReplace = matchingSlots[0]; // This line won't crash now
         var itemToUnequip = slotToReplace.equippedItem;
-
         UnequipItem(itemToUnequip, slotToReplace != null);
         EquipItem(inventoryItem, slotToReplace);
+    }
+
+    public void TryUseItem(Inventory_Item item)
+    {
+        Inventory_Item inventoryItem = FindItem(item.itemData);
+        if (inventoryItem == null)
+            return;
+
+        // Check if it has an effect that can be used (consumable)
+        if (inventoryItem.itemEffect != null && inventoryItem.itemEffect.CanBeUsed())
+            UseConsumable(inventoryItem);
+        else
+            TryEquipItem(item);
+    }
+
+    private void UseConsumable(Inventory_Item consumable)
+    {
+        consumable.itemEffect.ExecuteEffect();
+        RemoveOneItem(consumable);
     }
 
     // �w��X���b�g�ɃA�C�e���𑕔�

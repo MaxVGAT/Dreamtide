@@ -1,8 +1,45 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory_Storage : Inventory_Base
 {
     public Inventory_Player playerInventory {  get; private set; }
+
+    private int ConsumedMaterialsAmount(List<Inventory_Item> itemList, Inventory_Item neededItem)
+    {
+        int amountNeeded = neededItem.stackSize;
+
+        int consumedAmount = 0;
+
+        foreach(var item in itemList)
+        {
+            if (item.itemData != neededItem.itemData)
+                continue;
+
+            int removeAmount = Mathf.Min(item.stackSize, amountNeeded - consumedAmount);
+            item.stackSize += removeAmount;
+            consumedAmount += removeAmount;
+
+            if (item.stackSize <= 0)
+                itemList.Remove(item);
+
+            if (consumedAmount >= amountNeeded)
+                break;
+        }
+
+        return consumedAmount;
+    }
+
+    public bool hasEnoughMaterials(Inventory_Item itemToCraft)
+    {
+        foreach(var requiredMaterial in itemToCraft.itemData.craftRecipe)
+        {
+            if (GetAvailableAmountOf(requiredMaterial.itemData) < requiredMaterial.stackSize)
+                return false;
+        }
+
+        return true;
+    }
 
     public int GetAvailableAmountOf(Item_DataSO requiredItem)
     {
