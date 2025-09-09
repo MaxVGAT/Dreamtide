@@ -7,7 +7,12 @@ public class Inventory_Merchant : Inventory_Base
 
     [SerializeField] private ItemListDataSO shopData;
     [SerializeField] private int minItemsAmount = 4;
-    [SerializeField] private int maxItemsAmount = 10;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        FillShopList();
+    }
 
     public void FillShopList()
     {
@@ -25,8 +30,22 @@ public class Inventory_Merchant : Inventory_Base
             possibleItems.Add(itemToAdd);
         }
 
-        int randomItemAmount = Random.Range(minItemsAmount, maxItemsAmount + 1);
+        int randomItemAmount = Random.Range(minItemsAmount, maxInventorySize + 1);
         int finalAmount = Mathf.Clamp(randomItemAmount, 1, possibleItems.Count);
+
+        for(int i = 0; i < finalAmount; i++)
+        {
+            var randomIndex = Random.Range(0, possibleItems.Count);
+            var item = possibleItems[randomIndex];
+
+            if (CanAddItem(item))
+            {
+                possibleItems.Remove(item);
+                AddItem(item);
+            }
+        }
+
+        TriggerUpdateUI();
     }
 
     public void SetInventory(Inventory_Player inventory) => this.inventory = inventory;

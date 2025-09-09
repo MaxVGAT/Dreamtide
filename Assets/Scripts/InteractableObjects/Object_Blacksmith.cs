@@ -19,6 +19,7 @@ public class Object_Blacksmith : Object_NPC, IInteractable
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        
         base.OnTriggerEnter2D(collision);
         inventory = player.GetComponent<Inventory_Player>();
         storage.SetInventory(inventory);

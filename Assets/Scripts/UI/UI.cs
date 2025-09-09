@@ -122,7 +122,7 @@ public class UI : MonoBehaviour
 
     // Merchant Shop ---
 
-    public void OpenInventoryWithShop()
+    public void OpenInventoryWithMerchant()
     {
         OpenMenuIfClosed();
         ToggleNPCType(merchant, true);
