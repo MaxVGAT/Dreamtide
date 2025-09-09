@@ -5,6 +5,19 @@ public class Inventory_Storage : Inventory_Base
 {
     public Inventory_Player playerInventory {  get; private set; }
 
+    public void ConsumeMaterials(Inventory_Item itemToCraft)
+    {
+        foreach(var requiredItem in itemToCraft.itemData.craftRecipe)
+        {
+            int amountToConsume = requiredItem.stackSize;
+
+            amountToConsume -= ConsumedMaterialsAmount(playerInventory.itemList, requiredItem);
+
+            if (amountToConsume > 0)
+                amountToConsume -= ConsumedMaterialsAmount(itemList, requiredItem);
+        }
+    }
+
     private int ConsumedMaterialsAmount(List<Inventory_Item> itemList, Inventory_Item neededItem)
     {
         int amountNeeded = neededItem.stackSize;
@@ -17,7 +30,7 @@ public class Inventory_Storage : Inventory_Base
                 continue;
 
             int removeAmount = Mathf.Min(item.stackSize, amountNeeded - consumedAmount);
-            item.stackSize += removeAmount;
+            item.stackSize -= removeAmount;
             consumedAmount += removeAmount;
 
             if (item.stackSize <= 0)

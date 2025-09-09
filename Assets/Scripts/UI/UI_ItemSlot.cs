@@ -75,7 +75,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         if (itemStackSize != null)
         {
             itemStackSize.text = item.stackSize > 1 ? item.stackSize.ToString() : " ";
-            itemStackSize.color = item.stackSize < itemInSlot.itemData.maxStackSize ? itemStackSize.color : Color.yellow;
+            itemStackSize.color = item.stackSize < itemInSlot.itemData.maxStackSize ? Color.white : Color.yellow;
         }
     }
 

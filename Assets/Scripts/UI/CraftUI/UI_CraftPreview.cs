@@ -10,6 +10,7 @@ public class UI_CraftPreview : MonoBehaviour
 
     [Header("Item Preview Setup")]
     [SerializeField] private Image itemIcon;
+    [SerializeField] private TextMeshProUGUI buttonText;
     [SerializeField] private TextMeshProUGUI itemName;
     [SerializeField] private TextMeshProUGUI itemInfo;
     [SerializeField] private TextMeshProUGUI itemRarity;
@@ -22,6 +23,9 @@ public class UI_CraftPreview : MonoBehaviour
 
         foreach(var slot in craftPreviewSlots)
             slot.gameObject.SetActive(false);
+
+        if (itemToCraft == null)
+            buttonText.text = "なし";
     }
 
     public void UpdateCraftPreview(Item_DataSO itemData)
@@ -31,13 +35,19 @@ public class UI_CraftPreview : MonoBehaviour
         itemIcon.sprite = itemData.itemIcon;
         itemName.text = itemData.itemName;
         itemInfo.text = itemToCraft.GetItemInfo();
-
         SetRarityText(itemData.itemRarity);
+        UpdateCraftPreviewSlots();
+    }
+
+    private void UpdateCraftPreviewSlots()
+    {
+        if (itemToCraft != null)
+            buttonText.text = "クラフト";
 
         foreach (var slot in craftPreviewSlots)
             slot.gameObject.SetActive(false);
 
-        for(int i = 0; i < itemToCraft.itemData.craftRecipe.Length; i++)
+        for (int i = 0; i < itemToCraft.itemData.craftRecipe.Length; i++)
         {
             Inventory_Item requiredItem = itemToCraft.itemData.craftRecipe[i];
             int availableAmount = storage.GetAvailableAmountOf(requiredItem.itemData);
@@ -46,6 +56,17 @@ public class UI_CraftPreview : MonoBehaviour
             craftPreviewSlots[i].gameObject.SetActive(true);
             craftPreviewSlots[i].SetupPreviewSlot(requiredItem.itemData, availableAmount, requiredAmount);
         }
+    }
+
+    public void ConfirmCraft()
+    {
+        if(storage.hasEnoughMaterials(itemToCraft) && storage.playerInventory.CanAddItem(itemToCraft))
+        {
+            storage.ConsumeMaterials(itemToCraft);
+            storage.playerInventory.AddItem(itemToCraft);
+        }
+
+        UpdateCraftPreviewSlots();
     }
 
     private void SetRarityText(Item_Rarity rarity)
@@ -67,28 +88,6 @@ public class UI_CraftPreview : MonoBehaviour
             case Item_Rarity.Legendary: return (new Color(1f, 0.5f, 0f), "レジェンダリー");
             case Item_Rarity.Unique: return (new Color(0, 1f, 0.73f), "ユニック");
             default: return (Color.white, "不明");
-        }
-    }
-
-    // アイテム種別の日本語表記
-    private string SetItemTypeJP(Item_Type type)
-    {
-        switch (type)
-        {
-            case Item_Type.Helmet: return "ヘルメット";
-            case Item_Type.Shoulders: return "ショルダー";
-            case Item_Type.Chest: return "チェスト";
-            case Item_Type.Pants: return "ズボン";
-            case Item_Type.Cape: return "ケープ";
-            case Item_Type.Bracers: return "ブレイサー";
-            case Item_Type.Gloves: return "グローブ";
-            case Item_Type.Boots: return "ブーツ";
-            case Item_Type.Weapon: return "ウェポン";
-            case Item_Type.Ring: return "リング";
-            case Item_Type.Rune: return "ルーン";
-            case Item_Type.Material: return "マテリアル";
-            case Item_Type.Consumables: return "コンシュマブル";
-            default: return null;
         }
     }
 }
