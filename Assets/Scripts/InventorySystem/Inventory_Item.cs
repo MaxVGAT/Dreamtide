@@ -14,10 +14,15 @@ public class Inventory_Item
     public ItemModifier[] modifiers { get; private set; } // �������ʂ̏C���q
     public Item_EffectDataSO itemEffect;
 
+    public int buyPrice { get; private set; }
+    public float sellPrice { get; private set; }
+
     // �R���X�g���N�^�FScriptableObject���琶��
     public Inventory_Item(Item_DataSO itemData)
     {
         this.itemData = itemData;
+        buyPrice = itemData.itemPrice;
+        sellPrice = itemData.itemPrice * 0.35f;
 
         modifiers = EquipmentData()?.modifiers; // �����f�[�^������ΏC���q��擾
         itemEffect = itemData.itemEffect;

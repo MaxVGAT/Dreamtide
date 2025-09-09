@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.TerrainTools;
 using UnityEngine;
 
 public class UI_TabGroup : MonoBehaviour
@@ -54,34 +55,35 @@ public class UI_TabGroup : MonoBehaviour
         ResetTabs();
         button.background.sprite = tabActive;
 
-        int index;
-        if (button.TryGetComponent<UI_TabButton>(out var tabButton) && tabButton.tabIndex >= 0)
+        // Determine tab index
+        int index = (button.TryGetComponent<UI_TabButton>(out var tabButton) && tabButton.tabIndex >= 0)
+            ? tabButton.tabIndex
+            : tabButtons.IndexOf(button);
+
+        if (ui != null)
         {
-            index = tabButton.tabIndex;
-        }
-        else
-        {
-            index = tabButtons.IndexOf(button);
+            // Inventory tab is index 0
+            if (index == 0)
+            {
+                // Let UIContext handle trigger checks internally
+                ui.ShowStorageInInventory(true);
+                ui.ShowCraftInInventory(true);
+            }
+            else
+            {
+                ui.ShowStorageInInventory(false);
+                ui.ShowCraftInInventory(false);
+            }
         }
 
-        // Hide storage unless selecting inventory tab (index 0) and inside shop trigger
-        if (ui != null && index != 0) // Assuming inventory tab is at index 0
-        {
-            ui.ShowStorageInInventory(false);
-            ui.ShowCraftInInventory(false);
-        }
-        else if (ui != null && index == 0)
-        {
-            ui.ShowStorageInInventory(ui.IsInsideShopTrigger()); // Show storage only if in trigger
-            ui.ShowCraftInInventory(ui.IsInsideCraftTrigger());
-        }
-
+        // Swap objects
         for (int i = 0; i < objectsToSwap.Count; i++)
         {
             bool shouldActivate = (i == index);
             objectsToSwap[i].SetActive(shouldActivate);
 
-            if (i == index && objectsToSwap[i].TryGetComponent<UI_Inventory>(out var inventory))
+            // Refresh inventory UI if needed
+            if (shouldActivate && objectsToSwap[i].TryGetComponent<UI_Inventory>(out var inventory))
             {
                 inventory.RefreshInventoryUI();
             }

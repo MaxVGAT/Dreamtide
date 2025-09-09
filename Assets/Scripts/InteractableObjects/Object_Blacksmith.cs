@@ -13,9 +13,8 @@ public class Object_Blacksmith : Object_NPC, IInteractable
 
     public void Interact()
     {
-        ui.craftUI.SetupCraftUI(storage);
-        ui.SetInsideCraftTrigger(true); // Set trigger state
-        ui.OpenInventoryWithCraft();
+        ui.SetInsideCraftTrigger(true);  // Enable craft trigger
+        ui.OpenInventoryWithCraft();      // Opens the craft panel automatically
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

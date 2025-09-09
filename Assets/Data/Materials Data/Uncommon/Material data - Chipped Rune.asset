@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80600184fa92d5e44a37200b5e7bdac7, type: 3}
   m_Name: Material data - Chipped Rune
   m_EditorClassIdentifier: 
-  itemName: "\u5C0F\u3055\u3044\u30EB\u30FC\u30F3"
+  itemName: "\u30EB\u30FC\u30F3(\u5C0F)"
   itemIcon: {fileID: 1064844156188985133, guid: da4e56069bebb884cbdbeb6103fd9eaf, type: 3}
   itemRarity: 1
   itemType: 0
