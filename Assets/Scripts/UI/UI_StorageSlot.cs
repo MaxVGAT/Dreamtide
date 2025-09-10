@@ -35,8 +35,7 @@ public class UI_StorageSlot : UI_ItemSlot
 
         if (timeSinceLastClick < DoubleClickThreshold)
         {
-            if (storage != null && uiStorage != null && uiStorage.storageRoot != null
-                && uiStorage.storageRoot.activeInHierarchy)
+            if (storage != null && uiStorage != null && ui != null && ui.IsStorageVisible())
             {
                 if (slotType == StorageSlotType.StorageSlot)
                     storage.FromStorageToPlayer(itemInSlot, transferAll);

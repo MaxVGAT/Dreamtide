@@ -13,15 +13,17 @@ public class UI_Storage : MonoBehaviour
     {
         this.storage = storage;
         inventory = storage.playerInventory;
+        Debug.Log("SetupStorage called with: " + storage);
 
         // Subscribe to inventory changes
         storage.OnInventoryChange += UpdateUI;
 
+        // Setup storage slots properly by type
+        SetupStorageSlots();
+
         // Update UI immediately
         UpdateUI();
 
-        // Setup storage slots properly by type
-        SetupStorageSlots();
     }
 
     private void SetupStorageSlots()
@@ -78,9 +80,6 @@ public class UI_Storage : MonoBehaviour
         {
             storageParent.UpdateSlots(storage.itemList);
         }
-
-        // Re-establish slot references after UI update
-        SetupStorageSlots();
     }
 
     // Clean up when storage UI is closed

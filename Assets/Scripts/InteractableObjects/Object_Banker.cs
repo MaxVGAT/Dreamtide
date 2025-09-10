@@ -14,17 +14,28 @@ public class Object_Banker : Object_NPC, IInteractable
 
     public void Interact()
     {
+        inventory = player.GetComponent<Inventory_Player>();
+        storage.SetInventory(inventory);
+
         ui.SetInsideShopTrigger(true); // Set trigger state
-        ui.OpenInventoryWithStorage();
+
+        if (!ui.IsMenuOpen())
+            ui.OpenInventoryWithStorage();
+        else
+            ui.ShowStorageInInventory(storage);
+
+        if(storage != null && ui.storageUI != null)
+            ui.storageUI.SetupStorage(storage);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
-        inventory = player.GetComponent<Inventory_Player>();
-        storage.SetInventory(inventory);
 
         ui.SetInsideShopTrigger(true); // Set trigger state when entering
+
+        if (ui.IsMenuOpen())
+            ui.ShowStorageInInventory(false);
     }
 
     protected override void OnTriggerExit2D(Collider2D collision)

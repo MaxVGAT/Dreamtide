@@ -38,6 +38,8 @@ public class UI : MonoBehaviour
         craftUI = GetComponentInChildren<UI_Craft>(true);
         tabGroup = GetComponentInChildren<UI_TabGroup>(true);
 
+        storageUI.storageRoot = storage.panel;
+
         if (storage.panel != null)
             storage.panel.SetActive(false);
 
@@ -51,7 +53,10 @@ public class UI : MonoBehaviour
     public void ToggleUI()
     {
         menuEnabled = !menuEnabled;
-        tabMenuRoot.SetActive(menuEnabled);
+
+        if (tabMenuRoot)   // null check + destroyed object check
+            tabMenuRoot.SetActive(menuEnabled);
+
 
         itemTooltip?.ShowToolTip(false, null, null);
 
