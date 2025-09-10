@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3610e90778134994d8dc4e90f1e15d41, type: 3}
   m_Name: Consumable data - Book of Fate
   m_EditorClassIdentifier: 
+  itemPrice: 100
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 5
+  craftRecipe: []
   itemName: "\u904B\u547D\u306E\u66F8"
   itemIcon: {fileID: 8901744300859924994, guid: 9c87bbd6fe6e03f4fbf087ba890b91f3, type: 3}
   itemRarity: 3
   itemType: 12
   maxStackSize: 1
   itemEffect: {fileID: 11400000, guid: 656eaa856ea459d438805195f5306952, type: 2}
-  craftRecipe: []

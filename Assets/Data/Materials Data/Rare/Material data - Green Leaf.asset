@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80600184fa92d5e44a37200b5e7bdac7, type: 3}
   m_Name: Material data - Green Leaf
   m_EditorClassIdentifier: 
+  itemPrice: 100
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 8
+  craftRecipe: []
   itemName: "\u7DD1\u306E\u8449"
   itemIcon: {fileID: -3819574676071802690, guid: a109999f0b7aaa44f8eca662fab6c98c, type: 3}
   itemRarity: 2
   itemType: 0
   maxStackSize: 20
-  itemEFfect: {fileID: 0}
-  craftRecipe: []
+  itemEffect: {fileID: 0}

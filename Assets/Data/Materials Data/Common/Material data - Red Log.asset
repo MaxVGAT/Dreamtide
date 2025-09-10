@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80600184fa92d5e44a37200b5e7bdac7, type: 3}
   m_Name: Material data - Red Log
   m_EditorClassIdentifier: 
+  itemPrice: 100
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 20
+  craftRecipe: []
   itemName: "\u8D64\u3044\u539F\u6728"
   itemIcon: {fileID: 6426458773663519365, guid: 9fc2d98ace387dd45acbd058ea28788d, type: 3}
   itemRarity: 0
   itemType: 0
   maxStackSize: 20
-  itemEFfect: {fileID: 0}
-  craftRecipe: []
+  itemEffect: {fileID: 0}

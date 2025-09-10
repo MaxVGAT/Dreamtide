@@ -12,4 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f003b42a4d38fbd48b3c52e16f1070a0, type: 3}
   m_Name: List of Items - Merchant's Items
   m_EditorClassIdentifier: 
-  itemList: []
+  itemList:
+  - {fileID: 11400000, guid: 779b307bc5f8e6a46bba6d4270673700, type: 2}
+  - {fileID: 11400000, guid: eac027fb638d76a46ba1ac09cc8d66cc, type: 2}
+  - {fileID: 11400000, guid: 48f09e0bebc762946889c0bc6cbc67b7, type: 2}
+  - {fileID: 11400000, guid: eb3dc88d60427384f9e9b81b7cdd8c96, type: 2}
+  - {fileID: 11400000, guid: 996c443ab81effc4d88834cc78aa4eb6, type: 2}
+  - {fileID: 11400000, guid: b0a11ea95b098d949bfb22e5f614545a, type: 2}
+  - {fileID: 11400000, guid: b11e709d882e35c4cb452d632c2439df, type: 2}
+  - {fileID: 11400000, guid: 56fa4b1808aa33747aaac66f4fa48e85, type: 2}
+  - {fileID: 11400000, guid: afb27b2a6e079554caef6133700dc9a4, type: 2}
+  - {fileID: 11400000, guid: 79ee74d5bd95dd44c9beabe3b6b341ab, type: 2}
+  - {fileID: 11400000, guid: 0af7bf1c39f54174d847f7080d2c84ff, type: 2}
+  - {fileID: 11400000, guid: a86e16d22684f234cad106d1641ab3df, type: 2}
+  - {fileID: 11400000, guid: ab369ad7a93da1343852f1c828f39dc9, type: 2}
+  - {fileID: 11400000, guid: f82f9201773614f4a9772447c0a1de3f, type: 2}
+  - {fileID: 11400000, guid: b33bcc0bcb00ec744babeaced267deb7, type: 2}
+  - {fileID: 11400000, guid: 35d91facad7c9ab47bd8a4e2d6db095b, type: 2}
+  - {fileID: 11400000, guid: db3cbc58ad4b4934497ad81a2afe0fee, type: 2}
+  - {fileID: 11400000, guid: e1ad3e910575c26439335ce4123455b9, type: 2}

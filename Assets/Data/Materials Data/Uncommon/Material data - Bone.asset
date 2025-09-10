@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80600184fa92d5e44a37200b5e7bdac7, type: 3}
   m_Name: Material data - Bone
   m_EditorClassIdentifier: 
+  itemPrice: 100
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 12
+  craftRecipe: []
   itemName: "\u9AA8"
   itemIcon: {fileID: 499630553362929208, guid: 5eaf1afd59965824bb5cbefe17c81ceb, type: 3}
   itemRarity: 1
   itemType: 0
   maxStackSize: 20
-  itemEFfect: {fileID: 0}
-  craftRecipe: []
+  itemEffect: {fileID: 0}

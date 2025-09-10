@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80600184fa92d5e44a37200b5e7bdac7, type: 3}
   m_Name: Material data - Leather
   m_EditorClassIdentifier: 
+  itemPrice: 100
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 20
+  craftRecipe: []
   itemName: "\u9769"
   itemIcon: {fileID: 4446923789081652509, guid: 90df25f1ddb10194fb73a2900fe9be9a, type: 3}
   itemRarity: 0
   itemType: 0
   maxStackSize: 20
-  itemEFfect: {fileID: 0}
-  craftRecipe: []
+  itemEffect: {fileID: 0}

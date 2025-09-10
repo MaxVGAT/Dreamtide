@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3610e90778134994d8dc4e90f1e15d41, type: 3}
   m_Name: Consumable data - Orb of Wrath
   m_EditorClassIdentifier: 
+  itemPrice: 2153
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 2
+  craftRecipe: []
   itemName: Orb of Wrath
   itemIcon: {fileID: 2498528736212369741, guid: 4a5ca9f2ee417744dbd492597787734a, type: 3}
   itemRarity: 2
   itemType: 12
   maxStackSize: 1
-  itemEFfect: {fileID: 11400000, guid: e4ee678c677c06a4e9b227b70bd1fd59, type: 2}
+  itemEffect: {fileID: 0}

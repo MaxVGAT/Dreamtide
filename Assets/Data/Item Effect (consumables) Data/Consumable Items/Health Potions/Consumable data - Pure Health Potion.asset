@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3610e90778134994d8dc4e90f1e15d41, type: 3}
   m_Name: Consumable data - Pure Health Potion
   m_EditorClassIdentifier: 
+  itemPrice: 100
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 2
+  craftRecipe: []
   itemName: "\u56DE\u5FA9\u30DD\u30FC\u30B7\u30E7\u30F3 - \u30D7\u30A2"
   itemIcon: {fileID: 1731602884146348310, guid: bf7bd7b4f240651438a79e5c22027723, type: 3}
   itemRarity: 3
   itemType: 12
   maxStackSize: 3
   itemEffect: {fileID: 11400000, guid: 994100c6ec961a545afcee9dad1a99c9, type: 2}
-  craftRecipe: []

@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80600184fa92d5e44a37200b5e7bdac7, type: 3}
   m_Name: Material data - Red Plank
   m_EditorClassIdentifier: 
+  itemPrice: 100
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 8
+  craftRecipe:
+  - itemData: {fileID: 11400000, guid: eac027fb638d76a46ba1ac09cc8d66cc, type: 2}
+    stackSize: 5
+    itemEffect: {fileID: 0}
   itemName: "\u8D64\u3044\u677F\u6750"
   itemIcon: {fileID: -8595107456017878941, guid: 5356a577cd2a37d44a25ada2fa04b020, type: 3}
   itemRarity: 2
   itemType: 0
   maxStackSize: 20
-  itemEFfect: {fileID: 0}
-  craftRecipe:
-  - itemData: {fileID: 11400000, guid: eac027fb638d76a46ba1ac09cc8d66cc, type: 2}
-    stackSize: 5
-    itemEffect: {fileID: 0}
+  itemEffect: {fileID: 0}

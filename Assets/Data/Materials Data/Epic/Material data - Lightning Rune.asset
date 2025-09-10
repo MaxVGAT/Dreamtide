@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80600184fa92d5e44a37200b5e7bdac7, type: 3}
   m_Name: Material data - Lightning Rune
   m_EditorClassIdentifier: 
+  itemPrice: 100
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 3
+  craftRecipe:
+  - itemData: {fileID: 11400000, guid: 79ee74d5bd95dd44c9beabe3b6b341ab, type: 2}
+    stackSize: 3
+    itemEffect: {fileID: 0}
   itemName: "\u96F7\u306E\u30EB\u30FC\u30F3"
   itemIcon: {fileID: 6189009698619981847, guid: 4f10d3a87414f5646bab7e0ad47ae8d5, type: 3}
   itemRarity: 3
   itemType: 0
   maxStackSize: 20
-  itemEFfect: {fileID: 0}
-  craftRecipe:
-  - itemData: {fileID: 11400000, guid: 79ee74d5bd95dd44c9beabe3b6b341ab, type: 2}
-    stackSize: 3
-    itemEffect: {fileID: 0}
+  itemEffect: {fileID: 0}
