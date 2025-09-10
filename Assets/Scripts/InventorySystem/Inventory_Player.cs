@@ -7,6 +7,8 @@ public class Inventory_Player : Inventory_Base
     private Entity_Player player; // �v���C���[�̃X�e�[�^�X�Q��
     public List<Inventory_EquipmentSlot> equipList; // �����X���b�g���X�g
 
+    public int gold = 10000;
+
     protected override void Awake()
     {
         base.Awake();

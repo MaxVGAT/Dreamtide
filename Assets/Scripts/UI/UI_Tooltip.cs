@@ -1,31 +1,34 @@
 using UnityEngine;
 
-// ƒc[ƒ‹ƒ`ƒbƒv•\¦—pƒNƒ‰ƒX
+// ï¿½cï¿½[ï¿½ï¿½ï¿½`ï¿½bï¿½vï¿½\ï¿½ï¿½ï¿½pï¿½Nï¿½ï¿½ï¿½X
 public class UI_Tooltip : MonoBehaviour
 {
     protected RectTransform rect;
-    [SerializeField] private Vector2 offset = new Vector2(300, 20); // ƒc[ƒ‹ƒ`ƒbƒv‚Ì•\¦ƒIƒtƒZƒbƒg
+    [SerializeField] private Vector2 offset = new Vector2(300, 20); // ï¿½cï¿½[ï¿½ï¿½ï¿½`ï¿½bï¿½vï¿½Ì•\ï¿½ï¿½ï¿½Iï¿½tï¿½Zï¿½bï¿½g
 
     protected virtual void Awake()
     {
         rect = GetComponent<RectTransform>();
-        // ‰ŠúˆÊ’u‚ğ‰æ–ÊŠO‚Éİ’è
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ê’uï¿½ï¿½ï¿½ÊŠOï¿½Éİ’ï¿½
         rect.position = new Vector2(9999, 9999);
     }
 
-    // ƒc[ƒ‹ƒ`ƒbƒv•\¦/”ñ•\¦
+    // ï¿½cï¿½[ï¿½ï¿½ï¿½`ï¿½bï¿½vï¿½\ï¿½ï¿½/ï¿½ï¿½\ï¿½ï¿½
     public virtual void ShowToolTip(bool show, RectTransform targetRect)
     {
+        if (rect == null)
+            return;
+
         if (!show)
         {
-            rect.position = new Vector2(9999, 9999); // ”ñ•\¦‚Í‰æ–ÊŠO‚Ö
+            rect.position = new Vector2(9999, 9999); // ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Í‰ï¿½ÊŠOï¿½ï¿½
             return;
         }
 
         UpdatePosition(targetRect);
     }
 
-    // ƒc[ƒ‹ƒ`ƒbƒv‚ÌˆÊ’uXV
+    // ï¿½cï¿½[ï¿½ï¿½ï¿½`ï¿½bï¿½vï¿½ÌˆÊ’uï¿½Xï¿½V
     private void UpdatePosition(RectTransform targetRect)
     {
         float screenCenterX = Screen.width / 2f;
@@ -34,7 +37,7 @@ public class UI_Tooltip : MonoBehaviour
 
         Vector2 targetPosition = targetRect.position;
 
-        // ‰æ–Ê‚Ì¶‰E‚ÅƒIƒtƒZƒbƒg”½“]
+        // ï¿½ï¿½Ê‚Ìï¿½ï¿½Eï¿½ÅƒIï¿½tï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½]
         targetPosition.x = targetPosition.x > screenCenterX
             ? targetPosition.x - offset.x
             : targetPosition.x + offset.x;
@@ -43,7 +46,7 @@ public class UI_Tooltip : MonoBehaviour
         float topY = targetPosition.y + verticalHalf;
         float bottomY = targetPosition.y - verticalHalf;
 
-        // ‰æ–Êã’[/‰º’[‚É‚Í‚İo‚³‚È‚¢‚æ‚¤‚É•â³
+        // ï¿½ï¿½Êï¿½[/ï¿½ï¿½ï¿½[ï¿½É‚Í‚İoï¿½ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½É•â³
         if (topY > screenTop)
             targetPosition.y = screenTop - verticalHalf - offset.y;
         else if (bottomY < screenBottom)
@@ -52,7 +55,7 @@ public class UI_Tooltip : MonoBehaviour
         rect.position = targetPosition;
     }
 
-    // •¶š—ñ‚ÉF•t‚¯
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉFï¿½tï¿½ï¿½
     protected string GetColoredText(string color, string text)
     {
         return $"<color={color}>{text}</color>";

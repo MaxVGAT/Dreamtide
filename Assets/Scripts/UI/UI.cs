@@ -24,6 +24,7 @@ public class UI : MonoBehaviour
     public UI_Storage storageUI { get; private set; }
     public UI_TabGroup tabGroup { get; private set; }
     public UI_Craft craftUI { get; private set; }
+    public UI_Merchant merchantUI { get; private set; }
 
     private bool menuEnabled;
 
@@ -36,6 +37,7 @@ public class UI : MonoBehaviour
         statTooltip = GetComponentInChildren<UI_StatTooltip>();
         storageUI = GetComponentInChildren<UI_Storage>(true);
         craftUI = GetComponentInChildren<UI_Craft>(true);
+        merchantUI = GetComponentInChildren<UI_Merchant>(true);
         tabGroup = GetComponentInChildren<UI_TabGroup>(true);
 
         storageUI.storageRoot = storage.panel;

@@ -16,6 +16,8 @@ public class Object_Merchant : Object_NPC, IInteractable
         inventory = player.GetComponent<Inventory_Player>();
         merchantInventory.SetInventory(inventory);
 
+        ui.merchantUI.SetupMerchantUI(merchantInventory, inventory);
+
         ui.SetInsideMerchantTrigger(true);
 
         if (!ui.IsMenuOpen())

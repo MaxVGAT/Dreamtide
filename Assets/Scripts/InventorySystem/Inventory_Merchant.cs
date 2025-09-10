@@ -14,6 +14,46 @@ public class Inventory_Merchant : Inventory_Base
         FillShopList();
     }
 
+    public void TryBuyItem(Inventory_Item itemToBuy, bool buyFullStack)
+    {
+        int amountToBuy = buyFullStack ? itemToBuy.stackSize : 1;
+
+        for(int i = 0; i < amountToBuy; i++)
+        {
+            if (inventory.gold < itemToBuy.buyPrice)
+                return;
+
+            if (inventory.CanAddItem(itemToBuy))
+            {
+                var itemToAdd = new Inventory_Item(itemToBuy.itemData);
+                inventory.AddItem(itemToAdd);
+                inventory.gold -= itemToBuy.buyPrice;
+                RemoveOneItem(itemToBuy);
+            }
+            else
+                break;
+
+            
+        }
+
+        TriggerUpdateUI();
+    }
+
+    public void TrySellItem(Inventory_Item itemToSell, bool sellFullStack)
+    {
+        int amountToSell = sellFullStack ? itemToSell.stackSize : 1;
+
+        for(int i = 0; i < amountToSell; i++)
+        {
+            int sellPrice = Mathf.FloorToInt(itemToSell.sellPrice);
+
+            inventory.gold += sellPrice;
+            inventory.RemoveOneItem(itemToSell);
+        }
+
+        TriggerUpdateUI();
+    }
+
     public void FillShopList()
     {
         itemList.Clear();

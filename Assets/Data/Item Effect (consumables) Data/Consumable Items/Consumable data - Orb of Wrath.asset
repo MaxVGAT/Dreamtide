@@ -21,4 +21,4 @@ MonoBehaviour:
   itemRarity: 2
   itemType: 12
   maxStackSize: 1
-  itemEffect: {fileID: 0}
+  itemEffect: {fileID: 11400000, guid: e4ee678c677c06a4e9b227b70bd1fd59, type: 2}
