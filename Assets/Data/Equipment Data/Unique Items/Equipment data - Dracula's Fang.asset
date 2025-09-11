@@ -28,6 +28,9 @@ MonoBehaviour:
   - itemData: {fileID: 11400000, guid: 56fa4b1808aa33747aaac66f4fa48e85, type: 2}
     stackSize: 5
     itemEffect: {fileID: 0}
+  itemRarityScale: 960
+  dropChance: 4.1
+  maxDropChance: 65
   itemName: "\u30D6\u30E9\u30C3\u30C9\u30D5\u30A1\u30F3\u30B0"
   itemIcon: {fileID: -7313954986309091758, guid: 3c13e1468f70d674c933fa7fe77f52b3, type: 3}
   itemRarity: 5

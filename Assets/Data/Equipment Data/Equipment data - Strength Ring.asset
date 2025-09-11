@@ -16,6 +16,9 @@ MonoBehaviour:
   minStackSizeAtShop: 1
   maxStackSizeAtShop: 1
   craftRecipe: []
+  itemRarityScale: 431
+  dropChance: 57
+  maxDropChance: 65
   itemName: Strength Ring
   itemIcon: {fileID: 74012778399228409, guid: 781c8573924832849beb6a5bee5f9534, type: 3}
   itemRarity: 3

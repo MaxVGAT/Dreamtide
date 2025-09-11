@@ -16,6 +16,9 @@ MonoBehaviour:
   minStackSizeAtShop: 1
   maxStackSizeAtShop: 2
   craftRecipe: []
+  itemRarityScale: 674
+  dropChance: 32.7
+  maxDropChance: 65
   itemName: Orb of Wrath
   itemIcon: {fileID: 2498528736212369741, guid: 4a5ca9f2ee417744dbd492597787734a, type: 3}
   itemRarity: 2

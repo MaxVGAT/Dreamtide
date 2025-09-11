@@ -16,6 +16,9 @@ MonoBehaviour:
   minStackSizeAtShop: 1
   maxStackSizeAtShop: 2
   craftRecipe: []
+  itemRarityScale: 910
+  dropChance: 9.1
+  maxDropChance: 65
   itemName: Knowledge Shard
   itemIcon: {fileID: -471410683480259835, guid: 99ea96a51c85951408eae8872b7d5ffb, type: 3}
   itemRarity: 3

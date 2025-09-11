@@ -16,6 +16,9 @@ MonoBehaviour:
   minStackSizeAtShop: 1
   maxStackSizeAtShop: 5
   craftRecipe: []
+  itemRarityScale: 847
+  dropChance: 15.4
+  maxDropChance: 65
   itemName: "\u904B\u547D\u306E\u66F8"
   itemIcon: {fileID: 8901744300859924994, guid: 9c87bbd6fe6e03f4fbf087ba890b91f3, type: 3}
   itemRarity: 3

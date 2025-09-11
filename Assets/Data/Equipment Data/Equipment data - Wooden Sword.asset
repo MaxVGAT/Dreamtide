@@ -12,12 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f4d67da48b145f4f90989533709244c, type: 3}
   m_Name: Equipment data - Wooden Sword
   m_EditorClassIdentifier: 
-  itemName: "\u30E2\u30C3\u30B1\u30F3"
-  itemIcon: {fileID: -3589749343192059577, guid: 3c13e1468f70d674c933fa7fe77f52b3, type: 3}
-  itemRarity: 0
-  itemType: 1
-  maxStackSize: 1
-  itemEFfect: {fileID: 0}
+  itemPrice: 100
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 1
   craftRecipe:
   - itemData: {fileID: 11400000, guid: 779b307bc5f8e6a46bba6d4270673700, type: 2}
     stackSize: 1
@@ -25,6 +22,15 @@ MonoBehaviour:
   - itemData: {fileID: 11400000, guid: eac027fb638d76a46ba1ac09cc8d66cc, type: 2}
     stackSize: 1
     itemEffect: {fileID: 0}
+  itemRarityScale: 292
+  dropChance: 65
+  maxDropChance: 65
+  itemName: "\u30E2\u30C3\u30B1\u30F3"
+  itemIcon: {fileID: -3589749343192059577, guid: 3c13e1468f70d674c933fa7fe77f52b3, type: 3}
+  itemRarity: 0
+  itemType: 1
+  maxStackSize: 1
+  itemEffect: {fileID: 0}
   modifiers:
   - statType: 4
     value: 27
