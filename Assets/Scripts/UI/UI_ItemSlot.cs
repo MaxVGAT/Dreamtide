@@ -80,12 +80,17 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     }
 
     // �}�E�X�I�[�o�[�Ńc�[���`�b�v�\��
-    public void OnPointerEnter(PointerEventData eventData)
+    public virtual void OnPointerEnter(PointerEventData eventData)
     {
         if (itemInSlot == null)
             return;
 
-        ui.itemTooltip.ShowToolTip(true, rect, itemInSlot);
+        bool isMerchantOpen = ui.IsMerchantVisible();
+
+        if (isMerchantOpen)
+            ui.itemTooltip.ShowToolTip(true, rect, itemInSlot, true, true);
+        else
+            ui.itemTooltip.ShowToolTip(true, rect, itemInSlot);
     }
 
     // �}�E�X�����ꂽ��c�[���`�b�v��\��

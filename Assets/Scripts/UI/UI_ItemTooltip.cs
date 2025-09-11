@@ -8,30 +8,46 @@ public class UI_ItemTooltip : UI_Tooltip
     [SerializeField] private TextMeshProUGUI itemRarity; // レアリティ
     [SerializeField] private TextMeshProUGUI itemType;   // アイテム種別
     [SerializeField] private TextMeshProUGUI itemInfo;   // ステータス詳細
+    [SerializeField] private TextMeshProUGUI itemPrice;
+    [SerializeField] private Transform merchantInfo;
 
     // ツールチップの表示・非表示
-    public void ShowToolTip(bool show, RectTransform targetRect, Inventory_Item itemToShow)
+    public void ShowToolTip(bool show, RectTransform targetRect, Inventory_Item itemToShow, bool buyPrice = false, bool showMerchantInfo = false)
     {
-        // if no item, never show tooltip
-        if (itemToShow == null)
-            show = false;
-
-        base.ShowToolTip(show, targetRect);
-
-        if (!show)
+        // Early exit if no item or not showing
+        if (!show || itemToShow == null)
         {
-            itemName.text = "";
-            itemType.text = "";
-            itemInfo.text = "";
-            itemRarity.text = "";
+            base.ShowToolTip(false, targetRect);
+            if (itemName != null) itemName.text = "";
+            if (itemType != null) itemType.text = "";
+            if (itemInfo != null) itemInfo.text = "";
+            if (itemRarity != null) itemRarity.text = "";
+            if (itemPrice != null) itemPrice.text = "";
+            if (merchantInfo != null) merchantInfo.gameObject.SetActive(false);
             return;
         }
 
-        // rest of your code unchanged
-        itemName.text = itemToShow.itemData.itemName;
-        itemType.text = SetItemTypeJP(itemToShow.itemData.itemType);
-        itemInfo.text = itemToShow.GetItemInfo();
+        base.ShowToolTip(true, targetRect);
+
+        if (merchantInfo != null)
+            merchantInfo.gameObject.SetActive(showMerchantInfo);
+
+        int price = showMerchantInfo ? itemToShow.buyPrice : Mathf.FloorToInt(itemToShow.sellPrice);
+        int totalPrice = price * itemToShow.stackSize;
+        string fullStackPrice = $"値段: {price}x{itemToShow.stackSize} - {totalPrice}G";
+        string singleStackPrice = $"値段: {price}G";
+
+        if (itemName != null) itemName.text = itemToShow?.itemData?.itemName ?? "";
+        if (itemType != null) itemType.text = SetItemTypeJP(itemToShow.itemData.itemType);
+        if (itemInfo != null) itemInfo.text = itemToShow.GetItemInfo();
+        if (itemPrice != null) itemPrice.text = itemToShow.stackSize > 1 ? fullStackPrice : singleStackPrice;
         SetRarityText(itemToShow.itemData.itemRarity);
+    }
+
+
+    private void SetPriceText()
+    {
+        Debug.Log("Hello");
     }
 
     // レアリティ表示を更新

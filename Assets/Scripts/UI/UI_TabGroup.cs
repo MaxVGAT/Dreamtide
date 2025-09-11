@@ -68,11 +68,13 @@ public class UI_TabGroup : MonoBehaviour
                 // Let UIContext handle trigger checks internally
                 ui.ShowStorageInInventory(true);
                 ui.ShowCraftInInventory(true);
+                ui.ShowMerchantInInventory(true);
             }
             else
             {
                 ui.ShowStorageInInventory(false);
                 ui.ShowCraftInInventory(false);
+                ui.ShowMerchantInInventory(false);
             }
         }
 
