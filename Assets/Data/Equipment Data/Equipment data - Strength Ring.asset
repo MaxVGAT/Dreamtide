@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f4d67da48b145f4f90989533709244c, type: 3}
   m_Name: Equipment data - Strength Ring
   m_EditorClassIdentifier: 
+  itemPrice: 5347
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 1
+  craftRecipe: []
   itemName: Strength Ring
   itemIcon: {fileID: 74012778399228409, guid: 781c8573924832849beb6a5bee5f9534, type: 3}
   itemRarity: 3
   itemType: 10
   maxStackSize: 1
+  itemEffect: {fileID: 0}
   modifiers:
   - statType: 2
     value: 10

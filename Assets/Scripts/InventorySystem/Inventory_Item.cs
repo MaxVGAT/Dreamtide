@@ -1,6 +1,5 @@
 using System;
 using System.Text;
-using UnityEngine;
 
 // �C���x���g����̃A�C�e���f�[�^�Ǘ��N���X
 [Serializable]
@@ -50,8 +49,8 @@ public class Inventory_Item
         }
     }
 
-    public void AddItemEffect(Entity_Player player) => itemEffect?.Subscribe (player);
-    public void RemoveItemEffect() => itemEffect?.Unsubscribe ();
+    public void AddItemEffect(Entity_Player player) => itemEffect?.Subscribe(player);
+    public void RemoveItemEffect() => itemEffect?.Unsubscribe();
 
     // Equipment_DataSO�ւ̃L���X�g�i�����A�C�e���̏ꍇ�j
     private Equipment_DataSO EquipmentData()
@@ -73,13 +72,27 @@ public class Inventory_Item
 
     public string GetItemInfo()
     {
+        StringBuilder sb = new StringBuilder();
+
+
         if (itemData.itemType == Item_Type.Material)
-            return "クラフティング専用なリソース。";
+        {
+            sb.AppendLine("");
+            sb.AppendLine("クラフティング専用なリソース。");
+            sb.AppendLine();
+            sb.AppendLine();
+            return sb.ToString();
+        }
 
         if (itemData.itemType == Item_Type.Consumables)
-            return itemData.itemEffect.effectDescription;
+        {
+            sb.AppendLine("");
+            sb.AppendLine(itemEffect.effectDescription);
+            sb.AppendLine();
+            sb.AppendLine();
+            return sb.ToString();
+        }
 
-        StringBuilder sb = new StringBuilder();
         sb.AppendLine("");
 
         foreach (var mod in modifiers)
@@ -92,7 +105,7 @@ public class Inventory_Item
         if (itemEffect != null)
         {
             sb.AppendLine("");
-            sb.AppendLine("Unique Effect: ");
+            sb.AppendLine("専用効果: ");
             sb.AppendLine(itemEffect.effectDescription);
         }
 
@@ -146,5 +159,5 @@ public class Inventory_Item
         }
     }
 
-    
+
 }

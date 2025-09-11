@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f4d67da48b145f4f90989533709244c, type: 3}
   m_Name: Equipment data - Winter's Touch
   m_EditorClassIdentifier: 
+  itemPrice: 4861
+  minStackSizeAtShop: 1
+  maxStackSizeAtShop: 1
+  craftRecipe: []
   itemName: Winter's Touch
   itemIcon: {fileID: -4831000436996868193, guid: e26cd9bf73530ae4aa53677ff52c093d, type: 3}
   itemRarity: 5
   itemType: 4
   maxStackSize: 1
   itemEffect: {fileID: 11400000, guid: 5c6e82cf8bf8e5642b7c30ff70bdb894, type: 2}
-  craftRecipe: []
   modifiers:
   - statType: 4
     value: 30
