@@ -3,7 +3,19 @@ using UnityEngine;
 
 public class UI_ItemSlotParent : MonoBehaviour
 {
+    [SerializeField] private UI ui;                       // assign in inspector
+    [SerializeField] private Inventory_Player inventory;
+
     private UI_ItemSlot[] slots;
+
+    private void Awake()
+    {
+        slots = GetComponentsInChildren<UI_ItemSlot>();
+        foreach (var slot in slots)
+        {
+            slot.Setup(ui, inventory);
+        }
+    }
 
     public void UpdateSlots(List<Inventory_Item> itemList)
     {

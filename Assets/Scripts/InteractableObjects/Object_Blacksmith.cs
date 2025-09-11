@@ -12,20 +12,23 @@ public class Object_Blacksmith : Object_NPC, IInteractable
     }
 
     public void Interact()
+{
+    inventory = player.GetComponent<Inventory_Player>();
+    storage.SetInventory(inventory);
+
+    ui.SetInsideCraftTrigger(true);  // Enable craft trigger
+
+    if (!ui.IsMenuOpen())
     {
-        inventory = player.GetComponent<Inventory_Player>();
-        storage.SetInventory(inventory);
-
-        ui.SetInsideCraftTrigger(true);  // Enable craft trigger
-
-        if (!ui.IsMenuOpen())
-            ui.OpenInventoryWithCraft();      // Opens the craft panel automatically
-        else
-            ui.ShowCraftInInventory(true);
-
-        if(storage != null && ui.craftUI != null)
-            ui.craftUI.SetupCraftUI(storage);
+        ui.OpenInventoryWithCraft();      // Opens the craft panel automatically
+        ui.craftUI.SetupCraftUI(storage); // Only setup once on first open
     }
+    else if (!ui.IsCraftVisible())
+    {
+        ui.ShowCraftInInventory(true);    // Just show the panel, no setup
+    }
+    // If already open and visible, do NOTHING
+}
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -41,10 +44,12 @@ public class Object_Blacksmith : Object_NPC, IInteractable
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
-        ui.SetInsideCraftTrigger(false); // Clear trigger state and hide storage
+        ui.SetInsideCraftTrigger(false); // Clear trigger state and hide panel
+
         if (ui.IsMenuOpen())
-        {
-            ui.ToggleUI(); // Close menu when exiting trigger
-        }
+            ui.ShowCraftInInventory(false);
+
+        if (ui.craftUI != null)
+            ui.craftUI.ResetCraftPreview(); // Reset preview here, not on F
     }
 }

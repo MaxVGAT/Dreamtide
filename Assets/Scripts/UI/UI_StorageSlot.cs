@@ -28,6 +28,7 @@ public class UI_StorageSlot : UI_ItemSlot
         bool rightButton = eventData.button == PointerEventData.InputButton.Right;
         float timeSinceLastClick = Time.time - lastClickTime;
         lastClickTime = Time.time;
+
         // Transfer items to storage
         if (timeSinceLastClick < DoubleClickThreshold)
         {
@@ -61,13 +62,33 @@ public class UI_StorageSlot : UI_ItemSlot
     }
     private void HandleRightClick()
     {
+        bool transferAll = Input.GetKey(KeyCode.LeftControl);
 
-        if (merchant != null)
+        // Check if merchant/shop UI is visible
+        if (merchant != null && ui != null && ui.IsMerchantVisible())
         {
-            bool transferAll = Input.GetKey(KeyCode.LeftControl);
+            // Shop is open - sell the item
+            if (merchant.inventory == null)
+            {
+                merchant.SetInventory(inventory);
+            }
             merchant.TrySellItem(itemInSlot, transferAll);
-            ui?.itemTooltip?.ShowToolTip(false, null);
         }
-        return;
+        else
+        {
+            // Shop is not open - delete the item from inventory
+            if (transferAll)
+            {
+                // Remove entire stack
+                inventory?.RemoveOneItem(itemInSlot);
+            }
+            else
+            {
+                // Remove one item
+                inventory?.RemoveOneItem(itemInSlot);
+            }
+        }
+
+        ui?.itemTooltip?.ShowToolTip(false, null);
     }
 }

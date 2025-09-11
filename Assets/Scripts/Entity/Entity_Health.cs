@@ -11,6 +11,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
     private Entity_VFX entityVfx;
     private Entity entity;
     private Entity_Stats entityStats;
+    private Entity_DropManager dropManager;
 
     [SerializeField] protected float currentHealth;
 
@@ -38,6 +39,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
         entity = GetComponent<Entity>();
         entityVfx = GetComponent<Entity_VFX>();
         entityStats = GetComponent<Entity_Stats>();
+        dropManager = GetComponent<Entity_DropManager>();
 
         SetupHealth();
     }
@@ -169,7 +171,8 @@ public class Entity_Health : MonoBehaviour, IDamageable
     protected virtual void Die()
     {
         isDead = true;
-        entity.EntityDeath();
+        entity?.EntityDeath();
+        dropManager?.DropItems();
     }
 
     // �m�b�N�o�b�N����

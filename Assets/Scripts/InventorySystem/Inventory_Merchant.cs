@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Inventory_Merchant : Inventory_Base
 {
-    private Inventory_Player inventory;
+    public Inventory_Player inventory { get; private set; }
 
     [SerializeField] private ItemListDataSO shopData;
     [SerializeField] private int minItemsAmount = 4;

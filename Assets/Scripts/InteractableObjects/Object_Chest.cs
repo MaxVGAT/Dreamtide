@@ -7,26 +7,35 @@ public class Object_Chest : MonoBehaviour, IDamageable
     private Animator anim => GetComponentInChildren<Animator>();
     private Entity_VFX vfx => GetComponent<Entity_VFX>();
 
-    // ƒ_ƒ[ƒW‚ğó‚¯‚½‚Ìˆ—
+    private Entity_DropManager dropManager => GetComponent<Entity_DropManager>();
+
+    [SerializeField] private bool canDropItems = true;
+
+    // ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ó‚¯‚ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
     public bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageDealer)
     {
-        vfx.HandleHitColor(Entity_VFX.FlashType.White); // ƒqƒbƒgVFX•\¦
-        anim.SetBool("openChest", true);               // ŠJ‚­ƒAƒjƒ[ƒVƒ‡ƒ“
-        rb.linearVelocity = new Vector2(0, 3);         // ã•ûŒü‚Ì”½“®
+        if (canDropItems == false)
+            return false;
 
-        rb.angularVelocity = Random.Range(-200, 200);  // ‰ñ“]•t—^
+        canDropItems = false;
+        dropManager?.DropItems();
+        vfx.HandleHitColor(Entity_VFX.FlashType.White); // ï¿½qï¿½bï¿½gVFXï¿½\ï¿½ï¿½
+        anim.SetBool("openChest", true);               // ï¿½Jï¿½ï¿½ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½
+        rb.linearVelocity = new Vector2(0, 3);         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½
 
-        ChangeRBToKinematic();                         // •¨—’â~
+        rb.angularVelocity = Random.Range(-200, 200);  // ï¿½ï¿½]ï¿½tï¿½^
+
+        ChangeRBToKinematic();                         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½~
 
         return true;
     }
 
-    // Rigidbody‚ğKinematic‚É•ÏX‚µ‚Ä“®‚«‚ğ~‚ß‚é
+    // Rigidbodyï¿½ï¿½Kinematicï¿½É•ÏXï¿½ï¿½ï¿½Ä“ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½ß‚ï¿½
     private void ChangeRBToKinematic()
     {
-        col.enabled = false;               // “–‚½‚è”»’è–³Œø‰»
+        col.enabled = false;               // ï¿½ï¿½ï¿½ï¿½ï¿½è”»ï¿½è–³ï¿½ï¿½ï¿½ï¿½
         rb.bodyType = RigidbodyType2D.Kinematic;
-        rb.linearVelocity = Vector2.zero;  // ‘¬“xƒŠƒZƒbƒg
-        rb.angularVelocity = 0f;           // ‰ñ“]ƒŠƒZƒbƒg
+        rb.linearVelocity = Vector2.zero;  // ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½Zï¿½bï¿½g
+        rb.angularVelocity = 0f;           // ï¿½ï¿½]ï¿½ï¿½ï¿½Zï¿½bï¿½g
     }
 }

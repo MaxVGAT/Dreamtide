@@ -10,6 +10,7 @@ public class UI_ItemTooltip : UI_Tooltip
     [SerializeField] private TextMeshProUGUI itemInfo;   // ステータス詳細
     [SerializeField] private TextMeshProUGUI itemPrice;
     [SerializeField] private Transform merchantInfo;
+    [SerializeField] private Transform inventoryInfo;
 
     // ツールチップの表示・非表示
     public void ShowToolTip(bool show, RectTransform targetRect, Inventory_Item itemToShow, bool buyPrice = false, bool showMerchantInfo = false)
@@ -29,8 +30,8 @@ public class UI_ItemTooltip : UI_Tooltip
 
         base.ShowToolTip(true, targetRect);
 
-        if (merchantInfo != null)
-            merchantInfo.gameObject.SetActive(showMerchantInfo);
+        merchantInfo.gameObject.SetActive(showMerchantInfo);
+        inventoryInfo.gameObject.SetActive(!showMerchantInfo);
 
         int price = showMerchantInfo ? itemToShow.buyPrice : Mathf.FloorToInt(itemToShow.sellPrice);
         int totalPrice = price * itemToShow.stackSize;

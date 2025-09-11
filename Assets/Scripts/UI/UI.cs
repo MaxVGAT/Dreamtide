@@ -64,13 +64,15 @@ public class UI : MonoBehaviour
 
         if (!menuEnabled)
         {
-            ToggleNPCType(storage, false);
-            ToggleNPCType(craft, false);
-            ToggleNPCType(merchant, false);
+            // Only hide panels if the player is not inside their trigger
+            if (!storage.isInsideTrigger)
+                ToggleNPCType(storage, false);
 
-            storage.isInsideTrigger = false;
-            craft.isInsideTrigger = false;
-            merchant.isInsideTrigger = false;
+            if (!craft.isInsideTrigger)
+                ToggleNPCType(craft, false);
+
+            if (!merchant.isInsideTrigger)
+                ToggleNPCType(merchant, false);
         }
     }
 
@@ -118,6 +120,9 @@ public class UI : MonoBehaviour
 
     public void OpenInventoryWithCraft()
     {
+        if (IsCraftVisible())
+            return;
+
         OpenMenuIfClosed();
         ToggleNPCType(craft, true);
     }

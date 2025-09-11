@@ -41,8 +41,15 @@ public class UI_CraftPreview : MonoBehaviour
 
     private void UpdateCraftPreviewSlots()
     {
-        if (itemToCraft != null)
-            buttonText.text = "クラフト";
+        if (itemToCraft == null)
+        {
+            buttonText.text = "なし";
+            foreach (var slot in craftPreviewSlots)
+                slot.gameObject.SetActive(false);
+            return;
+        }
+
+        buttonText.text = "クラフト";
 
         foreach (var slot in craftPreviewSlots)
             slot.gameObject.SetActive(false);
@@ -67,6 +74,14 @@ public class UI_CraftPreview : MonoBehaviour
         }
 
         UpdateCraftPreviewSlots();
+    }
+
+    public void ResetCraftPreview()
+    {
+        itemToCraft = null;
+        foreach (var slot in craftPreviewSlots)
+            slot.gameObject.SetActive(false);
+        buttonText.text = "なし";
     }
 
     private void SetRarityText(Item_Rarity rarity)

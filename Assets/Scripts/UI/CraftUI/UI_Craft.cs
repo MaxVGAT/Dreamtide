@@ -36,5 +36,11 @@ public class UI_Craft : MonoBehaviour
             button.SetCraftSlot(craftSlots, craftPreviewUI); // pass preview so buttons can auto-update
     }
 
+    public void ResetCraftPreview()
+    {
+        if (craftPreviewUI != null)
+            craftPreviewUI.ResetCraftPreview();
+    }
+
     private void UpdateUI() => inventoryParent.UpdateSlots(inventory.itemList);
 }

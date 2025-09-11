@@ -20,12 +20,13 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     protected float lastClickTime;
     protected const float DoubleClickThreshold = 0.2f; // �_�u���N���b�N�ƔF������b��
 
-    protected void Awake()
+    public void Setup(UI ui, Inventory_Player inventory)
     {
-        ui = GetComponentInParent<UI>(); // UI�R���|�[�l���g�擾
-        inventory = FindAnyObjectByType<Inventory_Player>(); // �v���C���[�C���x���g���擾
-        rect = GetComponent<RectTransform>(); // RectTransform�擾
+        this.ui = ui;
+        this.inventory = inventory;
+        rect = GetComponent<RectTransform>(); // still needed
     }
+
 
     // �X���b�g�N���b�N��
     public virtual void OnPointerDown(PointerEventData eventData)
@@ -34,19 +35,29 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         if (itemInSlot == null || itemInSlot.itemData.itemType == Item_Type.Material)
             return;
 
-        // �_�u���N���b�N����
-        if (Time.time - lastClickTime < DoubleClickThreshold)
+        bool alternativeInput = Input.GetKey(KeyCode.LeftControl);
+
+        if (alternativeInput)
         {
-            inventory.TryUseItem(itemInSlot);
-            lastClickTime = 0;
+            inventory.RemoveOneItem(itemInSlot);
         }
         else
         {
-            lastClickTime = Time.time;
-        }
 
-        if (itemInSlot == null)
-            ui.itemTooltip.ShowToolTip(false, null);
+            // �_�u���N���b�N����
+            if (Time.time - lastClickTime < DoubleClickThreshold)
+            {
+                inventory.TryUseItem(itemInSlot);
+                lastClickTime = 0;
+            }
+            else
+            {
+                lastClickTime = Time.time;
+            }
+
+            if (itemInSlot == null)
+                ui.itemTooltip.ShowToolTip(false, null);
+        }
     }
 
     // �X���b�g�̓�e��X�V
