@@ -20,13 +20,19 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     protected float lastClickTime;
     protected const float DoubleClickThreshold = 0.2f; // �_�u���N���b�N�ƔF������b��
 
-    public void Setup(UI ui, Inventory_Player inventory)
+    protected virtual void Awake()
+    {
+        rect = GetComponent<RectTransform>();
+        if (ui == null) ui = FindAnyObjectByType<UI>();
+        if (inventory == null) inventory = FindAnyObjectByType<Inventory_Player>();
+    }
+
+    public virtual void Setup(UI ui, Inventory_Player inventory)
     {
         this.ui = ui;
         this.inventory = inventory;
-        rect = GetComponent<RectTransform>(); // still needed
+        this.rect = GetComponent<RectTransform>();
     }
-
 
     // �X���b�g�N���b�N��
     public virtual void OnPointerDown(PointerEventData eventData)

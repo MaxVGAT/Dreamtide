@@ -60,6 +60,7 @@ public class UI_StorageSlot : UI_ItemSlot
             }
         }
     }
+
     private void HandleRightClick()
     {
         bool transferAll = Input.GetKey(KeyCode.LeftControl);
@@ -80,7 +81,7 @@ public class UI_StorageSlot : UI_ItemSlot
             if (transferAll)
             {
                 // Remove entire stack
-                inventory?.RemoveOneItem(itemInSlot);
+                inventory?.RemoveAllItems(itemInSlot);
             }
             else
             {
