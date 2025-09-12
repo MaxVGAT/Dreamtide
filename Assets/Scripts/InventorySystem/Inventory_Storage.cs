@@ -1,11 +1,23 @@
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Inventory_Storage : Inventory_Base
 {
     public Inventory_Player playerInventory {  get; private set; }
 
-    public void ConsumeMaterials(Inventory_Item itemToCraft)
+    public bool CanCraftItems(Inventory_Item itemToCraft)
+    {
+        return hasEnoughMaterials(itemToCraft) && playerInventory.CanAddItem(itemToCraft);
+    }
+
+    public void CraftItem(Inventory_Item itemToCraft)
+    {
+        ConsumeMaterials(itemToCraft);
+        playerInventory.AddItem(itemToCraft);
+    }
+
+    private void ConsumeMaterials(Inventory_Item itemToCraft)
     {
         foreach(var requiredItem in itemToCraft.itemData.craftRecipe)
         {
@@ -43,7 +55,7 @@ public class Inventory_Storage : Inventory_Base
         return consumedAmount;
     }
 
-    public bool hasEnoughMaterials(Inventory_Item itemToCraft)
+    private bool hasEnoughMaterials(Inventory_Item itemToCraft)
     {
         foreach(var requiredMaterial in itemToCraft.itemData.craftRecipe)
         {

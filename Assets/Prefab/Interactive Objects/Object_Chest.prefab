@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4136146406159745246}
   - component: {fileID: 3562005690780822249}
   - component: {fileID: 2583768118501484607}
+  - component: {fileID: 4101242311289959104}
   m_Layer: 8
   m_Name: Object_Chest
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb210891cc8496f45bffa740925bd394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canDropItems: 1
 --- !u!61 &4136146406159745246
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -143,7 +145,23 @@ MonoBehaviour:
   critHitVfx: {fileID: 0}
   chillVfx: {r: 0, g: 1, b: 1, a: 1}
   burnVfx: {r: 1, g: 0, b: 0, a: 1}
-  electrifyVfx: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  shockVfx: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+--- !u!114 &4101242311289959104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5893497459331253200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c677bd71e8f6ef64d9b939a33eb8d37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDropPrefab: {fileID: 306079027514980540, guid: 37022bf799550874c888d104b2d79da0, type: 3}
+  dropData: {fileID: 11400000, guid: 4a1c08ab3384a034c895b9463a3d841f, type: 2}
+  maxRarityAmount: 1600
+  maxItemsToDrop: 4
 --- !u!1 &5954092388593494436
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,7 +189,7 @@ Transform:
   m_GameObject: {fileID: 5954092388593494436}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.085, y: -0.003, z: 0}
+  m_LocalPosition: {x: -0.99, y: 0.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -241,11 +259,11 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1855415033
-  m_SortingLayer: 4
+  m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 8328269760850406872, guid: f4cbf079faf7a7647bc23dd45563573c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 3, y: 2}

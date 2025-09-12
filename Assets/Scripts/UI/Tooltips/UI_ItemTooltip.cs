@@ -45,12 +45,6 @@ public class UI_ItemTooltip : UI_Tooltip
         SetRarityText(itemToShow.itemData.itemRarity);
     }
 
-
-    private void SetPriceText()
-    {
-        Debug.Log("Hello");
-    }
-
     // レアリティ表示を更新
     private void SetRarityText(Item_Rarity rarity)
     {

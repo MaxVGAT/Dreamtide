@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Entity_Health : MonoBehaviour, IDamageable
 {
     public event Action OnTakingDamage;
+    public event Action OnHealthUpdate;
 
     private Slider healthBar;
     private Entity_VFX entityVfx;
@@ -50,6 +51,8 @@ public class Entity_Health : MonoBehaviour, IDamageable
             return;
 
         currentHealth = entityStats.GetMaxHealth();
+        OnHealthUpdate += UpdateHealthBar;
+
         UpdateHealthBar();
 
         // ���Ԋu��HP�񕜏�����Ă�
@@ -101,6 +104,8 @@ public class Entity_Health : MonoBehaviour, IDamageable
         elementalDamageTaken = elementalDamage * (1 - resistance);
     }
 
+    public float GetCurrentHealth() => currentHealth;
+
     // ��𔻒�i��𗦂Ń����_������j
     private bool AttackAvoided()
     {
@@ -132,15 +137,16 @@ public class Entity_Health : MonoBehaviour, IDamageable
         // �ő�l�𒴂��Ȃ��悤�ɒ���
         currentHealth = Mathf.Min(newHealth, maxHealth);
 
-        UpdateHealthBar();
+        OnHealthUpdate?.Invoke();
     }
 
     // HP����炷�i0�ȉ��Ȃ玀�S�����j
     public void ReduceHealth(float damage)
     {
-        entityVfx?.HandleHitColor(Entity_VFX.FlashType.Red); // �q�b�g����VFX
         currentHealth -= damage;
-        UpdateHealthBar();
+
+        entityVfx?.HandleHitColor(Entity_VFX.FlashType.Red); // �q�b�g����VFX
+        OnHealthUpdate?.Invoke();
 
         if (currentHealth <= 0)
             Die();
@@ -164,7 +170,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
     public void SetHealthToPercent(float percent)
     {
         currentHealth = entityStats.GetMaxHealth() * Mathf.Clamp01(percent);
-        UpdateHealthBar();
+        OnHealthUpdate?.Invoke();
     }
 
     // ���S�����i�I�[�o�[���C�h�\�j

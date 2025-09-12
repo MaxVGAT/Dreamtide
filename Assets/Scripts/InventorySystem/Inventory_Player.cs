@@ -27,7 +27,7 @@ public class Inventory_Player : Inventory_Base
             return; // stop here, do NOT touch equip slots
         }
 
-        Inventory_Item inventoryItem = FindItem(item.itemData);
+        Inventory_Item inventoryItem = FindItem(item);
         List<Inventory_EquipmentSlot> matchingSlots = equipList.FindAll(slot => slot.slotType == item.itemData.itemType);
 
         // Add this check for consumables or items with no matching slots
@@ -36,7 +36,6 @@ public class Inventory_Player : Inventory_Base
             return;
         }
 
-        // Rest of your existing code...
         foreach (var slot in matchingSlots)
         {
             if (slot.HasItem() == false)
@@ -46,7 +45,7 @@ public class Inventory_Player : Inventory_Base
             }
         }
 
-        var slotToReplace = matchingSlots[0]; // This line won't crash now
+        var slotToReplace = matchingSlots[0];
         var itemToUnequip = slotToReplace.equippedItem;
         UnequipItem(itemToUnequip, slotToReplace != null);
         EquipItem(inventoryItem, slotToReplace);
@@ -54,7 +53,7 @@ public class Inventory_Player : Inventory_Base
 
     public void TryUseItem(Inventory_Item item)
     {
-        Inventory_Item inventoryItem = FindItem(item.itemData);
+        Inventory_Item inventoryItem = FindItem(item);
         if (inventoryItem == null)
             return;
 

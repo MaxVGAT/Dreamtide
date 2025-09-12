@@ -67,11 +67,8 @@ public class UI_CraftPreview : MonoBehaviour
 
     public void ConfirmCraft()
     {
-        if(storage.hasEnoughMaterials(itemToCraft) && storage.playerInventory.CanAddItem(itemToCraft))
-        {
-            storage.ConsumeMaterials(itemToCraft);
-            storage.playerInventory.AddItem(itemToCraft);
-        }
+        if(storage.CanCraftItems(itemToCraft))
+            storage.CraftItem(itemToCraft);
 
         UpdateCraftPreviewSlots();
     }

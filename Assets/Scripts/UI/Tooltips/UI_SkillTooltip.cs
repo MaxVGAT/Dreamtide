@@ -33,7 +33,7 @@ public class UI_SkillTooltip : UI_Tooltip
     }
 
     // スキルデータを指定してツールチップ表示
-    public void ShowToolTip(bool show, RectTransform targetRect, UI_TreeNode node, bool hasEnoughPoints)
+    public void ShowToolTip(bool show, RectTransform targetRect, UI_TreeNode node, Skill_DataSO skillData, bool hasEnoughPoints)
     {
         base.ShowToolTip(show, targetRect);
 
@@ -46,9 +46,15 @@ public class UI_SkillTooltip : UI_Tooltip
             textEffectCo = null;
         }
 
-        skillName.text = node.skillData.skillName;
-        skillDescription.text = node.skillData.skillDescription;
-        skillCooldown.text = "クールダウン：" + node.skillData.upgradeData.cooldown + "秒";
+        skillName.text = skillData.skillName;
+        skillDescription.text = skillData.skillDescription;
+        skillCooldown.text = "クールダウン：" + skillData.upgradeData.cooldown + "秒";
+
+        if(node == null)
+        {
+            skillRequirements.text = "";
+            return;
+        }
 
         if (node.isUnlocked)
             skillRequirements.text = GetColoredText(metConditionHex, unlockedSkillText);

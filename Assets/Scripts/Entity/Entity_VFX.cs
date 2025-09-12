@@ -1,13 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-// ƒGƒ“ƒeƒBƒeƒB‚ÌŠeíVFXiƒ_ƒ[ƒWAƒXƒe[ƒ^ƒXAUŒ‚j‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+// ï¿½Gï¿½ï¿½ï¿½eï¿½Bï¿½eï¿½Bï¿½ÌŠeï¿½ï¿½VFXï¿½iï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½Aï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½Aï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½jï¿½ï¿½Ç—ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½X
 public class Entity_VFX : MonoBehaviour
 {
-    protected SpriteRenderer sr; // ƒXƒvƒ‰ƒCƒg•`‰æ—p
+    protected SpriteRenderer sr; // ï¿½Xï¿½vï¿½ï¿½ï¿½Cï¿½gï¿½`ï¿½ï¿½p
     private Entity entity;
 
-    public enum FlashType { Red, Yellow, Green, White } // ƒ_ƒ[ƒWƒtƒ‰ƒbƒVƒ…ƒ^ƒCƒv
+    public enum FlashType { Red, Yellow, Green, White } // ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½tï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½ï¿½^ï¿½Cï¿½v
 
     [Header("On Taking Damage VFX")]
     [SerializeField] private Material interactableHitMat;
@@ -15,7 +15,7 @@ public class Entity_VFX : MonoBehaviour
     [SerializeField] private Material yellowHitBlockMat;
     [SerializeField] private Material greenHitPerfectBlockMat;
     [SerializeField] private float onDamageVfxDuration = 0.2f;
-    private Material originalMaterial; // Œ³‚Ìƒ}ƒeƒŠƒAƒ‹‚ğ•Û
+    private Material originalMaterial; // ï¿½ï¿½ï¿½Ìƒ}ï¿½eï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½Ûï¿½
     private Coroutine onDamageVfxCoroutine;
 
     [Header("On Doing Damage VFX")]
@@ -33,11 +33,11 @@ public class Entity_VFX : MonoBehaviour
     {
         entity = GetComponent<Entity>();
         sr = GetComponentInChildren<SpriteRenderer>();
-        originalMaterial = sr.material; // ‰Šúƒ}ƒeƒŠƒAƒ‹•Û‘¶
+        originalMaterial = sr.material; // ï¿½ï¿½ï¿½ï¿½ï¿½}ï¿½eï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Û‘ï¿½
         originalHitVfxColor = hitVfxColor;
     }
 
-    // ƒXƒe[ƒ^ƒXŒø‰Ê‚É‰‚¶‚½VFX‚ğÄ¶
+    // ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½ï¿½ï¿½Ê‚É‰ï¿½ï¿½ï¿½ï¿½ï¿½VFXï¿½ï¿½Äï¿½
     public void PlayOnStatusVfx(float duration, ElementType element)
     {
         if (element == ElementType.Ice)
@@ -50,7 +50,7 @@ public class Entity_VFX : MonoBehaviour
             StartCoroutine(PlayStatusVfxCo(duration, shockVfx));
     }
 
-    // ‘SVFX’â~iƒtƒ‰ƒbƒVƒ…‚âƒXƒe[ƒ^ƒXF‚ğƒŠƒZƒbƒgj
+    // ï¿½SVFXï¿½ï¿½~ï¿½iï¿½tï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½Fï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½j
     public void StopAllVfx()
     {
         StopAllCoroutines();
@@ -58,41 +58,41 @@ public class Entity_VFX : MonoBehaviour
         sr.material = originalMaterial;
     }
 
-    // ƒXƒe[ƒ^ƒXVFX‚ÌƒRƒ‹[ƒ`ƒ“iF‚Ì“_–Åj
+    // ï¿½Xï¿½eï¿½[ï¿½^ï¿½XVFXï¿½ÌƒRï¿½ï¿½ï¿½[ï¿½`ï¿½ï¿½ï¿½iï¿½Fï¿½Ì“_ï¿½Åj
     private IEnumerator PlayStatusVfxCo(float duration, Color effectColor)
     {
-        float tickInterval = 0.25f; // “_–ÅŠÔŠu
+        float tickInterval = 0.25f; // ï¿½_ï¿½ÅŠÔŠu
         float timeHasPassed = 0;
 
-        Color lightColor = effectColor * 1.2f; // –¾‚é‚¢F
-        Color darkColor = effectColor * 0.8f;   // ˆÃ‚¢F
+        Color lightColor = effectColor * 1.2f; // ï¿½ï¿½ï¿½é‚¢ï¿½F
+        Color darkColor = effectColor * 0.8f;   // ï¿½Ã‚ï¿½ï¿½F
 
         bool toggle = false;
 
         while (timeHasPassed < duration)
         {
-            sr.color = toggle ? lightColor : darkColor; // ŒğŒİ‚ÉF•ÏX
+            sr.color = toggle ? lightColor : darkColor; // ï¿½ï¿½İ‚ÉFï¿½ÏX
             toggle = !toggle;
 
             yield return new WaitForSeconds(tickInterval);
             timeHasPassed += tickInterval;
         }
 
-        sr.color = Color.white; // I—¹‚ÉŒ³F‚Ö
+        sr.color = Color.white; // ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ÉŒï¿½ï¿½Fï¿½ï¿½
     }
 
-    // UŒ‚VFX¶¬i’Êí or ƒNƒŠƒeƒBƒJƒ‹j
+    // ï¿½Uï¿½ï¿½ï¿½ï¿½VFXï¿½ï¿½ï¿½ï¿½ï¿½iï¿½Êï¿½ or ï¿½Nï¿½ï¿½ï¿½eï¿½Bï¿½Jï¿½ï¿½ï¿½j
     public void CreateOnHitVFX(Transform target, bool isCrit, ElementType element)
     {
         GameObject hitPrefab = isCrit ? critHitVfx : hitVfx;
         GameObject vfx = Instantiate(hitPrefab, target.position, Quaternion.identity);
 
-        // ”½“]ˆ—i¶Œü‚«‚Ì‚Æ‚«ƒNƒŠƒeƒBƒJƒ‹VFX‚ğ”½“]j
+        // ï¿½ï¿½ï¿½]ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Æ‚ï¿½ï¿½Nï¿½ï¿½ï¿½eï¿½Bï¿½Jï¿½ï¿½VFXï¿½ğ”½“]ï¿½j
         if (entity.facingDirection == -1 && isCrit)
             vfx.transform.Rotate(0, 180, 0);
     }
 
-    // ‘®«‚É‰‚¶‚½VFXF‚ğæ“¾
+    // ï¿½ï¿½ï¿½ï¿½ï¿½É‰ï¿½ï¿½ï¿½ï¿½ï¿½VFXï¿½Fï¿½ï¿½æ“¾
     public Color GetElementColor(ElementType element)
     {
         switch (element)
@@ -104,7 +104,7 @@ public class Entity_VFX : MonoBehaviour
         }
     }
 
-    // ƒ_ƒ[ƒW‚ÌFƒtƒ‰ƒbƒVƒ…
+    // ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ÌFï¿½tï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½
     public void HandleHitColor(FlashType type)
     {
         Material mat = redHitMat;
@@ -119,22 +119,22 @@ public class Entity_VFX : MonoBehaviour
         PlayOnDamageVfx(mat);
     }
 
-    // ƒ_ƒ[ƒWVFXÄ¶iƒ}ƒeƒŠƒAƒ‹•ÏXj
+    // ï¿½_ï¿½ï¿½ï¿½[ï¿½WVFXï¿½Äï¿½ï¿½iï¿½}ï¿½eï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ÏXï¿½j
     public void PlayOnDamageVfx(Material hitMaterial)
     {
         if (onDamageVfxCoroutine != null)
-            StopCoroutine(onDamageVfxCoroutine); // Šù‘¶ƒRƒ‹[ƒ`ƒ“’â~
+            StopCoroutine(onDamageVfxCoroutine); // ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½ï¿½ï¿½[ï¿½`ï¿½ï¿½ï¿½ï¿½~
 
         onDamageVfxCoroutine = StartCoroutine(OnDamageVfxCo(hitMaterial));
     }
 
-    // ƒ_ƒ[ƒWVFXƒRƒ‹[ƒ`ƒ“iw’èŠÔ‚¾‚¯ƒtƒ‰ƒbƒVƒ…j
+    // ï¿½_ï¿½ï¿½ï¿½[ï¿½WVFXï¿½Rï¿½ï¿½ï¿½[ï¿½`ï¿½ï¿½ï¿½iï¿½wï¿½èï¿½Ô‚ï¿½ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½ï¿½j
     private IEnumerator OnDamageVfxCo(Material hitMaterial)
     {
-        sr.material = hitMaterial; // ƒtƒ‰ƒbƒVƒ…—pƒ}ƒeƒŠƒAƒ‹‚É•ÏX
+        sr.material = hitMaterial; // ï¿½tï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½ï¿½pï¿½}ï¿½eï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½É•ÏX
 
         yield return new WaitForSeconds(onDamageVfxDuration);
 
-        sr.material = originalMaterial; // I—¹‚ÉŒ³ƒ}ƒeƒŠƒAƒ‹‚Ö–ß‚·
+        sr.material = originalMaterial; // ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ÉŒï¿½ï¿½}ï¿½eï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Ö–ß‚ï¿½
     }
 }

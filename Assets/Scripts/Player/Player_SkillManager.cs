@@ -1,39 +1,57 @@
 using UnityEngine;
 
-// ƒvƒŒƒCƒ„[‚ÌƒXƒLƒ‹ŠÇ—ƒNƒ‰ƒX
-// ŠeƒXƒLƒ‹‚Ö‚ÌQÆ‚ğ•Û‚µAƒN[ƒ‹ƒ_ƒEƒ“ŠÇ—‚âƒXƒLƒ‹æ“¾‚ğ’ñ‹Ÿ
+// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌƒXï¿½Lï¿½ï¿½ï¿½Ç—ï¿½ï¿½Nï¿½ï¿½ï¿½X
+// ï¿½eï¿½Xï¿½Lï¿½ï¿½ï¿½Ö‚ÌQï¿½Æ‚ï¿½Ûï¿½ï¿½ï¿½ï¿½Aï¿½Nï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½Ç—ï¿½ï¿½ï¿½Xï¿½Lï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½
 public class Player_SkillManager : MonoBehaviour
 {
-    // ŠeƒXƒLƒ‹‚ÌƒvƒƒpƒeƒB
+    // ï¿½eï¿½Xï¿½Lï¿½ï¿½ï¿½Ìƒvï¿½ï¿½ï¿½pï¿½eï¿½B
     public Skill_Dash dash { get; private set; }
     public Skill_Shard shard { get; private set; }
     public Skill_SwordThrow swordThrow { get; private set; }
     public Skill_TimeEcho timeEcho { get; private set; }
     public Skill_Domain domain { get; private set; }
 
-    private Skill_Base[] allSkills; // ‘SƒXƒLƒ‹‚Ì”z—ñi‹¤’Êˆ——pj
+    private Skill_Base[] allSkills; // ï¿½Sï¿½Xï¿½Lï¿½ï¿½ï¿½Ì”zï¿½ï¿½iï¿½ï¿½ï¿½Êï¿½ï¿½ï¿½ï¿½pï¿½j
+
+    public int SkillPoints { get; private set; }
+
 
     private void Awake()
     {
-        // qƒIƒuƒWƒFƒNƒg‚©‚çŠeƒXƒLƒ‹ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
+        // ï¿½qï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½eï¿½Xï¿½Lï¿½ï¿½ï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½ï¿½æ“¾
         dash = GetComponentInChildren<Skill_Dash>();
         shard = GetComponentInChildren<Skill_Shard>();
         swordThrow = GetComponentInChildren<Skill_SwordThrow>();
         timeEcho = GetComponentInChildren<Skill_TimeEcho>();
         domain = GetComponentInChildren<Skill_Domain>();
 
-        // ‘SƒXƒLƒ‹‚ğ”z—ñ‚Æ‚µ‚Äæ“¾i‹¤’Êˆ——pj
+        // ï¿½Sï¿½Xï¿½Lï¿½ï¿½ï¿½ï¿½zï¿½ï¿½Æ‚ï¿½ï¿½Äæ“¾ï¿½iï¿½ï¿½ï¿½Êï¿½ï¿½ï¿½ï¿½pï¿½j
         allSkills = GetComponentsInChildren<Skill_Base>();
     }
 
-    // ‘SƒXƒLƒ‹‚ÌƒN[ƒ‹ƒ_ƒEƒ“‚ğŒ¸­‚³‚¹‚é
+    public void AddSkillPoints(int amount)
+    {
+        SkillPoints += amount;
+    }
+
+    public bool SpendSkillPoints(int cost)
+    {
+        if (SkillPoints >= cost)
+        {
+            SkillPoints -= cost;
+            return true;
+        }
+        return false;
+    }
+
+    // ï¿½Sï¿½Xï¿½Lï¿½ï¿½ï¿½ÌƒNï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void ReduceAllSkillsBooldownBy(float amount)
     {
         foreach (var skills in allSkills)
             skills.ReduceCooldownBy(amount);
     }
 
-    // ƒXƒLƒ‹ƒ^ƒCƒv‚©‚çƒXƒLƒ‹‚ğæ“¾
+    // ï¿½Xï¿½Lï¿½ï¿½ï¿½^ï¿½Cï¿½vï¿½ï¿½ï¿½ï¿½Xï¿½Lï¿½ï¿½ï¿½ï¿½æ“¾
     public Skill_Base GetSkillByType(Skill_Type type)
     {
         switch (type)

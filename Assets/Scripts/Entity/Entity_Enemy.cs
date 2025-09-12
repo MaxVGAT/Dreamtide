@@ -2,14 +2,14 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-// “GƒGƒ“ƒeƒBƒeƒBiˆÚ“®Aí“¬AƒXƒ^ƒ“A€–Sˆ—‚È‚Ç‚ğŠÇ—j
+// ï¿½Gï¿½Gï¿½ï¿½ï¿½eï¿½Bï¿½eï¿½Bï¿½iï¿½Ú“ï¿½ï¿½Aï¿½í“¬ï¿½Aï¿½Xï¿½^ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½È‚Ç‚ï¿½Ç—ï¿½ï¿½j
 public class Entity_Enemy : Entity
 {
 
     private Entity_VFX entityVFX;
     public Enemy_Health health { get; private set; }
 
-    // “G‚Ìó‘ÔQÆ
+    // ï¿½Gï¿½Ìï¿½ÔQï¿½ï¿½
     public EnemyIdleState idleState;
     public EnemyMoveState moveState;
     public EnemyAttackState attackState;
@@ -17,28 +17,32 @@ public class Entity_Enemy : Entity
     public EnemyDeadState deadState;
     public EnemyStunnedState stunnedState;
 
-    [Header("Battle details")] // í“¬‚ÌˆÚ“®EUŒ‚E‘Ş”ğİ’è
+    [Header("Battle details")] // ï¿½í“¬ï¿½ï¿½ï¿½ÌˆÚ“ï¿½ï¿½Eï¿½Uï¿½ï¿½ï¿½Eï¿½Ş”ï¿½İ’ï¿½
     public float battleMoveSpeed = 4;
     public float attackDistance = 1;
     public float battleTimeDuration = 3;
     public float minRetreatDistance = 1;
     public Vector2 retreatVelocity;
 
-    [Header("Movement details")] // ’ÊíˆÚ“®‚â‘Ò‹@‚Ìİ’è
+    [Header("Exp Details")]
+    [SerializeField] private int experienceReward = 10;
+    private Entity_Player player;
+
+    [Header("Movement details")] // ï¿½Êï¿½Ú“ï¿½ï¿½ï¿½Ò‹@ï¿½Ìİ’ï¿½
     public float moveSpeed = 1.4f;
     public float idleTime = 2f;
     [Range(0, 2)] public float moveAnimSpeedMultiplier = 1f;
 
-    [Header("Stun details")] // ƒXƒ^ƒ“‚ÌŒp‘±ŠÔE‚«”ò‚ÑEƒXƒ^ƒ“‰Â”Û
+    [Header("Stun details")] // ï¿½Xï¿½^ï¿½ï¿½ï¿½ÌŒpï¿½ï¿½ï¿½ï¿½ï¿½ÔEï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÑEï¿½Xï¿½^ï¿½ï¿½ï¿½Â”ï¿½
     public float stunnedDuration = 1f;
     public Vector2 stunnedVelocity = new Vector2(8, 4);
     [SerializeField] protected bool canBeStunned;
 
-    [Header("Player detection")] // ƒvƒŒƒCƒ„[ŒŸ’m‚Ì‚½‚ß‚ÌƒŒƒCƒLƒƒƒXƒgİ’è
+    [Header("Player detection")] // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½mï¿½Ì‚ï¿½ï¿½ß‚Ìƒï¿½ï¿½Cï¿½Lï¿½ï¿½ï¿½Xï¿½gï¿½İ’ï¿½
     [SerializeField] private LayerMask whatIsPlayer;
     [SerializeField] private Transform playerCheck;
     [SerializeField] private float playerCheckDistance = 10f;
-    public Transform player { get; private set; }
+    public Transform playerTransform { get; private set; }
     public float activeSlowMultiplier { get; private set; } = 1f;
 
     public float GetMoveSpeed() => moveSpeed * activeSlowMultiplier;
@@ -52,7 +56,12 @@ public class Entity_Enemy : Entity
         health = GetComponent<Enemy_Health>();
     }
 
-    // ˆê“I‚ÉˆÚ“®‘¬“x‚ÆƒAƒjƒ‘¬“x‚ğ’á‰º‚³‚¹‚é
+    protected override void Start()
+    {
+        player = FindAnyObjectByType<Entity_Player>();
+    }
+
+    // ï¿½êï¿½Iï¿½ÉˆÚ“ï¿½ï¿½ï¿½ï¿½xï¿½ÆƒAï¿½jï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½á‰ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
     {
         activeSlowMultiplier = 1 - slowMultiplier;
@@ -72,13 +81,19 @@ public class Entity_Enemy : Entity
 
     public void EnableCounterAttack(bool enable) => canBeStunned = enable;
 
-    // “G‚Ì€–Sˆ—iVFX’â~‚Æ€–SƒXƒe[ƒg‘JˆÚj
+    // ï¿½Gï¿½Ìï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½iVFXï¿½ï¿½~ï¿½Æï¿½ï¿½Sï¿½Xï¿½eï¿½[ï¿½gï¿½Jï¿½Új
     public override void EntityDeath()
     {
         base.EntityDeath();
 
         if (entityVFX != null)
             entityVFX.StopAllVfx();
+
+
+        var uiInGame = FindFirstObjectByType<UI_InGame>();
+        if (uiInGame != null)
+            uiInGame.AddExperience(experienceReward);
+
 
         stateMachine.ChangeState(deadState);
     }
@@ -88,25 +103,25 @@ public class Entity_Enemy : Entity
         stateMachine.ChangeState(idleState);
     }
 
-    // í“¬ó‘Ô‚É“ü‚ê‚é‚©Šm”F‚µ‚Ä‘JˆÚ
+    // ï¿½í“¬ï¿½ï¿½Ô‚É“ï¿½ï¿½ï¿½é‚©ï¿½mï¿½Fï¿½ï¿½ï¿½Ä‘Jï¿½ï¿½
     public void TryEnterBattleState(Transform player)
     {
         if (stateMachine.currentState == battleState || stateMachine.currentState == attackState)
             return;
 
-        this.player = player;
+        this.playerTransform = player;
         stateMachine.ChangeState(battleState);
     }
 
     public Transform GetPlayerReference()
     {
-        if (player == null)
-            player = PlayerIsDetected().transform;
+        if (playerTransform == null)
+            playerTransform = PlayerIsDetected().transform;
 
-        return player;
+        return playerTransform;
     }
 
-    // ƒvƒŒƒCƒ„[ŒŸ’m‚ÌƒŒƒCƒLƒƒƒXƒg
+    // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½mï¿½Ìƒï¿½ï¿½Cï¿½Lï¿½ï¿½ï¿½Xï¿½g
     public RaycastHit2D PlayerIsDetected()
     {
         RaycastHit2D hit =
@@ -118,7 +133,7 @@ public class Entity_Enemy : Entity
         return hit;
     }
 
-    // ƒGƒfƒBƒ^ã‚ÅŒŸ’mEUŒ‚E‘Ş”ğ”ÍˆÍ‚ğ‰Â‹‰»
+    // ï¿½Gï¿½fï¿½Bï¿½^ï¿½ï¿½ÅŒï¿½ï¿½mï¿½Eï¿½Uï¿½ï¿½ï¿½Eï¿½Ş”ï¿½ÍˆÍ‚ï¿½Âï¿½ï¿½ï¿½
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
@@ -131,13 +146,13 @@ public class Entity_Enemy : Entity
         Gizmos.DrawLine(playerCheck.position, new Vector3(playerCheck.position.x + (facingDirection * minRetreatDistance), playerCheck.position.y));
     }
 
-    // ƒvƒŒƒCƒ„[€–SƒCƒxƒ“ƒg‚Ìw“ÇŠJn
+    // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Sï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½Ìwï¿½ÇŠJï¿½n
     private void OnEnable()
     {
         Entity_Player.OnPlayerDeath += HandlePlayerDeath;
     }
 
-    // ƒvƒŒƒCƒ„[€–SƒCƒxƒ“ƒg‚Ìw“Ç‰ğœ
+    // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Sï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½Ìwï¿½Ç‰ï¿½ï¿½
     private void OnDisable()
     {
         Entity_Player.OnPlayerDeath -= HandlePlayerDeath;

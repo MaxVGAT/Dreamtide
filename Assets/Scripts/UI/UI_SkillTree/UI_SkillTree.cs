@@ -29,13 +29,13 @@ public class UI_SkillTree : MonoBehaviour
     public UI_SkillTooltip SkillTooltip => skillTooltip;
 
     // �X�L���|�C���g������邩����
-    public bool EnoughSkillPoints(int cost) => skillPoints >= cost;
+    public bool EnoughSkillPoints(int cost) => skillManager.SkillPoints >= cost;
 
     // �X�L���|�C���g�����
-    public void RemoveSkillPoint(int cost) => skillPoints -= cost;
+    public void RemoveSkillPoint(int cost) => skillManager.SpendSkillPoints(cost);
 
     // �X�L���|�C���g��ǉ�
-    public void AddSkillPoints(int points) => skillPoints += points;
+    public void AddSkillPoints(int points) => skillManager.AddSkillPoints(points);
 
     private void Start()
     {

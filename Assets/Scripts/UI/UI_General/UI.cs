@@ -18,6 +18,7 @@ public class UI : MonoBehaviour
     [SerializeField] private UIContext craft = new UIContext();
     [SerializeField] private UIContext merchant = new UIContext();
 
+    #region UI Components
     public UI_SkillTree skillTree { get; private set; }
     public UI_ItemTooltip itemTooltip { get; private set; }
     public UI_StatTooltip statTooltip { get; private set; }
@@ -25,20 +26,24 @@ public class UI : MonoBehaviour
     public UI_TabGroup tabGroup { get; private set; }
     public UI_Craft craftUI { get; private set; }
     public UI_Merchant merchantUI { get; private set; }
+    public UI_InGame inGameUI { get; private set; }
+    #endregion
 
     private bool menuEnabled;
 
     private void Awake()
     {
         tabMenuRoot.SetActive(false);
+        tabGroup = GetComponentInChildren<UI_TabGroup>(true);
 
-        skillTree = GetComponentInChildren<UI_SkillTree>(true);
         itemTooltip = GetComponentInChildren<UI_ItemTooltip>();
         statTooltip = GetComponentInChildren<UI_StatTooltip>();
+
+        skillTree = GetComponentInChildren<UI_SkillTree>(true);
         storageUI = GetComponentInChildren<UI_Storage>(true);
         craftUI = GetComponentInChildren<UI_Craft>(true);
         merchantUI = GetComponentInChildren<UI_Merchant>(true);
-        tabGroup = GetComponentInChildren<UI_TabGroup>(true);
+        inGameUI = GetComponentInChildren<UI_InGame>(true);
 
         storageUI.storageRoot = storage.panel;
 
@@ -59,6 +64,8 @@ public class UI : MonoBehaviour
         if (tabMenuRoot)   // null check + destroyed object check
             tabMenuRoot.SetActive(menuEnabled);
 
+        if (!menuEnabled && skillTree != null)
+            skillTree.SkillTooltip.ShowToolTip(false, skillTree.SkillTooltip.GetComponent<RectTransform>());
 
         itemTooltip?.ShowToolTip(false, null, null);
 

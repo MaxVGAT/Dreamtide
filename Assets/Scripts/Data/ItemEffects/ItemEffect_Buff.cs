@@ -11,6 +11,11 @@ public class ItemEffect_Buff : Item_EffectDataSO
 
     private Player_Stats playerStats;
 
+    private void Awake()
+    {
+        playerStats = FindFirstObjectByType<Player_Stats>();
+    }
+
     public override bool CanBeUsed()
     {
         if(playerStats == null)
@@ -27,6 +32,9 @@ public class ItemEffect_Buff : Item_EffectDataSO
 
     public override void ExecuteEffect()
     {
+        if (playerStats == null)
+            playerStats = FindFirstObjectByType<Player_Stats>();
+
         playerStats.ApplyBuff(buffsToApply, duration, source);
     }
 }

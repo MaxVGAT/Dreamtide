@@ -80,7 +80,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         bool hasEnoughPoints = skillTree.EnoughSkillPoints(skillData.cost);
-        skillToolTip.ShowToolTip(true, rect, this, hasEnoughPoints);
+        skillToolTip.ShowToolTip(true, rect, this, skillData, hasEnoughPoints);
 
         // Highlight node if not unlocked or locked
         if (!isUnlocked && !isLocked)
@@ -100,6 +100,12 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // Unlock this skill node
     private void UnlockSkill()
     {
+        if (isUnlocked)
+        {
+            Debug.Log("Skill is already unlocked");
+            return;
+        }
+
         isUnlocked = true;
         UpdateIconColor(Color.white);                // Make icon white
         skillTree.RemoveSkillPoint(skillData.cost); // Deduct skill points
@@ -107,8 +113,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         connectHandler.UnlockConnectionImage(true); // Unlock visual connection
 
         // Apply skill upgrade in player skill manager
-        skillTree.skillManager.GetSkillByType(skillData.skillType)
-            .SetSkillUpgrade(skillData.upgradeData);
+        skillTree.skillManager.GetSkillByType(skillData.skillType).SetSkillUpgrade(skillData);
     }
 
     // Refund node

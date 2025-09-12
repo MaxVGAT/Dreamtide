@@ -2,67 +2,77 @@ using UnityEngine;
 
 public class Skill_Base : MonoBehaviour
 {
-    public Entity_Player player { get; private set; }             // Š‘®ƒvƒŒƒCƒ„[
-    public Player_SkillManager skillManager { get; private set; } // ƒXƒLƒ‹ŠÇ—ƒRƒ“ƒ|[ƒlƒ“ƒg
-
-    public DamageScaleData damageScaleData { get; private set; }  // ƒXƒLƒ‹‚Ìƒ_ƒ[ƒW”{—¦E‘®«î•ñ
+    public Entity_Player player { get; private set; }             // ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[
+    public Player_SkillManager skillManager { get; private set; } // ï¿½Xï¿½Lï¿½ï¿½ï¿½Ç—ï¿½ï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½g
+    public DamageScaleData damageScaleData { get; private set; }  // ï¿½Xï¿½Lï¿½ï¿½ï¿½Ìƒ_ï¿½ï¿½ï¿½[ï¿½Wï¿½{ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     [Header("General details")]
-    [SerializeField] protected Skill_Type skillType;             // ƒXƒLƒ‹‚Ìí—Ş
-    [SerializeField] protected Skill_UpgradeType upgradeType;    // ƒXƒLƒ‹‚ÌƒAƒbƒvƒOƒŒ[ƒhó‘Ô
-    [SerializeField] protected float cooldown;                  // ƒN[ƒ‹ƒ_ƒEƒ“ŠÔ
-    private float lastTimeUsed;                                   // ÅŒã‚Ég—p‚µ‚½ŠÔ
+    [SerializeField] protected Skill_Type skillType;             // ï¿½Xï¿½Lï¿½ï¿½ï¿½Ìï¿½ï¿½
+    [SerializeField] protected Skill_UpgradeType upgradeType;    // ï¿½Xï¿½Lï¿½ï¿½ï¿½ÌƒAï¿½bï¿½vï¿½Oï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½
+    [SerializeField] protected float cooldown;                  // ï¿½Nï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private float lastTimeUsed;                                   // ï¿½ÅŒï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    // ‰Šú‰»ˆ—
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     protected virtual void Awake()
     {
-        player = GetComponentInParent<Entity_Player>();         // e‚©‚çƒvƒŒƒCƒ„[QÆ
-        skillManager = GetComponentInParent<Player_SkillManager>(); // ƒXƒLƒ‹ƒ}ƒl[ƒWƒƒQÆ
-        lastTimeUsed = lastTimeUsed - cooldown;                // ‰‰ñg—p‰Â”\ó‘Ô‚É‚·‚é
-        damageScaleData = new DamageScaleData();               // ƒ_ƒ[ƒWî•ñ‰Šú‰»
+        player = GetComponentInParent<Entity_Player>();         // ï¿½eï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Qï¿½ï¿½
+        skillManager = GetComponentInParent<Player_SkillManager>(); // ï¿½Xï¿½Lï¿½ï¿½ï¿½}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½Qï¿½ï¿½
+        lastTimeUsed = lastTimeUsed - cooldown;                // ï¿½ï¿½ï¿½ï¿½gï¿½pï¿½Â”\ï¿½ï¿½Ô‚É‚ï¿½ï¿½ï¿½
+        damageScaleData = new DamageScaleData();               // ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ñ‰Šï¿½ï¿½ï¿½
     }
 
-    // ƒXƒLƒ‹g—p‚ğ‚İ‚éiƒI[ƒo[ƒ‰ƒCƒh—pj
+    // ï¿½Xï¿½Lï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½ï¿½İ‚ï¿½iï¿½Iï¿½[ï¿½oï¿½[ï¿½ï¿½ï¿½Cï¿½hï¿½pï¿½j
     public virtual void TryUseSkill()
     {
-        // qƒNƒ‰ƒX‚Åˆ—
+        // ï¿½qï¿½Nï¿½ï¿½ï¿½Xï¿½Åï¿½ï¿½ï¿½
     }
 
-    // ƒXƒLƒ‹ƒAƒbƒvƒOƒŒ[ƒh‚ğ“K—p
-    public void SetSkillUpgrade(UpgradeData upgrade)
+    // ï¿½Xï¿½Lï¿½ï¿½ï¿½Aï¿½bï¿½vï¿½Oï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½Kï¿½p
+    public void SetSkillUpgrade(Skill_DataSO skillData)
     {
-        upgradeType = upgrade.upgradeType;                     // ƒAƒbƒvƒOƒŒ[ƒhƒ^ƒCƒvİ’è
-        cooldown = upgrade.cooldown;                           // ƒN[ƒ‹ƒ_ƒEƒ“İ’è
-        damageScaleData = upgrade.damageScaleData;            // ƒ_ƒ[ƒWî•ñİ’è
-        ResetCooldown();                                       // ƒN[ƒ‹ƒ_ƒEƒ“ƒŠƒZƒbƒg
+        UpgradeData upgrade = skillData.upgradeData;
+        upgradeType = upgrade.upgradeType;// ï¿½Aï¿½bï¿½vï¿½Oï¿½ï¿½ï¿½[ï¿½hï¿½^ï¿½Cï¿½vï¿½İ’ï¿½
+        cooldown = upgrade.cooldown;                           // ï¿½Nï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½İ’ï¿½
+        damageScaleData = upgrade.damageScaleData;            // ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½İ’ï¿½
+
+        player.ui.inGameUI.GetSkillSlot(skillType).SetupSkillSlot(skillData);
+        ResetCooldown();                                       // ï¿½Nï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
     }
 
-    // ƒXƒLƒ‹‚ªg—p‰Â”\‚©”»’è
+    // ï¿½Xï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½gï¿½pï¿½Â”\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public virtual bool CanUseSkill()
     {
         if (upgradeType == Skill_UpgradeType.None)
-            return false;                                     // ƒXƒLƒ‹–¢æ“¾‚È‚ç•s‰Â
+            return false;                                     // ï¿½Xï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½æ“¾ï¿½È‚ï¿½sï¿½ï¿½
 
         if (OnCooldown())
-            return false;                                     // ƒN[ƒ‹ƒ_ƒEƒ“’†‚Í•s‰Â
+            return false;                                     // ï¿½Nï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Í•sï¿½ï¿½
 
-        // TODO: ‰ğ•úğŒ‚âƒ}ƒi—Ê”»’è‚È‚Ç’Ç‰Á‰Â”\
+        // TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½}ï¿½iï¿½Ê”ï¿½ï¿½ï¿½È‚Ç’Ç‰ï¿½ï¿½Â”\
 
         return true;
     }
 
-    // “Á’è‚ÌƒAƒbƒvƒOƒŒ[ƒh‚ğ‚Á‚Ä‚¢‚é‚©
+    // ï¿½ï¿½ï¿½ï¿½ÌƒAï¿½bï¿½vï¿½Oï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©
     protected bool Unlocked(Skill_UpgradeType upgradeToCheck) => upgradeType == upgradeToCheck;
 
-    // ƒN[ƒ‹ƒ_ƒEƒ“’†‚©”»’è
+    // ï¿½Nï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     protected bool OnCooldown() => Time.time < lastTimeUsed + cooldown;
 
-    // g—p‚ÉƒN[ƒ‹ƒ_ƒEƒ“‚ğİ’è
-    public void SetSkillOnCooldown() => lastTimeUsed = Time.time;
+    // ï¿½gï¿½pï¿½ï¿½ï¿½ÉƒNï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½İ’ï¿½
+    public void SetSkillOnCooldown()
+    {
+        player.ui.inGameUI.GetSkillSlot(skillType).StartCooldown(cooldown);
+        lastTimeUsed = Time.time;
+    }
 
-    // ƒN[ƒ‹ƒ_ƒEƒ“‚ğ’Zk
+    // ï¿½Nï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½Zï¿½k
     public void ReduceCooldownBy(float cooldownReduction) => lastTimeUsed = lastTimeUsed + cooldownReduction;
 
-    // ƒN[ƒ‹ƒ_ƒEƒ“‚ğƒŠƒZƒbƒg‚µ‚Ä‘¦g—p‰Â”\‚É‚·‚é
-    public void ResetCooldown() => lastTimeUsed = Time.time - cooldown;
+    // ï¿½Nï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½Ä‘ï¿½ï¿½gï¿½pï¿½Â”\ï¿½É‚ï¿½ï¿½ï¿½
+    public void ResetCooldown()
+    {
+        player.ui.inGameUI.GetSkillSlot(skillType).ResetCooldown();
+        lastTimeUsed = Time.time - cooldown;
+    }
 }

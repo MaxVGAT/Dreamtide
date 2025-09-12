@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 770296969765104229}
   - component: {fileID: 7880275099200278854}
   - component: {fileID: 5959650538126788054}
+  - component: {fileID: -3927210730236968908}
   m_Layer: 11
   m_Name: SkillObject_SwordRegular
   m_TagString: Untagged
@@ -115,7 +116,7 @@ Transform:
   m_GameObject: {fileID: 4212682362137729594}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -204,3 +205,15 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.4
+--- !u!210 &-3927210730236968908
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4212682362137729594}
+  m_Enabled: 1
+  m_SortingLayerID: 1903266617
+  m_SortingLayer: 6
+  m_SortingOrder: 0
+  m_SortAtRoot: 0

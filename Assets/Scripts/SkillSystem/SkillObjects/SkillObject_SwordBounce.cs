@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class SkillObject_SwordBounce : SkillObject_Sword
 {
-    [SerializeField] private float bounceSpeed;   // Ÿ‚Ìƒ^[ƒQƒbƒg‚É’µ‚Ë‚é‘¬“x
-    private int bounceCount;                       // c‚è‚Ì’µ‚Ë‰ñ”
+    [SerializeField] private float bounceSpeed;   // ï¿½ï¿½ï¿½Ìƒ^ï¿½[ï¿½Qï¿½bï¿½gï¿½É’ï¿½ï¿½Ë‚é‘¬ï¿½x
+    private int bounceCount;                       // ï¿½cï¿½ï¿½Ì’ï¿½ï¿½Ë‰ï¿½
 
-    private Collider2D[] enemyTargets;            // ƒXƒLƒ‹”ÍˆÍ“à‚Ì“G
-    private Transform nextTarget;                  // Ÿ‚Ì’µ‚Ë‚é‘ÎÛ
-    private List<Transform> selectedBefore = new List<Transform>(); // ˆÈ‘O‘I‚Î‚ê‚½ƒ^[ƒQƒbƒg‹L˜^
+    private Collider2D[] enemyTargets;            // ï¿½Xï¿½Lï¿½ï¿½ï¿½ÍˆÍ“ï¿½Ì“G
+    private Transform nextTarget;                  // ï¿½ï¿½ï¿½Ì’ï¿½ï¿½Ë‚ï¿½Îï¿½
+    private List<Transform> selectedBefore = new List<Transform>(); // ï¿½È‘Oï¿½Iï¿½Î‚ê‚½ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½Lï¿½^
 
     public override void SetupSword(Skill_SwordThrow swordManager, Vector2 direction)
     {
@@ -20,12 +20,12 @@ public class SkillObject_SwordBounce : SkillObject_Sword
 
     protected override void Update()
     {
-        transform.right = rb.linearVelocity; // Œ•‚ÌŒü‚«‚ğˆÚ“®•ûŒü‚É‡‚í‚¹‚é
-        HandleComeback();                    // ƒvƒŒƒCƒ„[‚Ö‚Ì–ß‚èˆ—
-        HandleBounce();                      // Ÿ‚Ì“G‚Ö‚Ì’µ‚Ëˆ—
+        transform.right = rb.linearVelocity; // ï¿½ï¿½ï¿½ÌŒï¿½ï¿½ï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½í‚¹ï¿½ï¿½
+        HandleComeback();                    // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ö‚Ì–ß‚èˆï¿½ï¿½
+        HandleBounce();                      // ï¿½ï¿½ï¿½Ì“Gï¿½Ö‚Ì’ï¿½ï¿½Ëï¿½ï¿½ï¿½
     }
 
-    // Ÿ‚Ìƒ^[ƒQƒbƒg‚Ö‚ÌˆÚ“®EUŒ‚ˆ—
+    // ï¿½ï¿½ï¿½Ìƒ^ï¿½[ï¿½Qï¿½bï¿½gï¿½Ö‚ÌˆÚ“ï¿½ï¿½Eï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private void HandleBounce()
     {
         if (nextTarget == null)
@@ -35,20 +35,20 @@ public class SkillObject_SwordBounce : SkillObject_Sword
 
         if (Vector2.Distance(transform.position, nextTarget.position) < 0.75f)
         {
-            DamageEnemiesInRadius(transform, 1); // Õ“Ë‚Éƒ_ƒ[ƒW
+            DamageEnemiesInRadius(transform, 1); // ï¿½Õ“Ëï¿½ï¿½Éƒ_ï¿½ï¿½ï¿½[ï¿½W
 
-            enemyTargets = GetEnemiesAround(transform, 10); // üˆÍ‚Ì“G‚ğXV
+            enemyTargets = GetEnemiesAround(transform, 10); // ï¿½ï¿½ï¿½Í‚Ì“Gï¿½ï¿½Xï¿½V
             BounceToNextTarget();
 
             if (bounceCount == 0 || nextTarget == null)
             {
                 nextTarget = null;
-                GetSwordBackToPlayer(); // ’µ‚ËI—¹‚ÅƒvƒŒƒCƒ„[‚É–ß‚·
+                GetSwordBackToPlayer(); // ï¿½ï¿½ï¿½ËIï¿½ï¿½ï¿½Åƒvï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½É–ß‚ï¿½
             }
         }
     }
 
-    // Ÿ‚Ìƒ^[ƒQƒbƒg‚ğŒˆ’è
+    // ï¿½ï¿½ï¿½Ìƒ^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½ï¿½ï¿½
     private void BounceToNextTarget()
     {
         Transform target = GetNextTarget();
@@ -61,27 +61,27 @@ public class SkillObject_SwordBounce : SkillObject_Sword
             nextTarget = null;
     }
 
-    // “–‚½‚è”»’è‚É“ü‚Á‚½‚Æ‚«‚Ìˆ—
+    // ï¿½ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½É“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½Ìï¿½ï¿½ï¿½
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        anim?.SetTrigger("spin"); // ‰ñ“]ƒAƒjƒ[ƒVƒ‡ƒ“
+        anim?.SetTrigger("spin"); // ï¿½ï¿½]ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½
 
         if (enemyTargets == null)
         {
-            enemyTargets = GetEnemiesAround(transform, 10); // ”ÍˆÍ“à‚Ì“G‚ğæ“¾
-            rb.simulated = false;                            // ˆÚ“®’â~
+            enemyTargets = GetEnemiesAround(transform, 10); // ï¿½ÍˆÍ“ï¿½Ì“Gï¿½ï¿½æ“¾
+            rb.simulated = false;                            // ï¿½Ú“ï¿½ï¿½ï¿½~
         }
 
-        DamageEnemiesInRadius(transform, 1); // ”ÍˆÍUŒ‚
+        DamageEnemiesInRadius(transform, 1); // ï¿½ÍˆÍUï¿½ï¿½
 
-        // ’µ‚Ë‚é‘ÎÛ‚ª‚¢‚È‚¢A‚Ü‚½‚Í’µ‚Ë‰ñ”I—¹
+        // ï¿½ï¿½ï¿½Ë‚ï¿½ÎÛ‚ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½Aï¿½Ü‚ï¿½ï¿½Í’ï¿½ï¿½Ë‰ñ”Iï¿½ï¿½
         if (enemyTargets.Length <= 1 || bounceCount == 0)
             GetSwordBackToPlayer();
         else
             nextTarget = GetNextTarget();
     }
 
-    // alive‚È“G‚¾‚¯‚ğ•Ô‚·
+    // aliveï¿½È“Gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½
     private List<Transform> GetAliveTargets()
     {
         List<Transform> aliveTargets = new List<Transform>();
@@ -95,7 +95,7 @@ public class SkillObject_SwordBounce : SkillObject_Sword
         return aliveTargets;
     }
 
-    // ‰ß‹‚É‘I‚Î‚ê‚Ä‚¢‚È‚¢“G‚¾‚¯‚ğ•Ô‚·B‚·‚×‚Ä‘I‚Î‚ê‚½ê‡‚ÍƒŠƒXƒg‚ğƒŠƒZƒbƒg
+    // ï¿½ß‹ï¿½ï¿½É‘Iï¿½Î‚ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½Gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½Bï¿½ï¿½ï¿½×‚Ä‘Iï¿½Î‚ê‚½ï¿½ê‡ï¿½Íƒï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
     private List<Transform> GetValidTargets()
     {
         List<Transform> validTargets = new List<Transform>();
@@ -114,7 +114,7 @@ public class SkillObject_SwordBounce : SkillObject_Sword
         return aliveTargets;
     }
 
-    // ƒ‰ƒ“ƒ_ƒ€‚ÉŸ‚Ìƒ^[ƒQƒbƒg‚ğŒˆ’è‚µ‚ÄselectedBefore‚É‹L˜^
+    // ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½Éï¿½ï¿½Ìƒ^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½ï¿½è‚µï¿½ï¿½selectedBeforeï¿½É‹Lï¿½^
     private Transform GetNextTarget()
     {
         List<Transform> validTarget = GetValidTargets();

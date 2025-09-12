@@ -410,6 +410,7 @@ GameObject:
   - component: {fileID: 8051161262718059846}
   - component: {fileID: 4964908324310208199}
   - component: {fileID: 6965031990942069463}
+  - component: {fileID: 4839335752889821768}
   m_Layer: 8
   m_Name: PigAssassin
   m_TagString: Untagged
@@ -457,12 +458,12 @@ MonoBehaviour:
   groundCheck: {fileID: 8189882669188338713}
   upperWallCheck: {fileID: 6883548938180043010}
   lowerWallCheck: {fileID: 0}
-  blockState: {fileID: 0}
   battleMoveSpeed: 2.5
   attackDistance: 1
   battleTimeDuration: 3
   minRetreatDistance: 1.3
   retreatVelocity: {x: 7, y: 4}
+  experienceReward: 20
   moveSpeed: 1.4
   idleTime: 1.5
   moveAnimSpeedMultiplier: 1
@@ -578,7 +579,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  isDead: 0
   regenInterval: 1
   canRegenerateHealth: 1
   knockbackPower: {x: 5, y: 3}
@@ -625,7 +625,7 @@ MonoBehaviour:
   setupSO: {fileID: 11400000, guid: 20dc4f31485f71f459cdf041534c6039, type: 2}
   resources:
     maxHealth:
-      baseValue: 10000
+      baseValue: 1
       modifiers: []
     healthRegen:
       baseValue: 0
@@ -653,6 +653,9 @@ MonoBehaviour:
       baseValue: 0
       modifiers: []
     lightningDamage:
+      baseValue: 0
+      modifiers: []
+    elementalDamage:
       baseValue: 0
       modifiers: []
   defense:
@@ -699,6 +702,22 @@ MonoBehaviour:
   lightningStrikeVFX: {fileID: 5452963836730128507, guid: 917ea9143fc00074cbb00d86081c4e0b, type: 3}
   currentCharge: 0
   maxCharge: 1
+--- !u!114 &4839335752889821768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5463326596169511843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c677bd71e8f6ef64d9b939a33eb8d37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDropPrefab: {fileID: 306079027514980540, guid: 37022bf799550874c888d104b2d79da0, type: 3}
+  dropData: {fileID: 11400000, guid: 4a1c08ab3384a034c895b9463a3d841f, type: 2}
+  maxRarityAmount: 1200
+  maxItemsToDrop: 4
 --- !u!1 &5766809111770807109
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,6 @@ public class UI_MerchantSlot : UI_ItemSlot
         if (itemInSlot == null)
             return;
 
-
         bool rightButton = eventData.button == PointerEventData.InputButton.Right;
         bool leftButton = eventData.button == PointerEventData.InputButton.Left;
 
@@ -21,7 +20,6 @@ public class UI_MerchantSlot : UI_ItemSlot
         {
             if(rightButton)
             {
-                Debug.Log("Hello");
                 bool sellFullStack = Input.GetKey(KeyCode.LeftControl);
                 merchant.TrySellItem(itemInSlot, sellFullStack);
             }
@@ -42,18 +40,6 @@ public class UI_MerchantSlot : UI_ItemSlot
     {
         if (itemInSlot == null)
             return;
-
-        if (ui == null)
-        {
-            Debug.LogError("UI is null!");
-            return;
-        }
-
-        if (ui.itemTooltip == null)
-        {
-            Debug.LogError("UI.itemTooltip is null!");
-            return;
-        }
 
         if (slotType == MerchantSlotType.MerchantSlot)
             ui.itemTooltip.ShowToolTip(true, rect, itemInSlot, true, true);

@@ -1,5 +1,5 @@
+using TMPro;
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.UI;
 
 // �v���C���[�̃C���x���g��UI��Ǘ�����N���X
@@ -9,6 +9,7 @@ public class UI_Inventory : MonoBehaviour
 
     [SerializeField] private UI_ItemSlotParent inventorySlotsParent; // �A�C�e���X���b�g�̐e�I�u�W�F�N�g
     [SerializeField] private UI_EquipSlotParent equipSlotParent; // �h��X���b�g�̐e
+    [SerializeField] private TextMeshProUGUI goldAmount;
 
     // ������
     private void Awake()
@@ -25,6 +26,7 @@ public class UI_Inventory : MonoBehaviour
     {
         inventorySlotsParent.UpdateSlots(inventory.itemList);  // �A�C�e���X���b�g�X�V
         equipSlotParent.UpdateEquipmentSlots(inventory.equipList);
+        UpdateGoldUI();
     }
 
     // �C���x���g��UI������I�ɍX�V�i���C�A�E�g������č\�z�j
@@ -32,5 +34,10 @@ public class UI_Inventory : MonoBehaviour
     {
         inventorySlotsParent.UpdateSlots(inventory.itemList);
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+    }
+
+    public void UpdateGoldUI()
+    {
+        goldAmount.text = "お金: " + inventory.gold.ToString();
     }
 }

@@ -72,9 +72,9 @@ public class Inventory_Base : MonoBehaviour
     }
 
     // �A�C�e����f�[�^���猟��
-    public Inventory_Item FindItem(Item_DataSO itemData)
+    public Inventory_Item FindItem(Inventory_Item itemToFind)
     {
-        return itemList.Find(item => item.itemData == itemData);
+        return itemList.Find(item => item == itemToFind);
     }
 
     public void TriggerUpdateUI() => OnInventoryChange?.Invoke();

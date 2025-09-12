@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Enemy_VFX : Entity_VFX // UŒ‚ƒ^[ƒQƒbƒg‚Ì‚½‚ß‚Ì¬‚³‚È•â•ƒNƒ‰ƒX
+public class Enemy_VFX : Entity_VFX // ï¿½Uï¿½ï¿½ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½Ì‚ï¿½ï¿½ß‚Ìï¿½ï¿½ï¿½ï¿½È•â•ï¿½Nï¿½ï¿½ï¿½X
 {
-    [Header("ƒJƒEƒ“ƒ^[UŒ‚ƒEƒBƒ“ƒhƒE‚ÌVFX")]
-    [SerializeField] private GameObject attackAlert; // UŒ‚Œx—p‚ÌƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ðŠ„‚è“–‚Ä‚é
+    [Header("ï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½Uï¿½ï¿½ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½ï¿½VFX")]
+    [SerializeField] private GameObject attackAlert; // ï¿½Uï¿½ï¿½ï¿½xï¿½ï¿½ï¿½pï¿½ÌƒQï¿½[ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½è“–ï¿½Ä‚ï¿½
 
-    // “G‚ªUŒ‚‚ðŽdŠ|‚¯‚éÛ‚ÉUŒ‚Œx‚ð•\Ž¦E”ñ•\Ž¦‚ÉØ‚è‘Ö‚¦‚é
+    // ï¿½Gï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½ï¿½dï¿½|ï¿½ï¿½ï¿½ï¿½Û‚ÉUï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½Eï¿½ï¿½\ï¿½ï¿½ï¿½ÉØ‚ï¿½Ö‚ï¿½ï¿½ï¿½
     public void EnableAttackAlert(bool enable) => attackAlert.SetActive(enable);
 }

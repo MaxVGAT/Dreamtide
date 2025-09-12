@@ -15,9 +15,7 @@ public class UI_Merchant : MonoBehaviour
         this.inventory = inventory;
 
         merchant.SetInventory(inventory);
-
         merchant.OnInventoryChange += UpdateSlotUI;
-
         UpdateSlotUI();
 
         UI_MerchantSlot[] merchantSlotComponent = GetComponentsInChildren<UI_MerchantSlot>();

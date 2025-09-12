@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class Skill_TimeEcho : Skill_Base
 {
-    [SerializeField] private GameObject timeEchoPrefab; // ƒvƒŒƒnƒu‰»‚³‚ê‚½ƒ^ƒCƒ€ƒGƒR[
-    [SerializeField] private float timeEchoDuration;    // ƒ^ƒCƒ€ƒGƒR[‚Ì‘¶İŠÔ
+    [SerializeField] private GameObject timeEchoPrefab; // ï¿½vï¿½ï¿½ï¿½nï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½^ï¿½Cï¿½ï¿½ï¿½Gï¿½Rï¿½[
+    [SerializeField] private float timeEchoDuration;    // ï¿½^ï¿½Cï¿½ï¿½ï¿½Gï¿½Rï¿½[ï¿½Ì‘ï¿½ï¿½İï¿½ï¿½ï¿½
 
     [Header("Attack upgrades")]
-    [SerializeField] private int maxAttacks = 3;        // Å‘åUŒ‚‰ñ”iƒ}ƒ‹ƒ`ƒAƒ^ƒbƒN—pj
-    [SerializeField] private float duplicateChance = 0.3f; // UŒ‚•¡»‚ÌŠm—¦
+    [SerializeField] private int maxAttacks = 3;        // ï¿½Å‘ï¿½Uï¿½ï¿½ï¿½ñ”iï¿½}ï¿½ï¿½ï¿½`ï¿½Aï¿½^ï¿½bï¿½Nï¿½pï¿½j
+    [SerializeField] private float duplicateChance = 0.3f; // ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌŠmï¿½ï¿½
 
     [Header("Heal Wisp Upgrades")]
-    [SerializeField] private float damagePercentHealed = 0.3f; // ‰ñ•œ—Êió‚¯‚½ƒ_ƒ[ƒW‚ÌŠ„‡j
-    [SerializeField] private float cooldownReducedInSeconds;  // ƒN[ƒ‹ƒ_ƒEƒ“’Zk—Ê
+    [SerializeField] private float damagePercentHealed = 0.3f; // ï¿½ñ•œ—Êiï¿½ó‚¯‚ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ÌŠï¿½ï¿½ï¿½ï¿½j
+    [SerializeField] private float cooldownReducedInSeconds;  // ï¿½Nï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½Zï¿½kï¿½ï¿½
 
-    // WispŒ`‘Ô‚Ìê‡‚É‰ñ•œŠ„‡‚ğ•Ô‚·
+    // Wispï¿½`ï¿½Ô‚Ìê‡ï¿½É‰ñ•œŠï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½
     public float GetPercentOfDamageHealed()
     {
         if (!ShouldBeWisp())
@@ -22,7 +22,7 @@ public class Skill_TimeEcho : Skill_Base
         return damagePercentHealed;
     }
 
-    // WispƒAƒbƒvƒOƒŒ[ƒh‚ª—LŒø‚Èê‡AƒN[ƒ‹ƒ_ƒEƒ“’Zk—Ê‚ğ•Ô‚·
+    // Wispï¿½Aï¿½bï¿½vï¿½Oï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½Èê‡ï¿½Aï¿½Nï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½Zï¿½kï¿½Ê‚ï¿½Ô‚ï¿½
     public float GetCooldownReduceInSeconds()
     {
         if (upgradeType != Skill_UpgradeType.TimeEcho_CooldownWisp)
@@ -31,20 +31,20 @@ public class Skill_TimeEcho : Skill_Base
         return cooldownReducedInSeconds;
     }
 
-    // ƒlƒKƒeƒBƒuŒø‰Ê‚ğœ‹‚Å‚«‚é‚©”»’è
+    // ï¿½lï¿½Kï¿½eï¿½Bï¿½uï¿½ï¿½ï¿½Ê‚ï¿½ï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½é‚©ï¿½ï¿½ï¿½ï¿½
     public bool CanRemoveNegativeEffects()
     {
         return upgradeType == Skill_UpgradeType.TimeEcho_CleanseWisp;
     }
 
-    // Œ»İ‚ÌƒAƒbƒvƒOƒŒ[ƒh‚ª‰ñ•œ/ƒNƒŒƒ“ƒYWisp‚©”»’è
+    // ï¿½ï¿½ï¿½İ‚ÌƒAï¿½bï¿½vï¿½Oï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½/ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½YWispï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public bool ShouldBeWisp()
     {
         return upgradeType == Skill_UpgradeType.TimeEcho_HealWisp
             || upgradeType == Skill_UpgradeType.TimeEcho_CleanseWisp;
     }
 
-    // •¡»UŒ‚‚ÌŠm—¦‚ğ•Ô‚·
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½ÌŠmï¿½ï¿½ï¿½ï¿½Ô‚ï¿½
     public float GetDuplicateChance()
     {
         if (upgradeType != Skill_UpgradeType.TimeEcho_ChanceToDuplicate)
@@ -53,7 +53,7 @@ public class Skill_TimeEcho : Skill_Base
         return duplicateChance;
     }
 
-    // Å‘åUŒ‚‰ñ”‚ğ•Ô‚·
+    // ï¿½Å‘ï¿½Uï¿½ï¿½ï¿½ñ”‚ï¿½Ô‚ï¿½
     public int GetMaxAttacks()
     {
         if (upgradeType == Skill_UpgradeType.TimeEcho_SingleAttack
@@ -66,29 +66,30 @@ public class Skill_TimeEcho : Skill_Base
         return 0;
     }
 
-    // ƒ^ƒCƒ€ƒGƒR[‚Ì‘¶İŠÔ‚ğ•Ô‚·
+    // ï¿½^ï¿½Cï¿½ï¿½ï¿½Gï¿½Rï¿½[ï¿½Ì‘ï¿½ï¿½İï¿½ï¿½Ô‚ï¿½Ô‚ï¿½
     public float GetEchoDuration()
     {
         return timeEchoDuration;
     }
 
-    // ƒXƒLƒ‹g—pˆ—
+    // ï¿½Xï¿½Lï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½ï¿½
     public override void TryUseSkill()
     {
         if (!CanUseSkill())
             return;
 
-        // ƒGƒR[‚ğì¬‚·‚éˆÊ’u‚ğŒˆ’èiŒ»İˆÊ’uj
+        // ï¿½Gï¿½Rï¿½[ï¿½ï¿½ì¬ï¿½ï¿½ï¿½ï¿½Ê’uï¿½ï¿½ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½İˆÊ’uï¿½j
         Vector3 exactPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         CreateTimeEcho(exactPosition);
+        SetSkillOnCooldown();
     }
 
-    // ƒ^ƒCƒ€ƒGƒR[‚ğ¶¬
+    // ï¿½^ï¿½Cï¿½ï¿½ï¿½Gï¿½Rï¿½[ï¿½ğ¶ï¿½
     public void CreateTimeEcho(Vector3? targetPosition = null)
     {
-        Vector3 position = targetPosition ?? transform.position; // w’è‚ª‚È‚¯‚ê‚ÎŒ»İˆÊ’u
+        Vector3 position = targetPosition ?? transform.position; // ï¿½wï¿½è‚ªï¿½È‚ï¿½ï¿½ï¿½ÎŒï¿½ï¿½İˆÊ’u
 
         GameObject timeEcho = Instantiate(timeEchoPrefab, position, Quaternion.identity);
-        timeEcho.GetComponent<SkillObject_TimeEcho>().SetupEcho(this); // ƒZƒbƒgƒAƒbƒv
+        timeEcho.GetComponent<SkillObject_TimeEcho>().SetupEcho(this); // ï¿½Zï¿½bï¿½gï¿½Aï¿½bï¿½v
     }
 }

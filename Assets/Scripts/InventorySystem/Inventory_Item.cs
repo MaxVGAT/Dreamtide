@@ -78,6 +78,8 @@ public class Inventory_Item
         if (itemData.itemType == Item_Type.Material)
         {
             sb.AppendLine("");
+            sb.AppendLine("");
+            sb.AppendLine("");
             sb.AppendLine("クラフティング専用なリソース。");
             sb.AppendLine();
             sb.AppendLine();
@@ -87,12 +89,15 @@ public class Inventory_Item
         if (itemData.itemType == Item_Type.Consumables)
         {
             sb.AppendLine("");
+            sb.AppendLine("");
+            sb.AppendLine("");
             sb.AppendLine(itemEffect.effectDescription);
             sb.AppendLine();
             sb.AppendLine();
             return sb.ToString();
         }
 
+        sb.AppendLine("");
         sb.AppendLine("");
 
         foreach (var mod in modifiers)
