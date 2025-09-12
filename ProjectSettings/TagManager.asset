@@ -56,14 +56,14 @@ TagManager:
   - name: Enemy
     uniqueID: 3706769625
     locked: 0
-  - name: Skills
-    uniqueID: 1903266617
-    locked: 0
   - name: Lights
     uniqueID: 1573877629
     locked: 0
   - name: PlayerPickups
     uniqueID: 1208918587
+    locked: 0
+  - name: Skills
+    uniqueID: 1903266617
     locked: 0
   - name: Player
     uniqueID: 3876397981

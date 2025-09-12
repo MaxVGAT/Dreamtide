@@ -5,7 +5,7 @@ public class ItemEffect_GrantSkillPoint : Item_EffectDataSO
 {
     [SerializeField] private int pointsToAdd;
 
-    public override void ExecuteEffect()
+    public override void ExecuteEffect(Entity_Player player)
     {
         UI ui = FindFirstObjectByType<UI>();
         ui.skillTree.AddSkillPoints(pointsToAdd);

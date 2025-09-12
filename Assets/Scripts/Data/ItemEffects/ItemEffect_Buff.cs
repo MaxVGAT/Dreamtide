@@ -11,18 +11,13 @@ public class ItemEffect_Buff : Item_EffectDataSO
 
     private Player_Stats playerStats;
 
-    private void Awake()
+    public override bool CanBeUsed(Entity_Player player)
     {
-        playerStats = FindFirstObjectByType<Player_Stats>();
-    }
-
-    public override bool CanBeUsed()
-    {
-        if(playerStats == null)
-            playerStats = FindFirstObjectByType<Player_Stats>();
-
-        if (playerStats.CanApplyBuffOf(source))
+        if (player.stats.CanApplyBuffOf(source))
+        {
+            this.player = player;
             return true;
+        }
         else
         {
             Debug.Log("Same buff can't bne applied twice.");
@@ -30,11 +25,9 @@ public class ItemEffect_Buff : Item_EffectDataSO
         }
     }
 
-    public override void ExecuteEffect()
+    public override void ExecuteEffect(Entity_Player player)
     {
-        if (playerStats == null)
-            playerStats = FindFirstObjectByType<Player_Stats>();
-
-        playerStats.ApplyBuff(buffsToApply, duration, source);
+        player.stats.ApplyBuff(buffsToApply, duration, source);
+        player = null;
     }
 }

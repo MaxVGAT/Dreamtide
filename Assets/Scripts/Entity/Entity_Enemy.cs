@@ -8,6 +8,7 @@ public class Entity_Enemy : Entity
 
     private Entity_VFX entityVFX;
     public Enemy_Health health { get; private set; }
+    public Entity_Stats stats { get; private set; }
 
     // �G�̏�ԎQ��
     public EnemyIdleState idleState;
@@ -54,6 +55,7 @@ public class Entity_Enemy : Entity
         base.Awake();
         entityVFX = GetComponent<Entity_VFX>();
         health = GetComponent<Enemy_Health>();
+        stats = GetComponent<Entity_Stats>();
     }
 
     protected override void Start()

@@ -122,6 +122,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "QuickItem_Slot1",
+                    "type": "Button",
+                    "id": "df6eccb2-1f4a-4281-89ea-8edc0b710934",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "QuickItem_Slot2",
+                    "type": "Button",
+                    "id": "3236d522-220f-4cc6-b20d-0beed8e65056",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -430,6 +448,28 @@
                     "processors": "",
                     "groups": ";Keyboard & Mouse",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1c5cc924-05d3-4e44-99e2-158cece795b5",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "QuickItem_Slot1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "744f47a6-b374-4899-b9c2-c17609d81427",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "QuickItem_Slot2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

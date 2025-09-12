@@ -13,8 +13,8 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     protected RectTransform rect; // �X���b�g��RectTransform
 
     [Header("UI Slot Setup")]
-    [SerializeField] private Image itemIcon; // �A�C�e���A�C�R��
-    [SerializeField] private TextMeshProUGUI itemStackSize; // �A�C�e���̃X�^�b�N���\��
+    [SerializeField] protected Image itemIcon; // �A�C�e���A�C�R��
+    [SerializeField] protected TextMeshProUGUI itemStackSize; // �A�C�e���̃X�^�b�N���\��
 
     // �_�u���N���b�N�p
     protected float lastClickTime;
@@ -102,6 +102,9 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         if (itemInSlot == null)
             return;
 
+        if (ui == null || ui.itemTooltip == null)
+            return;
+
         bool isMerchantOpen = ui.IsMerchantVisible();
 
         if (isMerchantOpen)
@@ -113,6 +116,9 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     // �}�E�X�����ꂽ��c�[���`�b�v��\��
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (ui == null || ui.itemTooltip == null)
+            return;
+
         ui.itemTooltip.ShowToolTip(false, null);
     }
 }

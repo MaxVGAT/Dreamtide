@@ -1,12 +1,18 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 // �v���C���[��p�C���x���g���i�����Ǘ��܂ށj
 public class Inventory_Player : Inventory_Base
 {
+    public event Action<int> OnQuickSlotUsed;
+
     private Entity_Player player; // �v���C���[�̃X�e�[�^�X�Q��
     public List<Inventory_EquipmentSlot> equipList; // �����X���b�g���X�g
     public Inventory_Storage storage;
+
+    [Header("Quick Item Slots")]
+    public Inventory_Item[] quickItems = new Inventory_Item[2];
 
     public int gold = 10000;
 
@@ -14,6 +20,29 @@ public class Inventory_Player : Inventory_Base
     {
         base.Awake();
         player = GetComponent<Entity_Player>(); // �v���C���[�̃X�e�[�^�X�擾
+    }
+
+    public void SetQuickItemsInSlot(int slotNumber, Inventory_Item itemToSet)
+    {
+        quickItems[slotNumber - 1] = itemToSet;
+        TriggerUpdateUI();
+    }
+
+    public void TryUseQuickItemInSlot(int passedSlotNumber)
+    {
+        int slotNumber = passedSlotNumber - 1;
+        var itemToUse = quickItems[slotNumber];
+
+        if (itemToUse == null)
+            return;
+
+        TryUseItem(itemToUse);
+
+        if(FindItem(itemToUse) == null)
+            quickItems[slotNumber] = FindSameItem(itemToUse);
+
+        TriggerUpdateUI();
+        OnQuickSlotUsed?.Invoke(slotNumber);
     }
 
     // �A�C�e���𑕔����悤�Ƃ���
@@ -54,19 +83,27 @@ public class Inventory_Player : Inventory_Base
     public void TryUseItem(Inventory_Item item)
     {
         Inventory_Item inventoryItem = FindItem(item);
+
         if (inventoryItem == null)
             return;
 
-        // Check if it has an effect that can be used (consumable)
-        if (inventoryItem.itemEffect != null && inventoryItem.itemEffect.CanBeUsed())
-            UseConsumable(inventoryItem);
-        else
-            TryEquipItem(item);
+        // Handle consumables
+        if (inventoryItem.itemData.itemType == Item_Type.Consumables)
+        {
+            if (inventoryItem.itemEffect != null && inventoryItem.itemEffect.CanBeUsed(player))
+                UseConsumable(inventoryItem);
+
+            return; // don’t fall through to equip logic
+        }
+
+        // Otherwise, try equipping
+        TryEquipItem(item);
     }
+
 
     private void UseConsumable(Inventory_Item consumable)
     {
-        consumable.itemEffect.ExecuteEffect();
+        consumable.itemEffect.ExecuteEffect(player);
         RemoveOneItem(consumable);
     }
 

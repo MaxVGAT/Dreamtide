@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
@@ -101,7 +102,13 @@ public class Inventory_Storage : Inventory_Base
             }
         }
 
+        SortItems();
         TriggerUpdateUI();
+    }
+
+    public void SortItems()
+    {
+        itemList = itemList.OrderBy(item => item.itemData.name).ThenBy(item => item.stackSize).ToList();
     }
 
     public void FromStorageToPlayer(Inventory_Item item, bool transferAll)
@@ -117,7 +124,7 @@ public class Inventory_Storage : Inventory_Base
                 playerInventory.AddItem(itemToAdd);
             }
         }
-
+        SortItems();
         TriggerUpdateUI();
     }
 }

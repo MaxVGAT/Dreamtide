@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "RPG Setup / Item Data/ Item Effect", fileName = "Item Effect Data - Refund All Skills")]
 public class ItemEffect_RefundSkillPoints : Item_EffectDataSO
 {
-    public override void ExecuteEffect()
+    public override void ExecuteEffect(Entity_Player player)
     {
         UI ui = FindFirstObjectByType<UI>();
         if (ui == null)

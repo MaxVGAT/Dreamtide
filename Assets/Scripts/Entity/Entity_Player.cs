@@ -13,6 +13,8 @@ public class Entity_Player : Entity
     public Entity_Health health { get; private set; }
     public Entity_StatusHandler statusHandler { get; private set; }
     public Player_Combat combat { get; private set; }
+    public Inventory_Player inventory { get; private set; }
+    public Player_Stats stats { get; private set; }
 
     #region State Variables
     // �v���C���[�̊e���
@@ -66,6 +68,8 @@ public class Entity_Player : Entity
         skillManager = GetComponent<Player_SkillManager>();
         statusHandler = GetComponent<Entity_StatusHandler>();
         combat = GetComponent<Player_Combat>();
+        inventory = GetComponent<Inventory_Player>();
+        stats = GetComponent<Player_Stats>();
 
         // �e��Ԃ������
         idleState = new Player_IdleState(this, stateMachine, "idle");
@@ -201,6 +205,9 @@ public class Entity_Player : Entity
         // UI�؂�ւ�
         input.Player.ToggleUI.performed += context => ui.ToggleUI();
         input.Player.Interact.performed += context => TryInteract();
+
+        input.Player.QuickItem_Slot1.performed += context => inventory.TryUseQuickItemInSlot(1);
+        input.Player.QuickItem_Slot2.performed += context => inventory.TryUseQuickItemInSlot(2);
 
         // �X�L���g�p
         input.Player.Skill.performed += context => skillManager.shard.TryUseSkill();

@@ -25,13 +25,9 @@ public class UI_ItemSlotParent : MonoBehaviour
         for (int i = 0; i < slots.Length; i++)
         {
             if (i < itemList.Count)
-            {
                 slots[i].UpdateSlot(itemList[i]);
-            }
             else
-            {
                 slots[i].UpdateSlot(null);
-            }
         }
     }
 }

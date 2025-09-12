@@ -4,52 +4,52 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public event Action OnFlipped; // ƒGƒ“ƒeƒBƒeƒB‚ª”½“]‚µ‚½‚Æ‚«‚É”­‰Î‚·‚éƒCƒxƒ“ƒg
+    public event Action OnFlipped; // ï¿½Gï¿½ï¿½ï¿½eï¿½Bï¿½eï¿½Bï¿½ï¿½ï¿½ï¿½ï¿½]ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½É”ï¿½ï¿½Î‚ï¿½ï¿½ï¿½Cï¿½xï¿½ï¿½ï¿½g
 
-    public Animator anim { get; private set; } // AnimatorƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾‚µA“Ç‚İæ‚è‰Â”\‚É‚·‚é
+    public Animator anim { get; private set; } // Animatorï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½ï¿½æ“¾ï¿½ï¿½ï¿½Aï¿½Ç‚İï¿½ï¿½Â”\ï¿½É‚ï¿½ï¿½ï¿½
 
-    public Rigidbody2D rb { get; private set; } // Rigidbody2DƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾‚µA“Ç‚İæ‚è‰Â”\‚É‚·‚é
-    public Entity_Stats stats { get; private set; } // Entity_StatsƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾‚µA“Ç‚İæ‚è‰Â”\‚É‚·‚é
+    public Rigidbody2D rb { get; private set; } // Rigidbody2Dï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½ï¿½æ“¾ï¿½ï¿½ï¿½Aï¿½Ç‚İï¿½ï¿½Â”\ï¿½É‚ï¿½ï¿½ï¿½
+     // Entity_Statsï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½ï¿½æ“¾ï¿½ï¿½ï¿½Aï¿½Ç‚İï¿½ï¿½Â”\ï¿½É‚ï¿½ï¿½ï¿½
 
-    protected StateMachine stateMachine; // ƒXƒe[ƒgƒ}ƒVƒ“‚ÌQÆ‚ğƒLƒƒƒbƒVƒ…
+    protected StateMachine stateMachine; // ï¿½Xï¿½eï¿½[ï¿½gï¿½}ï¿½Vï¿½ï¿½ï¿½ÌQï¿½Æ‚ï¿½Lï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½
 
-    public int facingDirection { get; private set; } = 1; // Œü‚¢‚Ä‚¢‚é•ûŒüi1‰EŒü‚«j‚ğ“Ç‚İæ‚è‰Â”\‚É‚µA‰Šú’l‚ğ‰EŒü‚«‚Éİ’è
-    private bool facingRight = true; // •ûŒü‚Ì“ñdƒ`ƒFƒbƒN—pƒtƒ‰ƒO
+    public int facingDirection { get; private set; } = 1; // ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½i1ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½jï¿½ï¿½Ç‚İï¿½ï¿½Â”\ï¿½É‚ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½lï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Éİ’ï¿½
+    private bool facingRight = true; // ï¿½ï¿½ï¿½ï¿½ï¿½Ì“ï¿½dï¿½`ï¿½Fï¿½bï¿½Nï¿½pï¿½tï¿½ï¿½ï¿½O
 
     [Header("Collision detection")]
-    [SerializeField] public LayerMask whatIsGround; // ’n–Ê”»’è—pƒŒƒCƒ„[ƒ}ƒXƒN
-    [SerializeField] private float groundCheckDistance; // ’n–Ê”»’è—pƒŒƒCƒLƒƒƒXƒg‚Ì’·‚³
-    [SerializeField] private float wallCheckDistance; // •Ç”»’è—pƒŒƒCƒLƒƒƒXƒg‚Ì’·‚³
-    [SerializeField] private Transform groundCheck; // ’n–Ê”»’è‚Ì‹N“_
-    [SerializeField] private Transform upperWallCheck; // •Ç”»’è‚Ìã‘¤‹N“_
-    [SerializeField] private Transform lowerWallCheck; // •Ç”»’è‚Ì‰º‘¤‹N“_
+    [SerializeField] public LayerMask whatIsGround; // ï¿½nï¿½Ê”ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½}ï¿½Xï¿½N
+    [SerializeField] private float groundCheckDistance; // ï¿½nï¿½Ê”ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½Cï¿½Lï¿½ï¿½ï¿½Xï¿½gï¿½Ì’ï¿½ï¿½ï¿½
+    [SerializeField] private float wallCheckDistance; // ï¿½Ç”ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½Cï¿½Lï¿½ï¿½ï¿½Xï¿½gï¿½Ì’ï¿½ï¿½ï¿½
+    [SerializeField] private Transform groundCheck; // ï¿½nï¿½Ê”ï¿½ï¿½ï¿½Ì‹Nï¿½_
+    [SerializeField] private Transform upperWallCheck; // ï¿½Ç”ï¿½ï¿½ï¿½Ìã‘¤ï¿½Nï¿½_
+    [SerializeField] private Transform lowerWallCheck; // ï¿½Ç”ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½ï¿½ï¿½Nï¿½_
 
-    public bool isWallDetected { get; private set; } // •Ç‚ª‹ß‚­‚É‚ ‚é‚©‚Ç‚¤‚©
-    public bool isGrounded { get; private set; } // ’n–Ê‚ÉÚ’n‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
+    public bool isWallDetected { get; private set; } // ï¿½Ç‚ï¿½ï¿½ß‚ï¿½ï¿½É‚ï¿½ï¿½é‚©ï¿½Ç‚ï¿½ï¿½ï¿½
+    public bool isGrounded { get; private set; } // ï¿½nï¿½Ê‚ÉÚ’nï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½Ç‚ï¿½ï¿½ï¿½
 
-    public virtual bool isBlocking => false; // ‘¼ƒNƒ‰ƒX‚ÅƒI[ƒo[ƒ‰ƒCƒh‰Â”\‚È–hŒäó‘Ô”»’è
+    public virtual bool isBlocking => false; // ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½Xï¿½ÅƒIï¿½[ï¿½oï¿½[ï¿½ï¿½ï¿½Cï¿½hï¿½Â”\ï¿½È–hï¿½ï¿½ï¿½Ô”ï¿½ï¿½ï¿½
 
-    // ƒmƒbƒNƒoƒbƒN—p•Ï”
+    // ï¿½mï¿½bï¿½Nï¿½oï¿½bï¿½Nï¿½pï¿½Ïï¿½
     private bool isKnocked;
     private Coroutine knockbackCo;
 
-    // Á–Å‚¨‚æ‚ÑƒXƒ[ƒ_ƒEƒ“ˆ——pCoroutine
+    // ï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½ÑƒXï¿½ï¿½ï¿½[ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pCoroutine
     private Coroutine despawnCo;
     private Coroutine slowDownCo;
 
-    // Œp³æ‚Åˆ—‚ğ•ÏX‰Â”\‚É‚·‚é‚½‚ßprotected virtual
+    // ï¿½pï¿½ï¿½ï¿½ï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½ÏXï¿½Â”\ï¿½É‚ï¿½ï¿½é‚½ï¿½ï¿½protected virtual
     protected virtual void Awake()
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        stats = GetComponent<Entity_Stats>();
+        
 
         stateMachine = new StateMachine();
     }
 
     protected virtual void Start()
     {
-        // ‹ó‚Ì‚Ü‚ÜŒp³æ‚Åg—p‰Â”\
+        // ï¿½ï¿½Ì‚Ü‚ÜŒpï¿½ï¿½ï¿½ï¿½Ågï¿½pï¿½Â”\
     }
 
     protected virtual void Update()
@@ -58,7 +58,7 @@ public class Entity : MonoBehaviour
         stateMachine.UpdateActiveState();
     }
 
-    // ƒAƒjƒ[ƒVƒ‡ƒ“ƒCƒxƒ“ƒg‚©‚çŒÄ‚Î‚ê‚éŠÖ”
+    // ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½Ä‚Î‚ï¿½ï¿½Öï¿½
     public void CurrentStateAnimationTrigger()
     {
         stateMachine.currentState.AnimationTrigger();
@@ -66,16 +66,16 @@ public class Entity : MonoBehaviour
 
     public virtual void EntityDeath()
     {
-        // Œp³æ‚ÅÀ‘•
+        // ï¿½pï¿½ï¿½ï¿½ï¿½Åï¿½ï¿½ï¿½
     }
 
-    // ƒXƒ[ƒ_ƒEƒ“ˆ—‚ğ~‚ß‚é
+    // ï¿½Xï¿½ï¿½ï¿½[ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½ß‚ï¿½
     public virtual void StopSlowDown()
     {
         slowDownCo = null;
     }
 
-    // ƒXƒ[ƒ_ƒEƒ“‚ğ“K—pBŠù‚ÉƒXƒ[ƒ_ƒEƒ“’†‚È‚çA—Dæ“x‚É‚æ‚Á‚Äã‘‚«‰Â”Û‚ğ”»’f
+    // ï¿½Xï¿½ï¿½ï¿½[ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½Kï¿½pï¿½Bï¿½ï¿½ï¿½ÉƒXï¿½ï¿½ï¿½[ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½Aï¿½Dï¿½ï¿½xï¿½É‚ï¿½ï¿½ï¿½Äã‘ï¿½ï¿½ï¿½Â”Û‚ğ”»’f
     public virtual void SlowDownEntityBy(float duration, float slowMultiplier, bool canOverrideSlowEffect = false)
     {
         if (slowDownCo != null)
@@ -94,7 +94,7 @@ public class Entity : MonoBehaviour
         yield return null;
     }
 
-    // €–S‚ÌƒtƒF[ƒhƒAƒEƒgˆ—ŠJn
+    // ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½Ìƒtï¿½Fï¿½[ï¿½hï¿½Aï¿½Eï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½n
     public void DespawnOnDeath(float duration)
     {
         if (despawnCo != null)
@@ -103,31 +103,31 @@ public class Entity : MonoBehaviour
         despawnCo = StartCoroutine(DespawnOnDeathCo(2f));
     }
 
-    private IEnumerator DespawnOnDeathCo(float duration) // ƒtƒF[ƒhƒAƒEƒg‚µ‚Ä‚©‚çƒQ[ƒ€ƒIƒuƒWƒFƒNƒg”jŠü
+    private IEnumerator DespawnOnDeathCo(float duration) // ï¿½tï¿½Fï¿½[ï¿½hï¿½Aï¿½Eï¿½gï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Qï¿½[ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½jï¿½ï¿½
     {
         float timer = 0f;
 
         SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
 
-        Color[] originalColors = new Color[sprites.Length]; // RGB‚Í•Ï‚¦‚¸‚ÉƒAƒ‹ƒtƒ@‚Ì‚İ‘€ì‚·‚é‚½‚ßŒ³‚ÌF‚ğ•Û‘¶
+        Color[] originalColors = new Color[sprites.Length]; // RGBï¿½Í•Ï‚ï¿½ï¿½ï¿½ï¿½ÉƒAï¿½ï¿½ï¿½tï¿½@ï¿½Ì‚İ‘ï¿½ï¿½ì‚·ï¿½é‚½ï¿½ßŒï¿½ï¿½ÌFï¿½ï¿½Û‘ï¿½
         for (int i = 0; i < sprites.Length; i++)
             originalColors[i] = sprites[i].color;
 
         while (timer < duration)
         {
             timer += Time.deltaTime;
-            float alphaFade = Mathf.Lerp(1f, 0f, timer / duration); // 1‚©‚ç0‚ÖƒAƒ‹ƒtƒ@’l‚ğüŒ`•âŠÔ
+            float alphaFade = Mathf.Lerp(1f, 0f, timer / duration); // 1ï¿½ï¿½ï¿½ï¿½0ï¿½ÖƒAï¿½ï¿½ï¿½tï¿½@ï¿½lï¿½ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½
 
             for (int i = 0; i < sprites.Length; i++)
             {
                 Color baseColor = originalColors[i];
 
-                baseColor.r = 1f;                    // ƒhƒ‰ƒ}ƒ`ƒbƒNŒø‰Ê‚Ì‚½‚ßÔF‚É•Ï‰»
+                baseColor.r = 1f;                    // ï¿½hï¿½ï¿½ï¿½}ï¿½`ï¿½bï¿½Nï¿½ï¿½ï¿½Ê‚Ì‚ï¿½ï¿½ßÔFï¿½É•Ï‰ï¿½
                 baseColor.g = 0f;
                 baseColor.b = 0f;
-                baseColor.a = alphaFade;             // ƒAƒ‹ƒtƒ@’l‚ÉƒtƒF[ƒh‚ğ“K—p
+                baseColor.a = alphaFade;             // ï¿½Aï¿½ï¿½ï¿½tï¿½@ï¿½lï¿½Éƒtï¿½Fï¿½[ï¿½hï¿½ï¿½Kï¿½p
 
-                sprites[i].color = baseColor;        // F‚ğ“K—p
+                sprites[i].color = baseColor;        // ï¿½Fï¿½ï¿½Kï¿½p
             }
 
             yield return null;
@@ -144,7 +144,7 @@ public class Entity : MonoBehaviour
         knockbackCo = StartCoroutine(KnockbackCo(knockback, duration));
     }
 
-    // ƒmƒbƒNƒoƒbƒN‚ğ“K—p
+    // ï¿½mï¿½bï¿½Nï¿½oï¿½bï¿½Nï¿½ï¿½Kï¿½p
     private IEnumerator KnockbackCo(Vector2 knockback, float duration)
     {
         isKnocked = true;
@@ -156,7 +156,7 @@ public class Entity : MonoBehaviour
         isKnocked = false;
     }
 
-    // ˆÚ“®‘¬“x‚Æ•ûŒü‚ğƒZƒbƒg‚µA•K—v‚È‚ç”½“]‚ğˆ—
+    // ï¿½Ú“ï¿½ï¿½ï¿½ï¿½xï¿½Æ•ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½Aï¿½Kï¿½vï¿½È‚ç”½ï¿½]ï¿½ï¿½ï¿½ï¿½ï¿½
     public void SetVelocity(float xVelocity, float yVelocity)
     {
         if (isKnocked) return;
@@ -165,7 +165,7 @@ public class Entity : MonoBehaviour
         HandleFlip(xVelocity);
     }
 
-    // ˆÚ“®•ûŒü‚É‡‚í‚¹‚ÄƒXƒvƒ‰ƒCƒg‚ğ”½“]
+    // ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½í‚¹ï¿½ÄƒXï¿½vï¿½ï¿½ï¿½Cï¿½gï¿½ğ”½“]
     public void HandleFlip(float xVelocity)
     {
         if (xVelocity > 0 && facingRight == false)
@@ -174,7 +174,7 @@ public class Entity : MonoBehaviour
             FlipMethod();
     }
 
-    // ƒXƒvƒ‰ƒCƒg‚Ì”½“]ˆ—
+    // ï¿½Xï¿½vï¿½ï¿½ï¿½Cï¿½gï¿½Ì”ï¿½ï¿½]ï¿½ï¿½ï¿½ï¿½
     public void FlipMethod()
     {
         transform.Rotate(0, 180, 0);
@@ -184,13 +184,13 @@ public class Entity : MonoBehaviour
         OnFlipped.Invoke();
     }
 
-    // ’n–Ê‚Æ•Ç”»’è—p‚ÌƒŒƒCƒLƒƒƒXƒg‚ğˆ—‚µAÚ’nE•Ç”»’èŒ‹‰Ê‚ğXV
+    // ï¿½nï¿½Ê‚Æ•Ç”ï¿½ï¿½ï¿½pï¿½Ìƒï¿½ï¿½Cï¿½Lï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Ú’nï¿½Eï¿½Ç”ï¿½ï¿½èŒ‹ï¿½Ê‚ï¿½Xï¿½V
     private void HandleCollisionDetection()
     {
-        // ’n–Ê‚Ì”»’è
+        // ï¿½nï¿½Ê‚Ì”ï¿½ï¿½ï¿½
         isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
 
-        // •Ç‚Íã‰º2‰ÓŠ‚Å”»’è‚µA—¼•ûÚG‚µ‚Ä‚¢‚È‚¢‚Æ•Ç‚Æ‚µ‚Ä”»’è‚µ‚È‚¢i•Ç‚©‚çŠŠ‚è—‚¿‚éˆ—‚ğÀŒ»j
+        // ï¿½Ç‚Íã‰º2ï¿½Óï¿½ï¿½Å”ï¿½ï¿½è‚µï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½ÚGï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½Æ•Ç‚Æ‚ï¿½ï¿½Ä”ï¿½ï¿½è‚µï¿½È‚ï¿½ï¿½iï¿½Ç‚ï¿½ï¿½çŠŠï¿½è—ï¿½ï¿½ï¿½éˆï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½j
         if (lowerWallCheck != null)
         {
             isWallDetected = Physics2D.Raycast(upperWallCheck.position, Vector2.right * facingDirection, wallCheckDistance, whatIsGround)
@@ -200,7 +200,7 @@ public class Entity : MonoBehaviour
             isWallDetected = Physics2D.Raycast(upperWallCheck.position, Vector2.right * facingDirection, wallCheckDistance, whatIsGround);
     }
 
-    // Gizmos‚ğg‚Á‚ÄƒŒƒCƒLƒƒƒXƒg‚Ì”ÍˆÍ‚ğ‰Â‹‰»iƒGƒfƒBƒ^“à‚Ì‚İj
+    // Gizmosï¿½ï¿½gï¿½ï¿½ï¿½Äƒï¿½ï¿½Cï¿½Lï¿½ï¿½ï¿½Xï¿½gï¿½Ì”ÍˆÍ‚ï¿½Âï¿½ï¿½ï¿½ï¿½iï¿½Gï¿½fï¿½Bï¿½^ï¿½ï¿½Ì‚İj
     protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + new Vector3(0, -groundCheckDistance));

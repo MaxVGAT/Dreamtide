@@ -14,11 +14,12 @@ public class UI_Merchant : MonoBehaviour
         this.merchant = merchant;
         this.inventory = inventory;
 
-        merchant.SetInventory(inventory);
-        merchant.OnInventoryChange += UpdateSlotUI;
+        merchant.inventory.OnInventoryChange += UpdateSlotUI;
+        this.merchant.OnInventoryChange += UpdateSlotUI;
         UpdateSlotUI();
 
         UI_MerchantSlot[] merchantSlotComponent = GetComponentsInChildren<UI_MerchantSlot>();
+
         foreach (var slot in merchantSlotComponent)
             slot.SetupMerchantUI(merchant);
     }

@@ -23,7 +23,7 @@ public class ItemEffect_IceBlastOnTakenDamage : Item_EffectDataSO
         player = null;
     }
 
-    public override void ExecuteEffect()
+    public override void ExecuteEffect(Entity_Player player)
     {
         bool noCooldown = Time.time >= lastTimeUsed + cooldown;
         bool reachedThreshold = player.health.GetHealthPercent() <= healthPercentTrigger;
@@ -59,14 +59,30 @@ public class ItemEffect_IceBlastOnTakenDamage : Item_EffectDataSO
     {
         base.Subscribe(player);
         lastTimeUsed = -999;
-        player.health.OnTakingDamage += ExecuteEffect;
+
+        player.health.OnTakingDamage += OnPlayerDamaged;
     }
 
     public override void Unsubscribe()
     {
-        base.Unsubscribe();
-        player.health.OnTakingDamage -= ExecuteEffect;
+        player.health.OnTakingDamage -= OnPlayerDamaged;
         player = null;
     }
+
+    private void OnPlayerDamaged()
+    {
+        if (player == null) return;
+
+        bool noCooldown = Time.time >= lastTimeUsed + cooldown;
+        bool reachedThreshold = player.health.GetHealthPercent() <= healthPercentTrigger;
+
+        if (noCooldown && reachedThreshold)
+        {
+            player.vfx.CreateEffectOf(iceBlastVfx, player.transform);
+            lastTimeUsed = Time.time;
+            DamageEnemiesWithIce();
+        }
+    }
+
 }
     
