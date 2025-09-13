@@ -14,9 +14,9 @@ public class Player_SkillManager : MonoBehaviour
     public Skill_TimeEcho timeEcho { get; private set; }
     public Skill_Domain domain { get; private set; }
 
-    private Skill_Base[] allSkills; // �S�X�L���̔z��i���ʏ����p�j
+    public Skill_Base[] allSkills { get; private set; } // �S�X�L���̔z��i���ʏ����p�j
 
-    public int skillPoints { get; private set; }
+    public int skillPoints;
 
 
     private void Awake()

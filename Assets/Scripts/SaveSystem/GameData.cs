@@ -10,7 +10,11 @@ public class GameData
     public SerializableDictionary<string, int> inventory; // itemSaveID -> stackSize
     public SerializableDictionary<string, int> storageItems;
 
-    public SerializableDictionary<string, Item_Type> equippedItems;
+    public SerializableDictionary<string, Item_Type> equippedItems; // SlotType -> itemSaveID;
+
+    public int skillPoints;
+    public SerializableDictionary<string, bool> skillTreeUI; // skillName -> unlock status
+    public SerializableDictionary<Skill_Type, Skill_UpgradeType> skillUpgrades; // skill type -> upgrade type
 
 
     public GameData()
@@ -19,5 +23,8 @@ public class GameData
         storageItems = new SerializableDictionary<string, int>();
 
         equippedItems = new SerializableDictionary<string, Item_Type>();
+
+        skillTreeUI = new SerializableDictionary<string, bool>();
+        skillUpgrades = new SerializableDictionary<Skill_Type, Skill_UpgradeType>();
     }
 }

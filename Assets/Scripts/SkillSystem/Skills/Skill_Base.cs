@@ -55,6 +55,8 @@ public class Skill_Base : MonoBehaviour
 
     // ����̃A�b�v�O���[�h������Ă��邩
     protected bool Unlocked(Skill_UpgradeType upgradeToCheck) => upgradeType == upgradeToCheck;
+    public Skill_UpgradeType GetUpgrade() => upgradeType;
+    public Skill_Type GetSkillType() => skillType;
 
     // �N�[���_�E����������
     protected bool OnCooldown() => Time.time < lastTimeUsed + cooldown;

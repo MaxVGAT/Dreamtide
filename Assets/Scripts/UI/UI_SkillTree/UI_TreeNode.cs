@@ -96,7 +96,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
 
     // Unlock this skill node
-    private void UnlockSkill()
+    public void UnlockSkill()
     {
         if (isUnlocked)
         {
@@ -112,6 +112,17 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         // Apply skill upgrade in player skill manager
         skillTree.skillManager.GetSkillByType(skillData.skillType).SetSkillUpgrade(skillData);
+    }
+
+    public void UnlockWithSaveData()
+    {
+        isUnlocked = true;
+        UpdateIconColor(Color.white);
+        LockConflictNodes();
+
+        // Add null check for connectHandler
+        if (connectHandler != null)
+            connectHandler.UnlockConnectionImage(true);
     }
 
     // Refund node
@@ -139,9 +150,13 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (node.isLocked)
             node.isLocked = false;
 
-        foreach (var child in node.connectHandler.GetChildNodes())
+        // Add null check for connectHandler
+        if (node.connectHandler != null)
         {
-            UnlockRefundedNode(child);
+            foreach (var child in node.connectHandler.GetChildNodes())
+            {
+                UnlockRefundedNode(child);
+            }
         }
     }
 
@@ -178,9 +193,13 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         isLocked = true;
 
-        foreach (var node in connectHandler.GetChildNodes())
+        // Add null check for connectHandler
+        if (connectHandler != null)
         {
-            node.LockChildNodes();
+            foreach (var node in connectHandler.GetChildNodes())
+            {
+                node.LockChildNodes();
+            }
         }
     }
 

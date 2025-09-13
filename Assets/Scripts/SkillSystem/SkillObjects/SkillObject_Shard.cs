@@ -16,66 +16,67 @@ public class SkillObject_Shard : SkillObject_Base
         if (target == null)
             return;
 
-        // –Ú•W‚ª‚ ‚éê‡Aˆê’è‘¬“x‚ÅˆÚ“®
+        // ï¿½Ú•Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Aï¿½ï¿½è‘¬ï¿½xï¿½ÅˆÚ“ï¿½
         transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
     }
 
-    // w’èƒ^[ƒQƒbƒgi‚à‚µ‚­‚ÍÅ‚à‹ß‚¢“Gj‚ÉŒü‚©‚Á‚ÄˆÚ“®ŠJn
+    // ï¿½wï¿½ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍÅ‚ï¿½ß‚ï¿½ï¿½Gï¿½jï¿½ÉŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÄˆÚ“ï¿½ï¿½Jï¿½n
     public void MoveTowardsClosestTarget(float speed, Transform newTarget = null)
-    {
-        target = newTarget != null ? FindClosestTarget() : target;
-        this.speed = speed;
-    }
+{
+    // Fixed logic: use newTarget if provided, otherwise find closest
+    target = newTarget != null ? newTarget : FindClosestTarget();
+    this.speed = speed;
+}
 
-    // ƒVƒƒ[ƒh‚ÌŠî–{ƒZƒbƒgƒAƒbƒvi©“®”š”­‚Ì‚İj
+    // ï¿½Vï¿½ï¿½ï¿½[ï¿½hï¿½ÌŠï¿½{ï¿½Zï¿½bï¿½gï¿½Aï¿½bï¿½vï¿½iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚İj
     public void SetupShard(Skill_Shard shardManager)
     {
         this.shardManager = shardManager;
 
-        // UŒ‚ŒvZ—p‚Ìî•ñ‚ğæ“¾
+        // ï¿½Uï¿½ï¿½ï¿½vï¿½Zï¿½pï¿½Ìï¿½ï¿½ï¿½æ“¾
         playerStats = shardManager.player.stats;
         damageScaleData = shardManager.damageScaleData;
 
-        // w’èŠÔŒã‚É©“®”š”­
+        // ï¿½wï¿½èï¿½ÔŒï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         float detonationTime = shardManager.GetDetonateTime();
         Invoke(nameof(Explode), detonationTime);
     }
 
-    // ƒVƒƒ[ƒh‚ÌƒZƒbƒgƒAƒbƒviˆÚ“®‰Â”\Eƒ^[ƒQƒbƒgw’èƒIƒvƒVƒ‡ƒ“•t‚«j
+    // ï¿½Vï¿½ï¿½ï¿½[ï¿½hï¿½ÌƒZï¿½bï¿½gï¿½Aï¿½bï¿½vï¿½iï¿½Ú“ï¿½ï¿½Â”\ï¿½Eï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½wï¿½ï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½j
     public void SetupShard(Skill_Shard shardManager, float detonationTime, bool canMove, float shardSpeed, Transform target)
     {
         this.shardManager = shardManager;
         playerStats = shardManager.player.stats;
         damageScaleData = shardManager.damageScaleData;
 
-        // ”š”­ƒ^ƒCƒ}[ŠJn
+        // ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Cï¿½}ï¿½[ï¿½Jï¿½n
         Invoke(nameof(Explode), detonationTime);
 
-        // ˆÚ“®‰Â”\‚È‚çƒ^[ƒQƒbƒg‚ÖŒü‚©‚¤
+        // ï¿½Ú“ï¿½ï¿½Â”\ï¿½È‚ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ÖŒï¿½ï¿½ï¿½ï¿½ï¿½
         if (canMove)
             MoveTowardsClosestTarget(shardSpeed, target);
     }
 
-    // ”š”­ˆ—F”ÍˆÍƒ_ƒ[ƒWAVFX¶¬AƒCƒxƒ“ƒg’Ê’m
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Fï¿½ÍˆÍƒ_ï¿½ï¿½ï¿½[ï¿½Wï¿½AVFXï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½Ê’m
     public void Explode()
     {
-        // üˆÍ‚Ì“G‚Éƒ_ƒ[ƒW
+        // ï¿½ï¿½ï¿½Í‚Ì“Gï¿½Éƒ_ï¿½ï¿½ï¿½[ï¿½W
         DamageEnemiesInRadius(transform, checkRadius);
 
-        // ”š”­VFX¶¬•ƒGƒŒƒƒ“ƒgFİ’è
+        // ï¿½ï¿½ï¿½ï¿½VFXï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½Fï¿½İ’ï¿½
         GameObject sprite = Instantiate(vfxPrefab, transform.position, Quaternion.identity);
         sprite.GetComponentInChildren<SpriteRenderer>().color = shardManager.player.vfx.GetElementColor(usedElement);
 
-        // ”š”­ƒCƒxƒ“ƒg”­‰Î
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½
         OnExplode?.Invoke();
 
-        // ƒVƒƒ[ƒhƒIƒuƒWƒFƒNƒg”jŠü
+        // ï¿½Vï¿½ï¿½ï¿½[ï¿½hï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½jï¿½ï¿½
         Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // “G‚ÉG‚ê‚½ê‡A‘¦À‚É”š”­
+        // ï¿½Gï¿½ÉGï¿½ê‚½ï¿½ê‡ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½É”ï¿½ï¿½ï¿½
         if (collision.GetComponent<Entity_Enemy>() != null)
             Explode();
     }
