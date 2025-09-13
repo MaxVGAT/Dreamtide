@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     // References
-    private UI ui;                           // Parent UI for tooltip
     private RectTransform rect;               // This node's RectTransform
     private UI_SkillTree skillTree;          // Parent skill tree reference
     private UI_TreeConnectHandler connectHandler; // Handles visual connection lines
@@ -27,7 +26,6 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private void Awake()
     {
         // Cache references
-        ui = GetComponentInParent<UI>();
         rect = GetComponent<RectTransform>();
         skillTree = GetComponentInParent<UI_SkillTree>();
         connectHandler = GetComponent<UI_TreeConnectHandler>();

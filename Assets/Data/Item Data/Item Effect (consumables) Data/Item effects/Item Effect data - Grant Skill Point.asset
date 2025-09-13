@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3397ef0995f2a8429b2415988c49ca6, type: 3}
   m_Name: Item Effect data - Grant Skill Point
   m_EditorClassIdentifier: 
-  effectDescription: 
+  effectDescription: "\u30B9\u30AD\u30EB\u30DD\u30A4\u30F3\u30C8\u30921\u7372\u5F97\u3002"
   pointsToAdd: 1

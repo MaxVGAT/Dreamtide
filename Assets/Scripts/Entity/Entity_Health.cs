@@ -14,6 +14,8 @@ public class Entity_Health : MonoBehaviour, IDamageable
     private Entity_Stats entityStats;
     private Entity_DropManager dropManager;
 
+    private bool miniHealthBarActive;
+
     [SerializeField] protected float currentHealth;
 
     public bool isDead { get; private set; }
@@ -155,7 +157,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
     // HP�o�[�X�V
     private void UpdateHealthBar()
     {
-        if (healthBar == null || entityStats == null)
+        if (healthBar == null && healthBar.transform.parent.gameObject.activeSelf == false)
             return;
 
         float maxHealth = entityStats.GetMaxHealth();
@@ -164,6 +166,8 @@ public class Entity_Health : MonoBehaviour, IDamageable
 
         healthBar.value = Mathf.Clamp01(currentHealth / maxHealth); // 0�`1�ɐ��K��
     }
+
+    public void EnableHealthBar(bool enable) => healthBar?.transform.parent.gameObject.SetActive(enable);
 
     public float GetHealthPercent() => currentHealth / entityStats.GetMaxHealth();
 

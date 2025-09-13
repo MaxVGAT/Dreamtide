@@ -1,16 +1,19 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_Options : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Entity_Player player;
+    [SerializeField] private Toggle healthBarToggle;
+
+    private void Start()
     {
-        
+        player = FindFirstObjectByType<Entity_Player>();
+        healthBarToggle.onValueChanged.AddListener(OnHealthBarToggle);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnHealthBarToggle(bool isOn)
     {
-        
+        player.health.EnableHealthBar(isOn);
     }
 }

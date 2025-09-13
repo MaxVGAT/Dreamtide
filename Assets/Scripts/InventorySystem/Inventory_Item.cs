@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using UnityEngine;
 
 // �C���x���g����̃A�C�e���f�[�^�Ǘ��N���X
 [Serializable]
@@ -20,13 +23,112 @@ public class Inventory_Item
     public Inventory_Item(Item_DataSO itemData)
     {
         this.itemData = itemData;
-        buyPrice = itemData.itemPrice;
-        sellPrice = itemData.itemPrice * 0.35f;
-
-        modifiers = EquipmentData()?.modifiers; // �����f�[�^������ΏC���q��擾
         itemEffect = itemData.itemEffect;
+        itemID = itemData.itemName + " - " + Guid.NewGuid();
 
-        itemID = itemData.itemName + " - " + Guid.NewGuid(); // ���j�[�NID����
+        // Generate stats automatically
+        modifiers = GenerateStats(itemData);
+    }
+
+    private ItemModifier[] GenerateStats(Item_DataSO itemData)
+    {
+        // Decide how many stats based on rarity
+        int numberOfStats = itemData.itemRarity switch
+        {
+            Item_Rarity.Common => 1,
+            Item_Rarity.Uncommon => 1,
+            Item_Rarity.Rare => 2,
+            Item_Rarity.Epic => 3,
+            Item_Rarity.Legendary => 4,
+            Item_Rarity.Unique => 5,
+            _ => 1
+        };
+
+        // Choose allowed stats based on type
+        StatType[] possibleStats = itemData.itemType switch
+        {
+            Item_Type.Weapon => new StatType[]
+                { StatType.Damage, StatType.AttackSpeed, StatType.Strength, StatType.Agility, StatType.Intelligence },
+
+            Item_Type.Helmet or Item_Type.Chest or Item_Type.Pants or Item_Type.Bracers or Item_Type.Boots => new StatType[]
+                { StatType.MaxHealth, StatType.Armor, StatType.Evasion, StatType.Strength, StatType.Agility, StatType.Intelligence, StatType.Vitality, },
+
+            Item_Type.Ring => new StatType[]
+                { StatType.Evasion, StatType.ArmorReduction, StatType.HealthRegen, StatType.CritChance, StatType.CritPower},
+
+            Item_Type.Rune => new StatType[]
+                { StatType.FireResistance, StatType.IceResistance, StatType.LightningResistance, StatType.FireDamage, StatType.IceDamage, StatType.LightningDamage, StatType.ElementalDamage},
+
+            Item_Type.Consumables => new StatType[]
+                { StatType.HealthRegen},
+
+            _ => Enum.GetValues(typeof(StatType)).Cast<StatType>().ToArray()
+        };
+
+        var selectedStats = new List<ItemModifier>();
+
+        for (int i = 0; i < numberOfStats; i++)
+        {
+            var stat = possibleStats[UnityEngine.Random.Range(0, possibleStats.Length)];
+
+            // Avoid duplicate stats
+            if (selectedStats.Any(m => m.statType == stat))
+            {
+                i--;
+                continue;
+            }
+
+            int value = GenerateStatValue(stat, itemData.itemRarity);
+            selectedStats.Add(new ItemModifier { statType = stat, value = value });
+        }
+
+        return selectedStats.ToArray();
+    }
+
+    private int GenerateStatValue(StatType stat, Item_Rarity rarity)
+    {
+        // Base value per stat type
+        int baseValue = stat switch
+        {
+            StatType.MaxHealth => 10,
+            StatType.HealthRegen => 2,
+            StatType.Strength => 3,
+            StatType.Agility => 3,
+            StatType.Intelligence => 3,
+            StatType.Vitality => 5,
+            StatType.AttackSpeed => 1,
+            StatType.Damage => 5,
+            StatType.CritChance => 2,
+            StatType.CritPower => 5,
+            StatType.ArmorReduction => 2,
+            StatType.FireDamage => 4,
+            StatType.IceDamage => 4,
+            StatType.LightningDamage => 4,
+            StatType.Armor => 5,
+            StatType.Evasion => 2,
+            StatType.IceResistance => 3,
+            StatType.FireResistance => 3,
+            StatType.LightningResistance => 3,
+            StatType.ElementalDamage => 2,
+            _ => 1
+        };
+
+        // Rarity multiplier
+        float multiplier = rarity switch
+        {
+            Item_Rarity.Common => 1f,
+            Item_Rarity.Uncommon => 1.3f,
+            Item_Rarity.Rare => 1.8f,
+            Item_Rarity.Epic => 2.5f,
+            Item_Rarity.Legendary => 4f,
+            Item_Rarity.Unique => 6f,
+            _ => 1f
+        };
+
+        // Small randomization ±10%
+        float randomFactor = UnityEngine.Random.Range(0.9f, 1.1f);
+
+        return Mathf.RoundToInt(baseValue * multiplier * randomFactor);
     }
 
     // �v���C���[�ɏC���q��K�p
@@ -38,7 +140,7 @@ public class Inventory_Item
             statToModify.AddModifier(mod.value, itemID);
         }
     }
-
+    
     // �v���C���[����C���q��폜
     public void RemoveModifiers(Entity_Stats playerStats)
     {
@@ -92,8 +194,8 @@ public class Inventory_Item
             sb.AppendLine("");
             sb.AppendLine("");
             sb.AppendLine(itemEffect.effectDescription);
-            sb.AppendLine();
-            sb.AppendLine();
+            sb.AppendLine("");
+
             return sb.ToString();
         }
 
@@ -110,12 +212,50 @@ public class Inventory_Item
         if (itemEffect != null)
         {
             sb.AppendLine("");
-            sb.AppendLine("専用効果: ");
-            sb.AppendLine(itemEffect.effectDescription);
+            sb.AppendLine("<color=#98FF98>" + itemEffect.effectDescription + "</color>");
+            sb.AppendLine("");
+            sb.AppendLine("");
         }
+        else
+            sb.AppendLine("");
 
         return sb.ToString();
     }
+
+    public int GetPrice(bool forBuying = false)
+    {
+        // Default base prices by rarity
+        int defaultBasePrice = itemData.itemRarity switch
+        {
+            Item_Rarity.Common => 10,
+            Item_Rarity.Uncommon => 50,
+            Item_Rarity.Rare => 150,
+            Item_Rarity.Epic => 400,
+            Item_Rarity.Legendary => 800,
+            Item_Rarity.Unique => 1500,
+            _ => 100
+        };
+
+        // Multiplier per rarity (optional, can tweak for scaling)
+        float multiplier = itemData.itemRarity switch
+        {
+            Item_Rarity.Common => 1f,
+            Item_Rarity.Uncommon => 1.3f,
+            Item_Rarity.Rare => 1.8f,
+            Item_Rarity.Epic => 2.5f,
+            Item_Rarity.Legendary => 4f,
+            Item_Rarity.Unique => 6f,
+            _ => 1f
+        };
+
+        // Small randomization ±10%
+        float randomFactor = UnityEngine.Random.Range(0.75f, 1.25f);
+
+        int finalPrice = Mathf.RoundToInt(defaultBasePrice * multiplier * randomFactor);
+
+        return forBuying ? finalPrice : Mathf.FloorToInt(finalPrice * 0.35f);
+    }
+
 
     // ステータスの日本語表示を返す
     private string GetStatTypeText(StatType type)
@@ -163,6 +303,7 @@ public class Inventory_Item
                 return false;
         }
     }
+
 
 
 }

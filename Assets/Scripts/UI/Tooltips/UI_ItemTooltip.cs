@@ -33,7 +33,7 @@ public class UI_ItemTooltip : UI_Tooltip
         merchantInfo.gameObject.SetActive(showMerchantInfo);
         inventoryInfo.gameObject.SetActive(!showMerchantInfo);
 
-        int price = showMerchantInfo ? itemToShow.buyPrice : Mathf.FloorToInt(itemToShow.sellPrice);
+        int price = showMerchantInfo ? itemToShow.GetPrice(true) : itemToShow.GetPrice(false);
         int totalPrice = price * itemToShow.stackSize;
         string fullStackPrice = $"値段: {price}x{itemToShow.stackSize} - {totalPrice}G";
         string singleStackPrice = $"値段: {price}G";

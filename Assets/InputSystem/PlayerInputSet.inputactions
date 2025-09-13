@@ -70,15 +70,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ToggleUI",
-                    "type": "Button",
-                    "id": "fc906b28-0940-430b-9fd4-89edd92adf47",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Skill",
                     "type": "Button",
                     "id": "26754fe4-fa03-4ef5-93e4-00b4239a030b",
@@ -431,17 +422,6 @@
                 },
                 {
                     "name": "",
-                    "id": "8f449c59-8cf7-4927-87e8-542eaccc7a45",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard & Mouse",
-                    "action": "ToggleUI",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "0ecfd490-0801-4ca8-bd6a-3cecbfd1343f",
                     "path": "<Keyboard>/f",
                     "interactions": "",
@@ -470,6 +450,54 @@
                     "processors": "",
                     "groups": ";Keyboard & Mouse",
                     "action": "QuickItem_Slot2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "a3891026-6bb3-4d38-8241-f71298170072",
+            "actions": [
+                {
+                    "name": "AlternativeInput",
+                    "type": "Button",
+                    "id": "31f6df80-fb3e-48f0-9c52-be5560c00ae6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleUI",
+                    "type": "Button",
+                    "id": "6651aadd-fd31-4450-8e4d-2da23a7d9e14",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d2f72e13-bb6a-4447-90fb-f6b13da7c4ba",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "ToggleUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5217937d-2ee6-4c0e-ba8a-c2183d18e861",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "AlternativeInput",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

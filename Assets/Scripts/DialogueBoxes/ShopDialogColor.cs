@@ -7,6 +7,7 @@ public class ShopDialogColor : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogText;
     [SerializeField] private Color nameColor;
     [SerializeField] private string merchantName;
+    [SerializeField] private string npcSentence;
 
     private void Start()
     {
@@ -16,6 +17,6 @@ public class ShopDialogColor : MonoBehaviour
     private void SetTextColor()
     {
         string hexColor = ColorUtility.ToHtmlStringRGB(nameColor);
-        dialogText.text = $"<color=#{hexColor}>{merchantName}</color>:" + $" いらっしゃい！うちの品、どうだい？";
+        dialogText.text = $"<color=#{hexColor}>{merchantName}</color>:" + $"{npcSentence}";
     }
 }

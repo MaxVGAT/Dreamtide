@@ -61,7 +61,6 @@ public class Entity_Player : Entity
         base.Awake();
 
         // �K�v�ȃR���|�[�l���g��擾
-        input = new PlayerInputSet();
         ui = FindAnyObjectByType<UI>();
         vfx = GetComponent<Player_VFX>();
         health = GetComponent<Entity_Health>();
@@ -70,6 +69,9 @@ public class Entity_Player : Entity
         combat = GetComponent<Player_Combat>();
         inventory = GetComponent<Inventory_Player>();
         stats = GetComponent<Player_Stats>();
+
+        input = new PlayerInputSet();
+        ui.SetupControlsUI(input);
 
         // �e��Ԃ������
         idleState = new Player_IdleState(this, stateMachine, "idle");
@@ -203,7 +205,6 @@ public class Entity_Player : Entity
         input.Player.Movement.canceled += context => moveInput = Vector2.zero;
 
         // UI�؂�ւ�
-        input.Player.ToggleUI.performed += context => ui.ToggleUI();
         input.Player.Interact.performed += context => TryInteract();
 
         input.Player.QuickItem_Slot1.performed += context => inventory.TryUseQuickItemInSlot(1);

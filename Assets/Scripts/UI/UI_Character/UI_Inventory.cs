@@ -38,6 +38,6 @@ public class UI_Inventory : MonoBehaviour
 
     public void UpdateGoldUI()
     {
-        goldAmount.text = "お金: " + inventory.gold.ToString();
+        goldAmount.text = inventory.gold.ToString("N0");
     }
 }

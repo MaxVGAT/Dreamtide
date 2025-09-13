@@ -1,10 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 // �X�L���c���[UI��Ǘ�����N���X
 public class UI_SkillTree : MonoBehaviour
 {
-    [SerializeField] private UI_SkillTooltip skillTooltip; // �X�L���̏ڍ׃c�[���`�b�vUI
-    [SerializeField] private int skillPoints;             // �v���C���[�̎c��X�L���|�C���g
+    [SerializeField] private UI_SkillTooltip skillTooltip; // �X�L���̏ڍ׃c�[���`�b�vUI         // �v���C���[�̎c��X�L���|�C���g
+    [SerializeField] private TextMeshProUGUI skillPointsText;
     [SerializeField] private UI_TreeConnectHandler[] parentNodes; // �ڑ��n���h���[�z��
 
     public Player_SkillManager skillManager { get; private set; } // �v���C���[�̃X�L���Ǘ��N���X�Q��
@@ -13,6 +14,21 @@ public class UI_SkillTree : MonoBehaviour
     {
         // �V�[�������Player_SkillManager��������Ď擾
         skillManager = FindAnyObjectByType<Player_SkillManager>();
+        skillManager.OnSkillPointsChanged += UpdateSkillPointsText;
+        UpdateSkillPointsText(skillManager.skillPoints);
+
+    }
+
+    private void Start()
+    {
+        // �X�L���c���[�̐ڑ���Ԃ�X�V
+        UpdateAllConnections();
+    }
+
+    private void UpdateSkillPointsText(int points)
+    {
+        if (skillPointsText != null)
+            skillPointsText.text = skillManager.skillPoints.ToString();
     }
 
     // �R���e�L�X�g���j���[����S�X�L������Z�b�g
@@ -29,18 +45,20 @@ public class UI_SkillTree : MonoBehaviour
     public UI_SkillTooltip SkillTooltip => skillTooltip;
 
     // �X�L���|�C���g������邩����
-    public bool EnoughSkillPoints(int cost) => skillManager.SkillPoints >= cost;
+    public bool EnoughSkillPoints(int cost) => skillManager.skillPoints >= cost;
 
     // �X�L���|�C���g�����
-    public void RemoveSkillPoint(int cost) => skillManager.SpendSkillPoints(cost);
+    public void RemoveSkillPoint(int cost)
+    {
+        if(skillManager.SpendSkillPoints(cost))
+            UpdateSkillPointsText(skillManager.skillPoints);
+    }
 
     // �X�L���|�C���g��ǉ�
-    public void AddSkillPoints(int points) => skillManager.AddSkillPoints(points);
-
-    private void Start()
+    public void AddSkillPoints(int points)
     {
-        // �X�L���c���[�̐ڑ���Ԃ�X�V
-        UpdateAllConnections();
+        skillManager.AddSkillPoints(points);
+        UpdateSkillPointsText(skillManager.skillPoints);
     }
 
     // �S�Ă̐e�m�[�h�̐ڑ���X�V

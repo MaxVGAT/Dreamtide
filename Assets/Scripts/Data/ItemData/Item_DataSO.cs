@@ -5,7 +5,6 @@ public class Item_DataSO : ScriptableObject
 {
 
     [Header("Merchant Details")]
-    [Range(0, 10000)] public int itemPrice = 100;
     public int minStackSizeAtShop = 1;
     public int maxStackSizeAtShop = 1;
 

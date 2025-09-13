@@ -13,7 +13,6 @@ public class UI_Storage : MonoBehaviour
     {
         this.storage = storage;
         inventory = storage.playerInventory;
-        Debug.Log("SetupStorage called with: " + storage);
 
         // Subscribe to inventory changes
         storage.OnInventoryChange += UpdateUI;

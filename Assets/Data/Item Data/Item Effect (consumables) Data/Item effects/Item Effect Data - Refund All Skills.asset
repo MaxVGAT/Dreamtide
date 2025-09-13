@@ -12,6 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d39cdb7117c1bc64a83df4659991108e, type: 3}
   m_Name: Item Effect Data - Refund All Skills
   m_EditorClassIdentifier: 
-  effectDescription: 'Resets the skill tree and refund the skill points
-
-'
+  effectDescription: "\u30B9\u30AD\u30EB\u30C4\u30EA\u30FC\u3092\u30EA\u30BB\u30C3\u30C8\u3057\u3001\u30B9\u30AD\u30EB\u30DD\u30A4\u30F3\u30C8\u3092\u8FD4\u9084\u3059\u308B\u3002"

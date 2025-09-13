@@ -1,9 +1,12 @@
 using UnityEngine;
+using System;
 
 // �v���C���[�̃X�L���Ǘ��N���X
 // �e�X�L���ւ̎Q�Ƃ�ێ����A�N�[���_�E���Ǘ���X�L���擾���
 public class Player_SkillManager : MonoBehaviour
 {
+    public event Action<int>OnSkillPointsChanged;
+
     // �e�X�L���̃v���p�e�B
     public Skill_Dash dash { get; private set; }
     public Skill_Shard shard { get; private set; }
@@ -13,7 +16,7 @@ public class Player_SkillManager : MonoBehaviour
 
     private Skill_Base[] allSkills; // �S�X�L���̔z��i���ʏ����p�j
 
-    public int SkillPoints { get; private set; }
+    public int skillPoints { get; private set; }
 
 
     private void Awake()
@@ -31,14 +34,16 @@ public class Player_SkillManager : MonoBehaviour
 
     public void AddSkillPoints(int amount)
     {
-        SkillPoints += amount;
+        skillPoints += amount;
+        OnSkillPointsChanged?.Invoke(skillPoints);
     }
 
     public bool SpendSkillPoints(int cost)
     {
-        if (SkillPoints >= cost)
+        if (skillPoints >= cost)
         {
-            SkillPoints -= cost;
+            skillPoints -= cost;
+            OnSkillPointsChanged?.Invoke(skillPoints);
             return true;
         }
         return false;

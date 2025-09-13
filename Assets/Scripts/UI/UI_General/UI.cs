@@ -11,6 +11,9 @@ public class UI : MonoBehaviour
         public bool isInsideTrigger;
     }
 
+    private PlayerInputSet input;
+    public bool alternativeInput { get; private set; }
+
     public enum NPCType { Storage, Craft, Merchant }
 
     [SerializeField] private GameObject tabMenuRoot;
@@ -57,6 +60,24 @@ public class UI : MonoBehaviour
             merchant.panel.SetActive(false);
     }
 
+    public void SetupControlsUI(PlayerInputSet inputSet)
+    {
+        input = inputSet;
+
+        input.UI.ToggleUI.performed += context => ToggleUI();
+
+        input.UI.AlternativeInput.performed += context => alternativeInput = true;
+        input.UI.AlternativeInput.canceled += context => alternativeInput = false; 
+    }
+
+    public void StopPlayerControls(bool stopControls)
+    {
+        if (stopControls)
+            input.Player.Disable();
+        else
+            input.Player.Enable();
+    }
+
     public void ToggleUI()
     {
         menuEnabled = !menuEnabled;
@@ -81,6 +102,10 @@ public class UI : MonoBehaviour
             if (!merchant.isInsideTrigger)
                 ToggleNPCType(merchant, false);
         }
+
+        Time.timeScale = menuEnabled ? 0 : 1;
+        StopPlayerControls(menuEnabled);
+
     }
 
     private void OpenMenuIfClosed()
@@ -92,6 +117,9 @@ public class UI : MonoBehaviour
 
             if (tabGroup != null && tabGroup.tabButtons.Count > 0)
                 tabGroup.OnTabSelected(tabGroup.tabButtons[0]);
+
+            Time.timeScale = 0;
+            StopPlayerControls(menuEnabled);
         }
     }
 
@@ -114,6 +142,9 @@ public class UI : MonoBehaviour
     // Storage ---
     public void OpenInventoryWithStorage()
     {
+        if (IsStorageVisible())
+            return;
+
         OpenMenuIfClosed();
         ToggleNPCType(storage, true);
     }
@@ -143,6 +174,9 @@ public class UI : MonoBehaviour
 
     public void OpenInventoryWithMerchant()
     {
+        if (IsMerchantVisible())
+            return;
+
         OpenMenuIfClosed();
         ToggleNPCType(merchant, true);
     }

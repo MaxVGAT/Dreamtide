@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3686f0a71a8e8445992dda416f45e68, type: 3}
   m_Name: Item Effect data - Power Orb
   m_EditorClassIdentifier: 
-  effectDescription: "\u30B9\u30C8\u30EC\u30F3\u30B0\u30B9\uFF0B\uFF12\uFF10\n"
+  effectDescription: "15\u79D2\u9593\u3001\u529B+20\u3001\u653B\u6483\u901F\u5EA6+10%\u3002"
   buffsToApply:
   - type: 2
     value: 20
+  - type: 6
+    value: 0.1
   duration: 15
   source: e37a4290-44c3-4928-9ec7-31b60c6bd848

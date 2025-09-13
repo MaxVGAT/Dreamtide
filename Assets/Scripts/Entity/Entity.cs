@@ -181,7 +181,7 @@ public class Entity : MonoBehaviour
         facingRight = !facingRight;
         facingDirection = facingDirection * -1;
 
-        OnFlipped.Invoke();
+        OnFlipped?.Invoke();
     }
 
     // �n�ʂƕǔ���p�̃��C�L���X�g��������A�ڒn�E�ǔ��茋�ʂ�X�V
