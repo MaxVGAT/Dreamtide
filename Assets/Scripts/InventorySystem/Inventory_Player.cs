@@ -7,8 +7,6 @@ public class Inventory_Player : Inventory_Base
 {
     public event Action<int> OnQuickSlotUsed;
 
-    [SerializeField] private ItemListDataSO itemDatabase;
-
     private Entity_Player player; // �v���C���[�̃X�e�[�^�X�Q��
     public List<Inventory_EquipmentSlot> equipList; // �����X���b�g���X�g
     public Inventory_Storage storage{ get; private set; }

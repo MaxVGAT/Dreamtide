@@ -106,11 +106,14 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
             return;
 
         bool isMerchantOpen = ui.IsMerchantVisible();
+        bool isStorageOpen = ui.IsStorageVisible();
 
         if (isMerchantOpen)
-            ui.itemTooltip.ShowToolTip(true, rect, itemInSlot, true, true);
+            ui.itemTooltip.ShowToolTip(true, rect, itemInSlot, true, true, false, false);
+        else if (isStorageOpen)
+            ui.itemTooltip.ShowToolTip(true, rect, itemInSlot, true, false, false, true);
         else
-            ui.itemTooltip.ShowToolTip(true, rect, itemInSlot);
+            ui.itemTooltip.ShowToolTip(true, rect, itemInSlot, true, false, true, false);
     }
 
     // �}�E�X�����ꂽ��c�[���`�b�v��\��

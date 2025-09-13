@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.SceneManagement;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Inventory_Storage : Inventory_Base
@@ -126,5 +127,52 @@ public class Inventory_Storage : Inventory_Base
         }
         SortItems();
         TriggerUpdateUI();
+    }
+
+    public override void SaveData(ref GameData data)
+    {
+        base.SaveData(ref data);
+
+        data.storageItems.Clear();
+
+        foreach(var entry in itemList)
+        {
+            if(entry != null && entry.itemData != null)
+            {
+                string saveID = entry.itemData.saveID;
+
+                if (data.storageItems.ContainsKey(saveID) == false)
+                    data.storageItems[saveID] = 0;
+
+                data.storageItems[saveID] += entry.stackSize;
+            }
+        }
+    }
+
+    public override void LoadData(GameData data)
+    {
+        itemList.Clear();
+
+        foreach(var entry in data.storageItems)
+        {
+            string saveID = entry.Key;
+            int stackSize = entry.Value;
+
+            Item_DataSO itemData = itemDatabase.GetItemData(saveID);
+
+            if(itemData == null)
+            {
+                Debug.LogWarning("Item not found: " + saveID);
+                continue;
+            }
+
+            Inventory_Item itemToLoad = new Inventory_Item(itemData);
+
+            for(int i = 0; i < stackSize; i++)
+            {
+            itemList.Add(itemToLoad);
+            }
+
+        }
     }
 }

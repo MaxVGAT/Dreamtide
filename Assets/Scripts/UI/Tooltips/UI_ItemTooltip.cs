@@ -10,10 +10,11 @@ public class UI_ItemTooltip : UI_Tooltip
     [SerializeField] private TextMeshProUGUI itemInfo;   // ステータス詳細
     [SerializeField] private TextMeshProUGUI itemPrice;
     [SerializeField] private Transform merchantInfo;
+    [SerializeField] private Transform storageInfo;
     [SerializeField] private Transform inventoryInfo;
 
     // ツールチップの表示・非表示
-    public void ShowToolTip(bool show, RectTransform targetRect, Inventory_Item itemToShow, bool buyPrice = false, bool showMerchantInfo = false)
+    public void ShowToolTip(bool show, RectTransform targetRect, Inventory_Item itemToShow, bool buyPrice = false, bool showMerchantInfo = false, bool showInventoryInfo = false, bool showStorageInfo = false)
     {
         // Early exit if no item or not showing
         if (!show || itemToShow == null)
@@ -30,8 +31,9 @@ public class UI_ItemTooltip : UI_Tooltip
 
         base.ShowToolTip(true, targetRect);
 
-        merchantInfo.gameObject.SetActive(showMerchantInfo);
-        inventoryInfo.gameObject.SetActive(!showMerchantInfo);
+       if(merchantInfo != null) merchantInfo.gameObject.SetActive(showMerchantInfo);
+       if(inventoryInfo != null) inventoryInfo.gameObject.SetActive(showInventoryInfo);
+       if(storageInfo != null) storageInfo.gameObject.SetActive(showStorageInfo);
 
         int price = showMerchantInfo ? itemToShow.GetPrice(true) : itemToShow.GetPrice(false);
         int totalPrice = price * itemToShow.stackSize;
@@ -48,6 +50,8 @@ public class UI_ItemTooltip : UI_Tooltip
     // レアリティ表示を更新
     private void SetRarityText(Item_Rarity rarity)
     {
+        if (itemRarity == null) return;
+
         var (color, text) = GetRarityColorAndText(rarity);
         itemRarity.text = text;
         itemRarity.color = color;
