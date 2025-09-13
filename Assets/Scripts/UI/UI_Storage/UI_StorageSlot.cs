@@ -7,6 +7,7 @@ public class UI_StorageSlot : UI_ItemSlot
     private UI_Storage uiStorage;
     public enum StorageSlotType { StorageSlot, PlayerInventorySlot }
     public StorageSlotType slotType;
+
     private void Start()
     {
         if (storage == null)

@@ -149,6 +149,7 @@ public class Inventory_Player : Inventory_Base
     {
         data.gold = gold;
         data.inventory.Clear();
+        data.equippedItems.Clear();
 
         foreach(var item in itemList)
         {
@@ -161,6 +162,12 @@ public class Inventory_Player : Inventory_Base
 
                 data.inventory[saveID] += item.stackSize;
             }
+        }
+
+        foreach(var slot in equipList)
+        {
+            if (slot.HasItem())
+                data.equippedItems[slot.equippedItem.itemData.saveID] = slot.slotType;
         }
     }
 
@@ -186,6 +193,21 @@ public class Inventory_Player : Inventory_Base
                 Inventory_Item itemToLoad = new Inventory_Item(itemData);
                 AddItem(itemToLoad);
             }
+        }
+
+        foreach(var entry in data.equippedItems)
+        {
+            string saveID = entry.Key;
+            Item_Type loadedSlotType = entry.Value;
+
+            Item_DataSO itemData = itemDatabase.GetItemData(saveID);
+            Inventory_Item itemToLoad = new Inventory_Item(itemData);
+
+            var slot = equipList.Find(slot => slot.slotType == loadedSlotType && slot.HasItem() == false);
+
+            slot.equippedItem = itemToLoad;
+            slot.equippedItem.AddModifiers(player.stats);
+            slot.equippedItem.AddItemEffect(player);
         }
 
         TriggerUpdateUI();
