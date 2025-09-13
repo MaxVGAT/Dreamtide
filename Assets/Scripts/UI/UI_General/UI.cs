@@ -103,6 +103,10 @@ public class UI : MonoBehaviour
 
             if (!merchant.isInsideTrigger)
                 ToggleNPCType(merchant, false);
+
+            skillTree.SkillTooltip.ShowToolTip(false, null);
+            itemTooltip.ShowToolTip(false, null);
+            statTooltip.ShowToolTip(false, null);
         }
 
         Time.timeScale = menuEnabled ? 0 : 1;

@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class Skill_SwordThrow : Skill_Base
 {
-    private SkillObject_Sword currentSword; // Œ»İ“Š‚°‚Ä‚¢‚éŒ•
-    private float currentThrowPower;        // Œ»İ‚ÌƒXƒ[‹­“x
+    private SkillObject_Sword currentSword; // ï¿½ï¿½ï¿½İ“ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½éŒ•
+    private float currentThrowPower;        // ï¿½ï¿½ï¿½İ‚ÌƒXï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½x
 
     [Header("Regular Sword Upgrade")]
-    [SerializeField] private GameObject swordPrefab; // ’ÊíŒ•‚ÌƒvƒŒƒnƒu
+    [SerializeField] private GameObject swordPrefab; // ï¿½ÊíŒ•ï¿½Ìƒvï¿½ï¿½ï¿½nï¿½u
     [Range(0, 10)]
     [SerializeField] private float regularThrowPower = 5;
 
     [Header("Pierce Sword Upgrade")]
-    [SerializeField] private GameObject pierceSwordPrefab; // ŠÑ’ÊŒ•
-    public int amountToPierce = 2; // ŠÑ’Ê‰ñ”
+    [SerializeField] private GameObject pierceSwordPrefab; // ï¿½Ñ’ÊŒï¿½
+    public int amountToPierce = 2; // ï¿½Ñ’Ê‰ï¿½
     [Range(0, 10)]
     [SerializeField] private float pierceThrowPower = 5;
 
@@ -20,47 +20,47 @@ public class Skill_SwordThrow : Skill_Base
     [SerializeField] private GameObject spinSwordPrefab;
     [Range(0, 10)]
     [SerializeField] private float spinThrowPower = 5;
-    public int maxDistance = 5; // ‰ñ“]Œ•‚ÌÅ‘å‹——£
-    public float attacksPerSecond = 2; // UŒ‚•p“x
-    public float maxSpinDuration = 3; // Å‘å‰ñ“]ŠÔ
+    public int maxDistance = 5; // ï¿½ï¿½]ï¿½ï¿½ï¿½ÌÅ‘å‹—ï¿½ï¿½
+    public float attacksPerSecond = 2; // ï¿½Uï¿½ï¿½ï¿½pï¿½x
+    public float maxSpinDuration = 3; // ï¿½Å‘ï¿½ï¿½]ï¿½ï¿½ï¿½ï¿½
 
     [Header("Bounce Sword Upgrade")]
     [SerializeField] private GameObject bounceSwordPrefab;
     [Range(0, 10)]
     [SerializeField] private float bounceThrowPower = 5;
-    public int bounceCount = 5; // ƒoƒEƒ“ƒX‰ñ”
-    public float bounceSpeed = 12; // ƒoƒEƒ“ƒX‘¬“x
+    public int bounceCount = 5; // ï¿½oï¿½Eï¿½ï¿½ï¿½Xï¿½ï¿½
+    public float bounceSpeed = 12; // ï¿½oï¿½Eï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½x
 
     [Header("Trajectory Prediction")]
-    [SerializeField] private GameObject predictionDot; // —\‘ª•\¦—pƒhƒbƒg
-    [SerializeField] private int numberOfDots = 20;    // ƒhƒbƒg”
-    [SerializeField] private float spaceBetweenDots = 0.05f; // ƒhƒbƒgŠÔŠu
-    private float swordGravity;  // Œ•‚É‚©‚©‚éd—ÍƒXƒP[ƒ‹
-    private Transform[] dots;    // ‹O“¹—\‘ªƒhƒbƒg
-    private Vector2 confirmedDirection; // “Š±Šm’è•ûŒü
+    [SerializeField] private GameObject predictionDot; // ï¿½\ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½pï¿½hï¿½bï¿½g
+    [SerializeField] private int numberOfDots = 20;    // ï¿½hï¿½bï¿½gï¿½ï¿½
+    [SerializeField] private float spaceBetweenDots = 0.05f; // ï¿½hï¿½bï¿½gï¿½ÔŠu
+    private float swordGravity;  // ï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½ï¿½dï¿½ÍƒXï¿½Pï¿½[ï¿½ï¿½
+    private Transform[] dots;    // ï¿½Oï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½hï¿½bï¿½g
+    private Vector2 confirmedDirection; // ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½ï¿½ï¿½ï¿½ï¿½
 
     protected override void Awake()
     {
         base.Awake();
-        swordGravity = swordPrefab.GetComponent<Rigidbody2D>().gravityScale; // Œ•‚Ìd—ÍƒXƒP[ƒ‹æ“¾
-        dots = GenerateDots(); // ‹O“¹—\‘ªƒhƒbƒg¶¬
+        swordGravity = swordPrefab.GetComponent<Rigidbody2D>().gravityScale; // ï¿½ï¿½ï¿½Ìdï¿½ÍƒXï¿½Pï¿½[ï¿½ï¿½ï¿½æ“¾
+        dots = GenerateDots(); // ï¿½Oï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½hï¿½bï¿½gï¿½ï¿½ï¿½ï¿½
     }
 
-    // ƒXƒLƒ‹g—p‰Â”\‚©”»’è
+    // ï¿½Xï¿½Lï¿½ï¿½ï¿½gï¿½pï¿½Â”\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public override bool CanUseSkill()
     {
-        UpdateThrowPower(); // Œ»İ‚ÌƒAƒbƒvƒOƒŒ[ƒh‚É‰‚¶‚½“Š±—ÍXV
+        UpdateThrowPower(); // ï¿½ï¿½ï¿½İ‚ÌƒAï¿½bï¿½vï¿½Oï¿½ï¿½ï¿½[ï¿½hï¿½É‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍXï¿½V
 
         if (currentSword != null)
         {
-            currentSword.GetSwordBackToPlayer(); // Šù‘¶Œ•‚ğ–ß‚·
+            currentSword.GetSwordBackToPlayer(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
             return false;
         }
 
         return base.CanUseSkill();
     }
 
-    // Œ•‚ğ“Š‚°‚é
+    // ï¿½ï¿½ï¿½ğ“Š‚ï¿½ï¿½ï¿½
     public void ThrowSword()
     {
         GameObject swordPrefab = GetSwordPrefab();
@@ -69,10 +69,10 @@ public class Skill_SwordThrow : Skill_Base
         currentSword = newSword.GetComponent<SkillObject_Sword>();
         currentSword.SetupSword(this, GetThrowPower());
 
-        SetSkillOnCooldown(); // g—pŒã‚ÉƒN[ƒ‹ƒ_ƒEƒ“ŠJn
+        SetSkillOnCooldown(); // ï¿½gï¿½pï¿½ï¿½ÉƒNï¿½[ï¿½ï¿½ï¿½_ï¿½Eï¿½ï¿½ï¿½Jï¿½n
     }
 
-    // Œ»İ‚ÌƒAƒbƒvƒOƒŒ[ƒh‚É‰‚¶‚½Œ•ƒvƒŒƒnƒu‚ğ•Ô‚·
+    // ï¿½ï¿½ï¿½İ‚ÌƒAï¿½bï¿½vï¿½Oï¿½ï¿½ï¿½[ï¿½hï¿½É‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½nï¿½uï¿½ï¿½Ô‚ï¿½
     private GameObject GetSwordPrefab()
     {
         if (Unlocked(Skill_UpgradeType.SwordThrow))
@@ -90,7 +90,7 @@ public class Skill_SwordThrow : Skill_Base
         return null;
     }
 
-    // Œ»İ‚ÌƒAƒbƒvƒOƒŒ[ƒh‚É‰‚¶‚Ä“Š±—Í‚ğİ’è
+    // ï¿½ï¿½ï¿½İ‚ÌƒAï¿½bï¿½vï¿½Oï¿½ï¿½ï¿½[ï¿½hï¿½É‰ï¿½ï¿½ï¿½ï¿½Ä“ï¿½ï¿½ï¿½ï¿½Í‚ï¿½İ’ï¿½
     private void UpdateThrowPower()
     {
         switch (upgradeType)
@@ -108,15 +108,14 @@ public class Skill_SwordThrow : Skill_Base
                 currentThrowPower = bounceThrowPower;
                 break;
             default:
-                Debug.Log("No upgrade unlocked");
                 break;
         }
     }
 
-    // “Š±‘¬“xƒxƒNƒgƒ‹‚ğŒvZ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½vï¿½Z
     private Vector2 GetThrowPower() => confirmedDirection * (currentThrowPower * 10);
 
-    // ‹O“¹—\‘ªXV
+    // ï¿½Oï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½Xï¿½V
     public void PredictTrajectory(Vector2 direction)
     {
         for (int i = 0; i < dots.Length; i++)
@@ -125,13 +124,13 @@ public class Skill_SwordThrow : Skill_Base
         }
     }
 
-    // ŠÔtŒã‚Ì—\‘ªˆÊ’u‚ğŒvZ
+    // ï¿½ï¿½ï¿½ï¿½tï¿½ï¿½Ì—\ï¿½ï¿½ï¿½Ê’uï¿½ï¿½vï¿½Z
     private Vector2 GetTrajectoryPoint(Vector2 direction, float t)
     {
         float scaledThrowPower = currentThrowPower * 10;
-        Vector2 initialVelocity = direction * scaledThrowPower; // ‰‘¬ƒxƒNƒgƒ‹
-        Vector2 gravityEffect = 0.5f * Physics2D.gravity * swordGravity * (t * t); // d—Í‚É‚æ‚éˆÊ’u•Ï‰»
-        Vector2 predictedPoint = (initialVelocity * t) + gravityEffect; // ‡¬ˆÊ’u
+        Vector2 initialVelocity = direction * scaledThrowPower; // ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½
+        Vector2 gravityEffect = 0.5f * Physics2D.gravity * swordGravity * (t * t); // ï¿½dï¿½Í‚É‚ï¿½ï¿½Ê’uï¿½Ï‰ï¿½
+        Vector2 predictedPoint = (initialVelocity * t) + gravityEffect; // ï¿½ï¿½ï¿½ï¿½ï¿½Ê’u
         Vector2 playerPosition = transform.root.position;
 
         return playerPosition + predictedPoint;
@@ -139,14 +138,14 @@ public class Skill_SwordThrow : Skill_Base
 
     public void ConfirmTrajectory(Vector2 direction) => confirmedDirection = direction;
 
-    // ƒhƒbƒg‚Ì•\¦Ø‘Ö
+    // ï¿½hï¿½bï¿½gï¿½Ì•\ï¿½ï¿½ï¿½Ø‘ï¿½
     public void EnableDots(bool enable)
     {
         foreach (Transform t in dots)
             t.gameObject.SetActive(enable);
     }
 
-    // ƒhƒbƒg¶¬
+    // ï¿½hï¿½bï¿½gï¿½ï¿½ï¿½ï¿½
     private Transform[] GenerateDots()
     {
         Transform[] newDots = new Transform[numberOfDots];

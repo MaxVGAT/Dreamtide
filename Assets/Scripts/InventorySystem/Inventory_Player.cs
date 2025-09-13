@@ -7,13 +7,16 @@ public class Inventory_Player : Inventory_Base
 {
     public event Action<int> OnQuickSlotUsed;
 
+    [SerializeField] private ItemListDataSO itemDatabase;
+
     private Entity_Player player; // �v���C���[�̃X�e�[�^�X�Q��
     public List<Inventory_EquipmentSlot> equipList; // �����X���b�g���X�g
-    public Inventory_Storage storage;
+    public Inventory_Storage storage{ get; private set; }
 
     [Header("Quick Item Slots")]
     public Inventory_Item[] quickItems = new Inventory_Item[2];
 
+    [Header("Gold Infos")]
     public int gold = 10000;
 
     protected override void Awake()
@@ -142,5 +145,51 @@ public class Inventory_Player : Inventory_Base
 
         player.health.SetHealthToPercent(savedHealthPercent);
         AddItem(itemToUnequip); // �C���x���g���ɖ߂�
+    }
+
+    public override void SaveData(ref GameData data)
+    {
+        data.gold = gold;
+        data.inventory.Clear();
+
+        foreach(var item in itemList)
+        {
+            if(item != null && item.itemData != null)
+            {
+                string saveID = item.itemData.saveID;
+
+                if (data.inventory.ContainsKey(saveID) == false)
+                    data.inventory[saveID] = 0;
+
+                data.inventory[saveID] += item.stackSize;
+            }
+        }
+    }
+
+    public override void LoadData(GameData data)
+    {
+        gold = data.gold;
+
+        foreach(var item in data.inventory)
+        {
+            string saveID = item.Key;
+            int stackSize = item.Value;
+
+            Item_DataSO itemData = itemDatabase.GetItemData(saveID);
+
+            if(itemData == null)
+            {
+                Debug.LogWarning("Item not found: " + saveID);
+                continue;
+            }
+
+            for(int i = 0; i < stackSize; i++)
+            {
+                Inventory_Item itemToLoad = new Inventory_Item(itemData);
+                AddItem(itemToLoad);
+            }
+        }
+
+        TriggerUpdateUI();
     }
 }

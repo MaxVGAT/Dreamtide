@@ -29,6 +29,14 @@ public class UI_Inventory : MonoBehaviour
         UpdateGoldUI();
     }
 
+    private void OnEnable()
+    {
+        if (inventory == null)
+            return;
+
+        UpdateUI();
+    }
+
     // �C���x���g��UI������I�ɍX�V�i���C�A�E�g������č\�z�j
     public void RefreshInventoryUI()
     {

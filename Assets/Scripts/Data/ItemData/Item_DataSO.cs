@@ -1,8 +1,11 @@
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "RPG Setup / Item Data/ Material item", fileName = "Material data - ")]
 public class Item_DataSO : ScriptableObject
 {
+
+    public string saveID { get; private set; }
 
     [Header("Merchant Details")]
     public int minStackSizeAtShop = 1;
@@ -30,6 +33,11 @@ public class Item_DataSO : ScriptableObject
     private void OnValidate()
     {
         dropChance = GetDropChance();
+
+#if UNITY_EDITOR
+        string path = AssetDatabase.GetAssetPath(this);
+        saveID = AssetDatabase.AssetPathToGUID(path);
+#endif
     }
 
     public float GetDropChance()

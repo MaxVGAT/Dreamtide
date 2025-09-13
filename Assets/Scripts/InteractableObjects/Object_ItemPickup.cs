@@ -27,6 +27,16 @@ public class Object_ItemPickup : MonoBehaviour
         float xForce = Random.Range(-dropForce.x, dropForce.x);
         rb.linearVelocity = new Vector2 (xForce, dropForce.y);
         col.isTrigger = false;
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            Collider2D playerCollider = player.GetComponent<Collider2D>();
+            if (playerCollider != null)
+            {
+                Physics2D.IgnoreCollision(col, playerCollider, true);
+            }
+        }
     }
 
 
@@ -38,10 +48,22 @@ public class Object_ItemPickup : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Ground") && col.isTrigger == false)
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") && col.isTrigger == false)
         {
             col.isTrigger = true;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
+
+            // Re-enable collision with player for trigger pickup
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                Collider2D playerCollider = player.GetComponent<Collider2D>();
+                if (playerCollider != null)
+                {
+                    Physics2D.IgnoreCollision(col, playerCollider, false);
+                }
+            }
         }
     }
 
