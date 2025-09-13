@@ -4,34 +4,80 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-// �C���x���g����̃A�C�e���f�[�^�Ǘ��N���X
+// インベントリ内のアイテムデータ管理クラス
 [Serializable]
 public class Inventory_Item
 {
-    private string itemID; // �A�C�e���̃��j�[�NID�i�X�^�b�N��C���q�p�j
+    private string itemID; // アイテムのユニークID（スタック管理用）
 
-    public Item_DataSO itemData; // ���f�[�^ScriptableObject
-    public int stackSize = 1;    // ���݂̃X�^�b�N��
+    public Item_DataSO itemData; // 元データScriptableObject
+    public int stackSize = 1;    // 現在のスタック数
 
-    public ItemModifier[] modifiers { get; private set; } // �������ʂ̏C���q
+    public ItemModifier[] modifiers { get; private set; } // 装備効果の修正子
     public Item_EffectDataSO itemEffect;
 
+    // Price is now stored and consistent per item
     public int buyPrice { get; private set; }
     public float sellPrice { get; private set; }
 
-    // �R���X�g���N�^�FScriptableObject���琶��
+    // コンストラクタ：ScriptableObjectから生成
     public Inventory_Item(Item_DataSO itemData)
     {
+        if (itemData == null)
+            throw new ArgumentNullException(nameof(itemData));
+
         this.itemData = itemData;
         itemEffect = itemData.itemEffect;
         itemID = itemData.itemName + " - " + Guid.NewGuid();
 
-        // Generate stats automatically
-        modifiers = GenerateStats(itemData);
+        // Generate stats automatically using item's unique ID as seed
+        modifiers = GenerateStats(itemData, itemID.GetHashCode());
+
+        // Generate prices once and store them
+        GeneratePrices();
     }
 
-    private ItemModifier[] GenerateStats(Item_DataSO itemData)
+    private void GeneratePrices()
     {
+        // Use a separate seed for price generation to avoid affecting stats
+        var priceRandom = new System.Random((itemID + "_price").GetHashCode());
+
+        // Default base prices by rarity
+        int defaultBasePrice = itemData.itemRarity switch
+        {
+            Item_Rarity.Common => 10,
+            Item_Rarity.Uncommon => 50,
+            Item_Rarity.Rare => 150,
+            Item_Rarity.Epic => 400,
+            Item_Rarity.Legendary => 800,
+            Item_Rarity.Unique => 1500,
+            _ => 100
+        };
+
+        // Multiplier per rarity
+        float multiplier = itemData.itemRarity switch
+        {
+            Item_Rarity.Common => 1f,
+            Item_Rarity.Uncommon => 1.3f,
+            Item_Rarity.Rare => 1.8f,
+            Item_Rarity.Epic => 2.5f,
+            Item_Rarity.Legendary => 4f,
+            Item_Rarity.Unique => 6f,
+            _ => 1f
+        };
+
+        // Small randomization ±25% using our seeded random
+        float randomFactor = (float)(priceRandom.NextDouble() * 0.5 + 0.75); // 0.75 to 1.25
+
+        buyPrice = Mathf.RoundToInt(defaultBasePrice * multiplier * randomFactor);
+        sellPrice = buyPrice * 0.35f; // Sell for 35% of buy price
+    }
+
+    private ItemModifier[] GenerateStats(Item_DataSO itemData, int seed)
+    {
+        // Use seeded random for consistent generation
+        var random = new System.Random(seed);
+
         // Decide how many stats based on rarity
         int numberOfStats = itemData.itemRarity switch
         {
@@ -65,27 +111,26 @@ public class Inventory_Item
             _ => Enum.GetValues(typeof(StatType)).Cast<StatType>().ToArray()
         };
 
+        // FIXED: Prevent infinite loop by limiting numberOfStats to available unique stats
+        numberOfStats = Math.Min(numberOfStats, possibleStats.Length);
+
         var selectedStats = new List<ItemModifier>();
+        var availableStats = possibleStats.ToList(); // Copy to modify
 
-        for (int i = 0; i < numberOfStats; i++)
+        for (int i = 0; i < numberOfStats && availableStats.Count > 0; i++)
         {
-            var stat = possibleStats[UnityEngine.Random.Range(0, possibleStats.Length)];
+            int randomIndex = random.Next(0, availableStats.Count);
+            var stat = availableStats[randomIndex];
+            availableStats.RemoveAt(randomIndex); // Remove to prevent duplicates
 
-            // Avoid duplicate stats
-            if (selectedStats.Any(m => m.statType == stat))
-            {
-                i--;
-                continue;
-            }
-
-            int value = GenerateStatValue(stat, itemData.itemRarity);
+            int value = GenerateStatValue(stat, itemData.itemRarity, random);
             selectedStats.Add(new ItemModifier { statType = stat, value = value });
         }
 
         return selectedStats.ToArray();
     }
 
-    private int GenerateStatValue(StatType stat, Item_Rarity rarity)
+    private int GenerateStatValue(StatType stat, Item_Rarity rarity, System.Random random)
     {
         // Base value per stat type
         int baseValue = stat switch
@@ -125,36 +170,40 @@ public class Inventory_Item
             _ => 1f
         };
 
-        // Small randomization ±10%
-        float randomFactor = UnityEngine.Random.Range(0.9f, 1.1f);
+        // Small randomization ±10% using seeded random
+        float randomFactor = (float)(random.NextDouble() * 0.2 + 0.9); // 0.9 to 1.1
 
         return Mathf.RoundToInt(baseValue * multiplier * randomFactor);
     }
 
-    // �v���C���[�ɏC���q��K�p
+    // プレイヤーに修正子を適用
     public void AddModifiers(Entity_Stats playerStats)
     {
+        if (playerStats == null) return;
+
         foreach (var mod in modifiers)
         {
             Stats statToModify = playerStats.GetStatByType(mod.statType);
-            statToModify.AddModifier(mod.value, itemID);
+            statToModify?.AddModifier(mod.value, itemID);
         }
     }
-    
-    // �v���C���[����C���q��폜
+
+    // プレイヤーから修正子を削除
     public void RemoveModifiers(Entity_Stats playerStats)
     {
+        if (playerStats == null) return;
+
         foreach (var mod in modifiers)
         {
             Stats statToModify = playerStats.GetStatByType(mod.statType);
-            statToModify.RemoveModifier(itemID);
+            statToModify?.RemoveModifier(itemID);
         }
     }
 
     public void AddItemEffect(Entity_Player player) => itemEffect?.Subscribe(player);
     public void RemoveItemEffect() => itemEffect?.Unsubscribe();
 
-    // Equipment_DataSO�ւ̃L���X�g�i�����A�C�e���̏ꍇ�j
+    // Equipment_DataSOへのキャスト（装備アイテムの場合）
     private Equipment_DataSO EquipmentData()
     {
         if (itemData is Equipment_DataSO equipment)
@@ -163,19 +212,26 @@ public class Inventory_Item
         return null;
     }
 
-    // �X�^�b�N�\������
+    // スタック可能判定
     public bool CanAddStack() => stackSize < itemData.maxStackSize;
 
-    // �X�^�b�N�𑝂₷
-    public void AddStack() => stackSize++;
+    // スタックを増やす - FIXED: Added bounds checking
+    public void AddStack()
+    {
+        if (stackSize < itemData.maxStackSize)
+            stackSize++;
+    }
 
-    // �X�^�b�N����炷
-    public void RemoveStack() => stackSize--;
+    // スタックを減らす - FIXED: Added bounds checking
+    public void RemoveStack()
+    {
+        if (stackSize > 0)
+            stackSize--;
+    }
 
-    public string GetItemInfo()
+    public string GetItemInfo(bool showForShop = false)
     {
         StringBuilder sb = new StringBuilder();
-
 
         if (itemData.itemType == Item_Type.Material)
         {
@@ -193,7 +249,7 @@ public class Inventory_Item
             sb.AppendLine("");
             sb.AppendLine("");
             sb.AppendLine("");
-            sb.AppendLine(itemEffect.effectDescription);
+            sb.AppendLine(itemEffect?.effectDescription ?? "効果なし");
             sb.AppendLine("");
 
             return sb.ToString();
@@ -219,43 +275,16 @@ public class Inventory_Item
         else
             sb.AppendLine("");
 
+
+
         return sb.ToString();
     }
 
+    // FIXED: Now returns consistent prices
     public int GetPrice(bool forBuying = false)
     {
-        // Default base prices by rarity
-        int defaultBasePrice = itemData.itemRarity switch
-        {
-            Item_Rarity.Common => 10,
-            Item_Rarity.Uncommon => 50,
-            Item_Rarity.Rare => 150,
-            Item_Rarity.Epic => 400,
-            Item_Rarity.Legendary => 800,
-            Item_Rarity.Unique => 1500,
-            _ => 100
-        };
-
-        // Multiplier per rarity (optional, can tweak for scaling)
-        float multiplier = itemData.itemRarity switch
-        {
-            Item_Rarity.Common => 1f,
-            Item_Rarity.Uncommon => 1.3f,
-            Item_Rarity.Rare => 1.8f,
-            Item_Rarity.Epic => 2.5f,
-            Item_Rarity.Legendary => 4f,
-            Item_Rarity.Unique => 6f,
-            _ => 1f
-        };
-
-        // Small randomization ±10%
-        float randomFactor = UnityEngine.Random.Range(0.75f, 1.25f);
-
-        int finalPrice = Mathf.RoundToInt(defaultBasePrice * multiplier * randomFactor);
-
-        return forBuying ? finalPrice : Mathf.FloorToInt(finalPrice * 0.35f);
+        return forBuying ? buyPrice : Mathf.FloorToInt(sellPrice);
     }
-
 
     // ステータスの日本語表示を返す
     private string GetStatTypeText(StatType type)
@@ -281,6 +310,7 @@ public class Inventory_Item
             case StatType.IceResistance: return "氷耐性";
             case StatType.FireResistance: return "火耐性";
             case StatType.LightningResistance: return "雷耐性";
+            case StatType.ElementalDamage: return "元素ダメージ"; // FIXED: Added missing translation
             default: return type.ToString();
         }
     }
@@ -303,7 +333,4 @@ public class Inventory_Item
                 return false;
         }
     }
-
-
-
 }

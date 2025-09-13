@@ -40,7 +40,7 @@ public class UI_ItemTooltip : UI_Tooltip
 
         if (itemName != null) itemName.text = itemToShow?.itemData?.itemName ?? "";
         if (itemType != null) itemType.text = SetItemTypeJP(itemToShow.itemData.itemType);
-        if (itemInfo != null) itemInfo.text = itemToShow.GetItemInfo();
+        if (itemInfo != null) itemInfo.text = itemToShow.GetItemInfo(showMerchantInfo);
         if (itemPrice != null) itemPrice.text = itemToShow.stackSize > 1 ? fullStackPrice : singleStackPrice;
         SetRarityText(itemToShow.itemData.itemRarity);
     }

@@ -82,16 +82,18 @@ public class UI : MonoBehaviour
     {
         menuEnabled = !menuEnabled;
 
-        if (tabMenuRoot)   // null check + destroyed object check
+        if (tabMenuRoot)
             tabMenuRoot.SetActive(menuEnabled);
 
-        if (!menuEnabled && skillTree != null)
-            skillTree.SkillTooltip.ShowToolTip(false, skillTree.SkillTooltip.GetComponent<RectTransform>());
-
-        itemTooltip?.ShowToolTip(false, null, null);
+        // ... existing code ...
 
         if (!menuEnabled)
         {
+            // When closing menu, reset ALL visibility states
+            storage.isVisible = false;
+            craft.isVisible = false;
+            merchant.isVisible = false;
+
             // Only hide panels if the player is not inside their trigger
             if (!storage.isInsideTrigger)
                 ToggleNPCType(storage, false);
@@ -105,7 +107,6 @@ public class UI : MonoBehaviour
 
         Time.timeScale = menuEnabled ? 0 : 1;
         StopPlayerControls(menuEnabled);
-
     }
 
     private void OpenMenuIfClosed()
@@ -142,9 +143,6 @@ public class UI : MonoBehaviour
     // Storage ---
     public void OpenInventoryWithStorage()
     {
-        if (IsStorageVisible())
-            return;
-
         OpenMenuIfClosed();
         ToggleNPCType(storage, true);
     }
@@ -158,9 +156,6 @@ public class UI : MonoBehaviour
 
     public void OpenInventoryWithCraft()
     {
-        if (IsCraftVisible())
-            return;
-
         OpenMenuIfClosed();
         ToggleNPCType(craft, true);
     }
@@ -174,9 +169,6 @@ public class UI : MonoBehaviour
 
     public void OpenInventoryWithMerchant()
     {
-        if (IsMerchantVisible())
-            return;
-
         OpenMenuIfClosed();
         ToggleNPCType(merchant, true);
     }
