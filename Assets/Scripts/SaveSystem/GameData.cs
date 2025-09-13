@@ -19,6 +19,8 @@ public class GameData
     public int playerLevel;
     public int totalExperience;
 
+    public Vector3 savedCheckpoint;
+
 
     public GameData()
     {

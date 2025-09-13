@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Entity_Player : Entity
 {
+    public static Entity_Player instance;
+
     public static event Action OnPlayerDeath;
 
     public UI ui { get; private set; }
@@ -59,6 +61,8 @@ public class Entity_Player : Entity
     protected override void Awake()
     {
         base.Awake();
+
+        instance = this;
 
         // �K�v�ȃR���|�[�l���g��擾
         ui = FindAnyObjectByType<UI>();
