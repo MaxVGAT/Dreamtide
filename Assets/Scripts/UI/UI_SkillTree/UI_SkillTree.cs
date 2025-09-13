@@ -9,7 +9,6 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
     [SerializeField] private TextMeshProUGUI skillPointsText;
     [SerializeField] private UI_TreeConnectHandler[] parentNodes; // �ڑ��n���h���[�z��
     private UI_TreeNode[] allTreeNodes;
-    private int skillPoints;
 
     public Player_SkillManager skillManager { get; private set; } // �v���C���[�̃X�L���Ǘ��N���X�Q��
 
@@ -18,7 +17,6 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
         // �V�[�������Player_SkillManager��������Ď擾
         skillManager = FindAnyObjectByType<Player_SkillManager>();
         skillManager.OnSkillPointsChanged += UpdateSkillPointsText;
-        skillPoints = skillManager.skillPoints;
 
         UpdateSkillPointsText(skillManager.skillPoints);
 
@@ -79,10 +77,11 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
 
     public void LoadData(GameData data)
     {
-        skillPoints = data.skillPoints;         
+        skillManager.skillPoints = data.skillPoints;
+        UpdateSkillPointsText(skillManager.skillPoints);
 
         // Validate before unlocking
-        foreach(var node in allTreeNodes)
+        foreach (var node in allTreeNodes)
         {
             string skillName = node.skillData.skillName;
 
@@ -142,6 +141,7 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
     public void SaveData(ref GameData data)
     {
         data.skillPoints = skillManager.skillPoints;
+
         data.skillTreeUI.Clear();
         data.skillUpgrades.Clear();
 

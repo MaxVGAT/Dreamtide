@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_InGame : MonoBehaviour
+public class UI_InGame : MonoBehaviour, ISaveable
 {
     private Entity_Player player;
     private Player_SkillManager skillManager;
@@ -15,6 +15,8 @@ public class UI_InGame : MonoBehaviour
     [SerializeField] private Slider healthSlider;
     [SerializeField] private TextMeshProUGUI healthText;
 
+    private bool dataLoaded = false;
+
     [Header("Quick Item Slots")]
     [SerializeField] private float yOffsetQuickItemParent = 60;
     [SerializeField] private float xOffsetQuickItemParent = 60;
@@ -25,6 +27,7 @@ public class UI_InGame : MonoBehaviour
 
     [Header("Experience Details")]
     [SerializeField] AnimationCurve experienceCurve;
+    private int startingLevel = 1;
     int currentLevel;
     int totalExp;
     int previousLevelsExp;
@@ -48,8 +51,14 @@ public class UI_InGame : MonoBehaviour
         skillSlots = GetComponentsInChildren<UI_SkillSlot>(true);
 
         player.health.OnHealthUpdate += UpdateHealthBar;
-        UpdateLevel();
-        UpdateInterface();
+
+        if (!dataLoaded)
+        {
+            currentLevel = startingLevel;
+            totalExp = 0;
+            UpdateLevel();
+            UpdateInterface();
+        }
     }
 
     public void PlayQuickSlotFeedback(int slotNumber) => quickItemSlots[slotNumber].SimulateButtonFeedback();
@@ -172,5 +181,21 @@ public class UI_InGame : MonoBehaviour
         levelText.text = currentLevel.ToString();
         expText.text = start + " / " + end;
         expValue.fillAmount = (float)start / (float)end;
+    }
+
+    public void LoadData(GameData data)
+    {
+        currentLevel = Mathf.Max(1, data.playerLevel); // Ensure level starts at 1
+        totalExp = data.totalExperience;
+
+        dataLoaded = true;
+        UpdateLevel();
+        UpdateInterface();
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.playerLevel = currentLevel;
+        data.totalExperience = totalExp;
     }
 }
