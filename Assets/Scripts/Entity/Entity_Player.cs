@@ -62,6 +62,7 @@ public class Entity_Player : Entity
     {
         base.Awake();
 
+
         instance = this;
 
         // �K�v�ȃR���|�[�l���g��擾
@@ -92,13 +93,15 @@ public class Entity_Player : Entity
         counterAttackState = new Player_CounterAttackState(this, stateMachine, "counterAttack");
         swordThrowState = new Player_SwordThrowState(this, stateMachine, "swordThrow");
         domainState = new Player_DomainState(this, stateMachine, "jumpFall");
+
+        stateMachine.Initialize(idleState);
     }
 
     protected override void Start()
     {
         base.Start();
         // ������Ԃ�Idle�ɐݒ�
-        stateMachine.Initialize(idleState);
+        
     }
 
     // �v���C���[��u�Ԉړ�

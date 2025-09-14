@@ -2,31 +2,31 @@ using UnityEngine;
 
 public class StateMachine
 {
-    public EntityState currentState { get; private set; } // Œ»Ý‚ÌƒXƒe[ƒg
-    public bool canChangeState = true;                   // ƒXƒe[ƒg•ÏX‰Â”\‚©‚Ç‚¤‚©
+    public EntityState currentState { get; private set; } // ï¿½ï¿½ï¿½Ý‚ÌƒXï¿½eï¿½[ï¿½g
+    public bool canChangeState = true;                   // ï¿½Xï¿½eï¿½[ï¿½gï¿½ÏXï¿½Â”\ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½
 
-    // ‰Šú‰»FŠJŽnƒXƒe[ƒg‚ðÝ’è‚µ‚ÄEnterŒÄ‚Ño‚µ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Fï¿½Jï¿½nï¿½Xï¿½eï¿½[ï¿½gï¿½ï¿½Ý’è‚µï¿½ï¿½Enterï¿½Ä‚Ñoï¿½ï¿½
     public void Initialize(EntityState startState)
     {
         currentState = startState;
-        currentState.Enter(); // ƒXƒe[ƒgŠJŽnˆ—
+        currentState.Enter(); // ï¿½Xï¿½eï¿½[ï¿½gï¿½Jï¿½nï¿½ï¿½ï¿½ï¿½
     }
 
-    // ƒXƒe[ƒgØ‚è‘Ö‚¦
+    // ï¿½Xï¿½eï¿½[ï¿½gï¿½Ø‚ï¿½Ö‚ï¿½
     public void ChangeState(EntityState newState)
     {
-        if (canChangeState == false) return; // ƒXƒe[ƒg•ÏX•s‰Â‚È‚çˆ—‚µ‚È‚¢
-        currentState.Exit();                 // Œ»Ý‚ÌƒXƒe[ƒgI—¹ˆ—
-        currentState = newState;             // V‚µ‚¢ƒXƒe[ƒg‚É•ÏX
-        currentState.Enter();                // VƒXƒe[ƒgŠJŽnˆ—
+        if (canChangeState == false) return; // ï¿½Xï¿½eï¿½[ï¿½gï¿½ÏXï¿½sï¿½Â‚È‚çˆï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
+        currentState.Exit();                 // ï¿½ï¿½ï¿½Ý‚ÌƒXï¿½eï¿½[ï¿½gï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        currentState = newState;             // ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½gï¿½É•ÏX
+        currentState.Enter();                // ï¿½Vï¿½Xï¿½eï¿½[ï¿½gï¿½Jï¿½nï¿½ï¿½ï¿½ï¿½
     }
 
-    // Œ»ÝƒAƒNƒeƒBƒu‚ÈƒXƒe[ƒg‚ÌXV
+    // ï¿½ï¿½ï¿½ÝƒAï¿½Nï¿½eï¿½Bï¿½uï¿½ÈƒXï¿½eï¿½[ï¿½gï¿½ÌXï¿½V
     public void UpdateActiveState()
     {
-        currentState.Update();               // UpdateŒÄ‚Ño‚µ
+        currentState.Update();               // Updateï¿½Ä‚Ñoï¿½ï¿½
     }
 
-    // ƒXƒe[ƒgƒ}ƒVƒ“‚ð’âŽ~iƒXƒe[ƒg•ÏX•s‰Âj
+    // ï¿½Xï¿½eï¿½[ï¿½gï¿½}ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½iï¿½Xï¿½eï¿½[ï¿½gï¿½ÏXï¿½sï¿½Âj
     public void SwitchOffStateMachine() => canChangeState = false;
 }

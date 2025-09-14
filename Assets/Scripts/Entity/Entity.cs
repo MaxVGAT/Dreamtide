@@ -43,7 +43,6 @@ public class Entity : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         
-
         stateMachine = new StateMachine();
     }
 

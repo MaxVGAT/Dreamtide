@@ -22,8 +22,6 @@ public class UI_TabGroup : MonoBehaviour
     void Start()
     {
         StartCoroutine(InitializeDefaultTab());
-        if (tabButtons != null && tabButtons.Count > 0)
-            OnTabSelected(tabButtons[defaultTabIndex]);
     }
 
     private System.Collections.IEnumerator InitializeDefaultTab()
@@ -74,8 +72,8 @@ public class UI_TabGroup : MonoBehaviour
 
         if (ui != null)
         {
-            // Inventory tab is index 0
-            if (index == 0)
+            // Inventory tab is index 1
+            if (index == 1)
             {
                 // Let UIContext handle trigger checks internally
                 ui.ShowStorageInInventory(true);

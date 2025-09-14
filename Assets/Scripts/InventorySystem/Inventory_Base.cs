@@ -19,6 +19,11 @@ public class Inventory_Base : MonoBehaviour, ISaveable
         // �K�v�ɉ����Čp����ŏ�����
     }
 
+    public void SetItemDatabase(ItemListDataSO database)
+    {
+        itemDatabase = database;
+    }
+
     // �A�C�e����ǉ��ł��邩
     public bool CanAddItem(Inventory_Item itemToAdd)
     {
