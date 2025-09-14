@@ -120,8 +120,8 @@ public class UI : MonoBehaviour
             menuEnabled = true;
             tabMenuRoot.SetActive(true);
 
-            if (tabGroup != null && tabGroup.tabButtons.Count > 0)
-                tabGroup.OnTabSelected(tabGroup.tabButtons[0]);
+            if (tabGroup != null && tabGroup.tabButtons.Count > 1)
+                tabGroup.OnTabSelected(tabGroup.tabButtons[1]);
 
             Time.timeScale = 0;
             StopPlayerControls(menuEnabled);
