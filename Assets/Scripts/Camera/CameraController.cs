@@ -1,48 +1,49 @@
-using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Entity_Player player;
+    [Header("References")]
+    [SerializeField] private Entity_Player player;
 
-    [Header("Camera details")]
-    public float moveSpeed;
-    public float lookAheadDistance = 2.5f;
-    public float lookAheadSpeed = 0.5f;
-    public float verticalOffset = 2f;
+    [Header("Camera movement")]
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float lookAheadDistance = 2.5f;
+    [SerializeField] private float lookAheadSpeed = 0.5f;
+    [SerializeField] private float verticalOffset = 2f;
+    [SerializeField] private float maxVertOffset = 5f;
+
+    [Header("Bounds (optional)")]
+    [SerializeField] private bool useBounds = false;   // enable this if you want limits in this scene
+    [SerializeField] private Vector2 minBounds;
+    [SerializeField] private Vector2 maxBounds;
+
+    private Vector3 targetPoint;
     private float lookOffset;
-    public float maxVertOffset = 5f;
     private bool isFalling;
-
-    [Header("Village bounds")]
-    public bool useBounds = false; // only active in specific scenes
-    public Vector2 minBounds;      // bottom-left corner
-    public Vector2 maxBounds;      // top-right corner
-
-    private Vector3 targetPoint = Vector3.zero;
-
-    void Awake()
-    {
-        useBounds = (SceneManager.GetActiveScene().name == "Village");
-    }
 
     private void Start()
     {
-        targetPoint = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z); // �J�����̏����ʒu��v���C���[�̈ʒu�ɐݒ�
+        if (player == null)
+        {
+            player = FindAnyObjectByType<Entity_Player>();
+        }
+
+        targetPoint = new Vector3(
+            player.transform.position.x,
+            player.transform.position.y,
+            transform.position.z
+        );
     }
 
     private void LateUpdate()
     {
-        if (player.isGrounded)
-            targetPoint.y = player.transform.position.y; // �v���C���[�̍����ɍ��킹�ăJ�����̍�������肳����
+        if (player == null) return;
 
+        // Handle vertical follow
         float targetY = player.transform.position.y + verticalOffset;
-
-        // �v���C���[�̈ʒu���ő�I�t�Z�b�g���Ⴂ�ꍇ�͗������Ƃ݂Ȃ��A�J�����������
-        if (transform.position.y - (player.transform.position.y + verticalOffset) > maxVertOffset)
+        if (transform.position.y - targetY > maxVertOffset)
             isFalling = true;
 
-        // �J������v���C���[��Y�ʒu�Ƀt�H�[�J�X������
         if (isFalling)
         {
             targetY = player.transform.position.y;
@@ -50,20 +51,25 @@ public class CameraController : MonoBehaviour
                 isFalling = false;
         }
 
-        // �v���C���[�̌����ɉ����ĉ�ʂ̃X�y�[�X��L�����p���邽�߂̃I�t�Z�b�g��ǉ�
+        // Look ahead horizontally
         float targetLookOffset = lookAheadDistance * player.facingDirection;
         lookOffset = Mathf.Lerp(lookOffset, targetLookOffset, lookAheadSpeed * Time.deltaTime);
 
-        // �����̏����g�ݍ��킹�āA�J������v���C���[�̑O���ɓ��I�ɔz�u����
-        targetPoint = new Vector3(player.transform.position.x + lookOffset, targetY, transform.position.z);
+        // Target camera position
+        targetPoint = new Vector3(
+            player.transform.position.x + lookOffset,
+            targetY,
+            transform.position.z
+        );
 
+        // Apply bounds if enabled
         if (useBounds)
         {
             targetPoint.x = Mathf.Clamp(targetPoint.x, minBounds.x, maxBounds.x);
             targetPoint.y = Mathf.Clamp(targetPoint.y, minBounds.y, maxBounds.y);
         }
 
-        // �J�����̓�����X���[�Y�ɂ��āA�}�ɓ����Ȃ��悤�ɂ���
+        // Smooth camera movement
         transform.position = Vector3.Lerp(transform.position, targetPoint, moveSpeed * Time.deltaTime);
     }
 }

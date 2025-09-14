@@ -183,7 +183,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInventorySize: 10
-  itemList: []
+  itemList:
+  - itemData: {fileID: 11400000, guid: 0af7bf1c39f54174d847f7080d2c84ff, type: 2}
+    stackSize: 0
+    itemEffect: {fileID: 11400000, guid: 994100c6ec961a545afcee9dad1a99c9, type: 2}
   itemDatabase: {fileID: 11400000, guid: 014b9ffee7fca65488a779538b26330e, type: 2}
 --- !u!114 &58036741
 MonoBehaviour:
@@ -198,13 +201,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDatabase: {fileID: 11400000, guid: 014b9ffee7fca65488a779538b26330e, type: 2}
-  storageInventory: {fileID: 0}
-  merchantInventory: {fileID: 0}
---- !u!4 &105004121 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1871460681179640222, guid: 0ca5c0aaefdb2494ca6f967d2cace9be, type: 3}
-  m_PrefabInstance: {fileID: 2179969675719074329}
-  m_PrefabAsset: {fileID: 0}
+  storageInventory: {fileID: 58036740}
+  merchantInventory: {fileID: 58036739}
 --- !u!1 &154522994
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,7 +826,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &453529630
 Transform:
   m_ObjectHideFlags: 0
@@ -1044,9 +1042,9 @@ MonoBehaviour:
   lookAheadSpeed: 6
   verticalOffset: 0.75
   maxVertOffset: 5
-  useBounds: 0
-  minBounds: {x: 0, y: 0}
-  maxBounds: {x: 0, y: 0}
+  useBounds: 1
+  minBounds: {x: 3, y: -5}
+  maxBounds: {x: 21.1, y: 0}
 --- !u!1 &811566448
 GameObject:
   m_ObjectHideFlags: 0
@@ -3080,7 +3078,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 805667409834139940, guid: bcf504cd9dd22c14bacd82c2337ebc45, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -298.94458
+      value: -298.94452
       objectReference: {fileID: 0}
     - target: {fileID: 805827694347580177, guid: bcf504cd9dd22c14bacd82c2337ebc45, type: 3}
       propertyPath: m_AnchorMax.y
@@ -7274,7 +7272,7 @@ PrefabInstance:
     - target: {fileID: 454279127666944879, guid: 0ca5c0aaefdb2494ca6f967d2cace9be, type: 3}
       propertyPath: respawnPoint
       value: 
-      objectReference: {fileID: 105004121}
+      objectReference: {fileID: 0}
     - target: {fileID: 454279127666944879, guid: 0ca5c0aaefdb2494ca6f967d2cace9be, type: 3}
       propertyPath: transferToScene
       value: VillageScene

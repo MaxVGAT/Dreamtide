@@ -8,7 +8,7 @@ public class Object_Merchant : Object_NPC, IInteractable
     protected override void Awake()
     {
         base.Awake();
-        merchantInventory = GetComponent<Inventory_Merchant>();
+        merchantInventory = PersistentStorageManager.instance.GetMerchantInventory();
     }
 
     public void Interact()

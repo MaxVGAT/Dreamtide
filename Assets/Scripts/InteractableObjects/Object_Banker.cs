@@ -9,7 +9,7 @@ public class Object_Banker : Object_NPC, IInteractable
     protected override void Awake()
     {
         base.Awake();
-        storage = GetComponent<Inventory_Storage>();
+        storage = PersistentStorageManager.instance.GetStorageInventory();
     }
 
     public void Interact()

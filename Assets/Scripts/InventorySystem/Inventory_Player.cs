@@ -147,69 +147,155 @@ public class Inventory_Player : Inventory_Base
 
     public override void SaveData(ref GameData data)
     {
+        Debug.Log($"=== STARTING SAVE - itemList count: {itemList?.Count ?? 0} ===");
+
         data.gold = gold;
         data.inventory.Clear();
         data.equippedItems.Clear();
 
-        foreach(var item in itemList)
+        // Save inventory items - simple approach using saveID
+        int itemIndex = 0;
+        foreach (var item in itemList)
         {
-            if(item != null && item.itemData != null)
+            Debug.Log($"Processing item {itemIndex}: {(item == null ? "NULL ITEM" : item.itemData?.itemName ?? "NULL ITEMDATA")}");
+
+            if (item != null && item.itemData != null)
             {
                 string saveID = item.itemData.saveID;
 
+                Debug.Log($"  - saveID: '{saveID}', stackSize: {item.stackSize}");
+
+                if (string.IsNullOrEmpty(saveID))
+                {
+                    Debug.LogError($"  - ERROR: Item {item.itemData.itemName} has null/empty saveID!");
+                    itemIndex++;
+                    continue;
+                }
+
+                // Simple approach: just use saveID as key
                 if (data.inventory.ContainsKey(saveID) == false)
                     data.inventory[saveID] = 0;
 
                 data.inventory[saveID] += item.stackSize;
+                Debug.Log($"  - ✓ SAVED successfully with key: {saveID}");
+            }
+            else
+            {
+                Debug.LogWarning($"  - ✗ SKIPPED - item null: {item == null}, itemData null: {item?.itemData == null}");
+            }
+            itemIndex++;
+        }
+
+        // Save equipped items - also simple using saveID
+        Debug.Log($"=== SAVING EQUIPPED ITEMS - equipList count: {equipList?.Count ?? 0} ===");
+
+        foreach (var slot in equipList)
+        {
+            Debug.Log($"Checking slot type: {slot.slotType}, HasItem: {slot.HasItem()}");
+            if (slot.HasItem())
+            {
+                string saveID = slot.equippedItem.itemData.saveID;
+
+                Debug.Log($"  - Saving equipped item: {slot.equippedItem.itemData.itemName} in {slot.slotType} slot with saveID: {saveID}");
+                data.equippedItems[saveID] = slot.slotType;
             }
         }
 
-        foreach(var slot in equipList)
-        {
-            if (slot.HasItem())
-                data.equippedItems[slot.equippedItem.itemData.saveID] = slot.slotType;
-        }
+        Debug.Log($"Total inventory items saved: {data.inventory.Count}");
+        Debug.Log($"Total equipped items saved: {data.equippedItems.Count}");
+        Debug.Log($"=== SAVE COMPLETE ===");
     }
 
     public override void LoadData(GameData data)
     {
+        Debug.Log($"=== STARTING LOAD ===");
+        Debug.Log($"Loading inventory data - found {data.inventory.Count} item entries");
+
         gold = data.gold;
 
-        foreach(var item in data.inventory)
+        // Clear existing equipment first to avoid stat conflicts
+        Debug.Log("Clearing existing equipment modifiers...");
+        foreach (var slot in equipList)
+        {
+            if (slot.HasItem())
+            {
+                Debug.Log($"Removing modifiers from {slot.equippedItem.itemData.itemName}");
+                slot.equippedItem.RemoveModifiers(player.stats);
+                slot.equippedItem.RemoveItemEffect();
+                slot.equippedItem = null;
+            }
+        }
+
+        // Load inventory items - simple approach
+        foreach (var item in data.inventory)
         {
             string saveID = item.Key;
             int stackSize = item.Value;
 
-            Item_DataSO itemData = itemDatabase.GetItemData(saveID);
+            Debug.Log($"Loading item with saveID: {saveID}, stackSize: {stackSize}");
 
-            if(itemData == null)
+            // Get the item data from database
+            Item_DataSO itemData = itemDatabase.GetItemData(saveID);
+            if (itemData == null)
             {
-                Debug.LogWarning("Item not found: " + saveID);
+                Debug.LogWarning("Item not found in database: " + saveID);
                 continue;
             }
 
-            for(int i = 0; i < stackSize; i++)
+            Debug.Log($"Found item data: {itemData.itemName}");
+
+            // Create items based on stack size
+            for (int i = 0; i < stackSize; i++)
             {
+                // Simple approach: create new item (will get new random stats if applicable)
                 Inventory_Item itemToLoad = new Inventory_Item(itemData);
+                Debug.Log($"  - Created item: {itemData.itemName}");
+
                 AddItem(itemToLoad);
+                Debug.Log($"  - Added {itemData.itemName} to inventory");
             }
         }
 
-        foreach(var entry in data.equippedItems)
+        // Load equipped items - simple approach
+        Debug.Log($"Loading {data.equippedItems.Count} equipped items");
+
+        foreach (var entry in data.equippedItems)
         {
             string saveID = entry.Key;
             Item_Type loadedSlotType = entry.Value;
 
-            Item_DataSO itemData = itemDatabase.GetItemData(saveID);
-            Inventory_Item itemToLoad = new Inventory_Item(itemData);
+            Debug.Log($"Loading equipped item with saveID: {saveID}, slot type: {loadedSlotType}");
 
+            // Get item data
+            Item_DataSO itemData = itemDatabase.GetItemData(saveID);
+            if (itemData == null)
+            {
+                Debug.LogError($"Could not find item data for equipped item: {saveID}");
+                continue;
+            }
+
+            // Create the equipped item (will get new random stats)
+            Inventory_Item itemToLoad = new Inventory_Item(itemData);
+            Debug.Log($"  - Created equipped item: {itemData.itemName}");
+
+            // Find empty slot of matching type
             var slot = equipList.Find(slot => slot.slotType == loadedSlotType && slot.HasItem() == false);
 
+            if (slot == null)
+            {
+                Debug.LogError($"Could not find empty slot for item type: {loadedSlotType}");
+                continue;
+            }
+
+            // Equip the item and apply its effects
+            Debug.Log($"  - Equipping {itemData.itemName} to {loadedSlotType} slot");
             slot.equippedItem = itemToLoad;
             slot.equippedItem.AddModifiers(player.stats);
             slot.equippedItem.AddItemEffect(player);
         }
 
+        Debug.Log($"Finished loading. Final itemList count: {itemList.Count}");
+        Debug.Log($"=== LOAD COMPLETE ===");
         TriggerUpdateUI();
     }
 }
