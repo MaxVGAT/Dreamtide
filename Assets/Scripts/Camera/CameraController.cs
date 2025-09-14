@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -14,25 +14,35 @@ public class CameraController : MonoBehaviour
     public float maxVertOffset = 5f;
     private bool isFalling;
 
+    [Header("Village bounds")]
+    public bool useBounds = false; // only active in specific scenes
+    public Vector2 minBounds;      // bottom-left corner
+    public Vector2 maxBounds;      // top-right corner
+
     private Vector3 targetPoint = Vector3.zero;
+
+    void Awake()
+    {
+        useBounds = (SceneManager.GetActiveScene().name == "Village");
+    }
 
     private void Start()
     {
-        targetPoint = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z); // ƒJƒƒ‰‚Ì‰ŠúˆÊ’u‚ğƒvƒŒƒCƒ„[‚ÌˆÊ’u‚Éİ’è
+        targetPoint = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z); // ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½Ê’uï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌˆÊ’uï¿½Éİ’ï¿½
     }
 
     private void LateUpdate()
     {
         if (player.isGrounded)
-            targetPoint.y = player.transform.position.y; // ƒvƒŒƒCƒ„[‚Ì‚‚³‚É‡‚í‚¹‚ÄƒJƒƒ‰‚Ì‚‚³‚ğˆÀ’è‚³‚¹‚é
+            targetPoint.y = player.transform.position.y; // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½í‚¹ï¿½ÄƒJï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è‚³ï¿½ï¿½ï¿½ï¿½
 
         float targetY = player.transform.position.y + verticalOffset;
 
-        // ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚ªÅ‘åƒIƒtƒZƒbƒg‚æ‚è’á‚¢ê‡‚Í—‰º’†‚Æ‚İ‚È‚µAƒJƒƒ‰‚ğ‰º‚°‚é
+        // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌˆÊ’uï¿½ï¿½ï¿½Å‘ï¿½Iï¿½tï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½á‚¢ï¿½ê‡ï¿½Í—ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚İ‚È‚ï¿½ï¿½Aï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (transform.position.y - (player.transform.position.y + verticalOffset) > maxVertOffset)
             isFalling = true;
 
-        // ƒJƒƒ‰‚ğƒvƒŒƒCƒ„[‚ÌYˆÊ’u‚ÉƒtƒH[ƒJƒX‚³‚¹‚é
+        // ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½Yï¿½Ê’uï¿½Éƒtï¿½Hï¿½[ï¿½Jï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (isFalling)
         {
             targetY = player.transform.position.y;
@@ -40,14 +50,20 @@ public class CameraController : MonoBehaviour
                 isFalling = false;
         }
 
-        // ƒvƒŒƒCƒ„[‚ÌŒü‚«‚É‰‚¶‚Ä‰æ–Ê‚ÌƒXƒy[ƒX‚ğ—LŒøŠˆ—p‚·‚é‚½‚ß‚ÌƒIƒtƒZƒbƒg‚ğ’Ç‰Á
+        // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌŒï¿½ï¿½ï¿½ï¿½É‰ï¿½ï¿½ï¿½ï¿½Ä‰ï¿½Ê‚ÌƒXï¿½yï¿½[ï¿½Xï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½é‚½ï¿½ß‚ÌƒIï¿½tï¿½Zï¿½bï¿½gï¿½ï¿½Ç‰ï¿½
         float targetLookOffset = lookAheadDistance * player.facingDirection;
         lookOffset = Mathf.Lerp(lookOffset, targetLookOffset, lookAheadSpeed * Time.deltaTime);
 
-        // ‚±‚ê‚ç‚ÌğŒ‚ğ‘g‚İ‡‚í‚¹‚ÄAƒJƒƒ‰‚ğƒvƒŒƒCƒ„[‚Ì‘O•û‚É“®“I‚É”z’u‚·‚é
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½gï¿½İï¿½ï¿½í‚¹ï¿½ÄAï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ì‘Oï¿½ï¿½ï¿½É“ï¿½ï¿½Iï¿½É”zï¿½uï¿½ï¿½ï¿½ï¿½
         targetPoint = new Vector3(player.transform.position.x + lookOffset, targetY, transform.position.z);
 
-        // ƒJƒƒ‰‚Ì“®‚«‚ğƒXƒ€[ƒY‚É‚µ‚ÄA‹}‚É“®‚©‚È‚¢‚æ‚¤‚É‚·‚é
+        if (useBounds)
+        {
+            targetPoint.x = Mathf.Clamp(targetPoint.x, minBounds.x, maxBounds.x);
+            targetPoint.y = Mathf.Clamp(targetPoint.y, minBounds.y, maxBounds.y);
+        }
+
+        // ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ì“ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½[ï¿½Yï¿½É‚ï¿½ï¿½ÄAï¿½}ï¿½É“ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½É‚ï¿½ï¿½ï¿½
         transform.position = Vector3.Lerp(transform.position, targetPoint, moveSpeed * Time.deltaTime);
     }
 }

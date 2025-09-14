@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.TerrainTools;
 using UnityEngine;
 
 public class UI_TabGroup : MonoBehaviour
@@ -14,19 +13,33 @@ public class UI_TabGroup : MonoBehaviour
 
     private UI ui; // Reference to UI manager
 
+    void Awake()
+    {
+        ui = GetComponentInParent<UI>();
+        defaultTabIndex = 0;
+    }
+
     void Start()
     {
-        ui = GetComponentInParent<UI>(); // Get UI component
+        StartCoroutine(InitializeDefaultTab());
+        if (tabButtons != null && tabButtons.Count > 0)
+            OnTabSelected(tabButtons[defaultTabIndex]);
+    }
+
+    private System.Collections.IEnumerator InitializeDefaultTab()
+    {
+        foreach (var obj in objectsToSwap)
+            obj.SetActive(false);
+
+        yield return null;
+
         if (tabButtons != null && tabButtons.Count > 0)
         {
-            if (defaultTabIndex >= 0 && defaultTabIndex < tabButtons.Count)
-            {
-                OnTabSelected(tabButtons[defaultTabIndex]);
-            }
-            else
-            {
-                OnTabSelected(tabButtons[0]);
-            }
+            int safeIndex = (defaultTabIndex >= 0 && defaultTabIndex < tabButtons.Count)
+                ? defaultTabIndex
+                : 0;
+
+            OnTabSelected(tabButtons[safeIndex]);
         }
     }
 
@@ -34,6 +47,7 @@ public class UI_TabGroup : MonoBehaviour
     {
         if (tabButtons == null)
             tabButtons = new List<UI_TabButton>();
+
         tabButtons.Add(button);
     }
 
@@ -56,9 +70,7 @@ public class UI_TabGroup : MonoBehaviour
         button.background.sprite = tabActive;
 
         // Determine tab index
-        int index = (button.TryGetComponent<UI_TabButton>(out var tabButton) && tabButton.tabIndex >= 0)
-            ? tabButton.tabIndex
-            : tabButtons.IndexOf(button);
+        int index = button.tabIndex >= 0 ? button.tabIndex : tabButtons.IndexOf(button);
 
         if (ui != null)
         {

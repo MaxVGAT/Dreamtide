@@ -1,60 +1,62 @@
-using System.Threading;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public class LightUpPlayer : MonoBehaviour
 {
-    private Light2D lampLight;
+    [Header("Lamp light")]
+    private Light2D lampLight;                 // The lamp窶冱 own light
+    [SerializeField] private Light2D playerLight; // Player窶冱 light
 
-    [Header("Light details")]
-    [SerializeField] private Light2D playerLight; // 暗いマップ内でプレイヤーのライト参照を取得する
+    [Header("Flicker settings")]
+    [SerializeField] private float baseIntensity = 1f;
+    [SerializeField] private float minFlicker = -0.5f;
+    [SerializeField] private float maxFlicker = 1f;
+    [SerializeField] private float changeSpeed = 5f;
 
-    [Header("Flickering details")]
-    [SerializeField] private float flickerInterval; // 秒単位、ライトの強度を変化させてチラつきをシミュレートする間隔
     private float targetIntensity;
-    private float baseIntensity = 1f;
-    private float minFlicker = -0.5f;
-    private float maxFlicker = 1f;
-    private float changeSpeed = 5f;
-    private float timer;
+    private float flickerTimer;
+    private float flickerInterval;
+    private bool playerInside = false;
 
-    private void Start()
+    private void Awake()
     {
         lampLight = GetComponentInChildren<Light2D>();
-
-        playerLight.intensity = 0.5f; // 暗いマップ内でのプレイヤーライトの基本強度
         targetIntensity = baseIntensity;
+        flickerInterval = Random.Range(0.05f, 0.3f);
     }
 
     private void Update()
     {
-        SetLightFlicker();
+        FlickerLamp();
+
+        // Only update player light if inside trigger
+        if (playerInside && playerLight != null)
+            playerLight.intensity = lampLight.intensity;
+    }
+
+    private void FlickerLamp()
+    {
+        flickerTimer += Time.deltaTime;
+
+        if (flickerTimer >= flickerInterval)
+        {
+            targetIntensity = baseIntensity + Random.Range(minFlicker, maxFlicker);
+            flickerInterval = Random.Range(0.05f, 0.3f);
+            flickerTimer = 0f;
+        }
+
+        lampLight.intensity = Mathf.Lerp(lampLight.intensity, targetIntensity, Time.deltaTime * changeSpeed);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) // プレイヤーがライトの下にいるときのみ影響する
-            playerLight.intensity = 1.5f;
+        if (collision.CompareTag("Player"))
+            playerInside = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-            playerLight.intensity = 0.5f;
+            playerInside = false;
     }
-
-    private void SetLightFlicker()
-    {
-        if (timer >= flickerInterval) // ランダムなチラつき時間、古く使い込まれたランプをシミュレートする
-        {
-            targetIntensity = baseIntensity + Random.Range(minFlicker, maxFlicker); // チラつき速度の範囲
-            flickerInterval = Random.Range(0.05f, 0.3f);
-            timer = 0;
-        }
-
-        lampLight.intensity = Mathf.Lerp(lampLight.intensity, targetIntensity, Time.deltaTime * changeSpeed); // ライトの強度の範囲、明るさの増減
-        timer += Time.deltaTime;
-    }
-
-
 }

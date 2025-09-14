@@ -628,7 +628,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 80
+        y: 79
         width: 32
         height: 16
       alignment: 0
@@ -759,7 +759,7 @@ TextureImporter:
       name: camp sprite sheet_113
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 32
         width: 64
         height: 32

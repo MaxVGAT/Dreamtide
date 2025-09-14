@@ -56,8 +56,11 @@ TagManager:
   - name: Enemy
     uniqueID: 3706769625
     locked: 0
-  - name: Lights
+  - name: Light_Flicker
     uniqueID: 1573877629
+    locked: 0
+  - name: Light_Modern
+    uniqueID: 2184595321
     locked: 0
   - name: PlayerPickups
     uniqueID: 1208918587
