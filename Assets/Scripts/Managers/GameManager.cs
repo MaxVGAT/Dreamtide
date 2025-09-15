@@ -75,74 +75,41 @@ public class GameManager : MonoBehaviour, ISaveable
 
     private IEnumerator HandleSceneSetup()
     {
-        // Wait for the scene to initialize
+        // Wait for scene initialization, player, and components
         yield return null;
-
-        // Wait for player instance and required components
-        while (Entity_Player.instance == null)
-            yield return null;
+        yield return StartCoroutine(WaitForPlayerAndComponents());
 
         var player = Entity_Player.instance;
 
-        while (player.GetComponent<Player_SkillManager>() == null)
-            yield return null;
+        // Determine teleport position
+        Vector3 targetPosition = player.transform.position; // Default: leave player at spawn
 
-        // Restore player position
-        var data = SaveManager.instance?.GetGameData();
-        if (data != null)
+        var checkpoint = GetActiveCheckpoint();
+        if (checkpoint != null)
         {
-            Vector3 targetPosition;
-
-            // Use nearest active checkpoint if it exists
-            var checkpoint = GetActiveCheckpoint();
-            if (checkpoint != null)
-                targetPosition = checkpoint.GetRespawnPosition();
-            else
-                targetPosition = data.savedCheckpoint != Vector3.zero
-                    ? data.savedCheckpoint
-                    : player.transform.position;
-
-            // Teleport player once, AFTER the player is fully initialized
-            player.TeleportPlayer(targetPosition);
+            targetPosition = checkpoint.GetRespawnPosition();
+        }
+        else
+        {
+            // Only use waypoint if lastRespawnType is meaningful
+            if (lastRespawnType != Respawn_Type.NonSpecific)
+            {
+                var waypoint = GetWaypoint(lastRespawnType);
+                if (waypoint != null)
+                    targetPosition = waypoint.GetPositionAndSetTriggerFalse();
+            }
+            // else: keep player at default scene spawn
         }
 
-        // Handle UI and save system
-        UI ui = null;
-        while ((ui = FindAnyObjectByType<UI>()) == null)
-            yield return null;
+        // Teleport player once
+        player.TeleportPlayer(targetPosition);
 
-        bool wasMenuOpen = ui.IsMenuOpen();
-        UI_TabButton rememberedTab = ui.tabGroup?.selectedTab;
-        int rememberedIndex = ui.tabGroup?.defaultTabIndex ?? 0;
-
-        if (!wasMenuOpen)
-        {
-            ui.ToggleUI();
-            yield return null;
-        }
-
-        SaveManager.instance?.RefreshAndLoad();
-        yield return null;
-
-        if (ui.tabGroup != null)
-        {
-            if (rememberedTab != null)
-                ui.tabGroup.OnTabSelected(rememberedTab);
-            else if (ui.tabGroup.tabButtons.Count > 0)
-                ui.tabGroup.OnTabSelected(ui.tabGroup.tabButtons[Mathf.Clamp(rememberedIndex, 0, ui.tabGroup.tabButtons.Count - 1)]);
-
-            yield return null;
-        }
-
-        if (!wasMenuOpen)
-        {
-            ui.ToggleUI();
-            yield return null;
-        }
+        // Handle UI and save as before
+        yield return StartCoroutine(HandleUIAndSaveSystem());
 
         isChangingScene = false;
+        SaveProgress();
     }
-
 
     private IEnumerator WaitForPlayerAndComponents()
     {
