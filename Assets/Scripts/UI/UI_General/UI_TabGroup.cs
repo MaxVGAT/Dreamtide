@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class UI_TabGroup : MonoBehaviour
@@ -12,37 +11,38 @@ public class UI_TabGroup : MonoBehaviour
     public UI_TabButton selectedTab;
     public int defaultTabIndex = 0;
 
-    private UI ui;
-    private bool isInitialized = false;
+    private UI ui; // Reference to UI manager
 
-    // Define the expected tab order by name (adjust these to match your actual tab names)
+    // Define the expected tab order by name
     private string[] expectedTabOrder = new string[]
     {
-        "Tab_CharacterProfile",        // Index 0
-        "Tab_Inventory",    // Index 1 (Character Profile)
-        "Tab_Skills",        // Index 2
-        "Tab_Settings",      // Index 3 (Settings)
-        // Add more tab names as needed
+        "Tab_CharacterProfile",  // Index 0
+        "Tab_Inventory",         // Index 1
+        "Tab_Settings",           // Index 2
+        "Tab_Skills"              // Index 3
     };
 
     void Awake()
     {
         ui = GetComponentInParent<UI>();
         defaultTabIndex = 0;
-        isInitialized = false;
     }
 
     void Start()
     {
+        tabButtons = new List<UI_TabButton>(); // Clear old references
+
+        foreach (var btn in GetComponentsInChildren<UI_TabButton>())
+            Subscribe(btn);
+
         StartCoroutine(InitializeDefaultTab());
     }
 
     private System.Collections.IEnumerator InitializeDefaultTab()
     {
-        // Sort tab buttons by expected order based on names
+        // Sort tab buttons by expected order to fix scene transition issues
         SortTabButtonsByExpectedOrder();
 
-        // Ensure all objects start inactive
         foreach (var obj in objectsToSwap)
             obj.SetActive(false);
 
@@ -53,49 +53,44 @@ public class UI_TabGroup : MonoBehaviour
             int safeIndex = (defaultTabIndex >= 0 && defaultTabIndex < tabButtons.Count)
                 ? defaultTabIndex
                 : 0;
-
             OnTabSelected(tabButtons[safeIndex]);
         }
-
-        isInitialized = true;
     }
 
     private void SortTabButtonsByExpectedOrder()
     {
         if (tabButtons == null || tabButtons.Count == 0) return;
 
-        // Create a new sorted list based on expected order
         var sortedTabs = new List<UI_TabButton>();
 
-        // First, add tabs in the expected order
+        // Add tabs in the expected order
         foreach (string expectedName in expectedTabOrder)
         {
             var tab = tabButtons.Find(t => t.name.Contains(expectedName) || t.name == expectedName);
             if (tab != null)
-            {
                 sortedTabs.Add(tab);
-                Debug.Log($"Added tab in order: {tab.name} at index {sortedTabs.Count - 1}");
-            }
         }
 
-        // Then add any remaining tabs that weren't in the expected list
+        // Add any remaining tabs that weren't in the expected list
         foreach (var tab in tabButtons)
         {
             if (!sortedTabs.Contains(tab))
-            {
                 sortedTabs.Add(tab);
-                Debug.Log($"Added remaining tab: {tab.name} at index {sortedTabs.Count - 1}");
-            }
         }
 
-        // Replace the original list
         tabButtons = sortedTabs;
+    }
 
-        // Debug final order
-        Debug.Log("Final tab button order:");
-        for (int i = 0; i < tabButtons.Count; i++)
+    void Update()
+    {
+        if (tabButtons != null && tabButtons.Count > 0)
         {
-            Debug.Log($"Index {i}: {tabButtons[i].name}");
+            string order = "TabButtons Order: ";
+            for (int i = 0; i < tabButtons.Count; i++)
+            {
+                order += $"[{i}] {tabButtons[i].name} ";
+            }
+            Debug.Log(order);
         }
     }
 
@@ -105,15 +100,11 @@ public class UI_TabGroup : MonoBehaviour
             tabButtons = new List<UI_TabButton>();
 
         if (!tabButtons.Contains(button))
-        {
             tabButtons.Add(button);
-        }
     }
 
     public void OnTabEnter(UI_TabButton button)
     {
-        if (!isInitialized) return;
-
         ResetTabs();
         if (selectedTab == null || button != selectedTab)
             button.background.sprite = tabHover;
@@ -121,39 +112,19 @@ public class UI_TabGroup : MonoBehaviour
 
     public void OnTabExit(UI_TabButton button)
     {
-        if (!isInitialized) return;
-
         ResetTabs();
     }
 
     public void OnTabSelected(UI_TabButton button)
     {
-        // Add this debug logging
-        Debug.Log($"=== TAB SELECTION DEBUG ===");
-        Debug.Log($"Selected button: {button.name}");
-        Debug.Log($"Button's tabIndex field: {button.tabIndex}");
-        Debug.Log($"Button's position in list: {tabButtons.IndexOf(button)}");
-        Debug.Log($"Total tabs in list: {tabButtons.Count}");
-        for (int i = 0; i < tabButtons.Count; i++)
-        {
-            Debug.Log($"  List[{i}]: {tabButtons[i].name} (tabIndex: {tabButtons[i].tabIndex})");
-        }
-
-        Debug.Log($"========================");
-        if (button == null) return;
-
         selectedTab = button;
         ResetTabs();
         button.background.sprite = tabActive;
 
-        // Use list index since we've sorted the list correctly
-        int index = tabButtons.IndexOf(button);
-
-        Debug.Log($"Tab selected: {button.name} at index {index}");
+        int index = button.tabIndex >= 0 ? button.tabIndex : tabButtons.IndexOf(button);
 
         if (ui != null)
         {
-            // Inventory tab is index 1
             if (index == 1)
             {
                 ui.ShowStorageInInventory(true);
@@ -168,37 +139,24 @@ public class UI_TabGroup : MonoBehaviour
             }
         }
 
-        // Swap objects
-        if (index >= 0 && index < objectsToSwap.Count)
+        for (int i = 0; i < objectsToSwap.Count; i++)
         {
-            for (int i = 0; i < objectsToSwap.Count; i++)
-            {
-                bool shouldActivate = (i == index);
-                objectsToSwap[i].SetActive(shouldActivate);
+            bool shouldActivate = (i == index);
+            objectsToSwap[i].SetActive(shouldActivate);
 
-                if (shouldActivate && objectsToSwap[i].TryGetComponent<UI_Inventory>(out var inventory))
-                {
-                    inventory.RefreshInventoryUI();
-                }
+            if (shouldActivate && objectsToSwap[i].TryGetComponent<UI_Inventory>(out var inventory))
+            {
+                inventory.RefreshInventoryUI();
             }
         }
     }
 
     public void ResetTabs()
     {
-        if (tabButtons == null) return;
-
         foreach (UI_TabButton button in tabButtons)
         {
             if (selectedTab != null && button == selectedTab) continue;
             button.background.sprite = tabIdle;
         }
-    }
-
-    public void ForceReset()
-    {
-        isInitialized = false;
-        selectedTab = null;
-        StartCoroutine(InitializeDefaultTab());
     }
 }
