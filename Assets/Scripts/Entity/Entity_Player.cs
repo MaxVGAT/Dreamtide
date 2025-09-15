@@ -7,6 +7,7 @@ public class Entity_Player : Entity
     public static Entity_Player instance;
 
     public static event Action OnPlayerDeath;
+    public static event Action OnPlayerDeathFinished;
 
     public UI ui { get; private set; }
     public PlayerInputSet input { get; private set; }
@@ -146,6 +147,29 @@ public class Entity_Player : Entity
         {
             attackVelocity[i] = originalAttackVelocity[i];
         }
+    }
+
+    public void NotifyDeathFinished()
+    {
+        OnPlayerDeathFinished?.Invoke();
+    }
+
+    public void RespawnAtCheckpoint(Object_Checkpoints checkpoint)
+    {
+        // Restore health
+        if (health != null)
+            health.SetHealthToPercent(1f);
+
+        // Re-enable input and physics
+        rb.simulated = true;
+        input.Enable();
+
+        // Teleport
+        if (checkpoint != null)
+            TeleportPlayer(checkpoint.GetRespawnPosition());
+
+        // Reset state machine
+        stateMachine.ChangeState(idleState);
     }
 
     // ���S����

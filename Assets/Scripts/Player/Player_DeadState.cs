@@ -1,9 +1,11 @@
-using UnityEditor;
+using System.Collections;
 using UnityEngine;
 
-// ƒvƒŒƒCƒ„[‚Ì€–Só‘Ô
+// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìï¿½ï¿½Sï¿½ï¿½ï¿½
 public class Player_DeadState : PlayerState
 {
+    [SerializeField] private float deathAnimDuration = 2f;
+
     public Player_DeadState(Entity_Player player, StateMachine stateMachine, string animBoolName)
         : base(player, stateMachine, animBoolName)
     {
@@ -13,10 +15,20 @@ public class Player_DeadState : PlayerState
     {
         base.Enter();
 
-        // “ü—Í‚ğ–³Œø‰»
+        // ï¿½ï¿½ï¿½Í‚ğ–³Œï¿½ï¿½ï¿½
         input.Disable();
 
-        // •¨—‹““®‚ğ’â~
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½~
         rb.simulated = false;
+
+        player.StartCoroutine(WaitAndNotifyDeath());
+    }
+
+    private IEnumerator WaitAndNotifyDeath()
+    {
+        yield return new WaitForSeconds(deathAnimDuration);
+
+        // Notify listeners that player death finished
+        player.NotifyDeathFinished();
     }
 }

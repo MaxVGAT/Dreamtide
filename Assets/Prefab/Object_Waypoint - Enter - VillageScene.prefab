@@ -49,8 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transferToScene: 
   waypointType: 1
-  connectedWaypoint: 0
-  respawnPoint: {fileID: 0}
+  conntedWaypoint: 0
+  respwanPoint: {fileID: 0}
   canBeTriggered: 1
 --- !u!61 &7984260367716894854
 BoxCollider2D:

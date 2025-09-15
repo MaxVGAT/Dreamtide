@@ -2154,6 +2154,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 453529630}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1689588603 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 454279127666944879, guid: 0ca5c0aaefdb2494ca6f967d2cace9be, type: 3}
+  m_PrefabInstance: {fileID: 2179969675719074329}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b125d5a296d14a74e964e0e197937001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1748708894
 GameObject:
   m_ObjectHideFlags: 0
@@ -7476,6 +7487,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1691725296510902076, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: waypoint
+      value: 
+      objectReference: {fileID: 1689588603}
     - target: {fileID: 2525673504066610906, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

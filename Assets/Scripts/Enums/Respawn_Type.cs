@@ -4,5 +4,6 @@ public enum Respawn_Type
 {
     Enter,
     Exit,
-    None
+    Portal,
+    NonSpecific
 }

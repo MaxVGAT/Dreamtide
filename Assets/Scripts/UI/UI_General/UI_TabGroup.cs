@@ -18,8 +18,8 @@ public class UI_TabGroup : MonoBehaviour
     {
         "Tab_CharacterProfile",  // Index 0
         "Tab_Inventory",         // Index 1
-        "Tab_Settings",           // Index 2
-        "Tab_Skills"              // Index 3
+        "Tab_Skills",           // Index 2
+        "Tab_Settings"              // Index 3
     };
 
     void Awake()

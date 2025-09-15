@@ -16,14 +16,7 @@ public class SaveManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         instance = this;
-        DontDestroyOnLoad(gameObject); // <- this makes it persistent across scenes
     }
 
     private IEnumerator Start()

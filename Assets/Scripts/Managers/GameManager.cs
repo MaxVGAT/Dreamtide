@@ -5,9 +5,15 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    [Header("Scene Transition")]
     private Respawn_Type lastRespawnType;
     private bool isChangingScene = false;
-    private bool skipNextUIOpen = false; // Track if we need to skip UI opening
+
+    [Header("Checkpoint System")]
+    public string activeCheckpointID;
+
+    #region Initialization
 
     private void Awake()
     {
@@ -16,165 +22,200 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         instance = this;
         DontDestroyOnLoad(gameObject);
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnDestroy()
+    public Object_Checkpoints GetActiveCheckpoint()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        if (string.IsNullOrEmpty(activeCheckpointID)) return null;
+        return FindCheckpoint(activeCheckpointID);
     }
+
+    public Object_Waypoint GetWaypoint(Respawn_Type type)
+    {
+        return FindWaypoint(type);
+    }
+
+    public string ActiveCheckpointID => activeCheckpointID;
+
+    #endregion
+
+    #region Scene Management
 
     public void ChangeScene(string sceneName, Respawn_Type respawnType)
     {
-        if (isChangingScene) return;
+        if (isChangingScene)
+            return;
 
-        isChangingScene = true;
-        lastRespawnType = respawnType;
-        skipNextUIOpen = false; // Reset flag
-
-        StartCoroutine(ChangeSceneCo(sceneName));
+        StartSceneTransition(sceneName, respawnType);
     }
 
-    private IEnumerator ChangeSceneCo(string sceneName)
+    private void StartSceneTransition(string sceneName, Respawn_Type respawnType)
     {
-        // Save game before leaving current scene
-        if (SaveManager.instance != null)
-        {
-            SaveManager.instance.SaveGame();
-            yield return new WaitForSeconds(0.1f); // Brief wait for save
-        }
+        isChangingScene = true;
+        lastRespawnType = respawnType;
 
-        // Load the new scene
+        SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene(sceneName);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (isChangingScene)
-        {
-            StartCoroutine(HandleSceneTransition());
-        }
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        StartCoroutine(HandleSceneSetup());
     }
 
-    private IEnumerator HandleSceneTransition()
+    private IEnumerator HandleSceneSetup()
     {
-        yield return null; // Wait one frame for scene initialization
+        yield return null; // Wait for scene initialization
 
-        // Find the target waypoint
-        Object_Waypoint targetWaypoint = GetWaypoint(lastRespawnType);
+        yield return StartCoroutine(WaitForPlayerAndComponents());
 
-        // Wait for player to exist
-        while (Entity_Player.instance == null)
-        {
-            yield return null;
-        }
+        HandlePlayerTeleportation();
 
-        // Wait for skill manager
-        Player_SkillManager skillManager = null;
-        while (skillManager == null)
-        {
-            skillManager = Entity_Player.instance.GetComponent<Player_SkillManager>();
-            yield return null;
-        }
+        yield return StartCoroutine(HandleUIAndSaveSystem());
 
-        // Teleport player first
-        if (targetWaypoint != null)
-        {
-            Entity_Player.instance.TeleportPlayer(targetWaypoint.GetRespawnPosition());
-
-            // Enable the waypoint after a short delay
-            StartCoroutine(EnableWaypointAfterDelay(targetWaypoint, 0.5f));
-        }
-
-        // Handle UI and save loading with proper state management
-        yield return StartCoroutine(HandleUISaveLoading());
-
-        // Reset flag
         isChangingScene = false;
     }
 
-    private IEnumerator HandleUISaveLoading()
+    private IEnumerator WaitForPlayerAndComponents()
     {
-        var uiScript = FindAnyObjectByType<UI>();
-        if (uiScript != null)
-        {
-            // Store the current menu state BEFORE any operations
-            bool wasMenuOpen = uiScript.IsMenuOpen();
+        while (Entity_Player.instance == null)
+            yield return null;
 
-            // Store tab state if available
-            UI_TabButton rememberedSelectedTab = null;
-            int rememberedDefaultIndex = 0;
-
-            if (uiScript.tabGroup != null)
-            {
-                rememberedSelectedTab = uiScript.tabGroup.selectedTab;
-                rememberedDefaultIndex = uiScript.tabGroup.defaultTabIndex;
-            }
-
-            // Only open UI if it wasn't already open
-            if (!wasMenuOpen)
-            {
-                uiScript.ToggleUI();
-                yield return null; // Wait for UI to fully open
-            }
-
-            // Load save data while UI is open
-            if (SaveManager.instance != null)
-            {
-                SaveManager.instance.RefreshAndLoad();
-                yield return null; // Wait for data to load
-            }
-
-            // Restore tab state if we have a remembered tab
-            if (uiScript.tabGroup != null)
-            {
-                if (rememberedSelectedTab != null)
-                {
-                    uiScript.tabGroup.OnTabSelected(rememberedSelectedTab);
-                }
-                else if (uiScript.tabGroup.tabButtons.Count > 0)
-                {
-                    int safeIndex = Mathf.Clamp(rememberedDefaultIndex, 0, uiScript.tabGroup.tabButtons.Count - 1);
-                    uiScript.tabGroup.OnTabSelected(uiScript.tabGroup.tabButtons[safeIndex]);
-                }
-                yield return null; // Wait for tab restoration
-            }
-
-            // Only close UI if we opened it (and it wasn't originally open)
-            if (!wasMenuOpen)
-            {
-                uiScript.ToggleUI();
-                yield return null; // Wait for UI to close
-            }
-        }
-        else
-        {
-            // Fallback without UI
-            yield return new WaitForSeconds(0.1f);
-            if (SaveManager.instance != null)
-            {
-                SaveManager.instance.RefreshAndLoad();
-            }
-        }
+        while (Entity_Player.instance.GetComponent<Player_SkillManager>() == null)
+            yield return null;
     }
 
-    private IEnumerator EnableWaypointAfterDelay(Object_Waypoint waypoint, float delay)
+    private void HandlePlayerTeleportation()
+    {
+        TeleportToWaypoint();
+        TeleportToActiveCheckpoint();
+    }
+
+    private void TeleportToWaypoint()
+    {
+        Object_Waypoint targetWaypoint = FindWaypoint(lastRespawnType);
+        if (targetWaypoint == null) return;
+
+        Vector3 teleportPosition = targetWaypoint.GetPositionAndSetTriggerFalse();
+        Entity_Player.instance.TeleportPlayer(teleportPosition);
+
+        StartCoroutine(ReenableWaypoint(targetWaypoint, 0.5f));
+    }
+
+    private void TeleportToActiveCheckpoint()
+    {
+        if (string.IsNullOrEmpty(activeCheckpointID)) return;
+
+        Object_Checkpoints activeCheckpoint = FindCheckpoint(activeCheckpointID);
+        if (activeCheckpoint != null)
+            Entity_Player.instance.TeleportPlayer(activeCheckpoint.GetRespawnPosition());
+    }
+
+    private IEnumerator HandleUIAndSaveSystem()
+    {
+        // Wait until UI exists
+        UI ui = null;
+        while ((ui = FindAnyObjectByType<UI>()) == null)
+            yield return null;
+
+        // Store menu/tab state
+        bool wasMenuOpen = ui.IsMenuOpen();
+        UI_TabButton rememberedTab = ui.tabGroup?.selectedTab;
+        int rememberedIndex = ui.tabGroup?.defaultTabIndex ?? 0;
+
+        // Open UI if needed
+        if (!wasMenuOpen) { ui.ToggleUI(); yield return null; }
+
+        // Refresh/save
+        SaveManager.instance?.RefreshAndLoad();
+        yield return null;
+
+        // Restore tab
+        if (ui.tabGroup != null)
+        {
+            if (rememberedTab != null)
+                ui.tabGroup.OnTabSelected(rememberedTab);
+            else if (ui.tabGroup.tabButtons.Count > 0)
+                ui.tabGroup.OnTabSelected(ui.tabGroup.tabButtons[Mathf.Clamp(rememberedIndex, 0, ui.tabGroup.tabButtons.Count - 1)]);
+
+            yield return null;
+        }
+
+        // Close UI if we opened it
+        if (!wasMenuOpen) { ui.ToggleUI(); yield return null; }
+    }
+
+    private IEnumerator ReenableWaypoint(Object_Waypoint waypoint, float delay)
     {
         yield return new WaitForSeconds(delay);
-        waypoint.SetCanBeTriggered(true);
+        waypoint.SetTriggerState(true);
     }
 
-    private Object_Waypoint GetWaypoint(Respawn_Type type)
+    #endregion
+
+    #region Player Death and Restart
+
+    private void OnEnable()
     {
-        var waypoints = FindObjectsByType<Object_Waypoint>(FindObjectsSortMode.None);
-        foreach (var waypoint in waypoints)
+        Entity_Player.OnPlayerDeathFinished += HandlePlayerRespawn;
+    }
+
+    private void OnDisable()
+    {
+        Entity_Player.OnPlayerDeathFinished -= HandlePlayerRespawn;
+    }
+
+    private void HandlePlayerRespawn()
+    {
+        var player = Entity_Player.instance;
+        if (player == null) return;
+
+        var checkpoint = GetActiveCheckpoint();
+        player.RespawnAtCheckpoint(checkpoint);
+    }
+
+    public void RestartCurrentScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        ChangeScene(currentSceneName, Respawn_Type.NonSpecific);
+    }
+
+    #endregion
+
+    #region Checkpoint System
+
+    public void SetActiveCheckpoint(string checkpointID)
+    {
+        activeCheckpointID = checkpointID;
+    }
+
+    private Object_Checkpoints FindCheckpoint(string checkpointID)
+    {
+        foreach (var checkpoint in FindObjectsByType<Object_Checkpoints>(FindObjectsSortMode.None))
         {
-            if (waypoint.GetWaypointType() == type)
+            if (checkpoint.GetCheckpointId() == checkpointID)
+                return checkpoint;
+        }
+        return null;
+    }
+
+    #endregion
+
+    #region Waypoint System
+
+    private Object_Waypoint FindWaypoint(Respawn_Type respawnType)
+    {
+        foreach (var waypoint in FindObjectsByType<Object_Waypoint>(FindObjectsSortMode.None))
+        {
+            if (waypoint.GetWaypointType() == respawnType)
                 return waypoint;
         }
         return null;
     }
+
+    #endregion
 }

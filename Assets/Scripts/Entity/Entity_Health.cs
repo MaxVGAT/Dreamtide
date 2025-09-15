@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 // �̗͂�Ǘ�����N���X
 public class Entity_Health : MonoBehaviour, IDamageable

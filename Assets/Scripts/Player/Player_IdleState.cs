@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// ƒvƒŒƒCƒ„[‚Ì’nã‘Ò‹@ó‘ÔiIdlej
+// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ì’nï¿½ï¿½Ò‹@ï¿½ï¿½ÔiIdleï¿½j
 public class Player_IdleState : PlayerGroundedState
 {
     public Player_IdleState(Entity_Player player, StateMachine stateMachine, string stateName)
@@ -12,7 +12,7 @@ public class Player_IdleState : PlayerGroundedState
     {
         base.Enter();
 
-        // ‘Ò‹@‚Í‰¡•ûŒü‚Ì‘¬“x‚ğƒ[ƒ‚Éİ’è
+        // ï¿½Ò‹@ï¿½ï¿½ï¿½Í‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½xï¿½ï¿½[ï¿½ï¿½ï¿½Éİ’ï¿½
         player.SetVelocity(0, rb.linearVelocity.y);
     }
 
@@ -20,11 +20,11 @@ public class Player_IdleState : PlayerGroundedState
     {
         base.Update();
 
-        // ƒvƒŒƒCƒ„[‚ª•Ç‚ÉŒü‚©‚Á‚Ä“ü—Í‚µ‚Ä‚¢‚éê‡‚Í“®‚©‚È‚¢
+        // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ç‚ÉŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä“ï¿½ï¿½Í‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ê‡ï¿½Í“ï¿½ï¿½ï¿½ï¿½È‚ï¿½
         if (player.moveInput.x == player.facingDirection && player.isWallDetected)
             return;
 
-        // ‰¡•ûŒü“ü—Í‚ª‚ ‚éê‡‚ÍˆÚ“®ó‘Ô‚É‘JˆÚ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í‚ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½ÍˆÚ“ï¿½ï¿½ï¿½Ô‚É‘Jï¿½ï¿½
         if (player.moveInput.x != 0)
             stateMachine.ChangeState(player.moveState);
     }
