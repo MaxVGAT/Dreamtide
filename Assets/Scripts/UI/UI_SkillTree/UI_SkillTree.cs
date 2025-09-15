@@ -77,8 +77,20 @@ public class UI_SkillTree : MonoBehaviour, ISaveable
 
     public void LoadData(GameData data)
     {
-        skillManager.skillPoints = data.skillPoints;
-        UpdateSkillPointsText(skillManager.skillPoints);
+        if (skillManager == null)
+    {
+        skillManager = FindAnyObjectByType<Player_SkillManager>();
+    }
+    
+    // Double check in case it's still null
+    if (skillManager == null)
+    {
+        Debug.Log("SkillManager not found - skipping skill tree load");
+        return;
+    }
+
+    skillManager.skillPoints = data.skillPoints;
+    UpdateSkillPointsText(skillManager.skillPoints);
 
         // Validate before unlocking
         foreach (var node in allTreeNodes)

@@ -1,11 +1,13 @@
-using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     private Respawn_Type lastRespawnType;
+    private bool isTeleporting = false; // Add this flag
 
     private void Awake()
     {
@@ -24,33 +26,31 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(string sceneName, Respawn_Type respawnType)
     {
         lastRespawnType = respawnType;
+        SceneManager.sceneLoaded += OnSceneLoaded; // Re-subscribe only when needed
         StartCoroutine(ChangeSceneCo(sceneName));
     }
 
     private IEnumerator ChangeSceneCo(string sceneName)
     {
-        // Wait a frame to ensure any pending operations complete
         yield return null;
-
-        // Save the game BEFORE changing scenes to preserve current progress
-        Debug.Log("Saving game before scene change...");
         SaveManager.instance?.SaveGame();
-        Debug.Log("Save completed!");
-
-        // Add a small delay to ensure save completes
         yield return new WaitForSeconds(0.1f);
-
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(sceneName);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("OnSceneLoaded - unsubscribing immediately");
+        SceneManager.sceneLoaded -= OnSceneLoaded; // Unsubscribe right away
+
         StartCoroutine(TeleportAfterSceneLoad());
     }
 
     private IEnumerator TeleportAfterSceneLoad()
     {
+        isTeleporting = true; // Set flag
+
         // Get waypoint and disable it immediately
         Object_Waypoint targetWaypoint = GetWaypoint(lastRespawnType);
         if (targetWaypoint != null)
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
         while (Entity_Player.instance == null)
             yield return null;
 
-        // Wait until the skill manager (or other dependencies) exists
+        // Wait until the skill manager exists
         var skillManager = Entity_Player.instance.GetComponent<Player_SkillManager>();
         while (skillManager == null)
         {
@@ -68,28 +68,36 @@ public class GameManager : MonoBehaviour
             skillManager = Entity_Player.instance.GetComponent<Player_SkillManager>();
         }
 
-        // Now safe to load saved data
-        SaveManager.instance?.RefreshAndLoad();
+        // Give one frame for everything to settle
+        yield return null;
 
-        yield return null; // one frame to let data settle
-
-        // Teleport player
         if (targetWaypoint != null)
             Entity_Player.instance.TeleportPlayer(targetWaypoint.GetRespawnPosition());
-    }
 
 
-
-    private Vector3 GetWaypointPosition(Respawn_Type type)
-    {
-        var waypoints = FindObjectsByType<Object_Waypoint>(FindObjectsSortMode.None);
-
-        foreach (var points in waypoints)
+        var uiScript = FindAnyObjectByType<UI>(); // Replace with your actual UI script name
+        if (uiScript != null)
         {
-            if (points.GetWaypointType() == type)
-                return points.GetRespawnPosition();
+            Debug.Log("Temporarily opening UI for initialization...");
+            uiScript.ToggleUI(); // Open UI
+
+            yield return null; // Let everything initialize
+            yield return null;
+
+            // Load save data while UI is open
+            Debug.Log("Loading save data...");
+            SaveManager.instance?.RefreshAndLoad();
+
+            // Close UI again
+            uiScript.ToggleUI(); // Close UI
+            Debug.Log("UI closed after save load");
         }
-        return Vector3.zero;
+        else
+        {
+            // Fallback
+            yield return new WaitForSeconds(0.5f);
+            SaveManager.instance?.RefreshAndLoad();
+        }
     }
 
     private Object_Waypoint GetWaypoint(Respawn_Type type)
