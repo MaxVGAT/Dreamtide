@@ -12,9 +12,6 @@ public class GameManager : MonoBehaviour, ISaveable
     private Respawn_Type lastRespawnType;
     private bool isChangingScene = false;
 
-    [Header("Checkpoint System")]
-    public string activeCheckpointID;
-
     #region Initialization
 
     private void Awake()
@@ -47,18 +44,10 @@ public class GameManager : MonoBehaviour, ISaveable
             instance = null;
     }
 
-    public Object_Checkpoints GetActiveCheckpoint()
-    {
-        if (string.IsNullOrEmpty(activeCheckpointID)) return null;
-        return FindCheckpoint(activeCheckpointID);
-    }
-
     public Object_Waypoint GetWaypoint(Respawn_Type type)
     {
         return FindWaypoint(type);
     }
-
-    public string ActiveCheckpointID => activeCheckpointID;
 
     #endregion
 
@@ -131,22 +120,14 @@ public class GameManager : MonoBehaviour, ISaveable
         // Determine teleport position
         Vector3 targetPosition = player.transform.position; // Default: leave player at spawn
 
-        var checkpoint = GetActiveCheckpoint();
-        if (checkpoint != null)
+        // Only use waypoint if lastRespawnType is meaningful
+        if (lastRespawnType != Respawn_Type.NonSpecific)
         {
-            targetPosition = checkpoint.GetRespawnPosition();
+            var waypoint = GetWaypoint(lastRespawnType);
+            if (waypoint != null)
+                targetPosition = waypoint.GetPositionAndSetTriggerFalse();
         }
-        else
-        {
-            // Only use waypoint if lastRespawnType is meaningful
-            if (lastRespawnType != Respawn_Type.NonSpecific)
-            {
-                var waypoint = GetWaypoint(lastRespawnType);
-                if (waypoint != null)
-                    targetPosition = waypoint.GetPositionAndSetTriggerFalse();
-            }
-            // else: keep player at default scene spawn
-        }
+        // else: keep player at default scene spawn
 
         // Teleport player once
         player.TeleportPlayer(targetPosition);
@@ -162,7 +143,6 @@ public class GameManager : MonoBehaviour, ISaveable
             ui.ToggleUI();
             ui.ToggleUI();
         }
-
 
         SaveProgress();
     }
@@ -293,34 +273,9 @@ public class GameManager : MonoBehaviour, ISaveable
         Entity_Player.OnPlayerDeathFinished -= OnPlayerDeath;
     }
 
-    private void HandlePlayerRespawn()
-    {
-        // Prevent multiple respawn calls
-        if (isChangingScene)
-        {
-            Debug.Log("[Respawn] Scene change already in progress, ignoring respawn request");
-            return;
-        }
-
-        var player = Entity_Player.instance;
-        if (player == null)
-        {
-            Debug.LogWarning("[Respawn] No player instance found!");
-            return;
-        }
-
-        SaveProgress();
-
-        // Reload current scene
-        string currentScene = SceneManager.GetActiveScene().name;
-        ChangeScene(currentScene, Respawn_Type.NonSpecific);
-
-        Debug.Log("[Respawn] Player died — scene reloaded for full reset");
-    }
-
     public void OnPlayerDeath()
     {
-        // However you normally access UI
+        // Show game over UI
         var ui = FindFirstObjectByType<UI>();
         if (ui != null)
             ui.ToggleGameOverNoControls();
@@ -333,45 +288,26 @@ public class GameManager : MonoBehaviour, ISaveable
     {
         if (Entity_Player.instance == null) return;
 
-        var checkpoint = GetActiveCheckpoint();
-        Vector3 respawnPos = checkpoint != null ? checkpoint.GetRespawnPosition() : Entity_Player.instance.transform.position;
+        // Just respawn at current position since no checkpoints
+        Vector3 respawnPos = Entity_Player.instance.transform.position;
 
-
-        // Optionally, close GameOver UI
+        // Close GameOver UI
         var ui = FindFirstObjectByType<UI>();
         if (ui != null)
         {
             ui.ToggleGameOverNoControls();
-
             ui.ToggleUI();
         }
 
+        SaveProgress();
+
+        Debug.Log($"[Respawn] Player respawned at position: {respawnPos}");
     }
 
     public void RestartCurrentScene()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         ChangeScene(currentSceneName, Respawn_Type.NonSpecific);
-    }
-
-    #endregion
-
-    #region Checkpoint System
-
-    public void SetActiveCheckpoint(string checkpointID)
-    {
-        activeCheckpointID = checkpointID;
-        SaveProgress();
-    }
-
-    private Object_Checkpoints FindCheckpoint(string checkpointID)
-    {
-        foreach (var checkpoint in FindObjectsByType<Object_Checkpoints>(FindObjectsSortMode.None))
-        {
-            if (checkpoint.GetCheckpointId() == checkpointID)
-                return checkpoint;
-        }
-        return null;
     }
 
     #endregion
@@ -391,20 +327,20 @@ public class GameManager : MonoBehaviour, ISaveable
     public void SaveProgress()
     {
         var data = SaveManager.instance?.GetGameData();
-        if (data == null) return;
+        if (data == null)
+        {
+            Debug.LogWarning("[Save] No GameData available to save!");
+            return;
+        }
 
-        // 1. Save current scene
+        // Save the current scene
         string currentScene = SceneManager.GetActiveScene().name;
         if (currentScene != "MainMenu")
             data.lastScenePlayed = currentScene;
 
-        // 2. Save active checkpoint position
-        var checkpoint = GetActiveCheckpoint();
-        var player = Entity_Player.instance;
-        if (player != null)
-            data.savedCheckpoint = checkpoint?.GetRespawnPosition() ?? player.transform.position;
-
         SaveManager.instance?.SaveGame();
+
+        Debug.Log($"[Save] Progress saved - Scene: {currentScene}");
     }
 
     public void LoadData(GameData data)
@@ -413,6 +349,8 @@ public class GameManager : MonoBehaviour, ISaveable
 
         if (string.IsNullOrEmpty(lastScenePlayed))
             lastScenePlayed = "IntroScene";
+
+        Debug.Log($"[Load] Data loaded - Scene: {lastScenePlayed}");
     }
 
     public void SaveData(ref GameData data)
@@ -423,6 +361,8 @@ public class GameManager : MonoBehaviour, ISaveable
             return;
 
         data.lastScenePlayed = currentScene;
+
+        Debug.Log($"[Save] Data saved - Scene: {currentScene}");
     }
 
     #endregion

@@ -131,11 +131,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a7f58f0f0b62aa468703cc15af492b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointId: 
+  respawnPoint: {fileID: 1940425503001678310}
   checkpointLight: {fileID: 7577899019213010375}
   baseIntensity: 1
   lowerIntensity: 0.3
   inactiveIntensity: 0.4
-  duration: 2
+  flickerDuration: 1
 --- !u!61 &552354839867192318
 BoxCollider2D:
   m_ObjectHideFlags: 0
