@@ -48,57 +48,90 @@ public class GameManager : MonoBehaviour
     }
 
     private IEnumerator TeleportAfterSceneLoad()
-    {
-        isTeleporting = true; // Set flag
-
-        // Get waypoint and disable it immediately
-        Object_Waypoint targetWaypoint = GetWaypoint(lastRespawnType);
-        if (targetWaypoint != null)
-            targetWaypoint.SetCanBeTriggered(false);
-
-        // Wait until the player exists
-        while (Entity_Player.instance == null)
-            yield return null;
-
-        // Wait until the skill manager exists
-        var skillManager = Entity_Player.instance.GetComponent<Player_SkillManager>();
-        while (skillManager == null)
-        {
-            yield return null;
-            skillManager = Entity_Player.instance.GetComponent<Player_SkillManager>();
-        }
-
-        // Give one frame for everything to settle
+{
+    isTeleporting = true; // Set flag
+    
+    // Get waypoint and disable it immediately
+    Object_Waypoint targetWaypoint = GetWaypoint(lastRespawnType);
+    if (targetWaypoint != null)
+        targetWaypoint.SetCanBeTriggered(false);
+    
+    // Wait until the player exists
+    while (Entity_Player.instance == null)
         yield return null;
-
-        if (targetWaypoint != null)
-            Entity_Player.instance.TeleportPlayer(targetWaypoint.GetRespawnPosition());
-
-
-        var uiScript = FindAnyObjectByType<UI>(); // Replace with your actual UI script name
-        if (uiScript != null)
-        {
-            Debug.Log("Temporarily opening UI for initialization...");
-            uiScript.ToggleUI(); // Open UI
-
-            yield return null; // Let everything initialize
-            yield return null;
-
-            // Load save data while UI is open
-            Debug.Log("Loading save data...");
-            SaveManager.instance?.RefreshAndLoad();
-
-            // Close UI again
-            uiScript.ToggleUI(); // Close UI
-            Debug.Log("UI closed after save load");
-        }
-        else
-        {
-            // Fallback
-            yield return new WaitForSeconds(0.5f);
-            SaveManager.instance?.RefreshAndLoad();
-        }
+    
+    // Wait until the skill manager exists
+    var skillManager = Entity_Player.instance.GetComponent<Player_SkillManager>();
+    while (skillManager == null)
+    {
+        yield return null;
+        skillManager = Entity_Player.instance.GetComponent<Player_SkillManager>();
     }
+    
+    // Give one frame for everything to settle
+    yield return null;
+    
+    if (targetWaypoint != null)
+        Entity_Player.instance.TeleportPlayer(targetWaypoint.GetRespawnPosition());
+    
+    var uiScript = FindAnyObjectByType<UI>();
+    if (uiScript != null)
+    {
+        Debug.Log("Temporarily opening UI for initialization...");
+        
+        // Store the current menu state
+        bool wasMenuOpen = uiScript.IsMenuOpen();
+        
+        // Get tab group and remember its state
+        var tabGroup = uiScript.tabGroup;
+        UI_TabButton rememberedSelectedTab = null;
+        int rememberedDefaultIndex = 0;
+        
+        if (tabGroup != null)
+        {
+            rememberedSelectedTab = tabGroup.selectedTab;
+            rememberedDefaultIndex = tabGroup.defaultTabIndex;
+        }
+        
+        // Open UI if it wasn't already open
+        if (!wasMenuOpen)
+            uiScript.ToggleUI();
+        
+        yield return null; // Let everything initialize
+        yield return null;
+        
+        // Load save data while UI is open
+        Debug.Log("Loading save data...");
+        SaveManager.instance?.RefreshAndLoad();
+        
+        // Restore tab state if we have a remembered tab
+        if (tabGroup != null && rememberedSelectedTab != null)
+        {
+            tabGroup.OnTabSelected(rememberedSelectedTab);
+        }
+        else if (tabGroup != null && tabGroup.tabButtons.Count > 0)
+        {
+            // Fallback to default tab
+            int safeIndex = (rememberedDefaultIndex >= 0 && rememberedDefaultIndex < tabGroup.tabButtons.Count) 
+                ? rememberedDefaultIndex : 0;
+            tabGroup.OnTabSelected(tabGroup.tabButtons[safeIndex]);
+        }
+        
+        // Close UI if it wasn't originally open
+        if (!wasMenuOpen)
+            uiScript.ToggleUI();
+        
+        Debug.Log("UI closed after save load with tab state restored");
+    }
+    else
+    {
+        // Fallback
+        yield return new WaitForSeconds(0.5f);
+        SaveManager.instance?.RefreshAndLoad();
+    }
+    
+    isTeleporting = false; // Clear flag
+}
 
     private Object_Waypoint GetWaypoint(Respawn_Type type)
     {
