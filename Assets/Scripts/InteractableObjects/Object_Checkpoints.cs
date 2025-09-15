@@ -34,6 +34,8 @@ public class Object_Checkpoints : MonoBehaviour, ISaveable
         if (string.IsNullOrEmpty(checkpointId))
             checkpointId = System.Guid.NewGuid().ToString();
 #endif
+
+        // Don't activate here; GameManager will handle it after scene load
     }
 
     public string GetCheckpointId() => checkpointId;
@@ -48,6 +50,16 @@ public class Object_Checkpoints : MonoBehaviour, ISaveable
             {
                 if (cp != this)
                     cp.ActivateCheckpoint(false);
+            }
+
+            if (GameManager.instance != null)
+            {
+                GameManager.instance.SetActiveCheckpoint(checkpointId);
+
+                // Save position to game data immediately
+                var data = SaveManager.instance?.GetGameData();
+                if (data != null)
+                    data.savedCheckpoint = GetRespawnPosition();
             }
         }
 

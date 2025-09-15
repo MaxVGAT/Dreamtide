@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -70,10 +71,30 @@ public class GameManager : MonoBehaviour
     private IEnumerator HandleSceneSetup()
     {
         yield return null; // Wait for scene initialization
-
         yield return StartCoroutine(WaitForPlayerAndComponents());
 
-        HandlePlayerTeleportation();
+        var data = SaveManager.instance?.GetGameData();
+
+        // Restore active checkpoint
+        if (data != null && data.savedCheckpoint != Vector3.zero)
+        {
+            var player = Entity_Player.instance;
+            if (player != null)
+            {
+                player.TeleportPlayer(data.savedCheckpoint);
+
+                // Find the checkpoint closest to savedCheckpoint
+                var nearestCheckpoint = FindObjectsByType<Object_Checkpoints>(FindObjectsSortMode.None)
+                    .OrderBy(cp => Vector3.Distance(cp.GetRespawnPosition(), data.savedCheckpoint))
+                    .FirstOrDefault();
+
+                if (nearestCheckpoint != null)
+                {
+                    // Activate it so the GameManager knows about it
+                    nearestCheckpoint.ActivateCheckpoint(true);
+                }
+            }
+        }
 
         yield return StartCoroutine(HandleUIAndSaveSystem());
 
@@ -87,32 +108,6 @@ public class GameManager : MonoBehaviour
 
         while (Entity_Player.instance.GetComponent<Player_SkillManager>() == null)
             yield return null;
-    }
-
-    private void HandlePlayerTeleportation()
-    {
-        TeleportToWaypoint();
-        TeleportToActiveCheckpoint();
-    }
-
-    private void TeleportToWaypoint()
-    {
-        Object_Waypoint targetWaypoint = FindWaypoint(lastRespawnType);
-        if (targetWaypoint == null) return;
-
-        Vector3 teleportPosition = targetWaypoint.GetPositionAndSetTriggerFalse();
-        Entity_Player.instance.TeleportPlayer(teleportPosition);
-
-        StartCoroutine(ReenableWaypoint(targetWaypoint, 0.5f));
-    }
-
-    private void TeleportToActiveCheckpoint()
-    {
-        if (string.IsNullOrEmpty(activeCheckpointID)) return;
-
-        Object_Checkpoints activeCheckpoint = FindCheckpoint(activeCheckpointID);
-        if (activeCheckpoint != null)
-            Entity_Player.instance.TeleportPlayer(activeCheckpoint.GetRespawnPosition());
     }
 
     private IEnumerator HandleUIAndSaveSystem()
@@ -172,11 +167,57 @@ public class GameManager : MonoBehaviour
     private void HandlePlayerRespawn()
     {
         var player = Entity_Player.instance;
-        if (player == null) return;
+        if (player == null)
+        {
+            Debug.LogWarning("[Respawn] No player instance found!");
+            return;
+        }
 
-        var checkpoint = GetActiveCheckpoint();
-        player.RespawnAtCheckpoint(checkpoint);
+        // Save active checkpoint to file
+        var data = SaveManager.instance?.GetGameData();
+        if (data != null)
+        {
+            data.savedCheckpoint = GetActiveCheckpoint()?.GetRespawnPosition() ?? player.transform.position;
+            SaveManager.instance?.SaveGame();
+        }
+
+        // Reload current scene
+        string currentScene = SceneManager.GetActiveScene().name;
+        ChangeScene(currentScene, Respawn_Type.NonSpecific);
+
+        Debug.Log("[Respawn] Player died — scene reloaded for full reset");
     }
+
+    private Vector3 GetNewPlayerPosition(Respawn_Type type)
+    {
+        if (type != Respawn_Type.NonSpecific) return Vector3.zero;
+
+        var player = Entity_Player.instance;
+        if (player == null) return Vector3.zero;
+
+        Vector3 deathPosition = player.transform.position;
+
+        var data = SaveManager.instance.GetGameData();
+
+        // All unlocked checkpoints
+        var unlockedCheckpoints = FindObjectsByType<Object_Checkpoints>(FindObjectsSortMode.None)
+            .Where(cp => data.unlockedCheckpoints.TryGetValue(cp.GetCheckpointId(), out bool unlocked) && unlocked)
+            .Select(cp => cp.GetRespawnPosition())
+            .ToList();
+
+        // All "Enter" waypoints
+        var enterWaypoints = FindObjectsByType<Object_Waypoint>(FindObjectsSortMode.None)
+            .Where(wp => wp.GetWaypointType() == Respawn_Type.Enter)
+            .Select(wp => wp.GetPositionAndSetTriggerFalse())
+            .ToList();
+
+        var positions = unlockedCheckpoints.Concat(enterWaypoints).ToList();
+        if (positions.Count == 0) return Vector3.zero;
+
+        // Return closest to death
+        return positions.OrderBy(pos => Vector3.Distance(pos, deathPosition)).First();
+    }
+
 
     public void RestartCurrentScene()
     {
