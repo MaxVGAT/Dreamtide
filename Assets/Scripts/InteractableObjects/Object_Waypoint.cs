@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Object_Waypoint : MonoBehaviour
 {
@@ -17,7 +17,7 @@ public class Object_Waypoint : MonoBehaviour
         playerIsInside = false;
         canBeTriggered = true;
     }
-    
+
     private void OnValidate()
     {
         gameObject.name = "Object_Waypoint - " + waypointType.ToString() + " - " + transferToScene;
@@ -29,12 +29,31 @@ public class Object_Waypoint : MonoBehaviour
 
     private void OnEnable()
     {
-        // Always reset state on scene load
         playerIsInside = false;
 
-        // Waypoint stays disabled until the player leaves its collider
-        // (prevents instant re-trigger if spawn overlaps)
-        canBeTriggered = false;
+        // Only disable triggering for Exit waypoints (where player spawns)
+        // Enter waypoints should be immediately active
+        if (waypointType == Respawn_Type.Exit)
+        {
+            canBeTriggered = false;
+
+            // Auto-enable after a short delay in case something goes wrong
+            StartCoroutine(AutoEnableCoroutine());
+        }
+        else
+        {
+            canBeTriggered = true;
+        }
+    }
+
+    private IEnumerator AutoEnableCoroutine()
+    {
+        yield return new WaitForSeconds(2f);
+        if (!canBeTriggered)
+        {
+            canBeTriggered = true;
+            Debug.LogWarning("Waypoint auto-enabled after timeout: " + gameObject.name);
+        }
     }
 
     public Respawn_Type GetWaypointType() => waypointType;
@@ -66,7 +85,13 @@ public class Object_Waypoint : MonoBehaviour
         if (collision.GetComponent<Entity_Player>() != null)
         {
             playerIsInside = false;
-            canBeTriggered = true; // re-armed only after exit
+
+            // Only re-enable Enter waypoints after player exits
+            // Exit waypoints get enabled by GameManager after teleportation
+            if (waypointType == Respawn_Type.Enter)
+            {
+                canBeTriggered = true;
+            }
         }
     }
 }
