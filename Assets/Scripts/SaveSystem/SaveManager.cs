@@ -59,10 +59,13 @@ public class SaveManager : MonoBehaviour
     [ContextMenu("*** Delete save data ***")]
     public void DeleteSaveData()
     {
-        
+        // Delete the file
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, encryptData);
         dataHandler.DeleteSave();
-        Debug.Log("Save Deleted");
+
+        // Clear the in-memory save too
+        gameData = new GameData(); // reset to defaults
+        Debug.Log("Save Deleted and in-memory data cleared");
     }
 
     public void RefreshAndLoad()

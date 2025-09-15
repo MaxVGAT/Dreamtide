@@ -154,24 +154,6 @@ public class Entity_Player : Entity
         OnPlayerDeathFinished?.Invoke();
     }
 
-    public void RespawnAtCheckpoint(Object_Checkpoints checkpoint)
-    {
-        // Restore health
-        if (health != null)
-            health.SetHealthToPercent(1f);
-
-        // Re-enable input and physics
-        rb.simulated = true;
-        input.Enable();
-
-        // Teleport
-        if (checkpoint != null)
-            TeleportPlayer(checkpoint.GetRespawnPosition());
-
-        // Reset state machine
-        stateMachine.ChangeState(idleState);
-    }
-
     // ���S����
     public override void EntityDeath()
     {

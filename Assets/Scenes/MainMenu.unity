@@ -325,9 +325,33 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 768283695}
-        m_TargetAssemblyTypeName: UI_MainMenu, Assembly-CSharp
-        m_MethodName: QuitButton
+      - m_Target: {fileID: 473703302}
+        m_TargetAssemblyTypeName: SaveManager, Assembly-CSharp
+        m_MethodName: DeleteSaveData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 967680331}
+        m_TargetAssemblyTypeName: ShowHideSettings, Assembly-CSharp
+        m_MethodName: HideSave
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1952925375}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayCloseButtonSFX
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -418,6 +442,7 @@ GameObject:
   - component: {fileID: 97463993}
   - component: {fileID: 97463992}
   - component: {fileID: 97463994}
+  - component: {fileID: 97463997}
   - component: {fileID: 97463995}
   - component: {fileID: 97463996}
   m_Layer: 0
@@ -627,7 +652,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverScale: {x: 1.1, y: 1.1, z: 1.1}
   pulseSpeed: 10
-  SFXSource: {fileID: 1598515785}
 --- !u!210 &97463996
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -640,6 +664,19 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &97463997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97463990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8e2c3cbd831bf46a7167ef60e5d668, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSFX: {fileID: 8300000, guid: ecb9c6ee528992c4d87103be31ab6b84, type: 3}
 --- !u!1 &98132122
 GameObject:
   m_ObjectHideFlags: 0
@@ -6075,7 +6112,8 @@ GameObject:
   - component: {fileID: 482212220}
   - component: {fileID: 482212219}
   - component: {fileID: 482212221}
-  - component: {fileID: 482212222}
+  - component: {fileID: 482212225}
+  - component: {fileID: 482212224}
   - component: {fileID: 482212223}
   m_Layer: 0
   m_Name: '- PlayButton - '
@@ -6270,7 +6308,32 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &482212222
+--- !u!210 &482212223
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482212217}
+  m_Enabled: 1
+  m_SortingLayerID: 1807081061
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+--- !u!114 &482212224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482212217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8e2c3cbd831bf46a7167ef60e5d668, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSFX: {fileID: 8300000, guid: ecb9c6ee528992c4d87103be31ab6b84, type: 3}
+--- !u!114 &482212225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6284,19 +6347,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverScale: {x: 1.1, y: 1.1, z: 1.1}
   pulseSpeed: 10
-  SFXSource: {fileID: 1598515785}
---- !u!210 &482212223
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 482212217}
-  m_Enabled: 1
-  m_SortingLayerID: 1807081061
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_SortAtRoot: 0
 --- !u!1 &484054228
 GameObject:
   m_ObjectHideFlags: 0
@@ -7550,18 +7600,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473703302}
-        m_TargetAssemblyTypeName: SaveManager, Assembly-CSharp
-        m_MethodName: DeleteSaveData
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 967680331}
         m_TargetAssemblyTypeName: ShowHideSettings, Assembly-CSharp
         m_MethodName: HideSave
@@ -7673,7 +7711,7 @@ MonoBehaviour:
   creditsGroup: {fileID: 564975173}
   exitGroup: {fileID: 1364581158}
   saveDeleteGroup: {fileID: 1598646485}
-  fadeTime: 0.3
+  deviceSwitch: {fileID: 0}
 --- !u!1 &998891463
 GameObject:
   m_ObjectHideFlags: 0
@@ -9898,6 +9936,7 @@ MonoBehaviour:
   firstSelected: {fileID: 482212217}
   settingsSelected: {fileID: 998891463}
   exitSelected: {fileID: 1226255827}
+  settingsManager: {fileID: 0}
   closeWindow: {fileID: -4428977360372289376, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!4 &1519386871
 Transform:
@@ -10924,8 +10963,9 @@ GameObject:
   - component: {fileID: 1636230232}
   - component: {fileID: 1636230234}
   - component: {fileID: 1636230233}
+  - component: {fileID: 1636230238}
   - component: {fileID: 1636230235}
-  - component: {fileID: 1636230236}
+  - component: {fileID: 1636230239}
   - component: {fileID: 1636230237}
   m_Layer: 0
   m_Name: '- OptionsButton - '
@@ -11108,19 +11148,32 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1952925375}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: PlayOpenButtonSFX
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1636230236
+--- !u!210 &1636230237
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636230231}
+  m_Enabled: 1
+  m_SortingLayerID: 1807081061
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+--- !u!114 &1636230238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636230231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8e2c3cbd831bf46a7167ef60e5d668, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSFX: {fileID: 8300000, guid: ecb9c6ee528992c4d87103be31ab6b84, type: 3}
+--- !u!114 &1636230239
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11134,19 +11187,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverScale: {x: 1.1, y: 1.1, z: 1.1}
   pulseSpeed: 10
-  SFXSource: {fileID: 1598515785}
---- !u!210 &1636230237
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1636230231}
-  m_Enabled: 1
-  m_SortingLayerID: 1807081061
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_SortAtRoot: 0
 --- !u!1 &1689123920
 GameObject:
   m_ObjectHideFlags: 0

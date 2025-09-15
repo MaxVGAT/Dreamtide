@@ -16,11 +16,4 @@ public class Player_Health : Entity_Health
             Die();
     }
 
-    protected override void Die()
-    {
-        base.Die();
-
-        player?.EntityDeath();
-    }
-
 }

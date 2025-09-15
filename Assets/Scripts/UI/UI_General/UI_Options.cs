@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class UI_Options : MonoBehaviour
 {
     private Entity_Player player;
+
     [SerializeField] private Toggle healthBarToggle;
 
     private void Start()
@@ -16,4 +19,10 @@ public class UI_Options : MonoBehaviour
     {
         player.health.EnableHealthBar(isOn);
     }
+
+    public void GoMainMenuButton()
+    {
+        GameManager.instance.GoMainMenuButton();
+    }
+
 }

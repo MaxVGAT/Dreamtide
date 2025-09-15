@@ -11,8 +11,11 @@ public class ControllerMouseSwitch : MonoBehaviour
     public GameObject settingsSelected; // �ݒ��ʑI��
     public GameObject exitSelected;     // �I���m�F��ʑI��
 
+    public ShowHideSettings settingsManager;
+
     [Header("���̓A�N�V����")]
     public InputActionReference closeWindow; // �E�B���h�E�������
+
 
     private void Start()
     {
@@ -65,29 +68,28 @@ public class ControllerMouseSwitch : MonoBehaviour
     {
         if (!context.performed) return;
 
-        // �ݒ�E�N���W�b�g�E�I����ʂ���鏈��
-        if (ShowHideSettings.Instance != null)
+        if (settingsManager == null)
+            settingsManager = FindFirstObjectByType<ShowHideSettings>(); // fallback search
+
+        if (settingsManager == null) return; // nothing to do
+
+        if (settingsManager.settingsGroup != null && settingsManager.settingsGroup.alpha > 0)
         {
-            var shs = ShowHideSettings.Instance;
+            settingsManager.HideSettings();
+            SoundManager.Instance.PlayCloseButtonSFX();
+        }
 
-            if (shs.settingsGroup != null && shs.settingsGroup.alpha > 0)
-            {
-                shs.HideSettings();
-                SoundManager.Instance.PlayCloseButtonSFX();
-            }
+        if (settingsManager.creditsGroup != null && settingsManager.creditsGroup.alpha > 0)
+        {
+            settingsManager.HideCredits();
+            SoundManager.Instance.PlayCloseButtonSFX();
+            settingsManager.ShowSettings();
+        }
 
-            if (shs.creditsGroup != null && shs.creditsGroup.alpha > 0)
-            {
-                shs.HideCredits();
-                SoundManager.Instance.PlayCloseButtonSFX();
-                shs.ShowSettings();
-            }
-
-            if (shs.exitGroup != null && shs.exitGroup.alpha > 0)
-            {
-                shs.HideExit();
-                SoundManager.Instance.PlayCloseButtonSFX();
-            }
+        if (settingsManager.exitGroup != null && settingsManager.exitGroup.alpha > 0)
+        {
+            settingsManager.HideExit();
+            SoundManager.Instance.PlayCloseButtonSFX();
         }
     }
 

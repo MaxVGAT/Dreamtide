@@ -12,6 +12,9 @@ public class Player_IdleState : PlayerGroundedState
     {
         base.Enter();
 
+        player.input.Enable();
+
+        player.rb.simulated = true;
         // �ҋ@���͉������̑��x��[���ɐݒ�
         player.SetVelocity(0, rb.linearVelocity.y);
     }

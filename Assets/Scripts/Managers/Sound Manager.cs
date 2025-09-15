@@ -87,16 +87,27 @@ public class SoundManager : MonoBehaviour
     // Play appropriate music based on loaded scene
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // Bind sliders
+        musicSlider = GameObject.Find("MusicSlider")?.GetComponent<Slider>();
+        sfxSlider = GameObject.Find("SFXSlider")?.GetComponent<Slider>();
+
+        if (musicSlider != null) musicSlider.onValueChanged.AddListener(SetMusicVolume);
+        if (sfxSlider != null) sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+
+        // Bind all buttons to SFX
+        var buttons = FindObjectsByType<UnityEngine.UI.Button>(FindObjectsSortMode.None);
+        foreach (var btn in buttons)
+        {
+            btn.onClick.AddListener(() => PlayOpenButtonSFX());
+        }
+
+        // Play appropriate music
         switch (scene.name)
         {
-            
             case "MainMenu":
                 PlayMusic(titleMusic);
                 PlayAmbient(ambientMusic);
                 break;
-            //case "InGame":
-            //    PlayMusic(lobbyMusic);
-            //    break;
         }
     }
 
@@ -126,6 +137,27 @@ public class SoundManager : MonoBehaviour
         ambientSource.loop = loop;
         ambientSource.volume = musicVolume;
         ambientSource.Play();
+    }
+
+    private void AssignSliders()
+    {
+        // Only assign if they exist in the scene
+        musicSlider = GameObject.Find("MusicSlider")?.GetComponent<Slider>();
+        sfxSlider = GameObject.Find("SFXSlider")?.GetComponent<Slider>();
+
+        if (musicSlider != null)
+        {
+            musicSlider.value = musicVolume;
+            musicSlider.onValueChanged.RemoveAllListeners();
+            musicSlider.onValueChanged.AddListener(SetMusicVolume);
+        }
+
+        if (sfxSlider != null)
+        {
+            sfxSlider.value = sfxVolume;
+            sfxSlider.onValueChanged.RemoveAllListeners();
+            sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+        }
     }
 
     // Convenience methods for specific SFX

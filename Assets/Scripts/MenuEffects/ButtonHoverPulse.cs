@@ -1,63 +1,53 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-// ƒ{ƒ^ƒ“ƒzƒo[‚ÉŠg‘åEk¬‚Ìƒpƒ‹ƒXƒAƒjƒ[ƒVƒ‡ƒ“‚ÆSFX‚ğÄ¶
+// ï¿½{ï¿½^ï¿½ï¿½ï¿½zï¿½oï¿½[ï¿½ï¿½ï¿½ÉŠgï¿½ï¿½Eï¿½kï¿½ï¿½ï¿½Ìƒpï¿½ï¿½ï¿½Xï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½SFXï¿½ï¿½Äï¿½
 public class ButtonHoverPulse : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
     [Header("Hover Settings")]
-    [SerializeField] private Vector3 hoverScale = new Vector3(1.1f, 1.1f, 1.1f); // ƒzƒo[‚ÌŠg‘åƒTƒCƒY
-    [SerializeField] private float pulseSpeed = 1f; // ƒpƒ‹ƒX‘¬“x
+    [SerializeField] private Vector3 hoverScale = new Vector3(1.1f, 1.1f, 1.1f); // ï¿½zï¿½oï¿½[ï¿½ï¿½ï¿½ÌŠgï¿½ï¿½Tï¿½Cï¿½Y
+    [SerializeField] private float pulseSpeed = 1f; // ï¿½pï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½x
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource SFXSource; // SFXÄ¶—p
-
-    private Vector3 originalScale; // Œ³‚ÌƒTƒCƒY
-    private bool isHovering = false; // ƒzƒo[’†‚©‚Ç‚¤‚©
+    private Vector3 originalScale; // ï¿½ï¿½ï¿½ÌƒTï¿½Cï¿½Y
+    private bool isHovering = false; // ï¿½zï¿½oï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½
 
     private void Start()
     {
-        originalScale = transform.localScale; // ‰ŠúƒTƒCƒYæ“¾
+        originalScale = transform.localScale; // ï¿½ï¿½ï¿½ï¿½ï¿½Tï¿½Cï¿½Yï¿½æ“¾
     }
 
     private void Update()
     {
-        // ƒzƒo[’†‚È‚çŠg‘åA‚»‚¤‚Å‚È‚¯‚ê‚ÎŒ³‚ÌƒTƒCƒY‚É•âŠÔ
+        // ï¿½zï¿½oï¿½[ï¿½ï¿½ï¿½È‚ï¿½gï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½Å‚È‚ï¿½ï¿½ï¿½ÎŒï¿½ï¿½ÌƒTï¿½Cï¿½Yï¿½É•ï¿½ï¿½
         Vector3 targetScale = isHovering ? Vector3.Scale(originalScale, hoverScale) : originalScale;
         transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * pulseSpeed);
     }
 
-    // ƒ}ƒEƒX‚ªƒ{ƒ^ƒ“ã‚É“ü‚Á‚½‚Æ‚«
+    // ï¿½}ï¿½Eï¿½Xï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½É“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½
     public void OnPointerEnter(PointerEventData eventData)
     {
         isHovering = true;
-        EventSystem.current.SetSelectedGameObject(gameObject); // ‘I‘ğó‘Ô‚Éİ’è
-
-        // ƒzƒo[SFXÄ¶
-        if (SFXSource != null)
-            SoundManager.Instance?.PlayHoverSFX();
+        EventSystem.current.SetSelectedGameObject(gameObject); // ï¿½Iï¿½ï¿½ï¿½Ô‚Éİ’ï¿½
     }
 
-    // ƒ}ƒEƒX‚ªƒ{ƒ^ƒ“ã‚©‚ço‚½‚Æ‚«
+    // ï¿½}ï¿½Eï¿½Xï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½ï¿½ã‚©ï¿½ï¿½oï¿½ï¿½ï¿½Æ‚ï¿½
     public void OnPointerExit(PointerEventData eventData)
     {
         isHovering = false;
     }
 
-    // UI‘I‘ğiƒL[ƒ{[ƒh‚âƒRƒ“ƒgƒ[ƒ‰[‘€ìj
+    // UIï¿½Iï¿½ï¿½ï¿½ï¿½iï¿½Lï¿½[ï¿½{ï¿½[ï¿½hï¿½ï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½j
     public void OnSelect(BaseEventData eventData)
     {
         isHovering = true;
-
-        if (SFXSource != null)
-            SoundManager.Instance?.PlayHoverSFX();
     }
 
-    // UI‘I‘ğ‰ğœ
+    // UIï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void OnDeselect(BaseEventData eventData)
     {
         isHovering = false;
 
-        // ‘I‘ğ‰ğœ‚Éƒ|ƒCƒ“ƒ^[‘ŞoƒCƒxƒ“ƒg‚ğ‘—M
+        // ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éƒ|ï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½Şoï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½ğ‘—M
         PointerEventData pointerData = new PointerEventData(EventSystem.current);
         ExecuteEvents.Execute(gameObject, pointerData, ExecuteEvents.pointerExitHandler);
     }

@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Linq;
-using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,12 +21,30 @@ public class GameManager : MonoBehaviour, ISaveable
     {
         if (instance != null && instance != this)
         {
+            // Clean up any event subscriptions on the old instance before destroying
+            if (instance != null)
+            {
+                SceneManager.sceneLoaded -= instance.OnSceneLoaded;
+                Entity_Player.OnPlayerDeathFinished -= instance.OnPlayerDeath;
+            }
+
             Destroy(gameObject);
             return;
         }
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        // Clean up event subscriptions when destroyed
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        Entity_Player.OnPlayerDeathFinished -= OnPlayerDeath;
+
+        // Clear instance if this was the active instance
+        if (instance == this)
+            instance = null;
     }
 
     public Object_Checkpoints GetActiveCheckpoint()
@@ -63,18 +79,49 @@ public class GameManager : MonoBehaviour, ISaveable
 
         SaveProgress();
 
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        // Unsubscribe first to prevent any lingering subscriptions
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        // Only subscribe if this is the active instance
+        if (instance == this)
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
         SceneManager.LoadScene(sceneName);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // Unsubscribe immediately to prevent duplicate calls
         SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        // Check if this GameManager instance is still valid and is the active instance
+        if (this == null || instance != this || this != instance)
+        {
+            Debug.LogWarning("[GameManager] OnSceneLoaded called on destroyed or inactive GameManager instance - ignoring");
+            return;
+        }
+
+        // Additional check to make sure we can start coroutines
+        if (!gameObject.activeInHierarchy)
+        {
+            Debug.LogWarning("[GameManager] GameManager not active in hierarchy - cannot start coroutines");
+            return;
+        }
+
         StartCoroutine(HandleSceneSetup());
     }
 
     private IEnumerator HandleSceneSetup()
     {
+        // Additional safety check
+        if (this == null || instance != this)
+        {
+            Debug.LogWarning("[GameManager] HandleSceneSetup called on destroyed or inactive GameManager instance");
+            yield break;
+        }
+
         // Wait for scene initialization, player, and components
         yield return null;
         yield return StartCoroutine(WaitForPlayerAndComponents());
@@ -108,38 +155,63 @@ public class GameManager : MonoBehaviour, ISaveable
         yield return StartCoroutine(HandleUIAndSaveSystem());
 
         isChangingScene = false;
+
+        var ui = FindFirstObjectByType<UI>();
+        if (ui != null)
+        {
+            ui.ToggleUI();
+            ui.ToggleUI();
+        }
+
+
         SaveProgress();
     }
 
     private IEnumerator WaitForPlayerAndComponents()
     {
         while (Entity_Player.instance == null)
+        {
+            if (this == null || instance != this) yield break; // Safety check
             yield return null;
+        }
 
         while (Entity_Player.instance.GetComponent<Player_SkillManager>() == null)
+        {
+            if (this == null || instance != this) yield break; // Safety check
             yield return null;
+        }
     }
 
     private IEnumerator HandleUIAndSaveSystem()
     {
-        // Wait until UI exists
         UI ui = null;
         while ((ui = FindAnyObjectByType<UI>()) == null)
+        {
+            if (this == null || instance != this) yield break; // Safety check
             yield return null;
+        }
 
-        // Store menu/tab state
+        // Special case: MainMenu always starts closed (or default state)
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            ui.ToggleUI(); // or whatever method closes credits, options, etc.
+            yield break; // skip restoring previous scene UI
+        }
+
+        // Otherwise, restore previous state
         bool wasMenuOpen = ui.IsMenuOpen();
         UI_TabButton rememberedTab = ui.tabGroup?.selectedTab;
         int rememberedIndex = ui.tabGroup?.defaultTabIndex ?? 0;
 
-        // Open UI if needed
-        if (!wasMenuOpen) { ui.ToggleUI(); yield return null; }
+        if (!wasMenuOpen)
+        {
+            ui.ToggleUI();
+            yield return null;
+        }
 
-        // Refresh/save
         SaveManager.instance?.RefreshAndLoad();
         yield return null;
 
-        // Restore tab
         if (ui.tabGroup != null)
         {
             if (rememberedTab != null)
@@ -150,8 +222,11 @@ public class GameManager : MonoBehaviour, ISaveable
             yield return null;
         }
 
-        // Close UI if we opened it
-        if (!wasMenuOpen) { ui.ToggleUI(); yield return null; }
+        if (!wasMenuOpen)
+        {
+            ui.ToggleUI();
+            yield return null;
+        }
     }
 
     public void ContinuePlay()
@@ -171,22 +246,62 @@ public class GameManager : MonoBehaviour, ISaveable
             Debug.LogError("[GameManager] No valid scene to load in ContinuePlay!");
     }
 
+    public void GoMainMenuButton()
+    {
+        StartCoroutine(CloseUIOnBackToMenu());
+    }
+
+    public IEnumerator CloseUIOnBackToMenu()
+    {
+        // Load MainMenu scene
+        SceneManager.LoadScene("MainMenu");
+
+        // Wait until MainMenu scene is active
+        yield return new WaitUntil(() => SceneManager.GetActiveScene().name == "MainMenu");
+
+        // Safety check
+        if (this == null || instance != this) yield break;
+
+        // Find the ShowHideSettings in the scene
+        ShowHideSettings settings = FindFirstObjectByType<ShowHideSettings>();
+        if (settings == null)
+        {
+            yield break;
+        }
+
+        // Assign CanvasGroups dynamically if needed
+        if (settings.mainMenuGroup == null)
+            settings.AssignCanvasGroups();
+
+        // Hide all panels
+        settings.HandleSettingsMainMenu();
+    }
+
     #endregion
 
     #region Player Death and Restart
 
     private void OnEnable()
     {
-        Entity_Player.OnPlayerDeathFinished += HandlePlayerRespawn;
+        // Ensure no duplicate subscriptions
+        Entity_Player.OnPlayerDeathFinished -= OnPlayerDeath;
+        Entity_Player.OnPlayerDeathFinished += OnPlayerDeath;
     }
 
     private void OnDisable()
     {
-        Entity_Player.OnPlayerDeathFinished -= HandlePlayerRespawn;
+        Entity_Player.OnPlayerDeathFinished -= OnPlayerDeath;
     }
 
     private void HandlePlayerRespawn()
     {
+        // Prevent multiple respawn calls
+        if (isChangingScene)
+        {
+            Debug.Log("[Respawn] Scene change already in progress, ignoring respawn request");
+            return;
+        }
+
         var player = Entity_Player.instance;
         if (player == null)
         {
@@ -203,6 +318,35 @@ public class GameManager : MonoBehaviour, ISaveable
         Debug.Log("[Respawn] Player died — scene reloaded for full reset");
     }
 
+    public void OnPlayerDeath()
+    {
+        // However you normally access UI
+        var ui = FindFirstObjectByType<UI>();
+        if (ui != null)
+            ui.ToggleGameOverNoControls();
+
+        // Pause gameplay if needed
+        // Time.timeScale = 0f;
+    }
+
+    public void RespawnFromUI()
+    {
+        if (Entity_Player.instance == null) return;
+
+        var checkpoint = GetActiveCheckpoint();
+        Vector3 respawnPos = checkpoint != null ? checkpoint.GetRespawnPosition() : Entity_Player.instance.transform.position;
+
+
+        // Optionally, close GameOver UI
+        var ui = FindFirstObjectByType<UI>();
+        if (ui != null)
+        {
+            ui.ToggleGameOverNoControls();
+
+            ui.ToggleUI();
+        }
+
+    }
 
     public void RestartCurrentScene()
     {

@@ -30,6 +30,7 @@ public class UI : MonoBehaviour
     public UI_Craft craftUI { get; private set; }
     public UI_Merchant merchantUI { get; private set; }
     public UI_InGame inGameUI { get; private set; }
+    public UI_DeathScreen deathUI { get; private set; }
     #endregion
 
     private bool menuEnabled;
@@ -47,6 +48,9 @@ public class UI : MonoBehaviour
         craftUI = GetComponentInChildren<UI_Craft>(true);
         merchantUI = GetComponentInChildren<UI_Merchant>(true);
         inGameUI = GetComponentInChildren<UI_InGame>(true);
+        deathUI = GetComponentInChildren<UI_DeathScreen>(true);
+
+        deathUI.gameObject.SetActive(false);
 
         storageUI.storageRoot = storage.panel;
 
@@ -111,6 +115,28 @@ public class UI : MonoBehaviour
 
         Time.timeScale = menuEnabled ? 0 : 1;
         StopPlayerControls(menuEnabled);
+    }
+
+    private void OnEnable()
+    {
+        Entity_Player.OnPlayerDeathFinished += ToggleGameOverNoControls;
+    }
+
+    private void OnDisable()
+    {
+        Entity_Player.OnPlayerDeathFinished -= ToggleGameOverNoControls;
+    }
+
+    public void ToggleGameOverNoControls()
+    {
+        if (deathUI == null)
+        {
+            Debug.LogError("GameOverScreen not assigned in UI inspector!");
+            return;
+        }
+
+        deathUI.gameObject.SetActive(true);
+        StopPlayerControls(true);
     }
 
     private void OpenMenuIfClosed()
