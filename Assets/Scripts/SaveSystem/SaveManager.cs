@@ -62,6 +62,7 @@ public class SaveManager : MonoBehaviour
         
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, encryptData);
         dataHandler.DeleteSave();
+        Debug.Log("Save Deleted");
     }
 
     public void RefreshAndLoad()

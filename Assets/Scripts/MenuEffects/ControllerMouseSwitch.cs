@@ -3,16 +3,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-// ƒRƒ“ƒgƒ[ƒ‰[‚Æƒ}ƒEƒX“ü—Í‚ðØ‚è‘Ö‚¦AUI‚Ì‘I‘ðó‘Ô‚ðŠÇ—
+// ï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½[ï¿½Æƒ}ï¿½Eï¿½Xï¿½ï¿½ï¿½Í‚ï¿½Ø‚ï¿½Ö‚ï¿½ï¿½AUIï¿½Ì‘Iï¿½ï¿½ï¿½Ô‚ï¿½Ç—ï¿½
 public class ControllerMouseSwitch : MonoBehaviour
 {
-    [Header("UI‘I‘ðƒIƒuƒWƒFƒNƒg")]
-    public GameObject firstSelected;    // ƒƒjƒ…[‰Šú‘I‘ð
-    public GameObject settingsSelected; // Ý’è‰æ–Ê‘I‘ð
-    public GameObject exitSelected;     // I—¹Šm”F‰æ–Ê‘I‘ð
+    [Header("UIï¿½Iï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g")]
+    public GameObject firstSelected;    // ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½
+    public GameObject settingsSelected; // ï¿½Ý’ï¿½ï¿½Ê‘Iï¿½ï¿½
+    public GameObject exitSelected;     // ï¿½Iï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½Ê‘Iï¿½ï¿½
 
-    [Header("“ü—ÍƒAƒNƒVƒ‡ƒ“")]
-    public InputActionReference closeWindow; // ƒEƒBƒ“ƒhƒE•Â‚¶‚é“ü—Í
+    [Header("ï¿½ï¿½ï¿½ÍƒAï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½")]
+    public InputActionReference closeWindow; // ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Â‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     private void Start()
     {
@@ -26,7 +26,7 @@ public class ControllerMouseSwitch : MonoBehaviour
         }
     }
 
-    // “ü—ÍƒfƒoƒCƒX•ÏX‚ðŠÄŽ‹iƒ}ƒEƒX‚©ƒRƒ“ƒgƒ[ƒ‰[‚©j
+    // ï¿½ï¿½ï¿½Íƒfï¿½oï¿½Cï¿½Xï¿½ÏXï¿½ï¿½ÄŽï¿½ï¿½iï¿½}ï¿½Eï¿½Xï¿½ï¿½ï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½j
     private void OnInputActionChange(object obj, InputActionChange change)
     {
         if (change != InputActionChange.ActionPerformed) return;
@@ -35,7 +35,7 @@ public class ControllerMouseSwitch : MonoBehaviour
         InputControl lastControl = inputAction.activeControl;
         InputDevice lastDevice = lastControl.device;
 
-        Cursor.visible = lastDevice.displayName == "Mouse"; // ƒ}ƒEƒX‚È‚çƒJ[ƒ\ƒ‹•\Ž¦
+        Cursor.visible = lastDevice.displayName == "Mouse"; // ï¿½}ï¿½Eï¿½Xï¿½È‚ï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½\ï¿½ï¿½
     }
 
     private void OnEnable()
@@ -60,12 +60,12 @@ public class ControllerMouseSwitch : MonoBehaviour
         }
     }
 
-    // ƒEƒBƒ“ƒhƒE•Â‚¶‚é‘€ì
+    // ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Â‚ï¿½ï¿½é‘€ï¿½ï¿½
     public void OnCloseWindow(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
 
-        // Ý’èEƒNƒŒƒWƒbƒgEI—¹‰æ–Ê‚ð•Â‚¶‚éˆ—
+        // ï¿½Ý’ï¿½Eï¿½Nï¿½ï¿½ï¿½Wï¿½bï¿½gï¿½Eï¿½Iï¿½ï¿½ï¿½ï¿½Ê‚ï¿½Â‚ï¿½ï¿½éˆï¿½ï¿½
         if (ShowHideSettings.Instance != null)
         {
             var shs = ShowHideSettings.Instance;
@@ -91,7 +91,7 @@ public class ControllerMouseSwitch : MonoBehaviour
         }
     }
 
-    // ƒƒjƒ…[AÝ’èAI—¹‰æ–Ê‚Å‚ÌUI‘I‘ðó‘ÔÝ’è
+    // ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Aï¿½Ý’ï¿½Aï¿½Iï¿½ï¿½ï¿½ï¿½Ê‚Å‚ï¿½UIï¿½Iï¿½ï¿½ï¿½ÔÝ’ï¿½
     public void SetSelectedOnMenu() => EventSystem.current.SetSelectedGameObject(firstSelected);
     public void SetSelectedOnSettings()
     {

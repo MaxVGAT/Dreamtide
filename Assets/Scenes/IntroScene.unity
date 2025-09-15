@@ -2637,7 +2637,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2131389584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2650,6 +2650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09713b54fabbbd44aa0766a3adecf1bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeCheckpointID: 
 --- !u!4 &2131389585
 Transform:
   m_ObjectHideFlags: 0
@@ -7326,6 +7327,10 @@ PrefabInstance:
     - target: {fileID: 4160559085015902365, guid: 76946f0326c46354eb5200eba685ab56, type: 3}
       propertyPath: m_Name
       value: '*** SAVE MANAGER ***'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160559085015902365, guid: 76946f0326c46354eb5200eba685ab56, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

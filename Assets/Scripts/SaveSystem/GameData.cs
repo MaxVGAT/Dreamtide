@@ -22,6 +22,7 @@ public class GameData
     public int totalExperience;
 
     public Vector3 savedCheckpoint;
+    public string lastScenePlayed; 
 
 
     public GameData()

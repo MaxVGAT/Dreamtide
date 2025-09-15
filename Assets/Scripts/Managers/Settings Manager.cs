@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ public class ShowHideSettings : MonoBehaviour
     public CanvasGroup settingsGroup;
     public CanvasGroup creditsGroup;
     public CanvasGroup exitGroup;
+    public CanvasGroup saveDeleteGroup;
     public float fadeTime = 0.3f;
 
     // ----------------------------------------
@@ -59,6 +61,13 @@ public class ShowHideSettings : MonoBehaviour
             exitGroup.alpha = 0;
             exitGroup.interactable = false;
             exitGroup.blocksRaycasts = false;
+        }
+
+        if (saveDeleteGroup != null)
+        {
+            saveDeleteGroup.alpha = 0;
+            saveDeleteGroup.interactable = false;
+            saveDeleteGroup.blocksRaycasts = false;
         }
     }
 
@@ -140,6 +149,51 @@ public class ShowHideSettings : MonoBehaviour
         exitGroup.alpha = 0;
         exitGroup.interactable = false;
         exitGroup.blocksRaycasts = false;
+
+        mainMenuGroup.interactable = true;
+
+        deviceSwitch.SetSelectedOnMenu();
+    }
+
+    public void ShowSave()
+    {
+        if (saveDeleteGroup == null || mainMenuGroup == null) return;
+
+        HideSettings();
+        // Hide exit panel, re-enable main menu interaction
+        saveDeleteGroup.alpha = 1;
+        saveDeleteGroup.interactable = true;
+        saveDeleteGroup.blocksRaycasts = true;
+
+        mainMenuGroup.interactable = false;
+
+        deviceSwitch.SetSelectedOnExit();
+    }
+
+    public void HideSaveToOptions()
+    {
+        if (saveDeleteGroup == null || mainMenuGroup == null) return;
+
+        ShowSettings();
+        // Hide exit panel, re-enable main menu interaction
+        saveDeleteGroup.alpha = 0;
+        saveDeleteGroup.interactable = false;
+        saveDeleteGroup.blocksRaycasts = false;
+
+        mainMenuGroup.interactable = true;
+
+        deviceSwitch.SetSelectedOnMenu();
+    }
+
+    public void HideSaveToMenu()
+    {
+        if (saveDeleteGroup == null || mainMenuGroup == null) return;
+
+        SaveManager.instance.DeleteSaveData();
+        // Hide exit panel, re-enable main menu interaction
+        saveDeleteGroup.alpha = 0;
+        saveDeleteGroup.interactable = false;
+        saveDeleteGroup.blocksRaycasts = false;
 
         mainMenuGroup.interactable = true;
 

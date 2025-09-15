@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Linq;
+using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, ISaveable
 {
     public static GameManager instance;
+
+    private string lastScenePlayed;
 
     [Header("Scene Transition")]
     private Respawn_Type lastRespawnType;
@@ -58,6 +61,8 @@ public class GameManager : MonoBehaviour
         isChangingScene = true;
         lastRespawnType = respawnType;
 
+        SaveProgress();
+
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene(sceneName);
     }
@@ -70,36 +75,74 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator HandleSceneSetup()
     {
-        yield return null; // Wait for scene initialization
-        yield return StartCoroutine(WaitForPlayerAndComponents());
+        // Wait for the scene to initialize
+        yield return null;
 
+        // Wait for player instance and required components
+        while (Entity_Player.instance == null)
+            yield return null;
+
+        var player = Entity_Player.instance;
+
+        while (player.GetComponent<Player_SkillManager>() == null)
+            yield return null;
+
+        // Restore player position
         var data = SaveManager.instance?.GetGameData();
-
-        // Restore active checkpoint
-        if (data != null && data.savedCheckpoint != Vector3.zero)
+        if (data != null)
         {
-            var player = Entity_Player.instance;
-            if (player != null)
-            {
-                player.TeleportPlayer(data.savedCheckpoint);
+            Vector3 targetPosition;
 
-                // Find the checkpoint closest to savedCheckpoint
-                var nearestCheckpoint = FindObjectsByType<Object_Checkpoints>(FindObjectsSortMode.None)
-                    .OrderBy(cp => Vector3.Distance(cp.GetRespawnPosition(), data.savedCheckpoint))
-                    .FirstOrDefault();
+            // Use nearest active checkpoint if it exists
+            var checkpoint = GetActiveCheckpoint();
+            if (checkpoint != null)
+                targetPosition = checkpoint.GetRespawnPosition();
+            else
+                targetPosition = data.savedCheckpoint != Vector3.zero
+                    ? data.savedCheckpoint
+                    : player.transform.position;
 
-                if (nearestCheckpoint != null)
-                {
-                    // Activate it so the GameManager knows about it
-                    nearestCheckpoint.ActivateCheckpoint(true);
-                }
-            }
+            // Teleport player once, AFTER the player is fully initialized
+            player.TeleportPlayer(targetPosition);
         }
 
-        yield return StartCoroutine(HandleUIAndSaveSystem());
+        // Handle UI and save system
+        UI ui = null;
+        while ((ui = FindAnyObjectByType<UI>()) == null)
+            yield return null;
+
+        bool wasMenuOpen = ui.IsMenuOpen();
+        UI_TabButton rememberedTab = ui.tabGroup?.selectedTab;
+        int rememberedIndex = ui.tabGroup?.defaultTabIndex ?? 0;
+
+        if (!wasMenuOpen)
+        {
+            ui.ToggleUI();
+            yield return null;
+        }
+
+        SaveManager.instance?.RefreshAndLoad();
+        yield return null;
+
+        if (ui.tabGroup != null)
+        {
+            if (rememberedTab != null)
+                ui.tabGroup.OnTabSelected(rememberedTab);
+            else if (ui.tabGroup.tabButtons.Count > 0)
+                ui.tabGroup.OnTabSelected(ui.tabGroup.tabButtons[Mathf.Clamp(rememberedIndex, 0, ui.tabGroup.tabButtons.Count - 1)]);
+
+            yield return null;
+        }
+
+        if (!wasMenuOpen)
+        {
+            ui.ToggleUI();
+            yield return null;
+        }
 
         isChangingScene = false;
     }
+
 
     private IEnumerator WaitForPlayerAndComponents()
     {
@@ -144,10 +187,21 @@ public class GameManager : MonoBehaviour
         if (!wasMenuOpen) { ui.ToggleUI(); yield return null; }
     }
 
-    private IEnumerator ReenableWaypoint(Object_Waypoint waypoint, float delay)
+    public void ContinuePlay()
     {
-        yield return new WaitForSeconds(delay);
-        waypoint.SetTriggerState(true);
+        // Use saved data if available
+        var data = SaveManager.instance?.GetGameData();
+
+        // If no save or empty, fallback to default scene
+        string sceneToLoad = (data != null && !string.IsNullOrEmpty(data.lastScenePlayed))
+            ? data.lastScenePlayed
+            : "IntroScene"; // <-- default starting scene
+
+        // Only try to load if sceneToLoad is valid
+        if (!string.IsNullOrEmpty(sceneToLoad))
+            ChangeScene(sceneToLoad, Respawn_Type.NonSpecific);
+        else
+            Debug.LogError("[GameManager] No valid scene to load in ContinuePlay!");
     }
 
     #endregion
@@ -173,49 +227,13 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // Save active checkpoint to file
-        var data = SaveManager.instance?.GetGameData();
-        if (data != null)
-        {
-            data.savedCheckpoint = GetActiveCheckpoint()?.GetRespawnPosition() ?? player.transform.position;
-            SaveManager.instance?.SaveGame();
-        }
+        SaveProgress();
 
         // Reload current scene
         string currentScene = SceneManager.GetActiveScene().name;
         ChangeScene(currentScene, Respawn_Type.NonSpecific);
 
         Debug.Log("[Respawn] Player died — scene reloaded for full reset");
-    }
-
-    private Vector3 GetNewPlayerPosition(Respawn_Type type)
-    {
-        if (type != Respawn_Type.NonSpecific) return Vector3.zero;
-
-        var player = Entity_Player.instance;
-        if (player == null) return Vector3.zero;
-
-        Vector3 deathPosition = player.transform.position;
-
-        var data = SaveManager.instance.GetGameData();
-
-        // All unlocked checkpoints
-        var unlockedCheckpoints = FindObjectsByType<Object_Checkpoints>(FindObjectsSortMode.None)
-            .Where(cp => data.unlockedCheckpoints.TryGetValue(cp.GetCheckpointId(), out bool unlocked) && unlocked)
-            .Select(cp => cp.GetRespawnPosition())
-            .ToList();
-
-        // All "Enter" waypoints
-        var enterWaypoints = FindObjectsByType<Object_Waypoint>(FindObjectsSortMode.None)
-            .Where(wp => wp.GetWaypointType() == Respawn_Type.Enter)
-            .Select(wp => wp.GetPositionAndSetTriggerFalse())
-            .ToList();
-
-        var positions = unlockedCheckpoints.Concat(enterWaypoints).ToList();
-        if (positions.Count == 0) return Vector3.zero;
-
-        // Return closest to death
-        return positions.OrderBy(pos => Vector3.Distance(pos, deathPosition)).First();
     }
 
 
@@ -232,6 +250,7 @@ public class GameManager : MonoBehaviour
     public void SetActiveCheckpoint(string checkpointID)
     {
         activeCheckpointID = checkpointID;
+        SaveProgress();
     }
 
     private Object_Checkpoints FindCheckpoint(string checkpointID)
@@ -256,6 +275,43 @@ public class GameManager : MonoBehaviour
                 return waypoint;
         }
         return null;
+    }
+
+    public void SaveProgress()
+    {
+        var data = SaveManager.instance?.GetGameData();
+        if (data == null) return;
+
+        // 1. Save current scene
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (currentScene != "MainMenu")
+            data.lastScenePlayed = currentScene;
+
+        // 2. Save active checkpoint position
+        var checkpoint = GetActiveCheckpoint();
+        var player = Entity_Player.instance;
+        if (player != null)
+            data.savedCheckpoint = checkpoint?.GetRespawnPosition() ?? player.transform.position;
+
+        SaveManager.instance?.SaveGame();
+    }
+
+    public void LoadData(GameData data)
+    {
+        lastScenePlayed = data.lastScenePlayed;
+
+        if (string.IsNullOrEmpty(lastScenePlayed))
+            lastScenePlayed = "IntroScene";
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (currentScene == "MainMenu")
+            return;
+
+        data.lastScenePlayed = currentScene;
     }
 
     #endregion
