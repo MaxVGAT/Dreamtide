@@ -11,6 +11,11 @@ public class GameManager : MonoBehaviour, ISaveable
     [Header("Scene Transition")]
     private Respawn_Type lastRespawnType;
     private bool isChangingScene = false;
+    private bool dataLoaded = false;
+
+    [Header("UI Types")]
+    [SerializeField] private GameObject inGameUI;
+    [SerializeField] private GameObject menuUI;
 
     #region Initialization
 
@@ -68,20 +73,54 @@ public class GameManager : MonoBehaviour, ISaveable
 
         SaveProgress();
 
-        // Unsubscribe first to prevent any lingering subscriptions
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        // Start the fade out and wait for it to complete before loading scene
+        StartCoroutine(FadeOutAndLoadScene(sceneName));
+    }
 
-        // Only subscribe if this is the active instance
-        if (instance == this)
+    private IEnumerator FadeOutAndLoadScene(string sceneName)
+    {
+        Debug.Log("[GameManager] Starting fade out...");
+
+        
+
+        // Fade out
+        UI_Fade fadeScreen = FindFadeScreenUI();
+        if (fadeScreen != null)
         {
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            Debug.Log("[GameManager] Found fade screen, calling DoFadeOut");
+            fadeScreen.DoFadeOut();
+
+            // Wait a frame to let the coroutine start
+            yield return null;
+
+            // Wait for the fade out to complete
+            while (fadeScreen.fadeEffectCo != null)
+            {
+                yield return null;
+            }
+
+            Debug.Log("[GameManager] Fade out complete");
+        }
+        else
+        {
+            Debug.LogWarning("[GameManager] No fade screen found!");
         }
 
+        // Subscribe for scene loaded
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        if (instance == this)
+            SceneManager.sceneLoaded += OnSceneLoaded;
+
+        Debug.Log("[GameManager] Loading scene: " + sceneName);
+        // Now load the scene after fade is complete
         SceneManager.LoadScene(sceneName);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (UI.instance != null)
+            UI.instance.StopPlayerControls(true);
+
         // Unsubscribe immediately to prevent duplicate calls
         SceneManager.sceneLoaded -= OnSceneLoaded;
 
@@ -104,12 +143,9 @@ public class GameManager : MonoBehaviour, ISaveable
 
     private IEnumerator HandleSceneSetup()
     {
-        // Additional safety check
-        if (this == null || instance != this)
-        {
-            Debug.LogWarning("[GameManager] HandleSceneSetup called on destroyed or inactive GameManager instance");
-            yield break;
-        }
+        // Wait for data to load
+        while (!dataLoaded)
+            yield return null;
 
         // Wait for scene initialization, player, and components
         yield return null;
@@ -117,34 +153,49 @@ public class GameManager : MonoBehaviour, ISaveable
 
         var player = Entity_Player.instance;
 
-        // Determine teleport position
-        Vector3 targetPosition = player.transform.position; // Default: leave player at spawn
+        
 
-        // Only use waypoint if lastRespawnType is meaningful
+        // Determine teleport position
+        Vector3 targetPosition = player.transform.position;
         if (lastRespawnType != Respawn_Type.NonSpecific)
         {
             var waypoint = GetWaypoint(lastRespawnType);
             if (waypoint != null)
                 targetPosition = waypoint.GetPositionAndSetTriggerFalse();
         }
-        // else: keep player at default scene spawn
 
-        // Teleport player once
+        // Teleport player
         player.TeleportPlayer(targetPosition);
 
-        // Handle UI and save as before
+        
+        yield return new WaitForSeconds(1f);
+
+        // Handle UI and save system
         yield return StartCoroutine(HandleUIAndSaveSystem());
+
+        
+
+        // Now fade in
+        UI_Fade fadeScreen = FindFadeScreenUI();
+        if (fadeScreen != null)
+        {
+            fadeScreen.DoFadeIn();
+
+            // Wait for fade in to complete
+            yield return null;
+            while (fadeScreen.fadeEffectCo != null)
+            {
+                yield return null;
+            }
+        }
 
         isChangingScene = false;
 
-        var ui = FindFirstObjectByType<UI>();
-        if (ui != null)
-        {
-            ui.ToggleUI();
-            ui.ToggleUI();
-        }
-
         SaveProgress();
+
+        if (UI.instance != null)
+            UI.instance.StopPlayerControls(false);
+
     }
 
     private IEnumerator WaitForPlayerAndComponents()
@@ -257,6 +308,15 @@ public class GameManager : MonoBehaviour, ISaveable
         settings.HandleSettingsMainMenu();
     }
 
+    private UI_Fade FindFadeScreenUI()
+    {
+        UI_Fade fadeScreen = FindFirstObjectByType<UI_Fade>();
+
+        if (fadeScreen == null)
+            Debug.LogWarning("No UI_Fade found in the scene!");
+        return fadeScreen;
+    }
+
     #endregion
 
     #region Player Death and Restart
@@ -351,6 +411,8 @@ public class GameManager : MonoBehaviour, ISaveable
             lastScenePlayed = "IntroScene";
 
         Debug.Log($"[Load] Data loaded - Scene: {lastScenePlayed}");
+
+        dataLoaded = true;
     }
 
     public void SaveData(ref GameData data)
@@ -366,4 +428,5 @@ public class GameManager : MonoBehaviour, ISaveable
     }
 
     #endregion
+
 }

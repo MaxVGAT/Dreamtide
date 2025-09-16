@@ -25,7 +25,7 @@ public class SaveManager : MonoBehaviour
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, encryptData);
         allSaveables = FindIsaveables();
 
-        yield return new WaitForSeconds(0.01f);
+        yield return null;
         LoadGame();
     }
 

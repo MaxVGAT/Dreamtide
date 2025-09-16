@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
+    public static UI instance;
 
     [System.Serializable]
     private class UIContext
@@ -31,12 +32,14 @@ public class UI : MonoBehaviour
     public UI_Merchant merchantUI { get; private set; }
     public UI_InGame inGameUI { get; private set; }
     public UI_DeathScreen deathUI { get; private set; }
+    public UI_Fade fadeUI { get; private set; }
     #endregion
 
     private bool menuEnabled;
 
     private void Awake()
     {
+        instance = this;
         tabMenuRoot.SetActive(false);
         tabGroup = GetComponentInChildren<UI_TabGroup>(true);
 
@@ -49,6 +52,7 @@ public class UI : MonoBehaviour
         merchantUI = GetComponentInChildren<UI_Merchant>(true);
         inGameUI = GetComponentInChildren<UI_InGame>(true);
         deathUI = GetComponentInChildren<UI_DeathScreen>(true);
+        fadeUI = GetComponentInChildren<UI_Fade>(true);
 
         deathUI.gameObject.SetActive(false);
 
