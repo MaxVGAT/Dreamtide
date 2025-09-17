@@ -34,37 +34,61 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         this.rect = GetComponent<RectTransform>();
     }
 
-    // �X���b�g�N���b�N��
-    public virtual void OnPointerDown(PointerEventData eventData)
+    protected void OnEnable()
     {
-        // �X���b�g����A�܂��̓}�e���A���͏������Ȃ�
-        if (itemInSlot == null || itemInSlot.itemData.itemType == Item_Type.Material)
-            return;
+        if (inventory == null)
+            inventory = FindAnyObjectByType<Inventory_Player>();
+    }
 
-        bool alternativeInput = Input.GetKey(KeyCode.LeftControl);
-
-        if (alternativeInput)
+    protected void Update()
+    {
+        if (inventory == null)
         {
-            inventory.RemoveOneItem(itemInSlot);
+            Debug.LogWarning($"[UI_ItemSlot] Inventory is NULL in scene '{UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}' for slot '{name}'");
         }
         else
         {
-
-            // �_�u���N���b�N����
-            if (Time.time - lastClickTime < DoubleClickThreshold)
-            {
-                inventory.TryUseItem(itemInSlot);
-                lastClickTime = 0;
-            }
-            else
-            {
-                lastClickTime = Time.time;
-            }
-
-            if (itemInSlot == null)
-                ui.itemTooltip.ShowToolTip(false, null);
+            // Optional: show which item is in slot
+            string itemName = itemInSlot != null ? itemInSlot.itemData.itemName : "None";
+            Debug.Log($"[UI_ItemSlot] Inventory OK. Slot '{name}' has item: {itemName}");
         }
     }
+
+
+    // �X���b�g�N���b�N��
+    public virtual void OnPointerDown(PointerEventData eventData)
+    {
+        if (inventory == null) inventory = FindAnyObjectByType<Inventory_Player>();
+        if (inventory == null || itemInSlot == null || itemInSlot.itemData == null) return;
+
+        // Ctrl for removing 1 stack
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            inventory.RemoveOneItem(itemInSlot);
+            return;
+        }
+
+        // If equipment, single click unequips
+        if (itemInSlot.itemData.itemType != Item_Type.Consumables)
+        {
+            inventory.UnequipItem(itemInSlot);
+            return;
+        }
+
+        // Otherwise, consumables use double-click
+        if (Time.time - lastClickTime < DoubleClickThreshold)
+        {
+            inventory.TryUseItem(itemInSlot);
+            lastClickTime = 0;
+        }
+        else
+        {
+            lastClickTime = Time.time;
+        }
+    }
+
+
+
 
     // �X���b�g�̓�e��X�V
     public void UpdateSlot(Inventory_Item item)
@@ -95,6 +119,8 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
             itemStackSize.color = item.stackSize < itemInSlot.itemData.maxStackSize ? Color.white : Color.yellow;
         }
     }
+
+
 
     // �}�E�X�I�[�o�[�Ńc�[���`�b�v�\��
     public virtual void OnPointerEnter(PointerEventData eventData)

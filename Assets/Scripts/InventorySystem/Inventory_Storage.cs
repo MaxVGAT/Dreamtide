@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.SceneManagement;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Inventory_Storage : Inventory_Base

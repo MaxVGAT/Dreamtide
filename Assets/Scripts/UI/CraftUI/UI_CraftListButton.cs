@@ -31,12 +31,11 @@ public class UI_CraftListButton : MonoBehaviour
             slot.gameObject.SetActive(false);
 
         // Populate only slots needed
-        for (int i = 0; i < craftData.itemList.Length; i++)
+        for (int i = 0; i < craftData.itemList.Length && i < craftSlots.Length; i++)
         {
             craftSlots[i].gameObject.SetActive(true);
             craftSlots[i].SetupButton(craftData.itemList[i]);
 
-            // Update preview for first slot automatically
             if (i == 0)
                 craftSlots[i].UpdateCraftPreview();
         }

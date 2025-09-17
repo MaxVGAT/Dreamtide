@@ -592,7 +592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d9ac3fe94670c43bb1bfcd1d0e3b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 480667349}
+  player: {fileID: 0}
   moveSpeed: 4
   lookAheadDistance: 2.5
   lookAheadSpeed: 6
@@ -2031,17 +2031,6 @@ Transform:
   - {fileID: 72831224}
   m_Father: {fileID: 1755764072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &480667349 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1691725296510902076, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-  m_PrefabInstance: {fileID: 1050619133}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e960d9494265cd408053036761a3786, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &505386777
 GameObject:
   m_ObjectHideFlags: 0
@@ -2997,6 +2986,83 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &691630098
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1691725296510902076, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: waypoint
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2525673504066610906, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2525673504066610906, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446292175806933018, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898403201870634532, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8119820369608065124, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
 --- !u!1 &740262491
 GameObject:
   m_ObjectHideFlags: 0
@@ -3755,6 +3821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDistanceToHearSound: 3
   showGizmo: 1
+  ignoreDistance: 0
 --- !u!1 &921314566
 GameObject:
   m_ObjectHideFlags: 0
@@ -4481,75 +4548,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &1050619133
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2525673504066610906, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2525673504066610906, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -6.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837233911808238654, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446292175806933018, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8119820369608065124, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 98be47e9b509e6249b2256a94c103e68, type: 3}
 --- !u!1 &1076151984
 GameObject:
   m_ObjectHideFlags: 0
@@ -4881,6 +4879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDistanceToHearSound: 20.7
   showGizmo: 1
+  ignoreDistance: 0
 --- !u!1 &1147292795
 GameObject:
   m_ObjectHideFlags: 0
@@ -9737,6 +9736,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDistanceToHearSound: 3.73
   showGizmo: 1
+  ignoreDistance: 0
 --- !u!1 &1268378751
 GameObject:
   m_ObjectHideFlags: 0
@@ -12243,6 +12243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDistanceToHearSound: 10
   showGizmo: 0
+  ignoreDistance: 0
 --- !u!212 &1003659308424711488
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19468,7 +19469,7 @@ SceneRoots:
   - {fileID: 1335121210}
   - {fileID: 1477584039}
   - {fileID: 7668799472910292638}
-  - {fileID: 1050619133}
+  - {fileID: 691630098}
   - {fileID: 1242517016}
   - {fileID: 1221943362}
   - {fileID: 587762464}

@@ -65,10 +65,16 @@ public class GameManager : MonoBehaviour, ISaveable
             while (fade.fadeEffectCo != null) yield return null;
         }
 
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.LoadScene(sceneName);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        asyncLoad.allowSceneActivation = true;
+
+        while (!asyncLoad.isDone)
+            yield return null;
+
+        // Scene loaded, setup
+        OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
+
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -84,7 +90,8 @@ public class GameManager : MonoBehaviour, ISaveable
 
     private IEnumerator SetupMainMenu()
     {
-        yield return null; // wait a frame for scene objects
+        yield return null; // wait a frame
+
         isChangingScene = false;
         lastRespawnType = Respawn_Type.NonSpecific;
 
@@ -101,8 +108,7 @@ public class GameManager : MonoBehaviour, ISaveable
             settings.HandleSettingsMainMenu();
         }
 
-        if (SoundManager.instance != null)
-            SoundManager.instance.StartBGM("MainMenu");
+        SoundManager.instance?.StartBGM("MainMenu");
 
         UI_Fade fade = FindFadeScreen();
         if (fade != null)
@@ -116,8 +122,20 @@ public class GameManager : MonoBehaviour, ISaveable
     {
         while (!dataLoaded) yield return null;
 
-        yield return StartCoroutine(WaitForPlayer());
+        float timer = 0f;
+        while ((Entity_Player.instance == null || Entity_Player.instance.GetComponent<Player_SkillManager>() == null) && timer < 5f)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
         Entity_Player player = Entity_Player.instance;
+        if (player == null)
+        {
+            Debug.LogError("[GameManager] Player not found in scene!");
+            isChangingScene = false;
+            yield break;
+        }
 
         Vector3 target = player.transform.position;
         if (lastRespawnType != Respawn_Type.NonSpecific)
@@ -127,16 +145,16 @@ public class GameManager : MonoBehaviour, ISaveable
         }
         player.TeleportPlayer(target);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
 
-        UI ui = null;
-        while ((ui = FindAnyObjectByType<UI>()) == null) yield return null;
-
-        // Restore UI state if needed
-        bool menuWasOpen = ui.IsMenuOpen();
-        if (!menuWasOpen) ui.ToggleUI();
-        SaveManager.instance?.RefreshAndLoad();
-        if (!menuWasOpen) ui.ToggleUI();
+        UI ui = FindAnyObjectByType<UI>();
+        if (ui != null)
+        {
+            bool menuWasOpen = ui.IsMenuOpen();
+            if (!menuWasOpen) ui.ToggleUI();
+            SaveManager.instance?.RefreshAndLoad();
+            if (!menuWasOpen) ui.ToggleUI();
+        }
 
         UI_Fade fade = FindFadeScreen();
         if (fade != null)
@@ -146,12 +164,6 @@ public class GameManager : MonoBehaviour, ISaveable
         }
 
         isChangingScene = false;
-    }
-
-    private IEnumerator WaitForPlayer()
-    {
-        while (Entity_Player.instance == null) yield return null;
-        while (Entity_Player.instance.GetComponent<Player_SkillManager>() == null) yield return null;
     }
 
     private UI_Fade FindFadeScreen()
@@ -178,7 +190,6 @@ public class GameManager : MonoBehaviour, ISaveable
     public void RespawnFromUI()
     {
         if (Entity_Player.instance == null) return;
-        Vector3 pos = Entity_Player.instance.transform.position;
 
         UI ui = FindFirstObjectByType<UI>();
         if (ui != null)
@@ -188,7 +199,7 @@ public class GameManager : MonoBehaviour, ISaveable
         }
 
         SaveProgress();
-        Debug.Log($"[Respawn] Player respawned at {pos}");
+        Debug.Log($"[Respawn] Player respawned at {Entity_Player.instance.transform.position}");
     }
 
     #endregion
@@ -241,8 +252,6 @@ public class GameManager : MonoBehaviour, ISaveable
     public void GoMainMenuButton()
     {
         Debug.Log("[GameManager] GoMainMenuButton called - switching to MainMenu");
-
-        // Use your existing scene transition system
         ChangeScene("MainMenu", Respawn_Type.NonSpecific);
     }
 

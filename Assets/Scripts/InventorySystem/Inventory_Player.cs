@@ -7,7 +7,7 @@ public class Inventory_Player : Inventory_Base
 {
     public event Action<int> OnQuickSlotUsed;
 
-    private Entity_Player player; // �v���C���[�̃X�e�[�^�X�Q��
+    public Entity_Player player { get; private set; }// �v���C���[�̃X�e�[�^�X�Q��
     public List<Inventory_EquipmentSlot> equipList; // �����X���b�g���X�g
     public Inventory_Storage storage{ get; private set; }
 
@@ -27,6 +27,11 @@ public class Inventory_Player : Inventory_Base
     {
         quickItems[slotNumber - 1] = itemToSet;
         TriggerUpdateUI();
+    }
+
+    public void RebindPlayer()
+    {
+        player = GetComponent<Entity_Player>();
     }
 
     public void TryUseQuickItemInSlot(int passedSlotNumber)
@@ -153,14 +158,27 @@ public class Inventory_Player : Inventory_Base
 
         foreach (var item in itemList)
         {
-            if (item == null || item.itemData == null)
+            if (item == null)
+            {
+                Debug.LogWarning("[Inventory_Player] Skipping null item in inventory");
                 continue;
+            }
+
+            if (item.itemData == null)
+            {
+                Debug.LogWarning("[Inventory_Player] Skipping item with null itemData");
+                continue;
+            }
 
             string saveID = item.itemData.saveID;
+            if (string.IsNullOrEmpty(saveID))
+            {
+                Debug.LogWarning($"[Inventory_Player] Skipping item with null or empty saveID: {item.itemData.itemName}");
+                continue;
+            }
 
             if (item.itemData.maxStackSize > 1)
             {
-                // Stackable: sum the stack size
                 if (!data.inventory.ContainsKey(saveID))
                     data.inventory[saveID] = 0;
 
@@ -168,13 +186,13 @@ public class Inventory_Player : Inventory_Base
             }
             else
             {
-                // Non-stackable: store one per instance
                 if (!data.inventory.ContainsKey(saveID))
                     data.inventory[saveID] = 0;
 
                 data.inventory[saveID] += 1;
             }
         }
+
 
         foreach (var slot in equipList)
         {

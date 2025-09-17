@@ -29,11 +29,14 @@ public class UI_Inventory : MonoBehaviour
         UpdateGoldUI();
     }
 
+
+
     private void OnEnable()
     {
         if (inventory == null)
-            return;
+            inventory = FindFirstObjectByType<Inventory_Player>();
 
+        inventory?.RebindPlayer();
         UpdateUI();
     }
 

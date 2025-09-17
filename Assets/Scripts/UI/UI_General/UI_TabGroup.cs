@@ -81,19 +81,6 @@ public class UI_TabGroup : MonoBehaviour
         tabButtons = sortedTabs;
     }
 
-    void Update()
-    {
-        if (tabButtons != null && tabButtons.Count > 0)
-        {
-            string order = "TabButtons Order: ";
-            for (int i = 0; i < tabButtons.Count; i++)
-            {
-                order += $"[{i}] {tabButtons[i].name} ";
-            }
-            Debug.Log(order);
-        }
-    }
-
     public void Subscribe(UI_TabButton button)
     {
         if (tabButtons == null)

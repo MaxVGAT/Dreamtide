@@ -1,26 +1,26 @@
 using System;
 using UnityEngine;
 
-// ‘•”õƒXƒƒbƒg‚Ìƒf[ƒ^ŠÇ—ƒNƒ‰ƒX
+// ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½Ìƒfï¿½[ï¿½^ï¿½Ç—ï¿½ï¿½Nï¿½ï¿½ï¿½X
 [Serializable]
 public class Inventory_EquipmentSlot
 {
-    public Item_Type slotType;       // ‚±‚ÌƒXƒƒbƒg‚ÌŽí—Þi—áFHelmet, Ringj
-    public Inventory_Item equippedItem; // ‘•”õ’†‚ÌƒAƒCƒeƒ€
+    public Item_Type slotType;       // ï¿½ï¿½ï¿½ÌƒXï¿½ï¿½ï¿½bï¿½gï¿½ÌŽï¿½Þiï¿½ï¿½FHelmet, Ringï¿½j
+    public Inventory_Item equippedItem; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌƒAï¿½Cï¿½eï¿½ï¿½
 
-    // Žw’èƒ^ƒCƒv‚ÅƒXƒƒbƒg‚ðì¬
+    // ï¿½wï¿½ï¿½^ï¿½Cï¿½vï¿½ÅƒXï¿½ï¿½ï¿½bï¿½gï¿½ï¿½ì¬
     public Inventory_EquipmentSlot(Item_Type type)
     {
         slotType = type;
         equippedItem = null;
     }
 
-    // ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^i‘•”õ‚È‚µj
+    // ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½j
     public Inventory_EquipmentSlot()
     {
         equippedItem = null;
     }
 
-    // ƒXƒƒbƒg‚É‘•”õ’†‚ÌƒAƒCƒeƒ€‚ª‚ ‚é‚©
+    // ï¿½Xï¿½ï¿½ï¿½bï¿½gï¿½É‘ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌƒAï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚©
     public bool HasItem() => equippedItem != null && equippedItem.itemData != null;
 }

@@ -54,7 +54,7 @@ public class UI_CraftPreview : MonoBehaviour
         foreach (var slot in craftPreviewSlots)
             slot.gameObject.SetActive(false);
 
-        for (int i = 0; i < itemToCraft.itemData.craftRecipe.Length; i++)
+        for (int i = 0; i < itemToCraft.itemData.craftRecipe.Length && i < craftPreviewSlots.Length; i++)
         {
             Inventory_Item requiredItem = itemToCraft.itemData.craftRecipe[i];
             int availableAmount = storage.GetAvailableAmountOf(requiredItem.itemData);

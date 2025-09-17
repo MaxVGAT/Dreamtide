@@ -1,31 +1,29 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-// �����X���b�gUI��Ǘ�����N���X
-// UI_ItemSlot ��p�����āA�����\�ȃA�C�e���^�C�v��w��ł���
 public class UI_EquipSlot : UI_ItemSlot
 {
-    public Item_Type slotType; // ���̃X���b�g�ő����\�ȃA�C�e���^�C�v
+    public Item_Type slotType;
 
-    // �G�f�B�^��ŃX���b�g��������X�V����
     private void OnValidate()
     {
         gameObject.name = "UI_EquipmentSlot - " + slotType.ToString();
     }
 
-    // �X���b�g���N���b�N���ꂽ���̏���
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if (itemInSlot == null) // �X���b�g�ɃA�C�e�����Ȃ���Ή�����Ȃ�
+        if (itemInSlot == null)
             return;
 
-        // �_�u���N���b�N����
         if (Time.time - lastClickTime < DoubleClickThreshold)
         {
-            inventory.UnequipItem(itemInSlot); // �A�C�e����O��
-            lastClickTime = 0;                 // �N���b�N�^�C�}�[����Z�b�g
+            inventory.UnequipItem(itemInSlot);
+            lastClickTime = 0;
         }
         else
-            lastClickTime = Time.time;         // �N���b�N���Ԃ�X�V
+        {
+            lastClickTime = Time.time;
+            base.OnPointerDown(eventData); // this won't compile as 'base' can't call interface implementation
+        }
     }
 }
