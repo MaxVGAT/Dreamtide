@@ -19,11 +19,15 @@ public class GameData
     public int playerLevel;
     public int totalExperience;
 
-    public string lastScenePlayed; 
+    public string lastScenePlayed;
+
+    public List<string> openedChests; // chestID -> opened status
 
 
     public GameData()
     {
+        gold = 10000;
+
         inventory = new SerializableDictionary<string, int>();
         storageItems = new SerializableDictionary<string, int>();
 
@@ -31,6 +35,8 @@ public class GameData
 
         skillTreeUI = new SerializableDictionary<string, bool>();
         skillUpgrades = new SerializableDictionary<Skill_Type, Skill_UpgradeType>();
+
+        openedChests = new List<string>(); // initialize the list
 
         playerLevel = 0;
         totalExperience = 0;

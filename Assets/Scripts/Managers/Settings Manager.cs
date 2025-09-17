@@ -5,19 +5,8 @@ public class ShowHideSettings : MonoBehaviour
     [Header("CanvasGroups")]
     public CanvasGroup mainMenuGroup;
     public CanvasGroup settingsGroup;
-    public CanvasGroup creditsGroup;
     public CanvasGroup exitGroup;
     public CanvasGroup saveDeleteGroup;
-
-    [Header("UI Device")]
-    public ControllerMouseSwitch deviceSwitch;
-
-    private void Awake()
-    {
-        // Optionally, assign deviceSwitch if not set in inspector
-        if (deviceSwitch == null)
-            deviceSwitch = FindFirstObjectByType<ControllerMouseSwitch>();
-    }
 
     private void Start()
     {
@@ -34,8 +23,6 @@ public class ShowHideSettings : MonoBehaviour
             mainMenuGroup = GameObject.Find("MainMenuGroup")?.GetComponent<CanvasGroup>();
         if (settingsGroup == null)
             settingsGroup = GameObject.Find("SettingsGroup")?.GetComponent<CanvasGroup>();
-        if (creditsGroup == null)
-            creditsGroup = GameObject.Find("CreditsGroup")?.GetComponent<CanvasGroup>();
         if (exitGroup == null)
             exitGroup = GameObject.Find("ExitGroup")?.GetComponent<CanvasGroup>();
         if (saveDeleteGroup == null)
@@ -45,7 +32,6 @@ public class ShowHideSettings : MonoBehaviour
     private void HideAllPanelsImmediate()
     {
         HideCanvas(settingsGroup);
-        HideCanvas(creditsGroup);
         HideCanvas(exitGroup);
         HideCanvas(saveDeleteGroup);
     }
@@ -73,41 +59,24 @@ public class ShowHideSettings : MonoBehaviour
     {
         ShowCanvas(settingsGroup);
         mainMenuGroup.interactable = false;
-        deviceSwitch?.SetSelectedOnSettings();
     }
 
     public void HideSettings()
     {
         HideCanvas(settingsGroup);
         mainMenuGroup.interactable = true;
-        deviceSwitch?.SetSelectedOnMenu();
-    }
-
-    public void ShowCredits()
-    {
-        ShowCanvas(creditsGroup);
-        mainMenuGroup.interactable = false;
-        settingsGroup.interactable = false;
-    }
-
-    public void HideCredits()
-    {
-        HideCanvas(creditsGroup);
-        settingsGroup.interactable = true;
     }
 
     public void ShowExit()
     {
         ShowCanvas(exitGroup);
         mainMenuGroup.interactable = false;
-        deviceSwitch?.SetSelectedOnExit();
     }
 
     public void HideExit()
     {
         HideCanvas(exitGroup);
         mainMenuGroup.interactable = true;
-        deviceSwitch?.SetSelectedOnMenu();
     }
 
     public void ShowSave()
@@ -115,21 +84,18 @@ public class ShowHideSettings : MonoBehaviour
         HideSettings();
         ShowCanvas(saveDeleteGroup);
         mainMenuGroup.interactable = false;
-        deviceSwitch?.SetSelectedOnExit();
     }
 
     public void HideSave()
     {
         HideCanvas(saveDeleteGroup);
         mainMenuGroup.interactable = true;
-        deviceSwitch?.SetSelectedOnMenu();
     }
 
     public void HandleSettingsMainMenu()
     {
         HideExit();
         HideSettings();
-        HideCredits();
         HideSave();
     }
 }

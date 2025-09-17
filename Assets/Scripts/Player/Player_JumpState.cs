@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// ƒvƒŒƒCƒ„[‚ÌƒWƒƒƒ“ƒvó‘Ôi‹ó’†‚É‚¢‚éŠÔ‚ÌˆÚ“®ŠÇ—j
+// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌƒWï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½Ôiï¿½ó’†‚É‚ï¿½ï¿½ï¿½Ô‚ÌˆÚ“ï¿½ï¿½Ç—ï¿½ï¿½j
 public class Player_JumpState : PlayerAiredState
 {
     public Player_JumpState(Entity_Player player, StateMachine stateMachine, string animBoolName)
@@ -12,7 +12,8 @@ public class Player_JumpState : PlayerAiredState
     {
         base.Enter();
 
-        // ƒWƒƒƒ“ƒvŠJn‚Ì‚’¼‘¬“x‚ğİ’èi‰¡‘¬“x‚ÍˆÛj
+        SoundManager.instance.PlaySFX("jump", player.GetComponentInChildren<AudioSource>());
+        // ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Jï¿½nï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½İ’ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ÍˆÛï¿½ï¿½j
         player.SetVelocity(rb.linearVelocity.x, player.jumpForce);
     }
 
@@ -20,7 +21,7 @@ public class Player_JumpState : PlayerAiredState
     {
         base.Update();
 
-        // ‰º•ûŒü‚ÉˆÚ“®’†‚ÅAƒWƒƒƒ“ƒvUŒ‚’†‚Å‚È‚¯‚ê‚Î—‰ºó‘Ô‚ÉˆÚs
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉˆÚ“ï¿½ï¿½ï¿½ï¿½ÅAï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½Å‚È‚ï¿½ï¿½ï¿½Î—ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ÉˆÚs
         if (rb.linearVelocity.y < 0 && stateMachine.currentState != player.jumpAttackState)
             stateMachine.ChangeState(player.fallState);
     }

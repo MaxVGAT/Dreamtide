@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d21b3dc8399c21548bdceab170e4329c, type: 3}
   m_Name: Skill data - Mirage Rush
   m_EditorClassIdentifier: 
-  cost: 2
+  skillName: "\u30DF\u30E9\u30FC\u30B8\u30E5\u30E9\u30C3\u30B7\u30E5"
+  skillDescription: "\u30C0\u30C3\u30B7\u30E5\u7D42\u4E86\u5730\u70B9\u306B\u5206\u8EAB\u3092\u6B8B\u3059\u3002"
+  skillIcon: {fileID: -7833787783344520613, guid: 0e685c5a1e8bedb47a91f1543aa876f8, type: 3}
+  cost: 4
   unlockedByDefault: 0
   skillType: 0
   upgradeData:
@@ -28,6 +31,3 @@ MonoBehaviour:
       shockDuration: 3
       shockDamageScale: 1
       shockCharge: 0.4
-  skillName: "\u30DF\u30E9\u30FC\u30B8\u30E5\u30E9\u30C3\u30B7\u30E5"
-  skillDescription: "\u30C0\u30C3\u30B7\u30E5\u7D42\u4E86\u5730\u70B9\u306B\u5206\u8EAB\u3092\u6B8B\u3059\u3002"
-  skillIcon: {fileID: -7833787783344520613, guid: 0e685c5a1e8bedb47a91f1543aa876f8, type: 3}

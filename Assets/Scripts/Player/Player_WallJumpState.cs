@@ -7,25 +7,26 @@ public class Player_WallJumpState : PlayerState
     {
     }
 
-    // •ÇƒWƒƒƒ“ƒvŠJn‚Ìˆ—
+    // ï¿½ÇƒWï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Jï¿½nï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
     public override void Enter()
     {
         base.Enter();
 
-        // ƒvƒŒƒCƒ„[‚É•ÇƒWƒƒƒ“ƒv‚Ì‰‘¬“x‚ğİ’è
+        SoundManager.instance.PlaySFX("wallJump", player.GetComponentInChildren<AudioSource>());
+        // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½É•ÇƒWï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Ìï¿½ï¿½ï¿½ï¿½xï¿½ï¿½İ’ï¿½
         player.SetVelocity(player.wallJumpDir.x * -player.facingDirection, player.wallJumpDir.y);
     }
 
-    // –ˆƒtƒŒ[ƒ€XV
+    // ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Xï¿½V
     public override void Update()
     {
         base.Update();
 
-        // ã¸‚ªI‚í‚Á‚½‚ç—‰ºó‘Ô‚Ö
+        // ï¿½ã¸ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç—ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½
         if (rb.linearVelocity.y < 0)
             stateMachine.ChangeState(player.fallState);
 
-        // •Ç‚ÉG‚ê‚Ä‚¢‚ê‚Î•ÇƒXƒ‰ƒCƒhó‘Ô‚Ö
+        // ï¿½Ç‚ÉGï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Î•ÇƒXï¿½ï¿½ï¿½Cï¿½hï¿½ï¿½Ô‚ï¿½
         if (player.isWallDetected)
             stateMachine.ChangeState(player.wallSlideState);
     }

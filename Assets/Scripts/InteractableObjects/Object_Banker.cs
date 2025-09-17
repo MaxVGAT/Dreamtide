@@ -6,10 +6,17 @@ public class Object_Banker : Object_NPC, IInteractable
     private Inventory_Player inventory;
     private Inventory_Storage storage;
 
+    private NPC_SFX npcSFX;
+    private AudioSource audioSource;
+
     protected override void Awake()
     {
         base.Awake();
         storage = PersistentStorageManager.instance.GetStorageInventory();
+        audioSource = GetComponent<AudioSource>();
+        npcSFX = GetComponent<NPC_SFX>();
+
+        
     }
 
     public void Interact()
@@ -17,34 +24,37 @@ public class Object_Banker : Object_NPC, IInteractable
         inventory = player.GetComponent<Inventory_Player>();
         storage.SetInventory(inventory);
 
-        ui.SetInsideShopTrigger(true); // Set trigger state
+        ui.SetInsideShopTrigger(true);
+        npcSFX?.PlayTalkSfx();
+
+        // Disable distance effect while talking
+        var distanceController = GetComponent<AudioDistanceController>();
+        if (distanceController != null)
+            distanceController.ignoreDistance = true;
 
         if (!ui.IsMenuOpen())
             ui.OpenInventoryWithStorage();
         else
             ui.ShowStorageInInventory(storage);
 
-        if(storage != null && ui.storageUI != null)
+        if (storage != null && ui.storageUI != null)
             ui.storageUI.SetupStorage(storage);
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        base.OnTriggerEnter2D(collision);
-
-        ui.SetInsideShopTrigger(true); // Set trigger state when entering
-
-        if (ui.IsMenuOpen())
-            ui.ShowStorageInInventory(false);
-    }
-
+    // When conversation ends / exiting trigger:
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
-        ui.SetInsideShopTrigger(false); // Clear trigger state and hide storage
+        ui.SetInsideShopTrigger(false);
         if (ui.IsMenuOpen())
-        {
-            ui.ToggleUI(); // Close menu when exiting trigger
-        }
+            ui.ToggleUI();
+
+        // Re-enable distance effect
+        var distanceController = GetComponent<AudioDistanceController>();
+        if (distanceController != null)
+            distanceController.ignoreDistance = false;
+
+        audioSource.Stop();
     }
+
 }

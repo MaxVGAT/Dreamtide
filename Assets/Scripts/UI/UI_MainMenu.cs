@@ -1,10 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_MainMenu : MonoBehaviour
 {
     [SerializeField] private UI_Fade fadeScreen; // Drag your fade component here in inspector
     [SerializeField] private ParticleSystem particleEffects; // Assign in inspector
+    [SerializeField] private Button playButton;
+
+    private bool hasClicked = false;
 
     private void Start()
     {
@@ -14,10 +18,19 @@ public class UI_MainMenu : MonoBehaviour
 
         if (fadeScreen != null)
             fadeScreen.gameObject.SetActive(false);
+
+        SoundManager.instance.NextBGM("music_mainMenu");
     }
 
     public void PlayButton()
     {
+        if (hasClicked)
+            return; // Ignore further clicks if already clicked
+
+        hasClicked = true; // Mark as clicked
+        if (playButton != null)
+            playButton.interactable = false;
+
         StartCoroutine(FadeAndStartGame());
     }
 

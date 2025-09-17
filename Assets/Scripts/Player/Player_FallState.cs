@@ -1,6 +1,4 @@
-using UnityEngine;
-
-// ƒvƒŒƒCƒ„[‚Ì—‰ºó‘Ô
+// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ì—ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 public class Player_FallState : PlayerAiredState
 {
     public Player_FallState(Entity_Player player, StateMachine stateMachine, string animBoolName)
@@ -12,12 +10,14 @@ public class Player_FallState : PlayerAiredState
     {
         base.Update();
 
-        // ’n–Ê‚É’…‚¢‚½‚çƒAƒCƒhƒ‹ó‘Ô‚É•ÏX
         if (player.isGrounded)
+        {
             stateMachine.ChangeState(player.idleState);
+        }
 
-        // •Ç‚ÉG‚ê‚½‚ç•ÇŠŠ‚èó‘Ô‚É•ÏX
-        if (player.isWallDetected)
+        else if (player.isWallDetected && rb.linearVelocity.y <= 0)
+        {
             stateMachine.ChangeState(player.wallSlideState);
+        }
     }
 }

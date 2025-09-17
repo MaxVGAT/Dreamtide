@@ -1,10 +1,10 @@
 using UnityEngine;
 
-// ƒvƒŒƒCƒ„[‚Ìƒ_ƒbƒVƒ…ó‘Ô
+// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìƒ_ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½
 public class Player_DashState : PlayerState
 {
-    private float originalGravityScale; // ƒ_ƒbƒVƒ…‘O‚Ìd—Í’l
-    private int dashDirection;           // ƒ_ƒbƒVƒ…•ûŒü (-1:¶, 1:‰E)
+    private float originalGravityScale; // ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½Oï¿½Ìdï¿½Í’l
+    private int dashDirection;           // ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (-1:ï¿½ï¿½, 1:ï¿½E)
 
     public Player_DashState(Entity_Player player, StateMachine stateMachine, string animBoolName)
         : base(player, stateMachine, animBoolName)
@@ -15,21 +15,23 @@ public class Player_DashState : PlayerState
     {
         base.Enter();
 
-        // ƒ_ƒbƒVƒ…ŠJn‚ÌƒGƒtƒFƒNƒg
+        // ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½ÌƒGï¿½tï¿½Fï¿½Nï¿½g
         skillManager.dash.OnStartEffect();
         player.vfx.DoImageEchoEffect(player.dashDuration);
 
-        // “ü—Í‚É‰‚¶‚½ƒ_ƒbƒVƒ…•ûŒü
+        SoundManager.instance.PlaySFX("dash", player.GetComponentInChildren<AudioSource>());
+
+        // ï¿½ï¿½ï¿½Í‚É‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         dashDirection = player.moveInput.x != 0 ? ((int)player.moveInput.x) : player.facingDirection;
 
-        // ƒ_ƒbƒVƒ…ŠÔ‚Ìİ’è
+        // ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ô‚Ìİ’ï¿½
         stateTimer = player.dashDuration;
 
-        // d—Í–³Œø‰»
+        // ï¿½dï¿½Í–ï¿½ï¿½ï¿½ï¿½ï¿½
         originalGravityScale = rb.gravityScale;
         rb.gravityScale = 0;
 
-        // –³“Gó‘Ô‚É‚·‚é
+        // ï¿½ï¿½ï¿½Gï¿½ï¿½Ô‚É‚ï¿½ï¿½ï¿½
         player.health.SetCanTakeDamage(false);
     }
 
@@ -39,10 +41,10 @@ public class Player_DashState : PlayerState
 
         CancelDashIfNeeded();
 
-        // ƒ_ƒbƒVƒ…’†‚ÌˆÚ“®
+        // ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ÌˆÚ“ï¿½
         player.SetVelocity(player.dashSpeed * dashDirection, 0);
 
-        // ƒ_ƒbƒVƒ…I—¹”»’è
+        // ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (stateTimer < 0)
         {
             if (player.isGrounded)
@@ -56,18 +58,18 @@ public class Player_DashState : PlayerState
     {
         base.Exit();
 
-        // ƒ_ƒbƒVƒ…I—¹‚ÌƒGƒtƒFƒNƒg
+        // ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ÌƒGï¿½tï¿½Fï¿½Nï¿½g
         skillManager.dash.OnEndEffect();
 
-        // ˆÚ“®‚Æd—Í‚ğŒ³‚É–ß‚·
+        // ï¿½Ú“ï¿½ï¿½Ædï¿½Í‚ï¿½ï¿½ï¿½É–ß‚ï¿½
         player.SetVelocity(0, 0);
         rb.gravityScale = originalGravityScale;
 
-        // ƒ_ƒ[ƒW‚ğó‚¯‚ç‚ê‚éó‘Ô‚É–ß‚·
+        // ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ó‚¯‚ï¿½ï¿½ï¿½ï¿½Ô‚É–ß‚ï¿½
         player.health.SetCanTakeDamage(true);
     }
 
-    // •Ç‚É“–‚½‚Á‚½‚çƒ_ƒbƒVƒ…‚ğƒLƒƒƒ“ƒZƒ‹
+    // ï¿½Ç‚É“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½
     private void CancelDashIfNeeded()
     {
         if (player.isWallDetected)

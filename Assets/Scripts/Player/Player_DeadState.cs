@@ -15,6 +15,7 @@ public class Player_DeadState : PlayerState
     {
         base.Enter();
 
+        SoundManager.instance.PlaySFX("death", player.GetComponentInChildren<AudioSource>());
         // ���͂𖳌���
         input.Disable();
 

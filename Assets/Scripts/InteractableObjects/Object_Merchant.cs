@@ -5,11 +5,17 @@ public class Object_Merchant : Object_NPC, IInteractable
     private Inventory_Player inventory;
     private Inventory_Merchant merchantInventory;
 
+    private NPC_SFX npcSFX;
+    private AudioSource audioSource;
     protected override void Awake()
     {
         base.Awake();
         merchantInventory = PersistentStorageManager.instance.GetMerchantInventory();
+        audioSource = GetComponent<AudioSource>();
+        npcSFX = GetComponent<NPC_SFX>();
+
     }
+
 
     public void Interact()
     {
@@ -19,6 +25,7 @@ public class Object_Merchant : Object_NPC, IInteractable
         ui.merchantUI.SetupMerchantUI(merchantInventory, inventory);
 
         ui.SetInsideMerchantTrigger(true);
+        npcSFX?.PlayTalkSfx();
 
         if (!ui.IsMenuOpen())
             ui.OpenInventoryWithMerchant();
@@ -35,6 +42,8 @@ public class Object_Merchant : Object_NPC, IInteractable
 
         if (ui.IsMenuOpen())
             ui.ShowMerchantInInventory(false);
+
+        audioSource.Play();
     }
 
     protected override void OnTriggerExit2D(Collider2D collision)
@@ -46,5 +55,7 @@ public class Object_Merchant : Object_NPC, IInteractable
         {
             ui.ToggleUI(); // Close menu when exiting trigger
         }
+
+        audioSource.Stop();
     }
 }

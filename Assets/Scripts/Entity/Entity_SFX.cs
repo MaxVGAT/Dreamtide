@@ -7,6 +7,9 @@ public class Entity_SFX : MonoBehaviour
     [Header("SFX Names")]
     [SerializeField] private string attackHit;
     [SerializeField] private string attackMiss;
+    [Space]
+    [SerializeField] private float soundDistance = 10f;
+    [SerializeField] private bool showGizmo;
 
     private void Awake()
     {
@@ -15,11 +18,21 @@ public class Entity_SFX : MonoBehaviour
 
     public void PlayAttackHit()
     {
-        SoundManager.instance.PlaySFX(attackHit, audioSource);
+        SoundManager.instance.PlaySFX(attackHit, audioSource, true, soundDistance);
     }
 
     public void PlayAttackMiss()
     {
-        SoundManager.instance.PlaySFX(attackMiss, audioSource);
+        SoundManager.instance.PlaySFX(attackMiss, audioSource, true, soundDistance);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (showGizmo)
+        {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, soundDistance);
+
+        }
     }
 }

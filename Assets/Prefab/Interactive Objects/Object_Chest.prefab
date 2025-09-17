@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canDropItems: 1
+  chestID: Chest_0001
 --- !u!61 &4136146406159745246
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -159,9 +160,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDropPrefab: {fileID: 306079027514980540, guid: 37022bf799550874c888d104b2d79da0, type: 3}
-  dropData: {fileID: 11400000, guid: 4a1c08ab3384a034c895b9463a3d841f, type: 2}
-  maxRarityAmount: 1600
-  maxItemsToDrop: 4
+  dropData: {fileID: 11400000, guid: 4eb6e4e914a79fc4397426a152692fb2, type: 2}
+  maxRarityAmount: 100000
+  maxItemsToDrop: 1
 --- !u!1 &5954092388593494436
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Skill data - Infinite Paradox
   m_EditorClassIdentifier: 
   skillName: "\u30A4\u30F3\u30D5\u30A3\u30CB\u30C3\u30C8\u30FB\u30D1\u30E9\u30C9\u30C3\u30AF\u30B9"
-  skillDescription: "\u5206\u8EAB\u306F3\u56DE\u3060\u3051\u653B\u6483\u3067\u304D\u308B\u3002"
+  skillDescription: "\u30A8\u30B3\u30FC\u653B\u6483\u306F\u3001\u653B\u6483\u3054\u3068\u306B\u8FFD\u52A0\u306E\u30A8\u30B3\u30FC\u3092\u547C\u3073\u51FA\u3059\u3053\u3068\u304C\u3042\u308A\u307E\u3059\u3002"
   skillIcon: {fileID: -3974560893290930320, guid: 9d4a3855a8eb53a4aa7f2470c7079c1c, type: 3}
   cost: 3
   unlockedByDefault: 0

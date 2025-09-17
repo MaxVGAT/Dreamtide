@@ -161,12 +161,14 @@ public class UI_InGame : MonoBehaviour, ISaveable
         {
             currentLevel++;
             skillManager.AddSkillPoints(1);
+            SoundManager.instance.PlayGlobalSFX("levelUp");
             UpdateLevel();
         }
     }
 
     void UpdateLevel()
     {
+        
         previousLevelsExp = currentLevel <= 1 ? 0 : Mathf.RoundToInt(experienceCurve.Evaluate(currentLevel));
 
         nextLevelsExp = Mathf.RoundToInt(experienceCurve.Evaluate(currentLevel + 1));

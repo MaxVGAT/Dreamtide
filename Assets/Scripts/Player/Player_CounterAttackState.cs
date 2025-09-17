@@ -1,11 +1,11 @@
 using UnityEngine;
 
-// ƒvƒŒƒCƒ„[‚ÌƒJƒEƒ“ƒ^[UŒ‚ó‘Ô
+// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌƒJï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½
 public class Player_CounterAttackState : PlayerState
 {
-    private Entity_VFX vfx;          // VFXŠÇ——p
-    private Player_Combat combat;     // ƒvƒŒƒCƒ„[‚Ìí“¬ƒNƒ‰ƒX
-    private bool counteredSomething;  // ƒJƒEƒ“ƒ^[‚ª¬Œ÷‚µ‚½‚©
+    private Entity_VFX vfx;          // VFXï¿½Ç—ï¿½ï¿½p
+    private Player_Combat combat;     // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìí“¬ï¿½Nï¿½ï¿½ï¿½X
+    private bool counteredSomething;  // ï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     public Player_CounterAttackState(Entity_Player player, StateMachine stateMachine, string animBoolName)
         : base(player, stateMachine, animBoolName)
@@ -18,20 +18,23 @@ public class Player_CounterAttackState : PlayerState
     {
         base.Enter();
 
-        // ƒJƒEƒ“ƒ^[Œã‚Ì‰ñ•œŠÔ‚ğİ’è
+        // ï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½ï¿½Ì‰ñ•œï¿½ï¿½Ô‚ï¿½İ’ï¿½
         stateTimer = combat.GetCounterRecovery();
 
-        // ƒJƒEƒ“ƒ^[UŒ‚‚ğÀs
+
+
+        // ï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s
         bool isCrit;
         counteredSomething = combat.CounterAttackPerformed(out isCrit);
 
         anim.SetBool("counterAttackPerformed", counteredSomething);
 
-        // ƒJƒEƒ“ƒ^[‚ª¬Œ÷‚µ‚½ê‡AVFX‚ğ¶¬
+        // ï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½AVFXï¿½ğ¶ï¿½
         if (counteredSomething && combat.counteredTargetTransform != null)
         {
             player.stats.GetElementalDamage(out ElementType element);
             vfx.CreateOnHitVFX(combat.counteredTargetTransform, isCrit, element);
+            SoundManager.instance.PlaySFX("block/counter", player.GetComponentInChildren<AudioSource>());
         }
     }
 
@@ -39,14 +42,14 @@ public class Player_CounterAttackState : PlayerState
     {
         base.Update();
 
-        // UŒ‚’†‚ÍƒvƒŒƒCƒ„[‚ğ’â~
+        // ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½Íƒvï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½~
         player.SetVelocity(0, rb.linearVelocity.y);
 
-        // ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌƒgƒŠƒK[‚Åó‘Ô‚ğI—¹
+        // ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ìƒgï¿½ï¿½ï¿½Kï¿½[ï¿½Åï¿½Ô‚ï¿½Iï¿½ï¿½
         if (triggerCalled)
             stateMachine.ChangeState(player.idleState);
 
-        // ƒJƒEƒ“ƒ^[‚É¸”s‚µ‚½ê‡Aƒ^ƒCƒ}[‚ÅI—¹
+        // ï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½Éï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Aï¿½^ï¿½Cï¿½}ï¿½[ï¿½ÅIï¿½ï¿½
         if (stateTimer < 0 && counteredSomething == false)
             stateMachine.ChangeState(player.idleState);
     }

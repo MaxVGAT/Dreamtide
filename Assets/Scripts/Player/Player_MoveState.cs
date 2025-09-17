@@ -1,8 +1,11 @@
 using UnityEngine;
 
-// ƒvƒŒƒCƒ„[‚ÌˆÚ“®ó‘Ôi’n–Ê‚É‚¢‚éŠÔ‚Ì¶‰EˆÚ“®ŠÇ—j
+// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌˆÚ“ï¿½ï¿½ï¿½Ôiï¿½nï¿½Ê‚É‚ï¿½ï¿½ï¿½Ô‚Ìï¿½ï¿½Eï¿½Ú“ï¿½ï¿½Ç—ï¿½ï¿½j
 public class Player_MoveState : PlayerGroundedState
 {
+    private float stepTimer = 0f;
+    private float stepInterval = 0.35f;
+
     public Player_MoveState(Entity_Player player, StateMachine stateMachine, string stateName)
         : base(player, stateMachine, stateName)
     {
@@ -12,11 +15,22 @@ public class Player_MoveState : PlayerGroundedState
     {
         base.Update();
 
-        // ˆÚ“®“ü—Í‚ª‚È‚­‚È‚Á‚½A‚Ü‚½‚Í•Ç‚ÉÚG‚µ‚½‚çƒAƒCƒhƒ‹ó‘Ô‚ÉˆÚs
+        // Switch to idle if not moving or hitting wall
         if (player.moveInput.x == 0 || player.isWallDetected)
+        {
             stateMachine.ChangeState(player.idleState);
+            return;
+        }
 
-        // ‰¡ˆÚ“®‘¬“x‚ðÝ’èiy•ûŒü‘¬“x‚ÍˆÛŽj
+        // Move the player
         player.SetVelocity(player.moveInput.x * player.moveSpeed, rb.linearVelocity.y);
+
+        // Play footsteps
+        stepTimer += Time.deltaTime;
+        if (stepTimer >= stepInterval)
+        {
+            SoundManager.instance.PlaySFX("footstep", player.GetComponentInChildren<AudioSource>());
+            stepTimer = 0f;
+        }
     }
 }

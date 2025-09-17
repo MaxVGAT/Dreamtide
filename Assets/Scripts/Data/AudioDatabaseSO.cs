@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,11 @@ public class AudioDatabaseSO : ScriptableObject
     public List<AudioClipData> uiAudio;
     public List<AudioClipData> enemies;
     public List<AudioClipData> npcs;
+    public List<AudioClipData> objects;
+
+    [Header("Music List")]
+    public List<AudioClipData> mainMenuMusic;
+    public List<AudioClipData> levelMusic;
 
     private Dictionary<string, AudioClipData> clipCollection;
 
@@ -19,6 +25,9 @@ public class AudioDatabaseSO : ScriptableObject
         AddToCollection(uiAudio);
         AddToCollection(enemies);
         AddToCollection(npcs);
+        AddToCollection(objects);
+        AddToCollection(mainMenuMusic);
+        AddToCollection(levelMusic);
     }
 
     public AudioClipData Get(string groupName)
@@ -43,7 +52,7 @@ public class AudioClipData
 {
     public string audioName;
     public List<AudioClip> clips = new List<AudioClip>();
-    [Range(0f, 1f)] public float volume = 1f;
+    [Range(0f, 1f)] public float maxVolume = 1f;
 
     public AudioClip GetRandomClip()
     {

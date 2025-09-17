@@ -16,27 +16,91 @@ MonoBehaviour:
   - audioName: player_attackHit
     clips:
     - {fileID: 8300000, guid: ade8064486d14a84c929ab0666ddce0c, type: 3}
-    volume: 1
+    maxVolume: 1
   - audioName: player_attackMiss
     clips:
     - {fileID: 8300000, guid: 2b76134f4e2b67443ae790b23b5bf615, type: 3}
-    volume: 1
+    maxVolume: 1
+  - audioName: footstep
+    clips:
+    - {fileID: 8300000, guid: 2e7b94f8e69a5014baa885f9e282171d, type: 3}
+    maxVolume: 1
+  - audioName: jump
+    clips:
+    - {fileID: 8300000, guid: 49f9dc87bd2dfbf4c9b7aab2b1fca9e9, type: 3}
+    maxVolume: 1
+  - audioName: wallJump
+    clips:
+    - {fileID: 8300000, guid: b8bcc59271a6f0e4c8c72d70697aa8d2, type: 3}
+    maxVolume: 1
+  - audioName: block/counter
+    clips:
+    - {fileID: 8300000, guid: b39ff6c0ce5f6184185f93209e8d1812, type: 3}
+    maxVolume: 1
+  - audioName: dash
+    clips:
+    - {fileID: 8300000, guid: be9436895ab7f5648b8f2ce9e63b54d0, type: 3}
+    maxVolume: 1
+  - audioName: death
+    clips:
+    - {fileID: 8300000, guid: 23ec400f48dd19a48b34b7eed1e05476, type: 3}
+    maxVolume: 1
+  - audioName: playerHit
+    clips:
+    - {fileID: 8300000, guid: 91244eb64bdae234a8b6f3e6532e2941, type: 3}
+    maxVolume: 1
   uiAudio:
+  - audioName: button_start
+    clips:
+    - {fileID: 8300000, guid: 9837562f777a8bc47a45d7e8a05203a6, type: 3}
+    maxVolume: 1
   - audioName: button_click
     clips:
     - {fileID: 8300000, guid: caca40694d891984597ad773936e9d5c, type: 3}
-    volume: 1
+    maxVolume: 1
+  - audioName: button_hover
+    clips:
+    - {fileID: 8300000, guid: ecb9c6ee528992c4d87103be31ab6b84, type: 3}
+    maxVolume: 1
+  - audioName: levelUp
+    clips:
+    - {fileID: 8300000, guid: b175a9030746672458838f12caeb4b7a, type: 3}
+    maxVolume: 1
   enemies:
   - audioName: enemy_attackHit
     clips:
     - {fileID: 8300000, guid: ade8064486d14a84c929ab0666ddce0c, type: 3}
     - {fileID: 8300000, guid: ab38806a196e48d4b9291f0f9424163b, type: 3}
     - {fileID: 8300000, guid: c88f77c69de71874e98984ad533f9e05, type: 3}
-    volume: 1
+    maxVolume: 1
   - audioName: enemy_attackMiss
     clips:
     - {fileID: 8300000, guid: 2b76134f4e2b67443ae790b23b5bf615, type: 3}
     - {fileID: 8300000, guid: 5994269d6217ad14ead10e94254d23f6, type: 3}
     - {fileID: 8300000, guid: 5ad35b6b4850d0d4399c8b1586f402d6, type: 3}
-    volume: 1
-  npcs: []
+    maxVolume: 1
+  npcs:
+  - audioName: npc_sfx
+    clips:
+    - {fileID: 8300000, guid: 468398892bb0f994899a33f5fc2401f3, type: 3}
+    maxVolume: 0
+  - audioName: talk_sfx
+    clips:
+    - {fileID: 8300000, guid: 88b29a2e8a07770488de9e73c12218a2, type: 3}
+    maxVolume: 0
+  objects:
+  - audioName: waypoint_enter
+    clips:
+    - {fileID: 8300000, guid: e458d8bf15be5b84db5d96b077e4f119, type: 3}
+    maxVolume: 0.995
+  mainMenuMusic:
+  - audioName: music_mainMenu
+    clips:
+    - {fileID: 8300000, guid: be86bd2fa9d5e8146866e9cc41e0c39f, type: 3}
+    maxVolume: 1
+  levelMusic:
+  - audioName: levels_playlist
+    clips:
+    - {fileID: 8300000, guid: 2f5135465f9e4af468298eb0e102abbc, type: 3}
+    - {fileID: 8300000, guid: af3f060d32ab39848ba3d099eb9baa43, type: 3}
+    maxVolume: 0.669
