@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class Enemy_PigAssassin : Entity_Enemy, ICounterable // ƒsƒbƒOƒAƒTƒVƒ““GŒÅ—L‚ÌÚ×‚ğˆµ‚¤ƒNƒ‰ƒX
+public class Enemy_PigAssassin : Entity_Enemy, ICounterable // ï¿½sï¿½bï¿½Oï¿½Aï¿½Tï¿½Vï¿½ï¿½ï¿½Gï¿½Å—Lï¿½ÌÚ×‚ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½X
 {
-    public bool CanBeCountered { get => canBeStunned; } // CanBeCountered ‚Í canBeStunned ‚Éİ’è‰Â”\‚ÈƒtƒHƒ[ƒAƒbƒvó‘Ô—p‚Ìƒtƒ‰ƒO
+    public bool CanBeCountered { get => canBeStunned; } // CanBeCountered ï¿½ï¿½ canBeStunned ï¿½Éİ’ï¿½Â”\ï¿½Èƒtï¿½Hï¿½ï¿½ï¿½[ï¿½Aï¿½bï¿½vï¿½ï¿½Ô—pï¿½Ìƒtï¿½ï¿½ï¿½O
 
-    // Enemy_VFX‚ğƒI[ƒo[ƒ‰ƒCƒh‚µ‚Ä“G‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ó‘Ô‚ğ“K—p
+    // Enemy_VFXï¿½ï¿½Iï¿½[ï¿½oï¿½[ï¿½ï¿½ï¿½Cï¿½hï¿½ï¿½ï¿½Ä“Gï¿½ÌƒAï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½Kï¿½p
     protected override void Awake()
     {
         base.Awake();
 
-        // Šeó‘Ô‚ğ‚»‚ê‚¼‚ê‚ÌƒXƒNƒŠƒvƒg‚ÆƒAƒjƒ[ƒVƒ‡ƒ“‚Å‰Šú‰»
+        // ï¿½eï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ê‚¼ï¿½ï¿½ÌƒXï¿½Nï¿½ï¿½ï¿½vï¿½gï¿½ÆƒAï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½
         idleState = new EnemyIdleState(this, stateMachine, "idle");
         moveState = new EnemyMoveState(this, stateMachine, "move");
         attackState = new EnemyAttackState(this, stateMachine, "attack");
@@ -18,7 +18,7 @@ public class Enemy_PigAssassin : Entity_Enemy, ICounterable // ƒsƒbƒOƒAƒTƒVƒ““GŒ
         stunnedState = new EnemyStunnedState(this, stateMachine, "stunned");
     }
 
-    // EntityeƒXƒNƒŠƒvƒg‚©‚çƒAƒCƒhƒ‹ó‘Ô‚ğ‰Šú‰»
+    // Entityï¿½eï¿½Xï¿½Nï¿½ï¿½ï¿½vï¿½gï¿½ï¿½ï¿½ï¿½Aï¿½Cï¿½hï¿½ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     protected override void Start()
     {
         base.Start();
@@ -26,7 +26,7 @@ public class Enemy_PigAssassin : Entity_Enemy, ICounterable // ƒsƒbƒOƒAƒTƒVƒ““GŒ
         stateMachine.Initialize(idleState);
     }
 
-    // ƒJƒEƒ“ƒ^[UŒ‚‚Ìƒ^ƒCƒ~ƒ“ƒO‚ÅƒuƒƒbƒN‚³‚ê‚½ê‡AstunnedState‚Éó‘Ô‚ğ•ÏX
+    // ï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½Uï¿½ï¿½ï¿½Ìƒ^ï¿½Cï¿½~ï¿½ï¿½ï¿½Oï¿½Åƒuï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ê‚½ï¿½ê‡ï¿½AstunnedStateï¿½Éï¿½Ô‚ï¿½ÏX
     public void HandleCounterAttack()
     {
         if (CanBeCountered == false)

@@ -6,6 +6,8 @@ public class AudioDatabaseSO : ScriptableObject
 {
     public List<AudioClipData> player;
     public List<AudioClipData> uiAudio;
+    public List<AudioClipData> enemies;
+    public List<AudioClipData> npcs;
 
     private Dictionary<string, AudioClipData> clipCollection;
 
@@ -15,6 +17,8 @@ public class AudioDatabaseSO : ScriptableObject
 
         AddToCollection(player);
         AddToCollection(uiAudio);
+        AddToCollection(enemies);
+        AddToCollection(npcs);
     }
 
     public AudioClipData Get(string groupName)

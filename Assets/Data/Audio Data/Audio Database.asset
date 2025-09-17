@@ -16,17 +16,27 @@ MonoBehaviour:
   - audioName: player_attackHit
     clips:
     - {fileID: 8300000, guid: ade8064486d14a84c929ab0666ddce0c, type: 3}
-    - {fileID: 8300000, guid: ab38806a196e48d4b9291f0f9424163b, type: 3}
-    - {fileID: 8300000, guid: c88f77c69de71874e98984ad533f9e05, type: 3}
     volume: 1
   - audioName: player_attackMiss
     clips:
     - {fileID: 8300000, guid: 2b76134f4e2b67443ae790b23b5bf615, type: 3}
-    - {fileID: 8300000, guid: 5994269d6217ad14ead10e94254d23f6, type: 3}
-    - {fileID: 8300000, guid: 5ad35b6b4850d0d4399c8b1586f402d6, type: 3}
     volume: 1
   uiAudio:
   - audioName: button_click
     clips:
     - {fileID: 8300000, guid: caca40694d891984597ad773936e9d5c, type: 3}
     volume: 1
+  enemies:
+  - audioName: enemy_attackHit
+    clips:
+    - {fileID: 8300000, guid: ade8064486d14a84c929ab0666ddce0c, type: 3}
+    - {fileID: 8300000, guid: ab38806a196e48d4b9291f0f9424163b, type: 3}
+    - {fileID: 8300000, guid: c88f77c69de71874e98984ad533f9e05, type: 3}
+    volume: 1
+  - audioName: enemy_attackMiss
+    clips:
+    - {fileID: 8300000, guid: 2b76134f4e2b67443ae790b23b5bf615, type: 3}
+    - {fileID: 8300000, guid: 5994269d6217ad14ead10e94254d23f6, type: 3}
+    - {fileID: 8300000, guid: 5ad35b6b4850d0d4399c8b1586f402d6, type: 3}
+    volume: 1
+  npcs: []

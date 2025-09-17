@@ -11,6 +11,8 @@ public class Entity : MonoBehaviour
     public Rigidbody2D rb { get; private set; } // Rigidbody2D�R���|�[�l���g��擾���A�ǂݎ��\�ɂ���
      // Entity_Stats�R���|�[�l���g��擾���A�ǂݎ��\�ɂ���
 
+    public Entity_SFX sfx { get; private set; }
+
     protected StateMachine stateMachine; // �X�e�[�g�}�V���̎Q�Ƃ�L���b�V��
 
     public int facingDirection { get; private set; } = 1; // �����Ă�������i1���E�����j��ǂݎ��\�ɂ��A�����l��E�����ɐݒ�
@@ -42,6 +44,7 @@ public class Entity : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        sfx = GetComponent<Entity_SFX>();
         
         stateMachine = new StateMachine();
     }

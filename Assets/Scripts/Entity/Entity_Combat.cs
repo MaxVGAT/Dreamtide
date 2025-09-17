@@ -7,6 +7,7 @@ public class Entity_Combat : MonoBehaviour // �^�[�Q�b�g���o��
 
     private Entity_Stats stats; // �U���֐��Ŏg�p����X�e�[�^�X��L���b�V��
     protected Entity_Stats Stats => stats; // �T�u�N���X����ǂݎ��\�ɂ��邽�߂̃v���p�e�B
+    private Entity_SFX sfx;
 
     private Entity_VFX vfx; // ��e���Ɏg��VFX�X�N���v�g��L���b�V��
 
@@ -21,10 +22,13 @@ public class Entity_Combat : MonoBehaviour // �^�[�Q�b�g���o��
     {
         vfx = GetComponent<Entity_VFX>();
         stats = GetComponent<Entity_Stats>();
+        sfx = GetComponent<Entity_SFX>();
     }
 
     public void PerformAttack()
     {
+        bool targetGotHit = false;
+
         // �͈͓�̑S�^�[�Q�b�g�ɑ΂��ă_���[�W��^����
         foreach (var target in GetDetectedColliders())
         {
@@ -42,7 +46,9 @@ public class Entity_Combat : MonoBehaviour // �^�[�Q�b�g���o��
             ElementType element = attackData.element;
 
             // ��e�����F���������true
-            bool targetGotHit = damageable.TakeDamage(physDamage, elementalDamage, element, transform);
+            targetGotHit = damageable.TakeDamage(physDamage, elementalDamage, element, transform);
+
+            Debug.Log($"Collider hit: {target.name}, TakeDamage returned {targetGotHit}");
 
             // �����U��������ꍇ�̓X�e�[�^�X���ʂ�t�^
             if (element != ElementType.None)
@@ -53,8 +59,13 @@ public class Entity_Combat : MonoBehaviour // �^�[�Q�b�g���o��
             {
                 OnDoingPhysicalDamage?.Invoke(physDamage);
                 vfx.CreateOnHitVFX(target.transform, attackData.isCrit, element);
+                sfx?.PlayAttackHit();
+                
             }
         }
+
+        if (targetGotHit == false)
+            sfx?.PlayAttackMiss();
     }
 
     // �~�`�͈͓�ɂ��邷�ׂẴ^�[�Q�b�g��z��Ƃ��Ď擾

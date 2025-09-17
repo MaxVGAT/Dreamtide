@@ -151,20 +151,31 @@ public class Inventory_Player : Inventory_Base
         data.inventory.Clear();
         data.equippedItems.Clear();
 
-        // Save inventory items - simple approach using saveID
         foreach (var item in itemList)
         {
-            if (item != null && item.itemData != null)
-            {
-                string saveID = item.itemData.saveID;
+            if (item == null || item.itemData == null)
+                continue;
 
-                // Simple approach: just use saveID as key
-                if (data.inventory.ContainsKey(saveID) == false)
+            string saveID = item.itemData.saveID;
+
+            if (item.itemData.maxStackSize > 1)
+            {
+                // Stackable: sum the stack size
+                if (!data.inventory.ContainsKey(saveID))
                     data.inventory[saveID] = 0;
 
                 data.inventory[saveID] += item.stackSize;
             }
+            else
+            {
+                // Non-stackable: store one per instance
+                if (!data.inventory.ContainsKey(saveID))
+                    data.inventory[saveID] = 0;
+
+                data.inventory[saveID] += 1;
+            }
         }
+
         foreach (var slot in equipList)
         {
             if (slot.HasItem())
@@ -178,6 +189,7 @@ public class Inventory_Player : Inventory_Base
     public override void LoadData(GameData data)
     {
         gold = data.gold;
+        itemList.Clear();
 
         foreach (var slot in equipList)
         {
@@ -193,19 +205,32 @@ public class Inventory_Player : Inventory_Base
         foreach (var item in data.inventory)
         {
             string saveID = item.Key;
-            int stackSize = item.Value;
+            int savedStack = item.Value;
 
-            // Get the item data from database
             Item_DataSO itemData = itemDatabase.GetItemData(saveID);
             if (itemData == null)
                 continue;
 
-            // Create items based on stack size
-            for (int i = 0; i < stackSize; i++)
+            if (itemData.maxStackSize > 1)
             {
-                // Simple approach: create new item (will get new random stats if applicable)
-                Inventory_Item itemToLoad = new Inventory_Item(itemData);
+                // Stackable: one item with total stack
+                Inventory_Item itemToLoad = new Inventory_Item(itemData)
+                {
+                    stackSize = savedStack
+                };
                 AddItem(itemToLoad);
+            }
+            else
+            {
+                // Non-stackable: create one item per count
+                for (int i = 0; i < savedStack; i++)
+                {
+                    Inventory_Item itemToLoad = new Inventory_Item(itemData)
+                    {
+                        stackSize = 1
+                    };
+                    AddItem(itemToLoad);
+                }
             }
         }
 

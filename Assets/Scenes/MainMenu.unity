@@ -12280,21 +12280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32a2c4928ea5fdd4592da971bdd140cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterMixer: {fileID: 24100000, guid: 096a1d5a31479314da1ade47fa1be0f7, type: 2}
+  audioDB: {fileID: 11400000, guid: 99540b3c348bf4c418568426cc65d830, type: 2}
+  bgmSource: {fileID: 0}
   sfxSource: {fileID: 1598515785}
-  musicSource: {fileID: 1137192981}
-  ambientSource: {fileID: 269729573}
-  titleMusic: {fileID: 8300000, guid: be86bd2fa9d5e8146866e9cc41e0c39f, type: 3}
-  ambientMusic: {fileID: 0}
-  buttonPressSFX: {fileID: 8300000, guid: caca40694d891984597ad773936e9d5c, type: 3}
-  buttonCloseSFX: {fileID: 8300000, guid: 2babdf13542311946ad712657e74b388, type: 3}
-  hoverSFX: {fileID: 8300000, guid: ecb9c6ee528992c4d87103be31ab6b84, type: 3}
-  startSFX: {fileID: 8300000, guid: 9837562f777a8bc47a45d7e8a05203a6, type: 3}
-  PauseSFX: {fileID: 8300000, guid: e458d8bf15be5b84db5d96b077e4f119, type: 3}
-  sfxVolume: 1
-  musicVolume: 1
-  musicSlider: {fileID: 998891465}
-  sfxSlider: {fileID: 1222919605}
 --- !u!1 &1973594797
 GameObject:
   m_ObjectHideFlags: 0

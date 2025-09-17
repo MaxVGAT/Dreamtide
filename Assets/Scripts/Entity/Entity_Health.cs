@@ -91,6 +91,7 @@ public class Entity_Health : MonoBehaviour, IDamageable
         // �Ō�Ɏ󂯂��_���[�W��L�^
         lastDamageTaken = physicalDamageTaken + elementalDamageTaken;
 
+
         OnTakingDamage?.Invoke();
         return true;
     }

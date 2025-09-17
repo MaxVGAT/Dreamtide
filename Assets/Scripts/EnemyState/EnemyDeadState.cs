@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyDeadState : EnemyState
 {
-    // ƒtƒF[ƒhƒAƒEƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ÌŠÔ
+    // ï¿½tï¿½Fï¿½[ï¿½hï¿½Aï¿½Eï¿½gï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
     private float deathAnimDuration = 2f;
 
     public EnemyDeadState(Entity_Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
@@ -15,7 +15,14 @@ public class EnemyDeadState : EnemyState
     {
         base.Enter();
 
-        // “G‚ª€–S‚µ‚½‚Æ‚«‚ÉƒRƒ‹[ƒ`ƒ“‚ğŠJn
+        // Disable physics/colliders immediately so it canâ€™t be hit
+        Collider2D col2D = enemy.GetComponent<Collider2D>();
+        if (col2D != null) col2D.enabled = false;
+
+        Rigidbody2D rb2D = enemy.GetComponent<Rigidbody2D>();
+        if (rb2D != null) rb2D.simulated = false; // stop knockback/movement
+
+        // Start animation/despawn timer
         enemy.StartCoroutine(WaitAndDespawn());
     }
 
@@ -23,7 +30,7 @@ public class EnemyDeadState : EnemyState
     {
         yield return new WaitForSeconds(deathAnimDuration);
 
-        // €–SƒAƒjƒ[ƒVƒ‡ƒ“I—¹ŒãAƒtƒF[ƒhƒAƒEƒg‚ÌƒRƒ‹[ƒ`ƒ“‚ğŠJn
+        // ï¿½ï¿½ï¿½Sï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½Aï¿½tï¿½Fï¿½[ï¿½hï¿½Aï¿½Eï¿½gï¿½ÌƒRï¿½ï¿½ï¿½[ï¿½`ï¿½ï¿½ï¿½ï¿½Jï¿½n
         enemy.DespawnOnDeath(2f);
     }
 }

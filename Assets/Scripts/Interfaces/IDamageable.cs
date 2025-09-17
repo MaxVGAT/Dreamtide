@@ -1,13 +1,13 @@
 using UnityEngine;
 
-// ƒ_ƒ[ƒW‚ğó‚¯‚é‚±‚Æ‚ª‚Å‚«‚éƒIƒuƒWƒFƒNƒg—pƒCƒ“ƒ^[ƒtƒF[ƒX
+// ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ó‚¯‚é‚±ï¿½Æ‚ï¿½ï¿½Å‚ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½pï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½X
 public interface IDamageable
 {
-    // ƒ_ƒ[ƒW‚ğ—^‚¦‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éŠÖ”
-    // damage: •¨—ƒ_ƒ[ƒW—Ê
-    // elementalDamage: ‘®«ƒ_ƒ[ƒW—Ê
-    // element: ‘®«ƒ^ƒCƒv
-    // damageDealer: ƒ_ƒ[ƒW‚ğ—^‚¦‚½ƒIƒuƒWƒFƒNƒg‚ÌTransform
-    // –ß‚è’l: ƒ_ƒ[ƒW‚ª“K—p‚³‚ê‚½‚©‚Ç‚¤‚©
+    // ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ÉŒÄ‚Î‚ï¿½ï¿½Öï¿½
+    // damage: ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½
+    // elementalDamage: ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½
+    // element: ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Cï¿½v
+    // damageDealer: ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½Transform
+    // ï¿½ß‚ï¿½l: ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½Kï¿½pï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½
     public bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageDealer);
 }

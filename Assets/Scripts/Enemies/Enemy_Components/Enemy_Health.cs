@@ -9,17 +9,21 @@ public class Enemy_Health : Entity_Health // ���ׂĂ̗̑͂���G��
         if (canTakeDamage == false)
             return false;
 
-        // �G���U����󂯂����m�F���A�_���[�W��K�p�B���̌�A�\�Ȃ�i�퓬��ԂłȂ���΁j�퓬��Ԃֈڍs
         bool wasHit = base.TakeDamage(damage, elementalDamage, element, damageDealer);
 
-        // �G�����S���Ă���ΐ퓬��Ԃɓ���K�v���Ȃ��̂ŏ�����I��
-        if (isDead)
-            return false;
-
-        // �_���[�W��^�����̂��v���C���[�Ȃ�A�G�͐퓬��Ԃֈڍs����݂�
+        // Trigger battle state if player attacked
         if (damageDealer.GetComponent<Entity_Player>() != null)
             enemy.TryEnterBattleState(damageDealer);
 
-        return true;
+        // Check death after damage applied
+        if (isDead)
+        {
+            // Call your death logic (VFX, loot, etc.)
+            Die(); // or whatever method handles death
+        }
+
+        // ✅ Always return true if base took damage
+        return wasHit;
     }
+
 }

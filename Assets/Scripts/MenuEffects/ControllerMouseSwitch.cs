@@ -73,24 +73,24 @@ public class ControllerMouseSwitch : MonoBehaviour
 
         if (settingsManager == null) return; // nothing to do
 
-        if (settingsManager.settingsGroup != null && settingsManager.settingsGroup.alpha > 0)
-        {
-            settingsManager.HideSettings();
-            SoundManager.Instance.PlayCloseButtonSFX();
-        }
+        //if (settingsManager.settingsGroup != null && settingsManager.settingsGroup.alpha > 0)
+        //{
+        //    settingsManager.HideSettings();
+        //    SoundManager.Instance.PlayCloseButtonSFX();
+        //}
 
-        if (settingsManager.creditsGroup != null && settingsManager.creditsGroup.alpha > 0)
-        {
-            settingsManager.HideCredits();
-            SoundManager.Instance.PlayCloseButtonSFX();
-            settingsManager.ShowSettings();
-        }
+        //if (settingsManager.creditsGroup != null && settingsManager.creditsGroup.alpha > 0)
+        //{
+        //    settingsManager.HideCredits();
+        //    SoundManager.Instance.PlayCloseButtonSFX();
+        //    settingsManager.ShowSettings();
+        //}
 
-        if (settingsManager.exitGroup != null && settingsManager.exitGroup.alpha > 0)
-        {
-            settingsManager.HideExit();
-            SoundManager.Instance.PlayCloseButtonSFX();
-        }
+        //if (settingsManager.exitGroup != null && settingsManager.exitGroup.alpha > 0)
+        //{
+        //    settingsManager.HideExit();
+        //    SoundManager.Instance.PlayCloseButtonSFX();
+        //}
     }
 
     // ���j���[�A�ݒ�A�I����ʂł�UI�I���Ԑݒ�
