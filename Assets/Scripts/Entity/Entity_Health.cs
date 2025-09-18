@@ -3,42 +3,42 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-// �̗͂�Ǘ�����N���X
+// エンティティのHP管理
 public class Entity_Health : MonoBehaviour, IDamageable
 {
-    public event Action OnTakingDamage;
-    public event Action OnHealthUpdate;
+    public event Action OnTakingDamage; // ダメージ時イベント
+    public event Action OnHealthUpdate; // HP更新時イベント
 
-    private Slider healthBar;
-    private Entity_VFX entityVfx;
-    private Entity entity;
-    private Entity_Stats entityStats;
-    private Entity_DropManager dropManager;
+    private Slider healthBar; // UIスライダー
+    private Entity_VFX entityVfx; // VFX参照
+    private Entity entity; // エンティティ本体
+    private Entity_Stats entityStats; // ステータス参照
+    private Entity_DropManager dropManager; // アイテムドロップ管理
 
     private bool miniHealthBarActive;
 
-    [SerializeField] protected float currentHealth;
+    [SerializeField] protected float currentHealth; // 現在HP
 
-    public bool isDead { get; private set; }
-    protected bool canTakeDamage = true;
+    public bool isDead { get; private set; } // 死亡判定
+    protected bool canTakeDamage = true; // ダメージ受け取り可否
 
-    [Header("Health Regen")] // �̗͉񕜐ݒ�
+    [Header("Health Regen")] // HP自動回復設定
     [SerializeField] private float regenInterval = 1;
     [SerializeField] private bool canRegenerateHealth = true;
-    public float lastDamageTaken { get; private set; }
+    public float lastDamageTaken { get; private set; } // 最終ダメージ
 
-    [Header("On Damage Knockback")] // �_���[�W���̃m�b�N�o�b�N�ݒ�
+    [Header("On Damage Knockback")] // ダメージ時ノックバック設定
     [SerializeField] private Vector2 knockbackPower = new Vector2(1.5f, 2.5f);
     [SerializeField] private Vector2 heavyKnockbackPower = new Vector2(7f, 7f);
     [SerializeField] private float knockbackDuration = 0.3f;
     [SerializeField] private float heavyKnockbackDuration = 0.6f;
 
-    [Header("On Heavy damages")] // ��_���[�W�Ɣ��肷�銄��
+    [Header("On Heavy damages")] // 重ダメージ閾値
     [SerializeField] private float heavyDamageThreshold = 0.3f;
 
     protected virtual void Awake()
     {
-        // �K�v�ȃR���|�[�l���g��擾
+        // コンポーネント取得
         healthBar = GetComponentInChildren<Slider>();
         entity = GetComponent<Entity>();
         entityVfx = GetComponent<Entity_VFX>();
@@ -58,39 +58,32 @@ public class Entity_Health : MonoBehaviour, IDamageable
 
         UpdateHealthBar();
 
-        // ���Ԋu��HP�񕜏�����Ă�
+        // 定期回復開始
         InvokeRepeating(nameof(RegenerateHealth), 0, regenInterval);
     }
 
-    // �_���[�W��󂯂鏈��
+    // ダメージ処理
     public virtual bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageDealer)
     {
-        // ���łɎ���ł���A�܂��͖��G��ԂȂ疳��
-        if (isDead || canTakeDamage == false)
-            return false;
+        if (isDead || !canTakeDamage) return false; // 死亡中または無敵中は無効
+        if (AttackAvoided()) return false; // 回避判定
 
-        // ���ɐ��������疳��
-        if (AttackAvoided())
-            return false;
-
-        // �U���҂̃X�e�[�^�X����h��͂�擾
+        // 攻撃者の防御値取得
         Entity_Stats attackerStats = damageDealer.GetComponent<Entity_Stats>();
         float armorReduction = attackerStats != null ? attackerStats.GetArmorReduction() : 0;
 
         float physicalDamageTaken, elementalDamageTaken;
 
-        // �h��E�ϐ���l�������ŏI�_���[�W��v�Z
+        // 物理・属性耐性適用
         ApplyPhysAndElemRes(damage, elementalDamage, element, armorReduction, out physicalDamageTaken, out elementalDamageTaken);
 
-        // �m�b�N�o�b�N�K�p
+        // ノックバック処理
         TakeKnockback(damageDealer, physicalDamageTaken);
 
-        // HP����炷
+        // HP減少
         ReduceHealth(physicalDamageTaken + elementalDamageTaken);
 
-        // �Ō�Ɏ󂯂��_���[�W��L�^
         lastDamageTaken = physicalDamageTaken + elementalDamageTaken;
-
 
         OnTakingDamage?.Invoke();
         return true;
@@ -98,11 +91,11 @@ public class Entity_Health : MonoBehaviour, IDamageable
 
     public void SetCanTakeDamage(bool canTakeDamage) => this.canTakeDamage = canTakeDamage;
 
-    // �_���[�W�v�Z�i�����E�����j
+    // 物理・属性耐性を反映した実ダメージ計算
     private void ApplyPhysAndElemRes(float damage, float elementalDamage, ElementType element, float armorReduction, out float physicalDamageTaken, out float elementalDamageTaken)
     {
-        float mitigation = entityStats != null ? entityStats.GetArmorMitigation(armorReduction) : 0; // �����y����
-        float resistance = entityStats != null ? entityStats.GetElementalResistance(element) : 0;   // �����ϐ�
+        float mitigation = entityStats != null ? entityStats.GetArmorMitigation(armorReduction) : 0;
+        float resistance = entityStats != null ? entityStats.GetElementalResistance(element) : 0;
 
         physicalDamageTaken = damage * (1 - mitigation);
         elementalDamageTaken = elementalDamage * (1 - resistance);
@@ -110,67 +103,52 @@ public class Entity_Health : MonoBehaviour, IDamageable
 
     public float GetCurrentHealth() => currentHealth;
 
-    // ��𔻒�i��𗦂Ń����_������j
+    // 攻撃回避判定
     private bool AttackAvoided()
     {
-        if (entityStats == null)
-            return false;
-        else
-            return UnityEngine.Random.Range(0, 100) < entityStats.GetEvasion();
+        return entityStats != null && UnityEngine.Random.Range(0, 100) < entityStats.GetEvasion();
     }
 
-    // �̗͉񕜏���
+    // 自動回復
     private void RegenerateHealth()
     {
-        if (canRegenerateHealth == false)
-            return;
+        if (!canRegenerateHealth) return;
 
-        float regenAmount = entityStats.resources.healthRegen.GetValue(); // �񕜗ʂ�擾
+        float regenAmount = entityStats.resources.healthRegen.GetValue();
         IncreaseHealth(regenAmount);
     }
 
-    // HP��񕜂���
+    // HP回復
     public void IncreaseHealth(float healAmount)
     {
-        if (isDead)
-            return;
+        if (isDead) return;
 
-        float newHealth = currentHealth + healAmount;
-        float maxHealth = entityStats.GetMaxHealth();
-
-        // �ő�l�𒴂��Ȃ��悤�ɒ���
-        currentHealth = Mathf.Min(newHealth, maxHealth);
-
+        currentHealth = Mathf.Min(currentHealth + healAmount, entityStats.GetMaxHealth());
         OnHealthUpdate?.Invoke();
     }
 
-    // HP����炷�i0�ȉ��Ȃ玀�S�����j
+    // HP減少
     public void ReduceHealth(float damage)
     {
         currentHealth -= damage;
-
-        entityVfx?.HandleHitColor(Entity_VFX.FlashType.Red); // �q�b�g����VFX
+        entityVfx?.HandleHitColor(Entity_VFX.FlashType.Red); // 被ダメVFX
         OnHealthUpdate?.Invoke();
 
-        if (currentHealth <= 0)
-            Die();
+        if (currentHealth <= 0) Die();
     }
 
-    // HP�o�[�X�V
+    // HPバー更新
     private void UpdateHealthBar()
     {
-        if (healthBar == null && healthBar.transform.parent.gameObject.activeSelf == false)
-            return;
+        if (healthBar == null || healthBar.transform.parent.gameObject.activeSelf == false) return;
 
         float maxHealth = entityStats.GetMaxHealth();
-        if (maxHealth <= 0)
-            return;
+        if (maxHealth <= 0) return;
 
-        healthBar.value = Mathf.Clamp01(currentHealth / maxHealth); // 0�`1�ɐ��K��
+        healthBar.value = Mathf.Clamp01(currentHealth / maxHealth);
     }
 
     public void EnableHealthBar(bool enable) => healthBar?.transform.parent.gameObject.SetActive(enable);
-
     public float GetHealthPercent() => currentHealth / entityStats.GetMaxHealth();
 
     public void SetHealthToPercent(float percent)
@@ -179,57 +157,48 @@ public class Entity_Health : MonoBehaviour, IDamageable
         OnHealthUpdate?.Invoke();
     }
 
-    // ���S�����i�I�[�o�[���C�h�\�j
+    // 死亡処理
     protected virtual void Die()
     {
         isDead = true;
-        entity?.EntityDeath();
-        dropManager?.DropItems();
+        entity?.EntityDeath(); // エンティティ死亡処理
+        dropManager?.DropItems(); // アイテムドロップ
     }
 
-    // �m�b�N�o�b�N����
+    // ノックバック処理
     private float TakeKnockback(Transform damageDealer, float finalDamage)
     {
         Vector2 knockback = CalculateKnockback(finalDamage, damageDealer);
         float duration = CalculateKnockbackDuration(finalDamage);
 
-        // �K�[�h���Ȃ�m�b�N�o�b�N�����_���[�W����
         if (entity != null && entity.isBlocking)
         {
-            entityVfx.HandleHitColor(Entity_VFX.FlashType.Yellow); // �K�[�h���̐F
+            entityVfx.HandleHitColor(Entity_VFX.FlashType.Yellow); // ブロック時VFX
             finalDamage /= 2;
         }
         else
         {
-            entity?.ReceiveKnockback(knockback, duration); // �m�b�N�o�b�N��K�p
+            entity?.ReceiveKnockback(knockback, duration); // 通常ノックバック
         }
 
         return finalDamage;
     }
 
-    // �m�b�N�o�b�N�����Ƌ�����v�Z
+    // ノックバック量計算
     private Vector2 CalculateKnockback(float damage, Transform damageDealer)
     {
-        // �ǂ���̕����ɔ�΂�������i�E or ���j
         int direction = transform.position.x > damageDealer.position.x ? 1 : -1;
-
-        // ��_���[�W�Ȃ狭���m�b�N�o�b�N
         Vector2 knockback = IsHeavyDamage(damage) ? heavyKnockbackPower : knockbackPower;
-
-        knockback.x *= direction; // �U���҂̈ʒu�ŕ������]
-
+        knockback.x *= direction;
         return knockback;
     }
 
-    // �m�b�N�o�b�N���Ԃ�v�Z
+    // ノックバック時間計算
     private float CalculateKnockbackDuration(float damage) => IsHeavyDamage(damage) ? heavyKnockbackDuration : knockbackDuration;
 
-    // ��_���[�W���ǂ�������
+    // 重ダメージ判定
     private bool IsHeavyDamage(float damage)
     {
-        if (entityStats == null)
-            return false;
-        else
-            return damage / entityStats.GetMaxHealth() > heavyDamageThreshold; // �_���[�W�������������l�ȏォ
+        return entityStats != null && damage / entityStats.GetMaxHealth() > heavyDamageThreshold;
     }
 }

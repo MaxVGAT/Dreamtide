@@ -1,13 +1,13 @@
 using UnityEngine;
 
-// �_���[�W��󂯂邱�Ƃ��ł���I�u�W�F�N�g�p�C���^�[�t�F�[�X
+// ダメージを受ける対象のインターフェース
 public interface IDamageable
 {
-    // �_���[�W��^�����Ƃ��ɌĂ΂��֐�
-    // damage: �����_���[�W��
-    // elementalDamage: �����_���[�W��
-    // element: �����^�C�v
-    // damageDealer: �_���[�W��^�����I�u�W�F�N�g��Transform
-    // �߂�l: �_���[�W���K�p���ꂽ���ǂ���
+    // ダメージ処理メソッド
+    // damage: 物理ダメージ量
+    // elementalDamage: 属性ダメージ量
+    // element: 属性タイプ
+    // damageDealer: ダメージを与えたオブジェクトのTransform
+    // return: ダメージが適用されたかどうか
     public bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageDealer);
 }

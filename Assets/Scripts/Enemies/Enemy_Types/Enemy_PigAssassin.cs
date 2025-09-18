@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class Enemy_PigAssassin : Entity_Enemy, ICounterable // �s�b�O�A�T�V���G�ŗL�̏ڍׂ�����N���X
+public class Enemy_PigAssassin : Entity_Enemy, ICounterable // 豚型アサシン敵クラス
 {
-    public bool CanBeCountered { get => canBeStunned; } // CanBeCountered �� canBeStunned �ɐݒ�\�ȃt�H���[�A�b�v��ԗp�̃t���O
+    public bool CanBeCountered { get => canBeStunned; } // カウンター可能判定（スタン可能ならtrue）
 
-    // Enemy_VFX��I�[�o�[���C�h���ēG�̃A�j���[�V������Ԃ�K�p
+    // Enemy_VFXやStateMachine用ステート初期化
     protected override void Awake()
     {
         base.Awake();
 
-        // �e��Ԃ���ꂼ��̃X�N���v�g�ƃA�j���[�V�����ŏ�����
+        // 各ステートを生成してStateMachineに設定
         idleState = new EnemyIdleState(this, stateMachine, "idle");
         moveState = new EnemyMoveState(this, stateMachine, "move");
         attackState = new EnemyAttackState(this, stateMachine, "attack");
@@ -18,20 +18,19 @@ public class Enemy_PigAssassin : Entity_Enemy, ICounterable // �s�b�O�A�
         stunnedState = new EnemyStunnedState(this, stateMachine, "stunned");
     }
 
-    // Entity�e�X�N���v�g����A�C�h����Ԃ������
+    // Entity_Enemy初期化とステート開始
     protected override void Start()
     {
         base.Start();
-
-        stateMachine.Initialize(idleState);
+        stateMachine.Initialize(idleState); // 初期ステートはIdle
     }
 
-    // �J�E���^�[�U���̃^�C�~���O�Ńu���b�N���ꂽ�ꍇ�AstunnedState�ɏ�Ԃ�ύX
+    // プレイヤーのカウンター攻撃時の処理
     public void HandleCounterAttack()
     {
         if (CanBeCountered == false)
             return;
 
-        stateMachine.ChangeState(stunnedState);
+        stateMachine.ChangeState(stunnedState); // スタン状態に遷移
     }
 }

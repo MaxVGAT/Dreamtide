@@ -1,32 +1,31 @@
-using UnityEngine;
-
+// 状態マシン管理クラス
 public class StateMachine
 {
-    public EntityState currentState { get; private set; } // ���݂̃X�e�[�g
-    public bool canChangeState = true;                   // �X�e�[�g�ύX�\���ǂ���
+    public EntityState currentState { get; private set; } // 現在の状態
+    public bool canChangeState = true;                   // 状態変更可能か
 
-    // �������F�J�n�X�e�[�g��ݒ肵��Enter�Ăяo��
+    // 初期状態を設定してEnter呼び出し
     public void Initialize(EntityState startState)
     {
         currentState = startState;
-        currentState.Enter(); // �X�e�[�g�J�n����
+        currentState.Enter(); // 状態開始処理
     }
 
-    // �X�e�[�g�؂�ւ�
+    // 状態変更処理
     public void ChangeState(EntityState newState)
     {
-        if (canChangeState == false) return; // �X�e�[�g�ύX�s�Ȃ珈�����Ȃ�
-        currentState.Exit();                 // ���݂̃X�e�[�g�I������
-        currentState = newState;             // �V�����X�e�[�g�ɕύX
-        currentState.Enter();                // �V�X�e�[�g�J�n����
+        if (canChangeState == false) return; // 変更不可なら何もしない
+        currentState.Exit();                 // 現在状態の終了処理
+        currentState = newState;             // 新しい状態に切替
+        currentState.Enter();                // 新状態の開始処理
     }
 
-    // ���݃A�N�e�B�u�ȃX�e�[�g�̍X�V
+    // 毎フレームの状態更新
     public void UpdateActiveState()
     {
-        currentState.Update();               // Update�Ăяo��
+        currentState.Update();               // Update呼び出し
     }
 
-    // �X�e�[�g�}�V�����~�i�X�e�[�g�ύX�s�j
+    // 状態変更禁止
     public void SwitchOffStateMachine() => canChangeState = false;
 }

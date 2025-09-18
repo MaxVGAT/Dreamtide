@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class Entity_Player : Entity
 {
-    public static Entity_Player instance;
+    public static Entity_Player instance; // プレイヤーのシングルトン参照
 
-    public static event Action OnPlayerDeath;
-    public static event Action OnPlayerDeathFinished;
+    public static event Action OnPlayerDeath; // 死亡時イベント
+    public static event Action OnPlayerDeathFinished; // 死亡アニメ完了後イベント
 
-    public UI ui { get; private set; }
-    public PlayerInputSet input { get; private set; }
-    public Player_SkillManager skillManager { get; private set; }
-    public Player_VFX vfx { get; private set; }
-    public Entity_Health health { get; private set; }
-    public Entity_StatusHandler statusHandler { get; private set; }
-    public Player_Combat combat { get; private set; }
-    public Inventory_Player inventory { get; private set; }
-    public Player_Stats stats { get; private set; }
+    public UI ui { get; private set; } // UI参照
+    public PlayerInputSet input { get; private set; } // 入力管理
+    public Player_SkillManager skillManager { get; private set; } // スキル管理
+    public Player_VFX vfx { get; private set; } // VFX管理
+    public Entity_Health health { get; private set; } // HP管理
+    public Entity_StatusHandler statusHandler { get; private set; } // ステータス管理
+    public Player_Combat combat { get; private set; } // 戦闘関連
+    public Inventory_Player inventory { get; private set; } // インベントリ管理
+    public Player_Stats stats { get; private set; } // ステータス値
 
     #region State Variables
-    // �v���C���[�̊e���
+    // プレイヤー状態管理
     public Player_IdleState idleState { get; private set; }
     public Player_MoveState moveState { get; private set; }
     public Player_JumpState jumpState { get; private set; }
@@ -38,35 +38,34 @@ public class Entity_Player : Entity
     #endregion
 
     [Header("Attack details")]
-    public Vector2[] attackVelocity;
-    public Vector2 jumpAttackVelocity;
-    public float attackVelocityDuration = 0.1f;
-    public float comboAttackWindow = 1f;
-    private Coroutine queuedAttackCo; // �U�����͒x���p�R���[�`��
+    public Vector2[] attackVelocity; // 攻撃のベロシティ配列
+    public Vector2 jumpAttackVelocity; // 空中攻撃のベロシティ
+    public float attackVelocityDuration = 0.1f; // 攻撃速度持続時間
+    public float comboAttackWindow = 1f; // コンボ入力受付時間
+    private Coroutine queuedAttackCo; // 攻撃遅延用コルーチン
 
     [Header("Domain Ability Details")]
-    public float riseSpeed = 25;
-    public float riseMaxDistance;
+    public float riseSpeed = 25; // ドメイン能力上昇速度
+    public float riseMaxDistance; // 最大上昇距離
 
     [Header("Movement details")]
-    public float moveSpeed;
-    public float jumpForce = 5f;
-    public Vector2 wallJumpDir;
-    public float inAirMoveMultiplier = 0.8f;
-    public float wallSlideSlowMultiplier = 0.7f;
-    [Space] public float dashDuration = 0.25f;
-    public float dashSpeed = 20f;
-    public Vector2 mousePosition { get; private set; }
-    public Vector2 moveInput { get; private set; }
+    public float moveSpeed; // 移動速度
+    public float jumpForce = 5f; // ジャンプ力
+    public Vector2 wallJumpDir; // 壁ジャンプ方向
+    public float inAirMoveMultiplier = 0.8f; // 空中移動補正
+    public float wallSlideSlowMultiplier = 0.7f; // 壁滑り減速倍率
+    [Space] public float dashDuration = 0.25f; // ダッシュ時間
+    public float dashSpeed = 20f; // ダッシュ速度
+    public Vector2 mousePosition { get; private set; } // マウス座標
+    public Vector2 moveInput { get; private set; } // 移動入力
 
     protected override void Awake()
     {
         base.Awake();
 
+        instance = this; // シングルトン設定
 
-        instance = this;
-
-        // �K�v�ȃR���|�[�l���g��擾
+        // コンポーネント取得
         ui = FindAnyObjectByType<UI>();
         vfx = GetComponent<Player_VFX>();
         health = GetComponent<Entity_Health>();
@@ -79,7 +78,7 @@ public class Entity_Player : Entity
         input = new PlayerInputSet();
         ui.SetupControlsUI(input);
 
-        // �e��Ԃ������
+        // 状態インスタンス初期化
         idleState = new Player_IdleState(this, stateMachine, "idle");
         moveState = new Player_MoveState(this, stateMachine, "move");
         jumpState = new Player_JumpState(this, stateMachine, "jumpFall");
@@ -95,26 +94,24 @@ public class Entity_Player : Entity
         swordThrowState = new Player_SwordThrowState(this, stateMachine, "swordThrow");
         domainState = new Player_DomainState(this, stateMachine, "jumpFall");
 
-        stateMachine.Initialize(idleState);
+        stateMachine.Initialize(idleState); // 初期状態設定
     }
 
     protected override void Start()
     {
         base.Start();
-        // ������Ԃ�Idle�ɐݒ�
-        
+        // Idle状態設定（必要なら追加処理）
     }
 
-    // �v���C���[��u�Ԉړ�
+    // プレイヤー瞬間移動
     public void TeleportPlayer(Vector3 position) => transform.position = position;
 
-    // �K�[�h��Ԃ��ǂ���
+    // ブロック状態判定
     public override bool isBlocking => stateMachine.currentState is Player_BlockState;
 
-    // �X���[�_�E�������i�X�L�����Ԉُ�ő��x�ቺ�j
+    // 移動速度・攻撃力遅延コルーチン
     protected override IEnumerator SlowDownEntityCo(float duration, float slowMultiplier)
     {
-        // ���̒l��ۑ�
         float originalMoveSpeed = moveSpeed;
         float originalJumpForce = jumpForce;
         float originalAnimSpeed = anim.speed;
@@ -124,7 +121,7 @@ public class Entity_Player : Entity
 
         float speedMultiplier = 1 - slowMultiplier;
 
-        // ���x��ቺ
+        // 速度調整
         moveSpeed *= speedMultiplier;
         jumpForce *= speedMultiplier;
         anim.speed *= speedMultiplier;
@@ -132,12 +129,12 @@ public class Entity_Player : Entity
         jumpAttackVelocity *= speedMultiplier;
         for (int i = 0; i < attackVelocity.Length; i++)
         {
-            attackVelocity[i] *= speedMultiplier; // �S�U�����x��ቺ
+            attackVelocity[i] *= speedMultiplier; // 攻撃速度調整
         }
 
         yield return new WaitForSeconds(duration);
 
-        // ���̒l�ɖ߂�
+        // 元に戻す
         moveSpeed = originalMoveSpeed;
         jumpForce = originalJumpForce;
         anim.speed = originalAnimSpeed;
@@ -151,19 +148,19 @@ public class Entity_Player : Entity
 
     public void NotifyDeathFinished()
     {
-        OnPlayerDeathFinished?.Invoke();
+        OnPlayerDeathFinished?.Invoke(); // 死亡アニメ完了通知
     }
 
-    // ���S����
+    // 死亡処理
     public override void EntityDeath()
     {
         base.EntityDeath();
 
-        OnPlayerDeath?.Invoke(); // ���N���X�Ɏ��S�ʒm
-        stateMachine.ChangeState(deadState); // ���S��ԂɈڍs
+        OnPlayerDeath?.Invoke(); // 死亡イベント呼び出し
+        stateMachine.ChangeState(deadState); // 状態変更
     }
 
-    // �U�����͒x������
+    // 攻撃入力遅延処理
     public void EnterAttackStateWithDelay()
     {
         if (queuedAttackCo != null)
@@ -174,14 +171,14 @@ public class Entity_Player : Entity
 
     private IEnumerator EnterAttackStateWithDelayCO()
     {
-        yield return new WaitForEndOfFrame(); // �t���[�����I���܂ő҂�
-        stateMachine.ChangeState(basicAttackState); // �U����ԂɈڍs
+        yield return new WaitForEndOfFrame(); // フレーム待機
+        stateMachine.ChangeState(basicAttackState); // 攻撃状態へ
     }
 
+    // 近くのオブジェクトと相互作用
     private void TryInteract()
     {
         Transform closest = null;
-
         float closestDistance = Mathf.Infinity;
 
         Collider2D[] objectsAround = Physics2D.OverlapCircleAll(transform.position, 1.5f);
@@ -203,33 +200,34 @@ public class Entity_Player : Entity
         if (closest == null)
             return;
 
-        closest.GetComponent<IInteractable>().Interact();
+        closest.GetComponent<IInteractable>().Interact(); // インタラクト実行
     }
 
     private void OnEnable()
     {
         input.Enable();
 
-        // �}�E�X���W�擾
+        // マウス位置取得
         input.Player.Mouse.performed += context => mousePosition = context.ReadValue<Vector2>();
 
-        // �ړ�����
+        // 移動入力
         input.Player.Movement.performed += context => moveInput = context.ReadValue<Vector2>();
         input.Player.Movement.canceled += context => moveInput = Vector2.zero;
 
-        // UI�؂�ւ�
+        // インタラクト
         input.Player.Interact.performed += context => TryInteract();
 
+        // クイックスロット使用
         input.Player.QuickItem_Slot1.performed += context => inventory.TryUseQuickItemInSlot(1);
         input.Player.QuickItem_Slot2.performed += context => inventory.TryUseQuickItemInSlot(2);
 
-        // �X�L���g�p
+        // スキル使用
         input.Player.Skill.performed += context => skillManager.shard.TryUseSkill();
         input.Player.Skill.performed += context => skillManager.timeEcho.TryUseSkill();
     }
 
     private void OnDisable()
     {
-        input.Disable();
+        input.Disable(); // 入力無効化
     }
 }

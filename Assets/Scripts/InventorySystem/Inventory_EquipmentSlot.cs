@@ -1,26 +1,26 @@
 using System;
 using UnityEngine;
 
-// �����X���b�g�̃f�[�^�Ǘ��N���X
+// 装備スロットを表すクラス
 [Serializable]
 public class Inventory_EquipmentSlot
 {
-    public Item_Type slotType;       // ���̃X���b�g�̎�ށi��FHelmet, Ring�j
-    public Inventory_Item equippedItem; // �������̃A�C�e��
+    public Item_Type slotType;       // スロットの種類 (例: Helmet, Ring)
+    public Inventory_Item equippedItem; // 装備中のアイテム
 
-    // �w��^�C�v�ŃX���b�g��쐬
+    // 指定スロットタイプでスロットを生成
     public Inventory_EquipmentSlot(Item_Type type)
     {
         slotType = type;
         equippedItem = null;
     }
 
-    // �f�t�H���g�R���X�g���N�^�i�����Ȃ��j
+    // デフォルトコンストラクタ
     public Inventory_EquipmentSlot()
     {
         equippedItem = null;
     }
 
-    // �X���b�g�ɑ������̃A�C�e�������邩
+    // スロットにアイテムが装備されているか
     public bool HasItem() => equippedItem != null && equippedItem.itemData != null;
 }

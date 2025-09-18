@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Enemy_VFX : Entity_VFX // �U���^�[�Q�b�g�̂��߂̏����ȕ⏕�N���X
+public class Enemy_VFX : Entity_VFX // 敵専用VFX管理クラス
 {
-    [Header("�J�E���^�[�U���E�B���h�E��VFX")]
-    [SerializeField] private GameObject attackAlert; // �U���x���p�̃Q�[���I�u�W�F�N�g����蓖�Ă�
+    [Header("攻撃警告用VFX")]
+    [SerializeField] private GameObject attackAlert; // 攻撃対象に向けて警告表示するオブジェクト
 
-    // �G���U����d�|����ۂɍU���x����\���E��\���ɐ؂�ւ���
+    // 攻撃警告の表示/非表示を切り替え
     public void EnableAttackAlert(bool enable) => attackAlert.SetActive(enable);
 }

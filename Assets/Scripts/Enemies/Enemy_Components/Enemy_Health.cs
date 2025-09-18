@@ -1,29 +1,27 @@
 using UnityEngine;
 
-public class Enemy_Health : Entity_Health // ���ׂĂ̗̑͂���G���e�B�e�B�̊�{�N���X
+public class Enemy_Health : Entity_Health // 敵用の体力管理クラス
 {
-    private Entity_Enemy enemy => GetComponent<Entity_Enemy>(); // �_���[�W�����̂��߂�Entity_Enemy�R���|�[�l���g��擾
+    private Entity_Enemy enemy => GetComponent<Entity_Enemy>(); // 同じGameObjectのEntity_Enemy参照
 
     public override bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageDealer)
     {
         if (canTakeDamage == false)
-            return false;
+            return false; // ダメージ不可なら処理せず false を返す
 
         bool wasHit = base.TakeDamage(damage, elementalDamage, element, damageDealer);
 
-        // Trigger battle state if player attacked
+        // プレイヤーから攻撃された場合、戦闘状態に移行
         if (damageDealer.GetComponent<Entity_Player>() != null)
             enemy.TryEnterBattleState(damageDealer);
 
-        // Check death after damage applied
+        // ダメージ適用後に死亡判定
         if (isDead)
         {
-            // Call your death logic (VFX, loot, etc.)
-            Die(); // or whatever method handles death
+            Die(); // 死亡処理（VFX、ドロップなど）
         }
 
-        // ✅ Always return true if base took damage
+        // ✅ 基底クラスでダメージを受けた場合は true を返す
         return wasHit;
     }
-
 }

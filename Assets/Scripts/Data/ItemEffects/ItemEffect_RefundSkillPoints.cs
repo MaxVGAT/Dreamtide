@@ -5,19 +5,22 @@ public class ItemEffect_RefundSkillPoints : Item_EffectDataSO
 {
     public override void ExecuteEffect(Entity_Player player)
     {
+        // シーン内のUIオブジェクトを検索
         UI ui = FindFirstObjectByType<UI>();
         if (ui == null)
         {
-            Debug.LogError("UI object not found in the scene!");
+            Debug.LogError("シーン内にUIオブジェクトが見つかりません！");
             return;
         }
 
+        // スキルツリーがアサインされているか確認
         if (ui.skillTree == null)
         {
-            Debug.LogError("UI.skillTree is not assigned!");
+            Debug.LogError("UI.skillTree が設定されていません！");
             return;
         }
 
+        // 全スキルポイントをリセット
         ui.skillTree.RefundAllSkills();
     }
 }

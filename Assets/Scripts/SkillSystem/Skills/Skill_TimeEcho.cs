@@ -1,19 +1,20 @@
 using UnityEngine;
 
+// タイムエコースキルの管理クラス
 public class Skill_TimeEcho : Skill_Base
 {
-    [SerializeField] private GameObject timeEchoPrefab; // �v���n�u�����ꂽ�^�C���G�R�[
-    [SerializeField] private float timeEchoDuration;    // �^�C���G�R�[�̑��ݎ���
+    [SerializeField] private GameObject timeEchoPrefab; // タイムエコーとして生成するオブジェクト
+    [SerializeField] private float timeEchoDuration;    // タイムエコーの存続時間
 
     [Header("Attack upgrades")]
-    [SerializeField] private int maxAttacks = 3;        // �ő�U���񐔁i�}���`�A�^�b�N�p�j
-    [SerializeField] private float duplicateChance = 0.3f; // �U�������̊m��
+    [SerializeField] private int maxAttacks = 3;        // 最大攻撃回数（マルチアタック用）
+    [SerializeField] private float duplicateChance = 0.3f; // 攻撃が複製される確率
 
     [Header("Heal Wisp Upgrades")]
-    [SerializeField] private float damagePercentHealed = 0.3f; // �񕜗ʁi�󂯂��_���[�W�̊����j
-    [SerializeField] private float cooldownReducedInSeconds;  // �N�[���_�E���Z�k��
+    [SerializeField] private float damagePercentHealed = 0.3f; // ヒールウィスプが回復する割合
+    [SerializeField] private float cooldownReducedInSeconds;  // ウィスプ使用時のクールダウン短縮時間
 
-    // Wisp�`�Ԃ̏ꍇ�ɉ񕜊�����Ԃ�
+    // ウィスプ効果の回復割合を取得
     public float GetPercentOfDamageHealed()
     {
         if (!ShouldBeWisp())
@@ -22,7 +23,7 @@ public class Skill_TimeEcho : Skill_Base
         return damagePercentHealed;
     }
 
-    // Wisp�A�b�v�O���[�h���L���ȏꍇ�A�N�[���_�E���Z�k�ʂ�Ԃ�
+    // ウィスプ効果時のクールダウン短縮量を取得
     public float GetCooldownReduceInSeconds()
     {
         if (upgradeType != Skill_UpgradeType.TimeEcho_CooldownWisp)
@@ -31,20 +32,20 @@ public class Skill_TimeEcho : Skill_Base
         return cooldownReducedInSeconds;
     }
 
-    // �l�K�e�B�u���ʂ�����ł��邩����
+    // ネガティブ効果を除去できるか判定
     public bool CanRemoveNegativeEffects()
     {
         return upgradeType == Skill_UpgradeType.TimeEcho_CleanseWisp;
     }
 
-    // ���݂̃A�b�v�O���[�h����/�N�����YWisp������
+    // ウィスプとして機能するか判定
     public bool ShouldBeWisp()
     {
         return upgradeType == Skill_UpgradeType.TimeEcho_HealWisp
             || upgradeType == Skill_UpgradeType.TimeEcho_CleanseWisp;
     }
 
-    // �����U���̊m����Ԃ�
+    // 攻撃複製の確率を取得
     public float GetDuplicateChance()
     {
         if (upgradeType != Skill_UpgradeType.TimeEcho_ChanceToDuplicate)
@@ -53,7 +54,7 @@ public class Skill_TimeEcho : Skill_Base
         return duplicateChance;
     }
 
-    // �ő�U���񐔂�Ԃ�
+    // 最大攻撃回数を取得
     public int GetMaxAttacks()
     {
         if (upgradeType == Skill_UpgradeType.TimeEcho_SingleAttack
@@ -66,30 +67,30 @@ public class Skill_TimeEcho : Skill_Base
         return 0;
     }
 
-    // �^�C���G�R�[�̑��ݎ��Ԃ�Ԃ�
+    // タイムエコーの存続時間を取得
     public float GetEchoDuration()
     {
         return timeEchoDuration;
     }
 
-    // �X�L���g�p����
+    // スキル使用処理
     public override void TryUseSkill()
     {
         if (!CanUseSkill())
             return;
 
-        // �G�R�[��쐬����ʒu�����i���݈ʒu�j
+        // タイムエコーを生成
         Vector3 exactPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         CreateTimeEcho(exactPosition);
         SetSkillOnCooldown();
     }
 
-    // �^�C���G�R�[�𐶐�
+    // タイムエコーの生成
     public void CreateTimeEcho(Vector3? targetPosition = null)
     {
-        Vector3 position = targetPosition ?? transform.position; // �w�肪�Ȃ���Ό��݈ʒu
+        Vector3 position = targetPosition ?? transform.position; // 指定がなければ自身の位置に生成
 
         GameObject timeEcho = Instantiate(timeEchoPrefab, position, Quaternion.identity);
-        timeEcho.GetComponent<SkillObject_TimeEcho>().SetupEcho(this); // �Z�b�g�A�b�v
+        timeEcho.GetComponent<SkillObject_TimeEcho>().SetupEcho(this); // スキルデータをセット
     }
 }

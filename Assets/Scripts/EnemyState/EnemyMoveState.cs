@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class EnemyMoveState : EnemyGroundState
 {
-    public EnemyMoveState(Entity_Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
+    public EnemyMoveState(Entity_Enemy enemy, StateMachine stateMachine, string animBoolName)
+        : base(enemy, stateMachine, animBoolName)
     {
     }
 
@@ -10,7 +11,7 @@ public class EnemyMoveState : EnemyGroundState
     {
         base.Enter();
 
-        // Flip the enemy when close to a hole or next to a wall, for patrolling-like action
+        // ŒŠ‚â•Ç‚Ì‹ß‚­‚Å“G‚ğ”½“]‚³‚¹‚Ä„‰ñ‚Á‚Û‚­“®‚©‚·
         if (enemy.isGrounded == false || enemy.isWallDetected)
             enemy.FlipMethod();
     }
@@ -19,10 +20,10 @@ public class EnemyMoveState : EnemyGroundState
     {
         base.Update();
 
-        // Apply direction based on movespeed and diretion
+        // ˆÚ“®‘¬“x‚Æ•ûŒü‚É‰‚¶‚Ä“G‚ğˆÚ“®
         enemy.SetVelocity(enemy.GetMoveSpeed() * enemy.facingDirection, rb.linearVelocityY);
 
-        // Make the enemy idle when next to a hole or next to a wall
+        // ŒŠ‚â•Ç‚ª‚ ‚éê‡‚ÍIdleó‘Ô‚É‘JˆÚ
         if (enemy.isGrounded == false || enemy.isWallDetected)
             stateMachine.ChangeState(enemy.idleState);
     }

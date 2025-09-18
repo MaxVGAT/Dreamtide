@@ -7469,6 +7469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inGameUI: {fileID: 0}
   menuUI: {fileID: 0}
+  defaultGameScene: IntroScene
 --- !u!4 &1098176310
 Transform:
   m_ObjectHideFlags: 0

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour, ISaveable
     [SerializeField] private GameObject menuUI;
 
     [Header("Scene Management")]
+    [SerializeField] private string defaultGameScene = "IntroScene";
     private bool isChangingScene = false;
     private Respawn_Type lastRespawnType = Respawn_Type.NonSpecific;
     private bool dataLoaded = false;
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour, ISaveable
     private void OnDisable()
     {
         Entity_Player.OnPlayerDeathFinished -= OnPlayerDeath;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     #endregion
@@ -47,40 +49,99 @@ public class GameManager : MonoBehaviour, ISaveable
 
     public void ChangeScene(string sceneName, Respawn_Type respawnType)
     {
-        if (isChangingScene || string.IsNullOrEmpty(sceneName))
+        // Validate scene name
+        if (string.IsNullOrEmpty(sceneName))
+        {
+            Debug.LogError($"[GameManager] Invalid scene name: '{sceneName}'. Using default scene.");
+            sceneName = defaultGameScene;
+        }
+
+        if (isChangingScene)
+        {
+            Debug.LogWarning($"[GameManager] Already changing scenes. Ignoring request for: {sceneName}");
             return;
+        }
+
+        Debug.Log($"[GameManager] Changing to scene: '{sceneName}' with respawn type: {respawnType}");
 
         isChangingScene = true;
         lastRespawnType = respawnType;
         SaveProgress();
-        StartCoroutine(FadeAndLoad(sceneName));
+        StartCoroutine(LoadSceneWithFade(sceneName));
     }
 
-    private IEnumerator FadeAndLoad(string sceneName)
+    private IEnumerator LoadSceneWithFade(string sceneName)
     {
-        UI_Fade fade = FindFadeScreen();
-        if (fade != null)
+        // Fade out
+        yield return StartCoroutine(HandleFadeOut());
+
+        // Validate scene exists
+        if (!Application.CanStreamedLevelBeLoaded(sceneName))
         {
-            fade.DoFadeOut();
-            while (fade.fadeEffectCo != null) yield return null;
+            Debug.LogError($"[GameManager] Scene '{sceneName}' not found in Build Settings! Using default scene.");
+            sceneName = defaultGameScene;
+
+            if (!Application.CanStreamedLevelBeLoaded(sceneName))
+            {
+                Debug.LogError($"[GameManager] Default scene '{sceneName}' also not found! Aborting scene change.");
+                isChangingScene = false;
+                yield break;
+            }
         }
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-        asyncLoad.allowSceneActivation = true;
-
-        while (!asyncLoad.isDone)
-            yield return null;
-
-        // Scene loaded, setup
-        OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+        // Load scene
+        yield return StartCoroutine(LoadSceneAsync(sceneName));
     }
 
+    private IEnumerator HandleFadeOut()
+    {
+        UI_Fade fade = FindFadeScreen();
+        if (fade == null) yield break;
+
+        fade.DoFadeOut();
+        float timeout = 0f;
+
+        while (fade.fadeEffectCo != null && timeout < 3f)
+        {
+            timeout += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        if (timeout >= 3f)
+        {
+            Debug.LogWarning("[GameManager] Fade out timed out!");
+        }
+    }
+
+    private IEnumerator LoadSceneAsync(string sceneName)
+    {
+        // Subscribe to scene loaded event
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        Debug.Log($"[GameManager] Starting async load of: {sceneName}");
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        float timeout = 0f;
+
+        while (!asyncLoad.isDone && timeout < 20f)
+        {
+            timeout += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        if (timeout >= 20f)
+        {
+            Debug.LogError($"[GameManager] Scene loading timed out: {sceneName}");
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            isChangingScene = false;
+        }
+    }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-
-        if (instance != this) return;
+        Debug.Log($"[GameManager] Scene loaded: {scene.name}");
 
         if (scene.name == "MainMenu")
             StartCoroutine(SetupMainMenu());
@@ -90,17 +151,16 @@ public class GameManager : MonoBehaviour, ISaveable
 
     private IEnumerator SetupMainMenu()
     {
-        yield return null; // wait a frame
+        yield return null;
 
+        // Reset state
         isChangingScene = false;
         lastRespawnType = Respawn_Type.NonSpecific;
 
-        inGameUI = GameObject.Find("InGameUI");
-        menuUI = GameObject.Find("MenuUI");
+        // Setup UI
+        SetupMainMenuUI();
 
-        if (inGameUI != null) inGameUI.SetActive(false);
-        if (menuUI != null) menuUI.SetActive(true);
-
+        // Setup settings
         ShowHideSettings settings = FindFirstObjectByType<ShowHideSettings>();
         if (settings != null)
         {
@@ -108,71 +168,142 @@ public class GameManager : MonoBehaviour, ISaveable
             settings.HandleSettingsMainMenu();
         }
 
+        // Start music
         SoundManager.instance?.StartBGM("MainMenu");
 
-        UI_Fade fade = FindFadeScreen();
-        if (fade != null)
-        {
-            fade.DoFadeIn();
-            while (fade.fadeEffectCo != null) yield return null;
-        }
+        // Fade in
+        yield return StartCoroutine(HandleFadeIn());
+
+        Debug.Log("[GameManager] Main Menu setup complete");
     }
 
     private IEnumerator SetupGameScene()
     {
-        while (!dataLoaded) yield return null;
+        // Wait for data
+        yield return StartCoroutine(WaitForDataLoaded());
 
-        float timer = 0f;
-        while ((Entity_Player.instance == null || Entity_Player.instance.GetComponent<Player_SkillManager>() == null) && timer < 5f)
-        {
-            timer += Time.deltaTime;
-            yield return null;
-        }
+        // Wait for player
+        yield return StartCoroutine(WaitForPlayer());
 
         Entity_Player player = Entity_Player.instance;
         if (player == null)
         {
-            Debug.LogError("[GameManager] Player not found in scene!");
+            Debug.LogError("[GameManager] Player not found after waiting!");
             isChangingScene = false;
             yield break;
         }
 
-        Vector3 target = player.transform.position;
-        if (lastRespawnType != Respawn_Type.NonSpecific)
-        {
-            var wp = FindWaypoint(lastRespawnType);
-            if (wp != null) target = wp.GetPositionAndSetTriggerFalse();
-        }
-        player.TeleportPlayer(target);
+        // Position player
+        PositionPlayer(player);
 
         yield return new WaitForSeconds(0.2f);
 
-        UI ui = FindAnyObjectByType<UI>();
-        if (ui != null)
-        {
-            bool menuWasOpen = ui.IsMenuOpen();
-            if (!menuWasOpen) ui.ToggleUI();
-            SaveManager.instance?.RefreshAndLoad();
-            if (!menuWasOpen) ui.ToggleUI();
-        }
+        // Setup UI and save system
+        SetupGameUI();
 
-        UI_Fade fade = FindFadeScreen();
-        if (fade != null)
-        {
-            fade.DoFadeIn();
-            while (fade.fadeEffectCo != null) yield return null;
-        }
+        // Fade in
+        yield return StartCoroutine(HandleFadeIn());
 
         isChangingScene = false;
+        Debug.Log("[GameManager] Game scene setup complete");
+    }
+
+    private IEnumerator WaitForDataLoaded()
+    {
+        float timeout = 0f;
+        while (!dataLoaded && timeout < 5f)
+        {
+            timeout += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        if (!dataLoaded)
+        {
+            Debug.LogWarning("[GameManager] Data loading timed out");
+        }
+    }
+
+    private IEnumerator WaitForPlayer()
+    {
+        float timeout = 0f;
+        while (timeout < 5f)
+        {
+            if (Entity_Player.instance != null &&
+                Entity_Player.instance.GetComponent<Player_SkillManager>() != null)
+            {
+                break;
+            }
+            timeout += Time.unscaledDeltaTime;
+            yield return null;
+        }
+    }
+
+    private void PositionPlayer(Entity_Player player)
+    {
+        Vector3 target = player.transform.position;
+
+        if (lastRespawnType != Respawn_Type.NonSpecific)
+        {
+            Object_Waypoint waypoint = FindWaypoint(lastRespawnType);
+            if (waypoint != null)
+            {
+                target = waypoint.GetPositionAndSetTriggerFalse();
+                Debug.Log($"[GameManager] Positioning player at waypoint: {lastRespawnType}");
+            }
+        }
+
+        player.TeleportPlayer(target);
+    }
+
+    private void SetupMainMenuUI()
+    {
+        inGameUI = GameObject.Find("InGameUI");
+        menuUI = GameObject.Find("MenuUI");
+
+        if (inGameUI != null) inGameUI.SetActive(false);
+        if (menuUI != null) menuUI.SetActive(true);
+    }
+
+    private void SetupGameUI()
+    {
+        UI ui = FindAnyObjectByType<UI>();
+        if (ui == null) return;
+
+        bool menuWasOpen = ui.IsMenuOpen();
+        if (!menuWasOpen) ui.ToggleUI();
+
+        SaveManager.instance?.RefreshAndLoad();
+
+        if (!menuWasOpen) ui.ToggleUI();
+    }
+
+    private IEnumerator HandleFadeIn()
+    {
+        UI_Fade fade = FindFadeScreen();
+        if (fade == null) yield break;
+
+        fade.DoFadeIn();
+        float timeout = 0f;
+
+        while (fade.fadeEffectCo != null && timeout < 3f)
+        {
+            timeout += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        if (timeout >= 3f)
+        {
+            Debug.LogWarning("[GameManager] Fade in timed out!");
+        }
     }
 
     private UI_Fade FindFadeScreen()
     {
-        var fade = FindFirstObjectByType<UI_Fade>();
+        UI_Fade fade = FindFirstObjectByType<UI_Fade>();
         if (fade == null)
         {
-            GameObject go = GameObject.Find("FadeScreen");
-            if (go != null) fade = go.GetComponent<UI_Fade>();
+            GameObject fadeObj = GameObject.Find("FadeScreen");
+            if (fadeObj != null) fade = fadeObj.GetComponent<UI_Fade>();
         }
         return fade;
     }
@@ -184,7 +315,7 @@ public class GameManager : MonoBehaviour, ISaveable
     private void OnPlayerDeath()
     {
         UI ui = FindFirstObjectByType<UI>();
-        if (ui != null) ui.ToggleGameOverNoControls();
+        ui?.ToggleGameOverNoControls();
     }
 
     public void RespawnFromUI()
@@ -199,7 +330,7 @@ public class GameManager : MonoBehaviour, ISaveable
         }
 
         SaveProgress();
-        Debug.Log($"[Respawn] Player respawned at {Entity_Player.instance.transform.position}");
+        Debug.Log($"[GameManager] Player respawned at {Entity_Player.instance.transform.position}");
     }
 
     #endregion
@@ -208,26 +339,32 @@ public class GameManager : MonoBehaviour, ISaveable
 
     public void SaveProgress()
     {
-        var data = SaveManager.instance?.GetGameData();
+        GameData data = SaveManager.instance?.GetGameData();
         if (data == null) return;
 
-        string scene = SceneManager.GetActiveScene().name;
-        if (scene != "MainMenu") data.lastScenePlayed = scene;
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (currentScene != "MainMenu")
+        {
+            data.lastScenePlayed = currentScene;
+        }
 
         SaveManager.instance?.SaveGame();
     }
 
     public void LoadData(GameData data)
     {
-        lastScenePlayed = string.IsNullOrEmpty(data.lastScenePlayed) ? "IntroScene" : data.lastScenePlayed;
+        lastScenePlayed = !string.IsNullOrEmpty(data.lastScenePlayed) ? data.lastScenePlayed : defaultGameScene;
         dataLoaded = true;
+        Debug.Log($"[GameManager] Data loaded. Last scene: '{lastScenePlayed}'");
     }
 
     public void SaveData(ref GameData data)
     {
-        string scene = SceneManager.GetActiveScene().name;
-        if (scene == "MainMenu") return;
-        data.lastScenePlayed = scene;
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (currentScene != "MainMenu")
+        {
+            data.lastScenePlayed = currentScene;
+        }
     }
 
     #endregion
@@ -236,9 +373,10 @@ public class GameManager : MonoBehaviour, ISaveable
 
     private Object_Waypoint FindWaypoint(Respawn_Type type)
     {
-        foreach (var wp in FindObjectsByType<Object_Waypoint>(FindObjectsSortMode.None))
+        Object_Waypoint[] waypoints = FindObjectsByType<Object_Waypoint>(FindObjectsSortMode.None);
+        foreach (Object_Waypoint waypoint in waypoints)
         {
-            if (wp.GetWaypointType() == type) return wp;
+            if (waypoint.GetWaypointType() == type) return waypoint;
         }
         return null;
     }
@@ -247,21 +385,48 @@ public class GameManager : MonoBehaviour, ISaveable
 
     #endregion
 
-    #region Public Buttons
+    #region Public Interface
 
     public void GoMainMenuButton()
     {
-        Debug.Log("[GameManager] GoMainMenuButton called - switching to MainMenu");
+        Debug.Log("[GameManager] Going to Main Menu");
         ChangeScene("MainMenu", Respawn_Type.NonSpecific);
     }
 
     public void ContinuePlay()
     {
-        string scene = SaveManager.instance?.GetGameData()?.lastScenePlayed ?? "IntroScene";
-        ChangeScene(scene, Respawn_Type.NonSpecific);
+        string sceneToLoad = GetLastPlayedScene();
+        Debug.Log($"[GameManager] Continue play to scene: '{sceneToLoad}'");
+        ChangeScene(sceneToLoad, Respawn_Type.NonSpecific);
     }
 
-    public void RestartCurrentScene() => ChangeScene(SceneManager.GetActiveScene().name, Respawn_Type.NonSpecific);
+    public void RestartCurrentScene()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        Debug.Log($"[GameManager] Restarting current scene: '{currentScene}'");
+        ChangeScene(currentScene, Respawn_Type.NonSpecific);
+    }
+
+    private string GetLastPlayedScene()
+    {
+        // Try to get from save data first
+        string savedScene = SaveManager.instance?.GetGameData()?.lastScenePlayed;
+
+        if (!string.IsNullOrEmpty(savedScene))
+        {
+            return savedScene;
+        }
+
+        // Fallback to instance variable
+        if (!string.IsNullOrEmpty(lastScenePlayed))
+        {
+            return lastScenePlayed;
+        }
+
+        // Final fallback to default
+        Debug.LogWarning($"[GameManager] No saved scene found, using default: '{defaultGameScene}'");
+        return defaultGameScene;
+    }
 
     #endregion
 }

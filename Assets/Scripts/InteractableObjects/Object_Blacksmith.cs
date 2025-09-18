@@ -2,63 +2,63 @@ using UnityEngine;
 
 public class Object_Blacksmith : Object_NPC, IInteractable
 {
-    private Inventory_Player inventory;
-    private Inventory_Storage storage;
+    private Inventory_Player inventory;   // プレイヤーのインベントリ参照
+    private Inventory_Storage storage;    // ブラックスミス用ストレージ
 
-    private NPC_SFX npcSFX;
-    private AudioSource audioSource;
+    private NPC_SFX npcSFX;               // NPC用SFX
+    private AudioSource audioSource;      // 音声再生用
 
     protected override void Awake()
     {
         base.Awake();
-        storage = GetComponent<Inventory_Storage>();
-        audioSource = GetComponent<AudioSource>();
-        npcSFX = GetComponent<NPC_SFX>();
+        storage = GetComponent<Inventory_Storage>();  // ストレージ取得
+        audioSource = GetComponent<AudioSource>();    // AudioSource取得
+        npcSFX = GetComponent<NPC_SFX>();            // NPC SFX取得
     }
 
+    // プレイヤーとのインタラクト処理
     public void Interact()
-{
-    inventory = player.GetComponent<Inventory_Player>();
-    storage.SetInventory(inventory);
+    {
+        inventory = player.GetComponent<Inventory_Player>();  // プレイヤーのインベントリ取得
+        storage.SetInventory(inventory);                       // ストレージにプレイヤー情報セット
 
-    ui.SetInsideCraftTrigger(true);  // Enable craft trigger
-    npcSFX?.PlayTalkSfx();
+        ui.SetInsideCraftTrigger(true);  // クラフトトリガー有効化
+        npcSFX?.PlayTalkSfx();           // 会話音再生
 
         if (!ui.IsMenuOpen())
-    {
-        ui.OpenInventoryWithCraft();      // Opens the craft panel automatically
-        ui.craftUI.SetupCraftUI(storage); // Only setup once on first open
+        {
+            ui.OpenInventoryWithCraft();      // クラフトUIを開く
+            ui.craftUI.SetupCraftUI(storage); // 初回セットアップ
+        }
+        else if (!ui.IsCraftVisible())
+        {
+            ui.ShowCraftInInventory(true);    // 表示のみ更新
+        }
+        // 開いていて表示中なら何もしない
     }
-    else if (!ui.IsCraftVisible())
-    {
-        ui.ShowCraftInInventory(true);    // Just show the panel, no setup
-    }
-    // If already open and visible, do NOTHING
-}
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
-
-        ui.SetInsideCraftTrigger(true); // Set trigger state when entering
+        ui.SetInsideCraftTrigger(true); // トリガー状態セット
 
         if (ui.IsMenuOpen())
-            ui.ShowCraftInInventory(false);
+            ui.ShowCraftInInventory(false); // UI非表示
 
-        audioSource.Play();
+        audioSource.Play(); // 効果音再生
     }
 
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
-        ui.SetInsideCraftTrigger(false); // Clear trigger state and hide panel
+        ui.SetInsideCraftTrigger(false); // トリガー解除
 
         if (ui.IsMenuOpen())
-            ui.ShowCraftInInventory(false);
+            ui.ShowCraftInInventory(false); // UI非表示
 
         if (ui.craftUI != null)
-            ui.craftUI.ResetCraftPreview(); // Reset preview here, not on F
+            ui.craftUI.ResetCraftPreview(); // クラフトプレビューリセット
 
-        audioSource.Stop();
+        audioSource.Stop(); // 音声停止
     }
 }

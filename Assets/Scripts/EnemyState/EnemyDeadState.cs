@@ -1,13 +1,13 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyDeadState : EnemyState
 {
-    // �t�F�[�h�A�E�g�A�j���[�V�����̎���
+    // 死亡アニメーションの再生時間
     private float deathAnimDuration = 2f;
 
-    public EnemyDeadState(Entity_Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
+    public EnemyDeadState(Entity_Enemy enemy, StateMachine stateMachine, string animBoolName)
+        : base(enemy, stateMachine, animBoolName)
     {
     }
 
@@ -15,14 +15,14 @@ public class EnemyDeadState : EnemyState
     {
         base.Enter();
 
-        // Disable physics/colliders immediately so it can’t be hit
+        // 物理判定を無効化して攻撃を受けないようにする
         Collider2D col2D = enemy.GetComponent<Collider2D>();
         if (col2D != null) col2D.enabled = false;
 
         Rigidbody2D rb2D = enemy.GetComponent<Rigidbody2D>();
-        if (rb2D != null) rb2D.simulated = false; // stop knockback/movement
+        if (rb2D != null) rb2D.simulated = false; // ノックバックや移動を停止
 
-        // Start animation/despawn timer
+        // アニメーション再生後に消去するコルーチンを開始
         enemy.StartCoroutine(WaitAndDespawn());
     }
 
@@ -30,7 +30,7 @@ public class EnemyDeadState : EnemyState
     {
         yield return new WaitForSeconds(deathAnimDuration);
 
-        // ���S�A�j���[�V�����I����A�t�F�[�h�A�E�g�̃R���[�`����J�n
+        // 死亡後の消去処理（エフェクトやオブジェクト削除）
         enemy.DespawnOnDeath(2f);
     }
 }

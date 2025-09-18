@@ -1,12 +1,12 @@
 using UnityEngine;
 
-// �A�C�e���⑕���̃��A���e�B��\���񋓌^
+// アイテムのレアリティ定義
 public enum Item_Rarity
 {
-    Common,      // ��ʓI�ȃA�C�e���B���肵�₷���A���\�͍T����
-    Uncommon,    // ��Ⓙ�����A�C�e���B�������͂Ȍ��ʂ����
-    Rare,        // �󏭂ȃA�C�e���B���\�������ʂ��ڗ���
-    Epic,        // ���Ɋ󏭂ŋ��͂ȃA�C�e���B����͍���
-    Legendary,
-    Unique// �`����̃A�C�e���B���ʂȐ��\��B�ꐫ�����
+    Common,      // 一般的なアイテム、入手しやすい
+    Uncommon,    // 少しレア、やや入手困難
+    Rare,        // レアアイテム、入手難度高め
+    Epic,        // 非常にレア、強力なアイテム
+    Legendary,   // 伝説級アイテム
+    Unique       // 固有アイテム、一つだけ存在する特殊アイテム
 }

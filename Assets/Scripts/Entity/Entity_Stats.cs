@@ -1,57 +1,55 @@
 using UnityEngine;
 
-// �L�����N�^�[�̃X�e�[�^�X��Ǘ�����N���X
+// エンティティのステータス管理
 public class Entity_Stats : MonoBehaviour
 {
-    public Stat_SetupSO setupSO; // �f�t�H���g�X�e�[�^�X�ݒ�
+    public Stat_SetupSO setupSO; // デフォルトステータス設定SO
 
-    public Stats_ResourceGroup resources; // �̗͂�񕜂Ȃǂ̃��\�[�X
-    public Stats_OffenseGroup offense; // �U���n�X�e�[�^�X
-    public Stats_DefenseGroup defense; // �h��n�X�e�[�^�X
-    public Stats_MajorGroup major; // ��{�\�͒l
+    public Stats_ResourceGroup resources; // 体力・回復等
+    public Stats_OffenseGroup offense; // 攻撃関連
+    public Stats_DefenseGroup defense; // 防御関連
+    public Stats_MajorGroup major; // 基本能力値（STR/AGI/INT/VIT）
 
     protected virtual void Awake()
     {
 
     }
 
-    // �U���f�[�^��擾
+    // 攻撃データ取得
     public AttackData GetAttackData(DamageScaleData scaleData)
     {
         return new AttackData(this, scaleData);
     }
 
-
-    // �����_���[�W�v�Z
+    // 物理ダメージ計算
     public float GetPhysicalDamage(out bool isCrit, float scaleFactor = 1)
     {
-        float baseDamage = GetBaseDamage(); // ��{�_���[�W
-        float critChance = GetCritChance(); // �N���e�B�J����
-        float critPower = GetCritPower(); // �N���e�B�J���{��
+        float baseDamage = GetBaseDamage(); // 基本ダメージ
+        float critChance = GetCritChance(); // クリティカル率
+        float critPower = GetCritPower(); // クリティカル倍率
 
-        isCrit = Random.Range(0, 100) < critChance; // �N���e�B�J������
+        isCrit = Random.Range(0, 100) < critChance; // クリティカル判定
         float finalPhysicalDamage = isCrit ? baseDamage * critPower : baseDamage;
 
-        return finalPhysicalDamage * scaleFactor; // �X�P�[����|���ĕԂ�
+        return finalPhysicalDamage * scaleFactor; // スケール適用
     }
 
-    public float GetBaseDamage() => offense.damage.GetValue() + major.strength.GetValue(); // STR�ɂ��{�[�i�X
-    public float GetCritChance() => offense.critChance.GetValue() + (major.agility.GetValue() * 0.3f); // AGI�ɂ��N�������Z
-    public float GetCritPower() => offense.critPower.GetValue() + (major.strength.GetValue() * 1); // STR�ɂ��N���{�����Z
+    public float GetBaseDamage() => offense.damage.GetValue() + major.strength.GetValue(); // STR依存
+    public float GetCritChance() => offense.critChance.GetValue() + (major.agility.GetValue() * 0.3f); // AGI依存
+    public float GetCritPower() => offense.critPower.GetValue() + (major.strength.GetValue() * 1); // STR依存
 
-    // �����_���[�W�v�Z
+    // 属性ダメージ計算
     public float GetElementalDamage(out ElementType element, float scaleFactor = 1)
     {
         float fireDamage = offense.fireDamage.GetValue();
         float iceDamage = offense.iceDamage.GetValue();
         float lightningDamage = offense.lightningDamage.GetValue();
 
-        float bonusElementalDamage = major.intelligence.GetValue(); // INT�ɂ��{�[�i�X
+        float bonusElementalDamage = major.intelligence.GetValue(); // INT依存
 
         float highestDamage = fireDamage;
         element = ElementType.Fire;
 
-        // ��ԍ��������_���[�W�����
         if (iceDamage > highestDamage)
         {
             highestDamage = iceDamage;
@@ -66,11 +64,11 @@ public class Entity_Stats : MonoBehaviour
 
         if (highestDamage <= 0)
         {
-            element = ElementType.None; // �����Ȃ�
+            element = ElementType.None; // ダメージなし
             return 0;
         }
 
-        // ��������50%�_���[�W��ǉ�
+        // 弱属性から50%加算
         float bonusFire = (element == ElementType.Fire) ? 0 : fireDamage * 0.5f;
         float bonusIce = (element == ElementType.Ice) ? 0 : iceDamage * 0.5f;
         float bonusLightning = (element == ElementType.Lightning) ? 0 : lightningDamage * 0.5f;
@@ -78,16 +76,14 @@ public class Entity_Stats : MonoBehaviour
         float weakerElementsDamage = bonusFire + bonusIce + bonusLightning;
         float finalElementalDamage = highestDamage + weakerElementsDamage + bonusElementalDamage;
 
-        float elementalDamage = finalElementalDamage * scaleFactor;
-
-        return elementalDamage;
+        return finalElementalDamage * scaleFactor;
     }
 
-    // �����ϐ��擾
+    // 属性耐性取得
     public float GetElementalResistance(ElementType element)
     {
         float baseResistance = 0;
-        float bonusResistance = major.intelligence.GetValue() * 0.5f; // INT��0.5%�ǉ�
+        float bonusResistance = major.intelligence.GetValue() * 0.5f; // INT依存
 
         switch (element)
         {
@@ -97,99 +93,82 @@ public class Entity_Stats : MonoBehaviour
         }
 
         float resistance = baseResistance + bonusResistance;
-        float resistanceCap = 75f; // �ő�ϐ�75%
-        float finalResistance = Mathf.Clamp(resistance, 0, resistanceCap) / 100;
-
-        return finalResistance;
+        float resistanceCap = 75f; // 上限75%
+        return Mathf.Clamp(resistance, 0, resistanceCap) / 100;
     }
 
-    // �ő�̗͌v�Z
+    // 最大体力取得
     public float GetMaxHealth()
     {
         float baseHealth = resources.maxHealth.GetValue();
-        float bonusHealth = major.vitality.GetValue() * 5; // VIT�ɂ��{�[�i�X
-        float finalMaxHealth = baseHealth + bonusHealth;
-        return finalMaxHealth;
+        float bonusHealth = major.vitality.GetValue() * 5; // VIT依存
+        return baseHealth + bonusHealth;
     }
 
-    // �A�[�}�[�ɂ��_���[�W�y���v�Z
+    // 防御によるダメージ軽減計算
     public float GetArmorMitigation(float armorReduction)
     {
         float totalArmor = GetBaseArmor();
-        float reductionMultiplier = Mathf.Clamp(1 - armorReduction, 0, 1); // �A�[�}�[������K�p
+        float reductionMultiplier = Mathf.Clamp(1 - armorReduction, 0, 1);
         float effectiveArmor = totalArmor * reductionMultiplier;
 
-        float mitigation = effectiveArmor / (effectiveArmor + 100); // ��{�y���v�Z
-        float mitigationCap = 70f; // �y���ő�70%
-        float finalMitigation = Mathf.Clamp(mitigation, 0, mitigationCap);
-
-        return finalMitigation;
+        float mitigation = effectiveArmor / (effectiveArmor + 100);
+        float mitigationCap = 70f; // 上限70%
+        return Mathf.Clamp(mitigation, 0, mitigationCap);
     }
 
-    public float GetBaseArmor() => defense.armor.GetValue() + major.vitality.GetValue(); // VIT�ɂ��A�[�}�[���Z
+    public float GetBaseArmor() => defense.armor.GetValue() + major.vitality.GetValue(); // VIT依存
 
-    public float GetArmorReduction()
-    {
-        float finalArmorReduction = offense.armorReduction.GetValue() / 100; // %�v�Z
-        return finalArmorReduction;
-    }
+    public float GetArmorReduction() => offense.armorReduction.GetValue() / 100; // %
 
-    // ��𗦌v�Z
+    // 回避率取得
     public float GetEvasion()
     {
         float baseEvasion = defense.evasion.GetValue();
-        float bonusEvasion = major.agility.GetValue() * 0.5f; // AGI�ɂ��{�[�i�X
+        float bonusEvasion = major.agility.GetValue() * 0.5f; // AGI依存
 
         float totalEvasion = baseEvasion + bonusEvasion;
-        float evasionCap = 25f; // �ő�25%
-        float finalEvasion = Mathf.Clamp(totalEvasion, 0, evasionCap);
-
-        return finalEvasion;
+        float evasionCap = 25f; // 上限25%
+        return Mathf.Clamp(totalEvasion, 0, evasionCap);
     }
 
-    // �X�e�[�^�X��^�C�v�ʂŎ擾
+    // StatTypeからStats取得
     public Stats GetStatByType(StatType type)
     {
         switch (type)
         {
             case StatType.MaxHealth: return resources.maxHealth;
             case StatType.HealthRegen: return resources.healthRegen;
-
             case StatType.Strength: return major.strength;
             case StatType.Agility: return major.agility;
             case StatType.Intelligence: return major.intelligence;
             case StatType.Vitality: return major.vitality;
-
             case StatType.AttackSpeed: return offense.attackSpeed;
             case StatType.Damage: return offense.damage;
             case StatType.CritChance: return offense.critChance;
             case StatType.CritPower: return offense.critPower;
             case StatType.ArmorReduction: return offense.armorReduction;
-
             case StatType.Armor: return defense.armor;
             case StatType.Evasion: return defense.evasion;
-
             case StatType.FireDamage: return offense.fireDamage;
             case StatType.IceDamage: return offense.iceDamage;
             case StatType.LightningDamage: return offense.lightningDamage;
             case StatType.ElementalDamage: return offense.elementalDamage;
-
             case StatType.FireResistance: return defense.fireResistance;
             case StatType.IceResistance: return defense.iceResistance;
             case StatType.LightningResistance: return defense.lightningResistance;
-
             default:
-                Debug.LogWarning($"StatType {type} is not implemented yet.");
+                Debug.LogWarning($"StatType {type} は未実装");
                 return null;
         }
     }
 
-    // �f�t�H���g�X�e�[�^�X��K�p
+    // デフォルトステータス適用
     public void ApplyDefaultStatSetup()
     {
         if (setupSO == null)
         {
-            Debug.Log("No default stat setup assigned");
+            Debug.Log("デフォルトステータス未設定");
             return;
         }
 

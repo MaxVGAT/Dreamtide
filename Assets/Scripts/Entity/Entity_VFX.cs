@@ -1,56 +1,51 @@
 using System.Collections;
 using UnityEngine;
 
-// �G���e�B�e�B�̊e��VFX�i�_���[�W�A�X�e�[�^�X�A�U�����j��Ǘ�����N���X
+// エンティティVFX管理（ダメージ・状態異常・攻撃エフェクト）
 public class Entity_VFX : MonoBehaviour
 {
-    protected SpriteRenderer sr; // �X�v���C�g�`��p
+    protected SpriteRenderer sr; // スプライト参照
     private Entity entity;
 
-    public enum FlashType { Red, Yellow, Green, White } // �_���[�W�t���b�V���^�C�v
+    public enum FlashType { Red, Yellow, Green, White } // ダメージフラッシュ種類
 
     [Header("On Taking Damage VFX")]
-    [SerializeField] private Material interactableHitMat;
-    [SerializeField] private Material redHitMat;
-    [SerializeField] private Material yellowHitBlockMat;
-    [SerializeField] private Material greenHitPerfectBlockMat;
-    [SerializeField] private float onDamageVfxDuration = 0.2f;
-    private Material originalMaterial; // ���̃}�e���A����ێ�
+    [SerializeField] private Material interactableHitMat; // インタラクト対象ヒット
+    [SerializeField] private Material redHitMat;           // 赤ヒット
+    [SerializeField] private Material yellowHitBlockMat;   // 黄ヒット（ブロック）
+    [SerializeField] private Material greenHitPerfectBlockMat; // 緑ヒット（パーフェクトブロック）
+    [SerializeField] private float onDamageVfxDuration = 0.2f; // ダメージVFX時間
+    private Material originalMaterial; // 元のマテリアル保存
     private Coroutine onDamageVfxCoroutine;
 
     [Header("On Doing Damage VFX")]
-    [SerializeField] private Color hitVfxColor = Color.white;
-    [SerializeField] private GameObject hitVfx;
-    [SerializeField] private GameObject critHitVfx;
+    [SerializeField] private Color hitVfxColor = Color.white; // 攻撃VFX色
+    [SerializeField] private GameObject hitVfx;              // 通常攻撃VFX
+    [SerializeField] private GameObject critHitVfx;          // クリティカルVFX
 
     [Header("Elements Colors")]
-    [SerializeField] private Color chillVfx = Color.cyan;
-    [SerializeField] private Color burnVfx = Color.red;
-    [SerializeField] private Color shockVfx = Color.yellow;
+    [SerializeField] private Color chillVfx = Color.cyan;    // 氷属性色
+    [SerializeField] private Color burnVfx = Color.red;      // 火属性色
+    [SerializeField] private Color shockVfx = Color.yellow;  // 雷属性色
     private Color originalHitVfxColor;
 
     private void Awake()
     {
         entity = GetComponent<Entity>();
         sr = GetComponentInChildren<SpriteRenderer>();
-        originalMaterial = sr.material; // �����}�e���A���ۑ�
+        originalMaterial = sr.material; // 元マテリアル保存
         originalHitVfxColor = hitVfxColor;
     }
 
-    // �X�e�[�^�X���ʂɉ�����VFX��Đ�
+    // 状態異常VFX再生
     public void PlayOnStatusVfx(float duration, ElementType element)
     {
-        if (element == ElementType.Ice)
-            StartCoroutine(PlayStatusVfxCo(duration, chillVfx));
-
-        if (element == ElementType.Fire)
-            StartCoroutine(PlayStatusVfxCo(duration, burnVfx));
-
-        if (element == ElementType.Lightning)
-            StartCoroutine(PlayStatusVfxCo(duration, shockVfx));
+        if (element == ElementType.Ice) StartCoroutine(PlayStatusVfxCo(duration, chillVfx));
+        if (element == ElementType.Fire) StartCoroutine(PlayStatusVfxCo(duration, burnVfx));
+        if (element == ElementType.Lightning) StartCoroutine(PlayStatusVfxCo(duration, shockVfx));
     }
 
-    // �SVFX��~�i�t���b�V����X�e�[�^�X�F����Z�b�g�j
+    // 全VFX停止
     public void StopAllVfx()
     {
         StopAllCoroutines();
@@ -58,41 +53,37 @@ public class Entity_VFX : MonoBehaviour
         sr.material = originalMaterial;
     }
 
-    // �X�e�[�^�XVFX�̃R���[�`���i�F�̓_�Łj
+    // 状態異常VFXコルーチン
     private IEnumerator PlayStatusVfxCo(float duration, Color effectColor)
     {
-        float tickInterval = 0.25f; // �_�ŊԊu
+        float tickInterval = 0.25f;
         float timeHasPassed = 0;
-
-        Color lightColor = effectColor * 1.2f; // ���邢�F
-        Color darkColor = effectColor * 0.8f;   // �Â��F
-
+        Color lightColor = effectColor * 1.2f;
+        Color darkColor = effectColor * 0.8f;
         bool toggle = false;
 
         while (timeHasPassed < duration)
         {
-            sr.color = toggle ? lightColor : darkColor; // ��݂ɐF�ύX
+            sr.color = toggle ? lightColor : darkColor; // 色交互
             toggle = !toggle;
-
             yield return new WaitForSeconds(tickInterval);
             timeHasPassed += tickInterval;
         }
 
-        sr.color = Color.white; // �I�����Ɍ��F��
+        sr.color = Color.white; // 元色に戻す
     }
 
-    // �U����VFX�����i�ʏ� or �N���e�B�J���j
+    // 攻撃時VFX生成
     public void CreateOnHitVFX(Transform target, bool isCrit, ElementType element)
     {
         GameObject hitPrefab = isCrit ? critHitVfx : hitVfx;
         GameObject vfx = Instantiate(hitPrefab, target.position, Quaternion.identity);
 
-        // ���]�����i�������̂Ƃ��N���e�B�J��VFX�𔽓]�j
-        if (entity.facingDirection == -1 && isCrit)
-            vfx.transform.Rotate(0, 180, 0);
+        // 左向きクリティカルVFX反転
+        if (entity.facingDirection == -1 && isCrit) vfx.transform.Rotate(0, 180, 0);
     }
 
-    // �����ɉ�����VFX�F��擾
+    // 属性色取得
     public Color GetElementColor(ElementType element)
     {
         switch (element)
@@ -104,37 +95,28 @@ public class Entity_VFX : MonoBehaviour
         }
     }
 
-    // �_���[�W���̐F�t���b�V��
+    // ダメージフラッシュ制御
     public void HandleHitColor(FlashType type)
     {
         Material mat = redHitMat;
-
-        if (type == FlashType.Yellow)
-            mat = yellowHitBlockMat;
-        if (type == FlashType.White)
-            mat = interactableHitMat;
-        //else if (type == FlashType.Green)
-        //    mat = greenHitPerfectBlockMat;
-
+        if (type == FlashType.Yellow) mat = yellowHitBlockMat;
+        if (type == FlashType.White) mat = interactableHitMat;
+        // Greenフラッシュは未使用
         PlayOnDamageVfx(mat);
     }
 
-    // �_���[�WVFX�Đ��i�}�e���A���ύX�j
+    // ダメージVFX開始
     public void PlayOnDamageVfx(Material hitMaterial)
     {
-        if (onDamageVfxCoroutine != null)
-            StopCoroutine(onDamageVfxCoroutine); // �����R���[�`����~
-
+        if (onDamageVfxCoroutine != null) StopCoroutine(onDamageVfxCoroutine);
         onDamageVfxCoroutine = StartCoroutine(OnDamageVfxCo(hitMaterial));
     }
 
-    // �_���[�WVFX�R���[�`���i�w�莞�Ԃ����t���b�V���j
+    // ダメージVFXコルーチン
     private IEnumerator OnDamageVfxCo(Material hitMaterial)
     {
-        sr.material = hitMaterial; // �t���b�V���p�}�e���A���ɕύX
-
+        sr.material = hitMaterial;
         yield return new WaitForSeconds(onDamageVfxDuration);
-
-        sr.material = originalMaterial; // �I�����Ɍ��}�e���A���֖߂�
+        sr.material = originalMaterial; // 元に戻す
     }
 }

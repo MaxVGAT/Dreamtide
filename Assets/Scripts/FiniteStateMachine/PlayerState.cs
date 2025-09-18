@@ -1,11 +1,13 @@
+// プレイヤー専用の状態基底クラス
 public abstract class PlayerState : EntityState
 {
-    protected Entity_Player player;           // �v���C���[�{�̂ւ̎Q��
-    protected PlayerInputSet input;           // �v���C���[�̓��͏��
-    protected Player_SkillManager skillManager; // �v���C���[�̃X�L���Ǘ�
+    protected Entity_Player player;           // プレイヤー本体参照
+    protected PlayerInputSet input;           // プレイヤー入力参照
+    protected Player_SkillManager skillManager; // プレイヤースキル管理参照
 
-    // �R���X�g���N�^�F�v���C���[�ƃX�e�[�g�}�V���A�A�j���[�V�������������
-    public PlayerState(Entity_Player player, StateMachine stateMachine, string animBoolName) : base(stateMachine, animBoolName)
+    // コンストラクタ：プレイヤーとステートマシン、アニメーションパラメータ設定
+    public PlayerState(Entity_Player player, StateMachine stateMachine, string animBoolName)
+        : base(stateMachine, animBoolName)
     {
         this.player = player;
 
@@ -16,50 +18,50 @@ public abstract class PlayerState : EntityState
         skillManager = player.skillManager;
     }
 
-    // ���t���[���X�V
+    // 毎フレーム更新
     public override void Update()
     {
         base.Update();
 
-        // �_�b�V�����͏���
+        // ダッシュ入力チェック
         if (input.Player.Dash.WasPressedThisFrame() && CanDash())
         {
-            skillManager.dash.SetSkillOnCooldown(); // �_�b�V���X�L����N�[���_�E���ɐݒ�
-            stateMachine.ChangeState(player.dashState); // �_�b�V���X�e�[�g�֐؂�ւ�
+            skillManager.dash.SetSkillOnCooldown();   // ダッシュスキルクールタイム設定
+            stateMachine.ChangeState(player.dashState); // ダッシュ状態に遷移
         }
 
-        // �A���e�B���b�g�X�L�����͏���
+        // アルティメットスキル入力チェック
         if (input.Player.UltimateSkill.WasPressedThisFrame() && skillManager.domain.CanUseSkill())
         {
-            if (skillManager.domain.InstantDomain()) // ���������\�Ȃ�
+            if (skillManager.domain.InstantDomain()) // 即発動可能か
             {
-                skillManager.domain.CreateDomain();   // �h���C���𐶐�
+                skillManager.domain.CreateDomain();   // ドメイン生成
             }
             else
-                stateMachine.ChangeState(player.domainState); // �����łȂ���΃X�e�[�g�؂�ւ�
+                stateMachine.ChangeState(player.domainState); // 非即発動時はドメイン状態に遷移
 
-            skillManager.domain.SetSkillOnCooldown(); // �X�L����N�[���_�E���ɐݒ�
+            skillManager.domain.SetSkillOnCooldown(); // ドメインスキルクールタイム設定
         }
     }
 
-    // �A�j���[�V�����p�����[�^�X�V
+    // アニメーションパラメータ更新
     public override void UpdateAnimationParameters()
     {
         base.UpdateAnimationParameters();
-        anim.SetFloat("yVelocity", rb.linearVelocity.y); // Y�����x��A�j���[�^�[�ɔ��f
+        anim.SetFloat("yVelocity", rb.linearVelocity.y); // Y軸速度をAnimatorに反映
     }
 
-    // �_�b�V���\������
+    // ダッシュ可能判定
     private bool CanDash()
     {
-        if (!skillManager.dash.CanUseSkill())   // �X�L���g�p�s��
+        if (!skillManager.dash.CanUseSkill())   // スキル使用不可
             return false;
 
-        if (player.isWallDetected)               // �ǐڐG���͕s��
+        if (player.isWallDetected)               // 壁検知中は不可
             return false;
 
         if (stateMachine.currentState == player.dashState || stateMachine.currentState == player.domainState)
-            return false;                        // ���Ƀ_�b�V������h���C�����͕s��
+            return false;                        // ダッシュ中またはドメイン中は不可
 
         return true;
     }

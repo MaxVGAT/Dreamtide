@@ -8,19 +8,18 @@ using UnityEngine;
 [Serializable]
 public class Inventory_Item
 {
-    private string itemID; // アイテムのユニークID（スタック管理用）
+    private string itemID; // アイテム固有ID（スタック・修正子用）
 
     public Item_DataSO itemData; // 元データScriptableObject
-    public int stackSize = 1;    // 現在のスタック数
+    public int stackSize = 1;    // スタック数
 
-    public ItemModifier[] modifiers { get; private set; } // 装備効果の修正子
-    public Item_EffectDataSO itemEffect;
+    public ItemModifier[] modifiers { get; private set; } // 装備効果修正子
+    public Item_EffectDataSO itemEffect;                  // アイテム効果
 
-    // Price is now stored and consistent per item
-    public int buyPrice { get; private set; }
-    public float sellPrice { get; private set; }
+    public int buyPrice { get; private set; }             // 購入価格
+    public float sellPrice { get; private set; }          // 売却価格
 
-    // コンストラクタ：ScriptableObjectから生成
+    // ScriptableObjectから生成
     public Inventory_Item(Item_DataSO itemData)
     {
         if (itemData == null)
@@ -30,19 +29,18 @@ public class Inventory_Item
         itemEffect = itemData.itemEffect;
         itemID = itemData.itemName + " - " + Guid.NewGuid();
 
-        // Generate stats automatically using item's unique ID as seed
+        // 固有IDで修正子を生成
         modifiers = GenerateStats(itemData, itemID.GetHashCode());
 
-        // Generate prices once and store them
+        // 価格を生成して保存
         GeneratePrices();
     }
 
+    // アイテム価格生成
     private void GeneratePrices()
     {
-        // Use a separate seed for price generation to avoid affecting stats
         var priceRandom = new System.Random((itemID + "_price").GetHashCode());
 
-        // Default base prices by rarity
         int defaultBasePrice = itemData.itemRarity switch
         {
             Item_Rarity.Common => 10,
@@ -54,7 +52,6 @@ public class Inventory_Item
             _ => 100
         };
 
-        // Multiplier per rarity
         float multiplier = itemData.itemRarity switch
         {
             Item_Rarity.Common => 1f,
@@ -66,19 +63,17 @@ public class Inventory_Item
             _ => 1f
         };
 
-        // Small randomization ±25% using our seeded random
-        float randomFactor = (float)(priceRandom.NextDouble() * 0.5 + 0.75); // 0.75 to 1.25
+        float randomFactor = (float)(priceRandom.NextDouble() * 0.5 + 0.75); // ±25%
 
         buyPrice = Mathf.RoundToInt(defaultBasePrice * multiplier * randomFactor);
-        sellPrice = buyPrice * 0.35f; // Sell for 35% of buy price
+        sellPrice = buyPrice * 0.35f; // 売却価格は35%
     }
 
+    // アイテム修正子生成
     private ItemModifier[] GenerateStats(Item_DataSO itemData, int seed)
     {
-        // Use seeded random for consistent generation
         var random = new System.Random(seed);
 
-        // Decide how many stats based on rarity
         int numberOfStats = itemData.itemRarity switch
         {
             Item_Rarity.Common => 1,
@@ -90,38 +85,27 @@ public class Inventory_Item
             _ => 1
         };
 
-        // Choose allowed stats based on type
         StatType[] possibleStats = itemData.itemType switch
         {
-            Item_Type.Weapon => new StatType[]
-                { StatType.Damage, StatType.AttackSpeed, StatType.Strength, StatType.Agility, StatType.Intelligence },
-
-            Item_Type.Helmet or Item_Type.Chest or Item_Type.Pants or Item_Type.Bracers or Item_Type.Boots => new StatType[]
-                { StatType.MaxHealth, StatType.Armor, StatType.Evasion, StatType.Strength, StatType.Agility, StatType.Intelligence, StatType.Vitality, },
-
-            Item_Type.Ring => new StatType[]
-                { StatType.Evasion, StatType.ArmorReduction, StatType.HealthRegen, StatType.CritChance, StatType.CritPower},
-
-            Item_Type.Rune => new StatType[]
-                { StatType.FireResistance, StatType.IceResistance, StatType.LightningResistance, StatType.FireDamage, StatType.IceDamage, StatType.LightningDamage, StatType.ElementalDamage},
-
-            Item_Type.Consumables => new StatType[]
-                { StatType.HealthRegen},
-
+            Item_Type.Weapon => new StatType[] { StatType.Damage, StatType.AttackSpeed, StatType.Strength, StatType.Agility, StatType.Intelligence },
+            Item_Type.Helmet or Item_Type.Chest or Item_Type.Pants or Item_Type.Bracers or Item_Type.Boots
+                => new StatType[] { StatType.MaxHealth, StatType.Armor, StatType.Evasion, StatType.Strength, StatType.Agility, StatType.Intelligence, StatType.Vitality },
+            Item_Type.Ring => new StatType[] { StatType.Evasion, StatType.ArmorReduction, StatType.HealthRegen, StatType.CritChance, StatType.CritPower },
+            Item_Type.Rune => new StatType[] { StatType.FireResistance, StatType.IceResistance, StatType.LightningResistance, StatType.FireDamage, StatType.IceDamage, StatType.LightningDamage, StatType.ElementalDamage },
+            Item_Type.Consumables => new StatType[] { StatType.HealthRegen },
             _ => Enum.GetValues(typeof(StatType)).Cast<StatType>().ToArray()
         };
 
-        // FIXED: Prevent infinite loop by limiting numberOfStats to available unique stats
         numberOfStats = Math.Min(numberOfStats, possibleStats.Length);
 
         var selectedStats = new List<ItemModifier>();
-        var availableStats = possibleStats.ToList(); // Copy to modify
+        var availableStats = possibleStats.ToList();
 
         for (int i = 0; i < numberOfStats && availableStats.Count > 0; i++)
         {
             int randomIndex = random.Next(0, availableStats.Count);
             var stat = availableStats[randomIndex];
-            availableStats.RemoveAt(randomIndex); // Remove to prevent duplicates
+            availableStats.RemoveAt(randomIndex);
 
             int value = GenerateStatValue(stat, itemData.itemRarity, random);
             selectedStats.Add(new ItemModifier { statType = stat, value = value });
@@ -130,9 +114,9 @@ public class Inventory_Item
         return selectedStats.ToArray();
     }
 
+    // ステータス値生成
     private int GenerateStatValue(StatType stat, Item_Rarity rarity, System.Random random)
     {
-        // Base value per stat type
         int baseValue = stat switch
         {
             StatType.MaxHealth => 10,
@@ -158,7 +142,6 @@ public class Inventory_Item
             _ => 1
         };
 
-        // Rarity multiplier
         float multiplier = rarity switch
         {
             Item_Rarity.Common => 1f,
@@ -170,13 +153,12 @@ public class Inventory_Item
             _ => 1f
         };
 
-        // Small randomization ±10% using seeded random
-        float randomFactor = (float)(random.NextDouble() * 0.2 + 0.9); // 0.9 to 1.1
+        float randomFactor = (float)(random.NextDouble() * 0.2 + 0.9); // ±10%
 
         return Mathf.RoundToInt(baseValue * multiplier * randomFactor);
     }
 
-    // プレイヤーに修正子を適用
+    // 修正子適用
     public void AddModifiers(Entity_Stats playerStats)
     {
         if (playerStats == null) return;
@@ -188,7 +170,7 @@ public class Inventory_Item
         }
     }
 
-    // プレイヤーから修正子を削除
+    // 修正子削除
     public void RemoveModifiers(Entity_Stats playerStats)
     {
         if (playerStats == null) return;
@@ -200,35 +182,26 @@ public class Inventory_Item
         }
     }
 
+    // アイテム効果適用/解除
     public void AddItemEffect(Entity_Player player) => itemEffect?.Subscribe(player);
     public void RemoveItemEffect() => itemEffect?.Unsubscribe();
 
-    // Equipment_DataSOへのキャスト（装備アイテムの場合）
+    // 装備データ取得
     private Equipment_DataSO EquipmentData()
     {
         if (itemData is Equipment_DataSO equipment)
             return equipment;
-
         return null;
     }
 
     // スタック可能判定
     public bool CanAddStack() => stackSize < itemData.maxStackSize;
 
-    // スタックを増やす - FIXED: Added bounds checking
-    public void AddStack()
-    {
-        if (stackSize < itemData.maxStackSize)
-            stackSize++;
-    }
+    // スタック増減
+    public void AddStack() { if (stackSize < itemData.maxStackSize) stackSize++; }
+    public void RemoveStack() { if (stackSize > 0) stackSize--; }
 
-    // スタックを減らす - FIXED: Added bounds checking
-    public void RemoveStack()
-    {
-        if (stackSize > 0)
-            stackSize--;
-    }
-
+    // アイテム情報文字列取得
     public string GetItemInfo(bool showForShop = false)
     {
         StringBuilder sb = new StringBuilder();
@@ -251,7 +224,6 @@ public class Inventory_Item
             sb.AppendLine("");
             sb.AppendLine(itemEffect?.effectDescription ?? "効果なし");
             sb.AppendLine("");
-
             return sb.ToString();
         }
 
@@ -260,7 +232,7 @@ public class Inventory_Item
 
         foreach (var mod in modifiers)
         {
-            string modType = GetStatTypeText(mod.statType); // ステータス名
+            string modType = GetStatTypeText(mod.statType);
             string modValue = IsPercentageStat(mod.statType) ? mod.value.ToString() + "%" : mod.value.ToString();
             sb.AppendLine(modType + " - " + " +" + modValue);
         }
@@ -272,50 +244,44 @@ public class Inventory_Item
             sb.AppendLine("");
             sb.AppendLine("");
         }
-        else
-            sb.AppendLine("");
-
-
+        else sb.AppendLine("");
 
         return sb.ToString();
     }
 
-    // FIXED: Now returns consistent prices
-    public int GetPrice(bool forBuying = false)
-    {
-        return forBuying ? buyPrice : Mathf.FloorToInt(sellPrice);
-    }
+    // 価格取得
+    public int GetPrice(bool forBuying = false) => forBuying ? buyPrice : Mathf.FloorToInt(sellPrice);
 
-    // ステータスの日本語表示を返す
+    // ステータス名日本語変換
     private string GetStatTypeText(StatType type)
     {
-        switch (type)
+        return type switch
         {
-            case StatType.MaxHealth: return "体力";
-            case StatType.HealthRegen: return "回復力";
-            case StatType.Strength: return "破壊力";
-            case StatType.Agility: return "俊敏さ";
-            case StatType.Intelligence: return "魔力";
-            case StatType.Vitality: return "耐久力";
-            case StatType.AttackSpeed: return "連撃速度";
-            case StatType.Damage: return "攻撃力";
-            case StatType.CritChance: return "会心率";
-            case StatType.CritPower: return "会心ダメージ";
-            case StatType.ArmorReduction: return "防御貫通";
-            case StatType.FireDamage: return "火炎ダメージ";
-            case StatType.IceDamage: return "氷結ダメージ";
-            case StatType.LightningDamage: return "雷撃ダメージ";
-            case StatType.Armor: return "防御力";
-            case StatType.Evasion: return "回避率";
-            case StatType.IceResistance: return "氷耐性";
-            case StatType.FireResistance: return "火耐性";
-            case StatType.LightningResistance: return "雷耐性";
-            case StatType.ElementalDamage: return "元素ダメージ"; // FIXED: Added missing translation
-            default: return type.ToString();
-        }
+            StatType.MaxHealth => "体力",
+            StatType.HealthRegen => "回復力",
+            StatType.Strength => "破壊力",
+            StatType.Agility => "俊敏さ",
+            StatType.Intelligence => "魔力",
+            StatType.Vitality => "耐久力",
+            StatType.AttackSpeed => "連撃速度",
+            StatType.Damage => "攻撃力",
+            StatType.CritChance => "会心率",
+            StatType.CritPower => "会心ダメージ",
+            StatType.ArmorReduction => "防御貫通",
+            StatType.FireDamage => "火炎ダメージ",
+            StatType.IceDamage => "氷結ダメージ",
+            StatType.LightningDamage => "雷撃ダメージ",
+            StatType.Armor => "防御力",
+            StatType.Evasion => "回避率",
+            StatType.IceResistance => "氷耐性",
+            StatType.FireResistance => "火耐性",
+            StatType.LightningResistance => "雷耐性",
+            StatType.ElementalDamage => "元素ダメージ",
+            _ => type.ToString()
+        };
     }
 
-    // パーセンテージ表記が必要か判定
+    // パーセント表記が必要か
     private bool IsPercentageStat(StatType type)
     {
         switch (type)

@@ -1,61 +1,62 @@
 using UnityEngine;
 
+// エンティティの状態基底クラス
 public abstract class EntityState
 {
-    protected StateMachine stateMachine; // �X�e�[�g�}�V���ւ̎Q��
-    protected string animBoolName;       // ���̃X�e�[�g�ɑΉ�����A�j���[�V������Bool��
+    protected StateMachine stateMachine; // 所属するステートマシン
+    protected string animBoolName;       // アニメーションのBoolパラメータ名
 
-    protected Animator anim;             // �A�j���[�^�[�ւ̎Q��
-    protected Rigidbody2D rb;            // Rigidbody2D�ւ̎Q��
-    protected Entity_Stats stats;        // �G���e�B�e�B�̃X�e�[�^�X���
+    protected Animator anim;             // Animator参照
+    protected Rigidbody2D rb;            // Rigidbody2D参照
+    protected Entity_Stats stats;        // エンティティのステータス参照
 
-    protected float stateTimer;          // �X�e�[�g��ł̌o�ߎ��ԊǗ�
-    public bool triggerCalled;        // �A�j���[�V�����C�x���g�̔��ΊǗ��t���O
+    protected float stateTimer;          // 状態経過時間管理用
+    public bool triggerCalled;           // アニメーションのトリガー呼び出しフラグ
 
-    // �R���X�g���N�^�F�X�e�[�g�}�V���ƃA�j���[�V�������������
+    // コンストラクタ：ステートマシンとアニメーションパラメータを設定
     public EntityState(StateMachine stateMachine, string animBoolName)
     {
         this.stateMachine = stateMachine;
         this.animBoolName = animBoolName;
     }
 
-    // �X�e�[�g�ɓ������Ƃ��ɌĂ΂��
-    // �A�j���[�V������Bool��true�ɂ��A�g���K�[�t���O����Z�b�g
+    // 状態開始時に呼ばれる
+    // アニメーションBoolをtrueにしてトリガーフラグをリセット
     public virtual void Enter()
     {
         anim.SetBool(animBoolName, true);
         triggerCalled = false;
     }
 
-    // ���t���[���X�V
-    // �^�C�}�[����炵�A�A�j���[�V�����p�����[�^��X�V
+    // 毎フレーム更新
+    // 状態タイマー減算とアニメーションパラメータ更新
     public virtual void Update()
     {
         stateTimer -= Time.deltaTime;
         UpdateAnimationParameters();
     }
 
-    // �X�e�[�g�𔲂���Ƃ��ɌĂ΂��
-    // �A�j���[�V������Bool��false�ɂ���
+    // 状態終了時に呼ばれる
+    // アニメーションBoolをfalseにする
     public virtual void Exit()
     {
         anim.SetBool(animBoolName, false);
     }
 
-    // �A�j���[�V�����C�x���g����Ă΂��
-    // �g���K�[�t���O��true�ɐݒ�
+    // アニメーションイベント用メソッド
+    // 呼ばれるとtriggerCalledをtrueにする
     public void AnimationTrigger()
     {
         triggerCalled = true;
     }
 
-    // �X�e�[�g�ŗL�̃A�j���[�V�����p�����[�^�X�V����
+    // 状態中にアニメーションパラメータを更新（必要に応じてオーバーライド）
     public virtual void UpdateAnimationParameters()
     {
 
     }
 
-    // �U�����x��A�j���[�^�[�ɓ���
+    // 攻撃速度とAnimatorの同期
     public void SyncAttackSpeed()
     {
         float attackSpeed = stats.offense.attackSpeed.GetValue();
